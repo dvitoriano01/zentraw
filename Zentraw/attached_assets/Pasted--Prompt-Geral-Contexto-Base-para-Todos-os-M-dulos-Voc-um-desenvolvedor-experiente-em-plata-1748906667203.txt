@@ -1,0 +1,156 @@
+🎯 Prompt Geral (Contexto Base para Todos os Módulos)
+
+Você é um desenvolvedor experiente em plataformas web modernas com foco em artistas musicais. Crie uma plataforma chamada ZENTRAW (www.zentraw.com) hospedada inicialmente no Wix, mas com estrutura modular para expansão futura. A plataforma é voltada para DJs e artistas da música, oferecendo ferramentas inteligentes geradas por IA.
+
+Fontes principais:
+- Geração de conteúdo via OpenAI (ChatGPT, DALL·E, Whisper, etc).
+- Integração com APIs de plataformas de música e redes sociais.
+
+Requisitos técnicos:
+- Tema claro/escuro com layout responsivo e animações leves.
+- Painel de controle em tela cheia para desktop e versão otimizada para mobile.
+- Área de membros com plano gratuito e planos pagos com controle de consumo baseado em tokens usados.
+- Banco de dados persistente com memória por usuário.
+- Plataforma multilíngue com foco em português, inglês e espanhol.
+
+Objetivo: construir uma plataforma modular com as seguintes funcionalidades:
+
+*************
+🔧 Funcionalidade 1 – Gerador de Bio/Release (com memória)
+
+Crie um formulário com campos como: nome artístico, estilo musical, humor, datas de lançamento, colaborações, público-alvo, tom desejado e tema principal. O sistema deve gerar:
+
+- Bio curta e longa.
+- Release personalizado.
+- Armazenar os dados no banco de dados do usuário (módulo de memória).
+- Exportar em TXT e PDF.
+- Compartilhamento via link único.
+
+Use OpenAI (GPT-4.5 ou superior) para geração textual.
+
+
+*************
+📰 Funcionalidade 2 – Gerador de Press Release com Página Pública
+
+A partir da bio/release armazenada, crie um press release com templates variados. Use o layout gerado por prompts visuais (com HTML + CSS ou integração com IA de design).
+
+Requisitos:
+- Templates para diferentes mídias (revistas, blogs, sites oficiais).
+- Exportação: PDF e imagens (PNG, JPG).
+- Gerar página pública com URL única (ex: zentraw.com/press/nome-do-artista).
+- Botões de compartilhamento integrados (Whatsapp, Instagram, Email, etc).
+
+Geração com OpenAI + banco de templates visuais.
+
+*************
+🎨 Funcionalidade 3 – Gerador de Capas de Single + Story
+
+Entrada:
+- Prompt textual e/ou imagem de referência.
+- Estilo visual desejado (minimalista, glitch, retrô, cyberpunk, etc).
+
+Saída:
+- PNG 2048x2048 (capa oficial).
+- JPG 1080x1920 (story).
+- Exportar em lote.
+- Botão “transformar em vídeo animado” (ver funcionalidade 4).
+
+IA de imagem: DALL·E, Midjourney (via API de terceiros), ou Replicate.
+
+*************
+📽️ Funcionalidade 4 – Gerador de Visualizers + Vídeos Curto
+
+Usando a capa gerada + arquivo de áudio (.mp3 ou .wav) enviado pelo usuário:
+- Aplicar template de visualizer moderno com animação.
+- Sincronizar com waveform ou batida.
+- Geração automática de vídeos:
+
+  - Formato Reels / TikTok: 1080x1920 (15~30s)
+  - Canva Spotify: 9:16 (3~8s)
+  - Versão longa: até 1 min para YouTube Shorts
+
+Exportar em MP4 (H.264/H.265). Possível integração com ferramentas como RunwayML, Kaiber ou ffmpeg no backend.
+
+*************
+📊 Funcionalidade 5 – Charts de Músicas (via API)
+
+Integração com:
+
+- Billboard Charts (API oficial ou web scraping estruturado)
+- 1001Tracklists
+- Beatport Top 100
+- Spotify Charts
+
+Objetivo:
+- Dashboard com Top 10 atualizados em tempo real.
+- Permitir favoritos e notificações de artistas selecionados.
+
+*************
+📈 Funcionalidade 6 – Dashboard com Dados de Streaming (via API)
+
+Integrações:
+- Spotify API
+- Apple Music API
+- YouTube Data API
+- Deezer, Tidal, Amazon Music (se possível)
+
+Mostrar:
+- Audiência (mensal, total)
+- Top músicas
+- Gráfico de desempenho
+- Comparação entre faixas
+- Destaques por playlist
+
+Permitir login com Spotify/YouTube do artista para leitura de dados privados.
+
+
+*************
+🤖 Funcionalidade 7 – Integração com Moises.ai, Kits.ai, etc
+
+Implementar links diretos e APIs de:
+- Moises.ai (para separação de stems, pitch shift, etc)
+- Kits.ai (vozes personalizadas)
+
+Permitir que o artista envie um áudio e selecione ações, com integração direta via API ou redirecionamento autorizado.
+
+
+*************
+📅 Funcionalidade 8 – Postagens Programadas em Redes Sociais
+
+Integrar APIs (Meta, TikTok, etc):
+- Login social
+- Agendamento de posts (feed, stories, reels)
+- Publicação automática de conteúdos gerados (vídeos, capas, press release)
+
+Permitir o upload do conteúdo direto da plataforma e definir dias e horários.
+Possível uso de serviços como Hootsuite, Buffer ou agendadores próprios via API oficial.
+
+
+*************
+🧮 Funcionalidade Interna – Calculadora de Custos por Token
+
+Painel administrativo com:
+
+- Cálculo de tokens usados por geração de texto, imagem, vídeo.
+- Estimativa de custo por usuário.
+- Controle por plano de assinatura (free, básico, avançado).
+- Histórico de consumo por usuário.
+
+Armazenamento no banco de dados + alertas de uso excedente.
+
+*************
+🔒 Outras Considerações Técnicas
+Stack sugerida (caso evolua fora do Wix):
+
+Front-end: React + Tailwind + Framer Motion
+
+Back-end: Node.js / Express ou Next.js (API Routes)
+
+DB: Firebase ou Supabase
+
+Autenticação: Firebase Auth ou Auth0
+
+API Gateway para OpenAI + outras APIs externas
+
+Exportação de arquivos: jsPDF, FileSaver, ffmpeg.wasm, etc
+

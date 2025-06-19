@@ -1,0 +1,140 @@
+// ZentrawCanvasWorkspace.tsx
+import { useEffect, useRef, useState } from 'react';
+import { fabric } from 'fabric';
+
+export default function ZentrawCanvasWorkspace({ onExport }: { onExport: (imageUrl: string) => void }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const fabricCanvas = useRef<fabric.Canvas | null>(null);
+  const [activeObject, setActiveObject] = useState<fabric.Object | null>(null);
+  const [zoom, setZoom] = useState(1);
+
+  // Carregar fontes locais
+  const loadFonts = async () => {
+    const fontNames = ['Arkhip', 'FreepikFont']; // nomes exatos dos arquivos sem extensão
+    fontNames.forEach((name) => {
+      const font = new FontFace(name, `url(/fonts/${name}.ttf)`);
+      font.load().then((loaded) => {
+        document.fonts.add(loaded);
+        console.log(`Fonte carregada: ${name}`);
+      }).catch((err) => console.error('Erro ao carregar fonte:', err));
+    });
+  };
+
+  useEffect(() => {
+    loadFonts();
+
+    const canvas = new fabric.Canvas(canvasRef.current!, {
+      backgroundColor: 'transparent',
+      preserveObjectStacking: true,
+      selection: true,
+      width: 1080,
+      height: 1080,
+    });
+
+    fabricCanvas.current = canvas;
+
+    // Fundo xadrez estilo Photoshop
+    const patternCanvas = document.createElement('canvas');
+    patternCanvas.width = patternCanvas.height = 40;
+    const pctx = patternCanvas.getContext('2d')!;
+    pctx.fillStyle = '#ccc';
+    pctx.fillRect(0, 0, 40, 40);
+    pctx.fillStyle = '#eee';
+    pctx.fillRect(0, 0, 20, 20);
+    pctx.fillRect(20, 20, 20, 20);
+    const pattern = new fabric.Pattern({ source: patternCanvas, repeat: 'repeat' });
+    canvas.setBackgroundColor(pattern, canvas.renderAll.bind(canvas));
+
+    canvas.on('selection:created', (e) => setActiveObject(e.selected?.[0] || null));
+    canvas.on('selection:updated', (e) => setActiveObject(e.selected?.[0] || null));
+    canvas.on('selection:cleared', () => setActiveObject(null));
+
+    window.addEventListener('keydown', (e) => {
+      if (!fabricCanvas.current) return;
+      if (e.key === 'Delete' && activeObject) {
+        fabricCanvas.current.remove(activeObject);
+        setActiveObject(null);
+        fabricCanvas.current.renderAll();
+      }
+      if (e.ctrlKey && e.key === '+') {
+        const newZoom = zoom + 0.1;
+        setZoom(newZoom);
+        fabricCanvas.current.setZoom(newZoom);
+      }
+      if (e.ctrlKey && e.key === '-') {
+        const newZoom = zoom - 0.1;
+        setZoom(newZoom);
+        fabricCanvas.current.setZoom(newZoom);
+      }
+    });
+
+    return () => canvas.dispose();
+  }, []);
+
+  // Adicionar texto com fonte Freepik
+  const addText = () => {
+    const text = new fabric.Textbox('Texto aqui', {
+      left: 100,
+      top: 100,
+      fontSize: 48,
+      fontFamily: 'Arkhip',
+      fill: '#000',
+    });
+    fabricCanvas.current?.add(text);
+    fabricCanvas.current?.setActiveObject(text);
+    fabricCanvas.current?.renderAll();
+  };
+
+  const addOverlay = (src: string) => {
+    fabric.Image.fromURL(src, (img) => {
+      img.set({ left: 0, top: 0, selectable: true });
+      fabricCanvas.current?.add(img);
+      fabricCanvas.current?.setActiveObject(img);
+      fabricCanvas.current?.renderAll();
+    });
+  };
+
+  const exportImage = () => {
+    const url = fabricCanvas.current?.toDataURL({ format: 'png', multiplier: 2 });
+    if (url) onExport(url);
+  };
+
+  return (
+    <div className="flex h-full w-full">
+      {/* Barra lateral esquerda */}
+      <div className="w-12 bg-gray-900 p-2 text-white flex flex-col items-center gap-3">
+        <button title="Texto" onClick={addText}>T</button>
+        <button title="Overlay" onClick={() => addOverlay('/overlays/grunge1.png')}>🎨</button>
+      </div>
+
+      {/* Área central do canvas */}
+      <div className="flex-1 bg-neutral-800 flex items-center justify-center">
+        <canvas ref={canvasRef} className="shadow-lg border border-neutral-600" />
+      </div>
+
+      {/* Painel lateral direito */}
+      <div className="w-64 bg-neutral-900 text-white p-4 space-y-4">
+        <h2 className="text-sm font-bold">Properties</h2>
+        {activeObject && (
+          <>
+            <label className="text-xs">Opacidade</label>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={activeObject.opacity || 1}
+              onChange={(e) => {
+                activeObject.set({ opacity: parseFloat(e.target.value) });
+                fabricCanvas.current?.renderAll();
+              }}
+            />
+          </>
+        )}
+        <button onClick={exportImage} className="bg-purple-600 w-full py-2 text-sm rounded">
+          Exportar PNG
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,26 @@
+.chromatic-text {
+  font-size: 4rem;
+  color: white;
+  position: relative;
+}
+
+.chromatic-text::before,
+.chromatic-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: red;
+  z-index: -1;
+  animation: chromaShift 1s infinite alternate;
+}
+
+.chromatic-text::after {
+  color: blue;
+  animation-delay: 0.5s;
+}
+
+@keyframes chromaShift {
+  0% { transform: translateX(0); opacity: 0.7; }
+  100% { transform: translateX(2px); opacity: 0.3; }
+}

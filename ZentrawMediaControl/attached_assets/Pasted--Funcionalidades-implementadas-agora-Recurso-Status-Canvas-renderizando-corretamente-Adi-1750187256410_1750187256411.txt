@@ -1,0 +1,111 @@
+🎯 Funcionalidades implementadas agora:
+Recurso	Status
+🖼️ Canvas renderizando corretamente	✅
+✍️ Adição de texto com conteúdo editável	✅
+🎨 Alteração de tamanho e cor do texto	✅
+💾 Histórico com Undo (Ctrl+Z) e Redo (Ctrl+Y)	✅
+🗑️ Delete no teclado funcionando	✅
+🎛️ Fontes externas (/fonts) carregadas	✅
+📐 Responsivo e centralizado na tela	✅
+
+✅ Próximos recursos (opcional, podemos fazer já):
+📦 Exportar PNG e JSON
+
+🧱 Painel de camadas
+
+🎛️ FX Visuais (blur, overlay, glitch etc.)
+
+☁️ Salvar e carregar projetos com Supabase
+
+🧬 Template presets automáticos (Story, Square, Poster)
+
+Deseja que eu adicione agora o botão de Export PNG + JSON + Mudança de formato na barra superior?
+
+
+
+
+
+
+Você disse:
+sim
+
+
+O ChatGPT disse:
+Perfeito! Vamos adicionar agora os botões e funcionalidades para:
+
+✅ Zentraw Studio Pro - Export & Formatos
+🆕 O que será implementado:
+Recurso	Função
+📦 Export PNG	Salva imagem final (alta qualidade)
+📂 Export JSON	Salva projeto como template reutilizável
+🧩 Formatos visuais	Square, Story, Poster
+
+🔧 Como será adicionado:
+Uma barra superior com botões:
+
+[Texto] [Export PNG] [Export JSON] [Square] [Story] [Poster]
+
+✅ Código atualizado abaixo para colar no topo do <div>:
+Substitua o início do return (...) por este bloco completo:
+
+tsx
+Copiar
+Editar
+return (
+  <div className="flex flex-col h-screen w-screen">
+    {/* Top Bar */}
+    <div className="h-10 bg-black text-white flex items-center gap-3 px-4 text-sm">
+      <span className="font-bold text-purple-400">ZENTRAW STUDIO PRO</span>
+      <button onClick={addText}>Texto</button>
+      <button onClick={handleExportPNG}>Export PNG</button>
+      <button onClick={handleExportJSON}>Export JSON</button>
+      <button onClick={() => changeCanvasSize('square')}>Square</button>
+      <button onClick={() => changeCanvasSize('story')}>Story</button>
+      <button onClick={() => changeCanvasSize('poster')}>Poster</button>
+    </div>
+
+    {/* Workspace */}
+    <div className="flex flex-1">
+      ...
+    </div>
+  </div>
+);
+✅ Funções auxiliares para incluir no componente:
+Adicione dentro do seu componente (antes do return):
+
+tsx
+Copiar
+Editar
+const handleExportPNG = () => {
+  const url = fabricCanvas.current?.toDataURL({ format: 'png', multiplier: 2 });
+  if (!url) return;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'cover.png';
+  a.click();
+};
+
+const handleExportJSON = () => {
+  const json = JSON.stringify(fabricCanvas.current?.toJSON(), null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'project.zentraw.json';
+  a.click();
+};
+
+const changeCanvasSize = (mode: 'square' | 'story' | 'poster') => {
+  const size = {
+    square: { width: 1080, height: 1080 },
+    story: { width: 1080, height: 1920 },
+    poster: { width: 1350, height: 1080 }
+  }[mode];
+  setCanvasSize(size);
+};
+✅ Resultado:
+Interface com exportação funcional
+
+Formatos predefinidos para redes sociais
+
+Estrutura modular pronta para salvar templates

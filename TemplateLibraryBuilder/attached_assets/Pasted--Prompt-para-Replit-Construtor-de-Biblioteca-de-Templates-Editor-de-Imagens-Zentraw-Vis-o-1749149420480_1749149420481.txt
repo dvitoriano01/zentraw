@@ -1,0 +1,213 @@
+# Prompt para Replit — Construtor de Biblioteca de Templates & Editor de Imagens Zentraw
+
+## Visão Geral
+
+Você é **um agente no Replit** responsável por criar **um editor de imagens semelhante ao Canva Pro** para a plataforma [Zentraw](https://www.zentraw.com). O projeto deve nascer modular e escalável, permitindo a adição de **planos de assinatura** (Basic, Pro, Advanced) e um **painel de administração** completo. Nosso primeiro objetivo é **substituir o `Template Manager (admin‑complete.tsx)`** por uma alternativa criada do zero que:
+
+1. **Salve** cada template como um arquivo JSON independente dentro de `/src/templates`.
+2. **Organize** todos os templates em uma biblioteca facilmente consultável por slug, tags e categoria.
+3. Exponha funções CRUD (Create, Read, Update, Delete) para que o editor e o painel admin façam uso desses templates.
+4. Seja simples de integrar na página/app inicial da Zentraw.
+
+## Stack & Dependências Sugeridas
+
+\| Área | Lib/Stack |
+\| — | — |
+\| UI Framework | **React 18 + Vite + TypeScript** |
+\| Canvas Engine | **Fabric.js** (ou Konva) |
+\| State Mgmt | **Zustand** |
+\| UI Kit | **Tailwind CSS** + Headless UI |
+\| Auth | *placeholder*: Next‑Auth ou Clerk |
+\| Build/Test | Vitest + Playwright |
+
+> **IMPORTANTE:** se já existir outra stack no workspace, adapte as instruções mantendo compatibilidade.
+
+## Estrutura de Pastas Alvo
+
+```
+├─ public/
+│  └─ assets/
+├─ src/
+│  ├─ components/
+│  │  ├─ editor/
+│  │  ├─ templates/
+│  │  └─ ui/
+│  ├─ hooks/
+│  ├─ pages/        # ou /routes se usar React Router
+│  ├─ services/
+│  │  └─ templateService.ts
+│  ├─ store/
+│  ├─ templates/    # <— JSONs de template ficam aqui
+│  └─ utils/
+└─ README.md
+```
+
+## Fases & Entregas
+
+Divida o desenvolvimento nos **5 fases** abaixo. **Finalize cada fase com um commit e rodando testes.**
+
+### Fase 0 — Bootstrap (🟢 Iniciar)
+
+1. Criar projeto React/Vite com TypeScript.
+2. Configurar Tailwind CSS.
+3. Adicionar Fabric.js e Zustand.
+4. Criar README com instruções de dev setup.
+
+### Fase 1 — Core do Editor
+
+1. Implementar `<CanvasEditor />` com:
+
+   * Adição/remoção/movimentação de **shapes**, **textos** e **imagens**.
+   * Suporte a **layers** e **undo/redo**.
+   * Exportação em **PNG/JPEG/SVG**.
+2. Criar store global (Zustand) para estado do documento.
+3. Escrever testes unitários para actions principais.
+
+### Fase 2 — Módulo de Templates
+
+1. Definir **interface `TemplateSchema`** (id, name, category, tags\[], previewUrl, layers\[]…).
+2. Implementar `templateService.ts` com:
+
+   * `loadAll()` → lista todos JSONs em `/src/templates`.
+   * `load(id)`
+   * `save(template)`
+   * `update(id, patch)`
+   * `remove(id)`
+3. Gerar **3 templates de exemplo** (Cartaz, Post IG, Capa Single) salvos como JSON.
+4. Criar `<TemplateGallery />` filtrável.
+5. Conectar `<TemplateGallery />` ao `<CanvasEditor />`: clicar → carrega no editor.
+
+### Fase 3 — Planos & Controle de Acesso
+
+1. Criar enum `PlanTier` (Basic|Pro|Advanced).
+2. Mockar sistema de autenticação (e.g. dummy user context).
+3. Gatear recursos:
+
+   * **Basic**: 720p export, 10 templates, sem efeitos premium.
+   * **Pro**: 1080p export, 100 templates, efeitos premium.
+   * **Advanced**: 4K export, templates ilimitados, batch‑render de assets.
+4. Adicionar banner de upgrade quando usuário exceder limite.
+
+### Fase 4 — Painel Admin
+
+1. Rota `/admin` protegida.
+2. Dashboard cards com métricas (total users, templates, renders).
+3. CRUD GUI para templates (usa `templateService`).
+4. Ferramenta de **importação/exportação** de coleção de templates (`.zip` + manifest).
+
+### Fase 5 — Integração Final + QA
+
+1. Integrar tudo na **landing/app inicial da Zentraw** (placeholder `/app`).
+2. Rodar e documentar **testes e2e**.
+3. Checklist de performance (Lighthouse ≥ 90) e acessibilidade.
+4. Atualizar README.
+
+---
+
+## Regras de Ouro para o Agente do Replit
+
+1. **Não quebre funcionalidades existentes** ao corrigir bugs — escreva testes antes de mexer.
+2. **Commits semânticos** (`feat:`, `fix:`, `chore:` etc.).
+3. Termine cada fase com `npm test` e `npm run lint` passando.
+4. Documente *qualquer* decisão arquitetural no README.
+5. Comentários de código devem ser em **inglês**; README e UI, em **PT‑BR**.
+
+## Formato dos Templates
+
+```jsonc
+{
+  "id": "capa-single-glitch",
+  "name": "Capa Single Glitch",
+  "category": "Music",
+  "tags": ["capa", "glitch", "vhs"],
+  "previewUrl": "/assets/previews/capa-single-glitch.png",
+  "thumbnailUrl": "/assets/thumbnails/capa-single-glitch.jpg",
+  "layers": [
+    // Cada layer segue o schema do Fabric.js
+  ]
+}
+```
+
+## Entrega Esperada ao Final das Fases
+
+* Projeto executável em Replit (`npm run dev`).
+* Biblioteca de templates organizada e documentada.
+* Página/App inicial da Zentraw importando editor + gallery.
+* README com instruções de deploy e roadmap futuro.
+
+---
+
+### Próximos Passos
+
+Quando concluir **Fase 0**, pare e aguarde autorização para continuar. Isso garante que nenhuma fase seguinte atrapalhe as anteriores.
+
+Boa sorte 🚀
+
+---
+
+## Compatibilidade e Solução de Problemas
+
+### Problema: Importação do Fabric.js falha em Replit
+
+1. Instale o core e os tipos:
+
+   ```bash
+   npm install fabric @types/fabric --save
+   ```
+2. Importe como **default** ou **namespace** para evitar erro:
+
+   ```ts
+   import fabric from 'fabric';
+   // ou
+   import * as fabric from 'fabric';
+   ```
+3. Se usar Vite, adicione em `vite.config.ts`:
+
+   ```ts
+   optimizeDeps: {
+     include: ['fabric']
+   }
+   ```
+
+### Editor Avançado (Canva‑like)
+
+Para obter recursos comparáveis ao Canva Pro (crop, filtros, ajuste de cor, shapes complexos, máscaras, history/undo, etc.), integre **TUI Image Editor** como sobre‑camada do Fabric:
+
+```bash
+npm install tui-image-editor @toast-ui/react-image-editor
+```
+
+Exemplo de uso em `AdvancedEditor.tsx`:
+
+```tsx
+import { ImageEditor } from '@toast-ui/react-image-editor';
+import 'tui-image-editor/dist/tui-image-editor.css';
+
+export default function AdvancedEditor() {
+  return (
+    <ImageEditor
+      includeUI={{
+        theme: {},
+        initMenu: 'filter',
+        menuBarPosition: 'left',
+      }}
+      cssMaxHeight={700}
+      cssMaxWidth={900}
+      selectionStyle={{ cornerSize: 20, rotatingPointOffset: 70 }}
+      usageStatistics={false}
+    />
+  );
+}
+```
+
+> **Dica:** mantenha `<CanvasEditor />` como wrapper: se TUI carregar, renderize `<AdvancedEditor />`; caso contrário, use Fabric core como fallback.
+
+### Nova Sub‑Fase 1.5 — Funcionalidades Avançadas
+
+1. Adicionar dependências **tui-image-editor** e **@toast-ui/react-image-editor**.
+2. Implementar `<AdvancedEditor />` conforme exemplo acima.
+3. Integrar ao Zustand store para persistir estado e permitir undo/redo multi‑nível.
+4. Garantir exportação em PNG/JPEG/SVG mantendo metadados.
+5. Atualizar testes unitários e documentação.
+
+---

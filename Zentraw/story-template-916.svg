@@ -1,0 +1,53 @@
+<svg viewBox="0 0 400 711" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background overlay for 9:16 format -->
+  <defs>
+    <linearGradient id="storyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(0,0,0,0.3);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgba(0,0,0,0.1);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(0,0,0,0.7);stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="textShadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.8)"/>
+    </filter>
+  </defs>
+  
+  <!-- Gradient overlay -->
+  <rect width="100%" height="100%" fill="url(#storyGradient)" />
+  
+  <!-- Top decorative element -->
+  <circle cx="200" cy="80" r="40" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- Main content area -->
+  <g transform="translate(200, 355)">
+    <!-- Artist name -->
+    <text x="0" y="-60" text-anchor="middle" 
+          font-family="Arial, sans-serif" 
+          font-size="32" 
+          font-weight="bold" 
+          fill="white" 
+          filter="url(#textShadow)">
+      {{artistName}}
+    </text>
+    
+    <!-- Album name -->
+    <text x="0" y="0" text-anchor="middle" 
+          font-family="Arial, sans-serif" 
+          font-size="24" 
+          font-weight="300" 
+          fill="rgba(255,255,255,0.9)" 
+          filter="url(#textShadow)">
+      {{albumName}}
+    </text>
+    
+    <!-- Decorative line -->
+    <line x1="-80" y1="30" x2="80" y2="30" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+  </g>
+  
+  <!-- Bottom decorative elements -->
+  <rect x="50" y="630" width="300" height="2" fill="rgba(255,255,255,0.4)" rx="1"/>
+  
+  <!-- Corner decorations -->
+  <polygon points="20,20 60,20 60,40 40,40 40,60 20,60" fill="rgba(255,255,255,0.2)"/>
+  <polygon points="380,20 340,20 340,40 360,40 360,60 380,60" fill="rgba(255,255,255,0.2)"/>
+</svg>

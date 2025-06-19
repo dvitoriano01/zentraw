@@ -1,0 +1,118 @@
+🧩 Fase: Layout Final (composição do template)
+🧠 Objetivo:
+Permitir que o artista escolha um template de capa (SVG) e que o sistema:
+
+Faça o blend automático da imagem gerada/exportada com esse template.
+
+Substitua dinamicamente o texto do template por:
+
+Nome do artista
+
+Nome do single
+
+Respeite tamanhos, espaçamentos e limites visuais definidos no SVG.
+
+Ajuste tipografia conforme tamanho do texto.
+
+Exporte novas versões já “embaladas” visualmente.
+
+✅ Etapas para implementação
+🔹 1. Upload e armazenamento dos templates (Admin)
+Novo painel exclusivo (ou aba oculta) para o admin enviar arquivos .svg.
+
+SVGs salvos no Supabase ou backend com campos:
+
+id, name, description, svgUrl, fontSettings, positioning, scaleRules, etc.
+
+🔹 2. Leitura e parsing do template no frontend
+Carregar SVG via fetch(svgUrl)
+
+Substituir o texto do template via DOMParser:
+
+ts
+Copiar
+Editar
+const parser = new DOMParser();
+const doc = parser.parseFromString(svgString, 'image/svg+xml');
+doc.querySelector('#artistName').textContent = formData.artistName;
+doc.querySelector('#songTitle').textContent = formData.songTitle;
+🔹 3. Composição da imagem + SVG
+Usar canvas para renderizar a capa gerada (ou exportada) + o SVG com blend
+
+Aplicar transparência ou blending com base em atributos definidos
+
+Alternativamente, usar o próprio SVG como plano de fundo da imagem (ex: filtros de textura)
+
+🔹 4. Ajuste de texto dinâmico (anti-quebra)
+Calcular largura do texto com ctx.measureText()
+
+Reduzir tamanho da fonte dinamicamente até caber
+
+Aplicar wrap (quebra de linha) se necessário com limite de altura
+
+🔹 5. Nova aba “Layout Final”
+Será uma nova TabsContent:
+
+tsx
+Copiar
+Editar
+<TabsTrigger value="layout">
+  <Layers className="h-4 w-4" /> Layout Final
+</TabsTrigger>
+Exibirá:
+
+Seletor de template (carregado do Supabase ou array local)
+
+Preview ao vivo com blend da imagem + SVG + texto renderizado
+
+Botão de exportação final
+
+🔧 Dependências e ferramentas recomendadas
+Função	Ferramenta Sugerida
+Renderização final + blend	canvas ou fabric.js
+Parsing e manipulação de SVG	DOMParser, canvg, ou svg.js
+Upload admin de SVG	Supabase bucket ou API /admin
+
+✅ Próximo passo
+Se você aprovar esse plano, posso:
+
+Criar a aba "Layout Final" com seletor de templates (mockado)
+
+Iniciar o sistema de substituição de texto no SVG
+
+Integrar renderização e exportação final via canvas
+
+Depois disso, implementamos o painel do Admin para upload e edição dos templates
+
+Você gostaria que eu iniciasse agora o passo 1 com uma estrutura básica de templates em mock (local)?
+
+
+
+
+
+
+Você disse:
+sim
+
+
+O ChatGPT disse:
+Editado
+
+Responder no chat
+✅ Pronto! Agora o projeto está na versão V2.8 com a fase “Layout Final” iniciada.
+
+🆕 O que foi adicionado:
+🧩 Aba nova: Layout Final
+Inclusa ao sistema de Tabs com TabsTrigger e TabsContent.
+
+🖼️ Seleção de Template
+Dois templates mockados com SVG real e texto identificável por id="artistName" e id="songTitle".
+
+🖌️ Renderização automática
+O canvas faz:
+
+Load da imagem base
+
+Substituição dos textos no SVG
+
+Renderização do resultado final com drawImage()

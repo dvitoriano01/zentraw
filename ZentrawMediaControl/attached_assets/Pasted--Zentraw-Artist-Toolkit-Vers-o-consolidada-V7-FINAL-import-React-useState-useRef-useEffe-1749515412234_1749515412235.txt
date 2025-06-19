@@ -1,0 +1,196 @@
+// Zentraw Artist Toolkit - Versão consolidada V7 FINAL
+
+import React, { useState, useRef, useEffect } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import html2pdf from 'html2pdf.js';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const OpenAI_API_KEY = process.env.OPENAI_API_KEY;
+
+export default function ZentrawToolkit() {
+  const [formData, setFormData] = useState({
+    artistName: '',
+    genre: '',
+    achievements: '',
+    influences: '',
+    tone: 'formal',
+    audience: 'press',
+    songTitle: '',
+    musicStyle: '',
+    mood: '',
+    releaseDate: '',
+    collaborators: '',
+    releaseAudience: '',
+    themeMessage: '',
+    audioFile: null,
+    pressPhoto: null
+  });
+  const [bioOutput, setBioOutput] = useState('');
+  const [releaseOutput, setReleaseOutput] = useState('');
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const [audioPreview, setAudioPreview] = useState(null);
+  const [imageIA, setImageIA] = useState('');
+  const [projects, setProjects] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    supabase.auth.signInAnonymously().then(({ data, error }) => {
+      if (!error && data?.user?.id) setUserId(data.user.id);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (formData.pressPhoto) setPhotoPreview(URL.createObjectURL(formData.pressPhoto));
+    if (formData.audioFile) setAudioPreview(URL.createObjectURL(formData.audioFile));
+  }, [formData.pressPhoto, formData.audioFile]);
+
+  const uploadFile = async (file, folder) => {
+    const filename = `${Date.now()}_${file.name}`;
+    const { error } = await supabase.storage.from('zentraw-files').upload(`${folder}/${filename}`, file, { upsert: true });
+    if (error) throw new Error(error.message);
+    return supabase.storage.from('zentraw-files').getPublicUrl(`${folder}/${filename}`).publicUrl;
+  };
+
+  const saveProject = async () => {
+    try {
+      const imageUrl = formData.pressPhoto ? await uploadFile(formData.pressPhoto, 'images') : null;
+      const audioUrl = formData.audioFile ? await uploadFile(formData.audioFile, 'audio') : null;
+      await supabase.from('projects').insert([{ user_id: userId, artist_name: formData.artistName, song_title: formData.songTitle, genre: formData.genre, mood: formData.mood, bio: bioOutput, release: releaseOutput, image_url: imageUrl, audio_url: audioUrl }]);
+      alert('Projeto salvo com sucesso!');
+    } catch (err) { alert('Erro ao salvar: ' + err.message); }
+  };
+
+  const loadProjects = async () => {
+    const { data } = await supabase.from('projects').select('*').eq('user_id', userId).order('created_at', { ascending: false });
+    setProjects(data || []);
+  };
+
+  const deleteProject = async (id) => {
+    if (confirm('Deseja mesmo excluir?')) {
+      await supabase.from('projects').delete().eq('id', id);
+      loadProjects();
+    }
+  };
+
+  const updateProject = async (id) => {
+    await supabase.from('projects').update({ genre: formData.genre, mood: formData.mood, bio: bioOutput, release: releaseOutput }).eq('id', id);
+    alert('Projeto atualizado');
+  };
+
+  const loadProjectIntoForm = (p) => {
+    setFormData({ ...formData, artistName: p.artist_name, songTitle: p.song_title, genre: p.genre, mood: p.mood });
+    setBioOutput(p.bio); setReleaseOutput(p.release);
+    setPhotoPreview(p.image_url); setAudioPreview(p.audio_url);
+  };
+
+  const generateBio = async () => {
+    const prompt = `Crie uma bio para o artista ${formData.artistName}, estilo ${formData.genre}, conquistas: ${formData.achievements}, influências: ${formData.influences}, tom: ${formData.tone}, público: ${formData.audience}`;
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OpenAI_API_KEY}` },
+      body: JSON.stringify({ model: 'gpt-4', messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    setBioOutput(data.choices[0].message.content);
+  };
+
+  const generateRelease = async () => {
+    const prompt = `Release do single: ${formData.songTitle}, artista: ${formData.artistName}, estilo: ${formData.musicStyle}, mood: ${formData.mood}, lançamento: ${formData.releaseDate}, colabs: ${formData.collaborators}, mensagem: ${formData.themeMessage}, público: ${formData.releaseAudience}, bio: ${bioOutput}`;
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OpenAI_API_KEY}` },
+      body: JSON.stringify({ model: 'gpt-4', messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    setReleaseOutput(data.choices[0].message.content);
+  };
+
+  const generateImageIA = async () => {
+    const prompt = `Capa de single estilo ${formData.musicStyle} com clima ${formData.mood} e tema: ${formData.themeMessage}`;
+    const res = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OpenAI_API_KEY}` },
+      body: JSON.stringify({ model: 'dall-e-3', prompt, n: 1, size: '1024x1024' })
+    });
+    const result = await res.json();
+    setImageIA(result.data[0].url);
+  };
+
+  const exportCoverSizes = () => {
+    const canvas = canvasRef.current;
+    const sizes = [
+      { name: 'spotify', w: 2048, h: 2048 },
+      { name: 'instagram_post', w: 1080, h: 1350 },
+      { name: 'reel_story', w: 1080, h: 1920 },
+      { name: 'youtube', w: 1920, h: 1080 },
+    ];
+    sizes.forEach(({ name, w, h }) => {
+      const temp = document.createElement('canvas');
+      temp.width = w; temp.height = h;
+      const ctx = temp.getContext('2d');
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#fff'; ctx.font = `${w * 0.05}px sans-serif`;
+      ctx.fillText(formData.artistName, 40, 80);
+      ctx.font = `${w * 0.04}px sans-serif`;
+      ctx.fillText(formData.songTitle, 40, 140);
+      const link = document.createElement('a');
+      link.download = `${name}.png`;
+      link.href = temp.toDataURL();
+      link.click();
+    });
+  };
+
+  const exportMiniSite = () => {
+    const htmlContent = `
+      <html><head><title>${formData.artistName} - ${formData.songTitle}</title>
+      <style>body{font-family:sans-serif;padding:2rem;}</style></head><body>
+      <h1>${formData.artistName}</h1>
+      <h2>${formData.songTitle}</h2>
+      ${photoPreview ? `<img src="${photoPreview}" style="max-width:400px;" />` : ''}
+      <h3>Release:</h3><p>${releaseOutput.replace(/\n/g, '<br>')}</p>
+      <footer><p>Gerado com Zentraw Toolkit</p></footer></body></html>
+    `;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${formData.artistName}_presskit.html`;
+    link.click();
+  };
+
+  return (
+    <Tabs defaultValue="bio" className="w-full">
+      <TabsList className="grid grid-cols-6 mb-6">
+        <TabsTrigger value="bio">Bio</TabsTrigger>
+        <TabsTrigger value="release">Release</TabsTrigger>
+        <TabsTrigger value="midia">Fotos & Áudio</TabsTrigger>
+        <TabsTrigger value="capa">Capa</TabsTrigger>
+        <TabsTrigger value="kit">Kit Final</TabsTrigger>
+        <TabsTrigger value="recentes">Recentes</TabsTrigger>
+      </TabsList>
+      <TabsContent value="recentes">
+        <Card><CardContent className="grid gap-4 p-4">
+          <Button onClick={loadProjects}>Carregar Projetos Recentes</Button>
+          {projects.map((proj) => (
+            <div key={proj.id} className="border p-3 rounded shadow space-y-2">
+              <p><strong>{proj.artist_name}</strong> - {proj.song_title}</p>
+              <p><em>{new Date(proj.created_at).toLocaleString()}</em></p>
+              {proj.image_url && <img src={proj.image_url} alt="foto" className="max-w-xs rounded" />}
+              {proj.audio_url && <audio controls src={proj.audio_url} className="w-full" />}
+              <div className="flex flex-wrap gap-2">
+                <Button onClick={() => loadProjectIntoForm(proj)}>Carregar</Button>
+                <Button onClick={() => updateProject(proj.id)}>Atualizar</Button>
+                <Button onClick={() => deleteProject(proj.id)}>Excluir</Button>
+                <a href={proj.image_url} download className="text-sm underline">Baixar Imagem</a>
+                <a href={proj.audio_url} download className="text-sm underline">Baixar Áudio</a>
+              </div>
+            </div>
+          ))}
+        </CardContent></Card>
+      </TabsContent>
+    </Tabs>
+  );
+}

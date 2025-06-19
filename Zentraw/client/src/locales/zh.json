@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "首页",
+    "dashboard": "仪表板",
+    "content": "内容",
+    "profile": "个人资料",
+    "gallery": "画廊",
+    "templates": "模板",
+    "logout": "登出"
+  },
+  "coverGenerator": {
+    "title": "封面生成器",
+    "artistName": "艺术家姓名",
+    "trackName": "歌曲名称",
+    "albumName": "专辑名称",
+    "generationType": "生成类型",
+    "generateByAI": "AI生成",
+    "uploadImage": "上传图片",
+    "chooseFromAPI": "从API选择",
+    "imageDescription": "图片描述",
+    "style": "风格",
+    "styles": {
+      "modern": "现代",
+      "futuristic": "未来主义",
+      "vintage": "复古",
+      "urban": "都市",
+      "classic": "经典",
+      "cyberpunk": "赛博朋克",
+      "abstract": "抽象"
+    },
+    "useThisImage": "使用此图片",
+    "nextStep": "下一步",
+    "generate": "生成",
+    "generating": "生成中..."
+  },
+  "editor": {
+    "title": "封面编辑器",
+    "watermark": "水印",
+    "templates": "模板",
+    "textEditor": "文本编辑器",
+    "artistText": "艺术家文本",
+    "trackText": "歌曲文本",
+    "font": "字体",
+    "size": "大小",
+    "color": "颜色",
+    "opacity": "不透明度",
+    "flip": "翻转",
+    "horizontal": "水平",
+    "vertical": "垂直",
+    "overlay": "覆盖层",
+    "intensity": "强度",
+    "soft": "柔和",
+    "hard": "强烈",
+    "filters": "滤镜",
+    "glitch": "故障",
+    "scanlines": "扫描线",
+    "noise": "噪声",
+    "zoom": "缩放",
+    "position": "位置",
+    "download": "下载",
+    "save": "保存",
+    "reset": "重置"
+  },
+  "gallery": {
+    "title": "画廊",
+    "recent": "最近图片",
+    "covers": "已保存封面",
+    "releases": "发布",
+    "pressKits": "新闻资料包",
+    "rename": "重命名",
+    "download": "下载",
+    "remove": "删除",
+    "empty": "未找到图片"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "close": "关闭",
+    "upload": "上传",
+    "search": "搜索"
+  },
+  "messages": {
+    "uploadSuccess": "图片上传成功！",
+    "generateSuccess": "封面生成成功！",
+    "saveSuccess": "项目保存成功！"
+  }
+}

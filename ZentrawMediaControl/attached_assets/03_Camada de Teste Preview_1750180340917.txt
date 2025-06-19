@@ -1,0 +1,231 @@
+// ZentrawWorkspaceFull.tsx - Editor Visual Pro com Character FX
+import { useEffect, useRef, useState } from 'react';
+import { fabric } from 'fabric';
+
+export default function ZentrawWorkspaceFull() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const fabricCanvas = useRef<fabric.Canvas | null>(null);
+  const [activeObject, setActiveObject] = useState<fabric.Object | null>(null);
+  const [objects, setObjects] = useState<fabric.Object[]>([]);
+  const [zoom, setZoom] = useState(1);
+  const fontList = ['Arkhip', 'FreepikFont', 'Arial', 'Georgia'];
+
+  const loadFonts = async () => {
+    fontList.forEach(name => {
+      const font = new FontFace(name, `url(/fonts/${name}.ttf)`);
+      font.load().then(loaded => document.fonts.add(loaded)).catch(console.error);
+    });
+  };
+
+  useEffect(() => {
+    loadFonts();
+
+    const canvas = new fabric.Canvas(canvasRef.current!, {
+      width: 1080,
+      height: 1080,
+      backgroundColor: 'transparent',
+      preserveObjectStacking: true,
+      selection: true
+    });
+
+    const bgCanvas = document.createElement('canvas');
+    bgCanvas.width = bgCanvas.height = 40;
+    const ctx = bgCanvas.getContext('2d')!;
+    ctx.fillStyle = '#ccc'; ctx.fillRect(0, 0, 40, 40);
+    ctx.fillStyle = '#eee'; ctx.fillRect(0, 0, 20, 20); ctx.fillRect(20, 20, 20, 20);
+    const pattern = new fabric.Pattern({ source: bgCanvas, repeat: 'repeat' });
+    canvas.setBackgroundColor(pattern, canvas.renderAll.bind(canvas));
+
+    fabricCanvas.current = canvas;
+
+    canvas.on('selection:created', e => setActiveObject(e.selected?.[0] || null));
+    canvas.on('selection:updated', e => setActiveObject(e.selected?.[0] || null));
+    canvas.on('selection:cleared', () => setActiveObject(null));
+    canvas.on('object:added', () => setObjects(canvas.getObjects()));
+    canvas.on('object:removed', () => setObjects(canvas.getObjects()));
+
+    window.addEventListener('keydown', (e) => {
+      if (!fabricCanvas.current) return;
+      if (e.key === 'Delete' && activeObject) {
+        fabricCanvas.current.remove(activeObject);
+        setActiveObject(null);
+        fabricCanvas.current.renderAll();
+      }
+      if (e.ctrlKey && e.key === 'z') {
+        // TODO: implementar undo stack
+      }
+    });
+
+    return () => canvas.dispose();
+  }, []);
+
+  const addText = () => {
+    const text = new fabric.Textbox('Texto Zentraw', {
+      left: 150,
+      top: 150,
+      fontSize: 48,
+      fontFamily: 'Arkhip',
+      fill: '#111',
+      fontWeight: 'bold',
+      editable: true,
+    });
+    fabricCanvas.current?.add(text);
+    fabricCanvas.current?.setActiveObject(text);
+  };
+
+  const addOverlay = () => {
+    fabric.Image.fromURL('/overlays/grunge1.png', (img) => {
+      img.set({ left: 0, top: 0, opacity: 0.8, selectable: true });
+      fabricCanvas.current?.add(img);
+      fabricCanvas.current?.setActiveObject(img);
+    });
+  };
+
+  const exportPNG = () => {
+    const dataUrl = fabricCanvas.current?.toDataURL({ format: 'png', multiplier: 2 });
+    const a = document.createElement('a');
+    a.href = dataUrl || '';
+    a.download = 'cover.png';
+    a.click();
+  };
+
+  const exportJSON = () => {
+    const json = JSON.stringify(fabricCanvas.current?.toJSON(), null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'template.zentraw.json';
+    a.click();
+  };
+
+  return (
+    <div className="h-screen w-screen flex flex-col">
+      <div className="h-10 bg-black text-white flex items-center gap-6 px-4 text-sm">
+        <span className="font-bold text-purple-400">ZENTRAW</span>
+        <button onClick={addText}>Texto</button>
+        <button onClick={addOverlay}>Overlay</button>
+        <button onClick={exportPNG}>Export PNG</button>
+        <button onClick={exportJSON}>Export JSON</button>
+      </div>
+
+      <div className="flex flex-1 bg-neutral-900">
+        <div className="w-12 bg-neutral-800 p-2 text-white flex flex-col gap-3 items-center">
+          <button onClick={addText}>T</button>
+          <button onClick={addOverlay}>🎨</button>
+        </div>
+
+        <div className="flex-1 flex justify-center items-center bg-neutral-700">
+          <canvas ref={canvasRef} className="border border-gray-700 shadow-md" />
+        </div>
+
+        <div className="w-80 bg-neutral-900 text-white p-4 overflow-y-auto">
+          <h3 className="text-sm font-bold mb-2">Propriedades</h3>
+          {activeObject && (
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs">Opacidade</label>
+                <input type="range" min="0" max="1" step="0.01" value={activeObject.opacity || 1}
+                  onChange={(e) => {
+                    activeObject.set({ opacity: parseFloat(e.target.value) });
+                    fabricCanvas.current?.renderAll();
+                  }} />
+              </div>
+
+              {activeObject.type === 'textbox' && (
+                <>
+                  <div>
+                    <label className="text-xs">Cor</label>
+                    <input type="color" value={activeObject.fill as string}
+                      onChange={(e) => {
+                        activeObject.set({ fill: e.target.value });
+                        fabricCanvas.current?.renderAll();
+                      }} />
+                  </div>
+
+                  <div>
+                    <label className="text-xs">Fonte</label>
+                    <select
+                      value={activeObject.fontFamily as string}
+                      onChange={(e) => {
+                        activeObject.set({ fontFamily: e.target.value });
+                        fabricCanvas.current?.renderAll();
+                      }}
+                    >
+                      {fontList.map(f => <option key={f} value={f}>{f}</option>)}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-xs">Tamanho</label>
+                    <input
+                      type="range"
+                      min="10"
+                      max="200"
+                      value={activeObject.fontSize as number || 48}
+                      onChange={(e) => {
+                        activeObject.set({ fontSize: parseFloat(e.target.value) });
+                        fabricCanvas.current?.renderAll();
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs">Espaçamento</label>
+                    <input
+                      type="range"
+                      min="-10"
+                      max="50"
+                      value={activeObject.charSpacing || 0}
+                      onChange={(e) => {
+                        activeObject.set({ charSpacing: parseInt(e.target.value) });
+                        fabricCanvas.current?.renderAll();
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs">Sombra</label>
+                    <input
+                      type="text"
+                      defaultValue={activeObject.shadow?.toString() || ''}
+                      onBlur={(e) => {
+                        activeObject.set({ shadow: e.target.value });
+                        fabricCanvas.current?.renderAll();
+                      }}
+                      placeholder="2px 2px 5px #000"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {!activeObject && <p className="text-xs text-gray-400">Nenhum objeto selecionado</p>}
+
+          <h3 className="text-sm font-bold mt-6 mb-2">Camadas</h3>
+          <div className="space-y-1 text-xs">
+            {objects.map((obj, i) => (
+              <div key={i} className="flex justify-between items-center px-2 py-1 bg-white/5 rounded">
+                <span>{obj.type}</span>
+                <div className="flex gap-1">
+                  <button onClick={() => {
+                    obj.visible = !obj.visible;
+                    fabricCanvas.current?.renderAll();
+                  }}>👁️</button>
+                  <button onClick={() => {
+                    obj.selectable = !obj.selectable;
+                  }}>🔒</button>
+                  <button onClick={() => {
+                    fabricCanvas.current?.bringToFront(obj);
+                    fabricCanvas.current?.renderAll();
+                  }}>🔼</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

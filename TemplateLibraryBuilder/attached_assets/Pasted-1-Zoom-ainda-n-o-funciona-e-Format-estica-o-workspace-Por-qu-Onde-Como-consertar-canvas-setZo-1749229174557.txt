@@ -1,0 +1,158 @@
+1 ▪ Zoom ainda não funciona e “Format” estica o workspace
+Por quê?	Onde?	Como consertar
+canvas.setZoom() escala a partir do (0, 0), logo você “perde” a arte para fora da viewport.	Funções zoomIn, zoomOut usam setZoom puro. 
+Use zoom nativo com ponto de ancoragem: ts const center = new fabric.Point(canvas.getWidth()/2, canvas.getHeight()/2); canvas.zoomToPoint(center, newZoom); Repita em in, out e fitToScreen.
+Alterar formato chama setDimensions sem reajustar zoom** → tela cresce/encolhe.	handleFormatChange() faz fabricCanvas.setDimensions(dimensions) e pronto. 
+1) Depois de setDimensions, chame fitToScreen() - ele já calcula a escala ideal. 2) Remova o canvas.getWidth()/getHeight direto do zoom-helper e consulte canvasRef.current?.clientWidth para não ultrapassar as bordas do workspace.
+
+diff
+Copiar
+Editar
+// zoom helpers (troque TODOS os setZoom)
+- const newZoom = Math.min(currentZoom * 1.2, 5)
+- canvas.setZoom(newZoom)
++ const newZoom = Math.min(currentZoom * 1.2, 5)
++ const center = new fabric.Point(canvas.getWidth()/2, canvas.getHeight()/2)
++ canvas.zoomToPoint(center, newZoom)
+  setCurrentZoom(newZoom)
+diff
+Copiar
+Editar
+// handleFormatChange
+fabricCanvasRef.current.setDimensions(dimensions)
+fabricCanvasRef.current.calcOffset()
+-fabricCanvasRef.current.requestRenderAll()
+-saveState()
++fitToScreen()          // reposiciona
++fabricCanvasRef.current.requestRenderAll()
++saveState()
+2 ▪ Grid não aparece
+O grid é pintado no container em #4c4c4c com linhas #3d3d3d. Diferença de ~3 % é imperceptível.
+
+Além disso, o gradiente só fica visível se showGrid = true ao primeiro render; depois de mudar o slider você já re-renderiza, mas o CSS continua igual.
+
+diff
+Copiar
+Editar
+const gridCSS = (size:number)=>`
+- repeating-linear-gradient(90deg,#3d3d3d 0 ${size-1}px,transparent ${size-1}px ${size}px),
+- repeating-linear-gradient(0deg ,#3d3d3d 0 ${size-1}px,transparent ${size-1}px ${size}px)
++ repeating-linear-gradient(90deg,#6c6c6c 0 1px,transparent 1px ${size}px),
++ repeating-linear-gradient(0deg ,#6c6c6c 0 1px,transparent 1px ${size}px)
+`
+Se quiser um grid “Photoshop” cinza-claro, troque #6c6c6c por #7d7d7d e remova bg-[#4c4c4c] da div-centro para que o padrão fique totalmente visível.
+
+3 ▪ Canvas não fica realmente transparente
+backgroundColor='' volta ao default branco do Fabric. 
+
+diff
+Copiar
+Editar
+-if (canvasBackground === 'transparent') {
+-   fabricCanvasRef.current.backgroundColor = '';
+- } else {
+-   fabricCanvasRef.current.backgroundColor = canvasBackground;
+- }
++fabricCanvasRef.current.setBackgroundColor(
++  canvasBackground === 'transparent' ? null : canvasBackground,
++  fabricCanvasRef.current.renderAll.bind(fabricCanvasRef.current)
++)
+O xadrez de fundo já é desenhado no botão de Transparent. Se quiser que apareça também atrás da arte, aplique o mesmo CSS do botão em uma pseudo-layer dentro do contêiner.
+
+4 ▪ Visual Effects não renderiza nem tem preview
+4.1 Registre a biblioteca
+ts
+Copiar
+Editar
+// libs/VisualEffects.ts
+import { BaseFilter } from 'fabric';
+
+export const visualEffects = [
+  { id:'vhs',   label:'VHS',    fabricOptions:{ filter:new BaseFilter({type:'Noise',noise:200}) }},
+  { id:'blur',  label:'Blur',   fabricOptions:{ filter:new fabric.Image.filters.Blur({blur:0.15}) }},
+  { id:'glitch',label:'Glitch', fabricOptions:{ filter:new fabric.Image.filters.Noise({noise:600}) }},
+  { id:'scan',  label:'Scanlines', fabricOptions:{ filter:new fabric.Image.filters.Grayscale() }},
+  // ...adicione o resto aqui
+];
+4.2 Preview no painel
+No VisualEffectsPanel (já importado) acrescente um <canvas width={48} height={48}> por item, carregue uma mini imagem de amostra e aplique a mesma filter. Depois basta mostrar o toDataURL() dentro de <img>.
+
+tsx
+Copiar
+Editar
+const SmallPreview = ({fx}:{fx:any})=>{
+  const ref = useRef<HTMLCanvasElement>(null)
+  useEffect(()=>{
+    const c = new fabric.Canvas(ref.current!,{width:48,height:48,backgroundColor:'#666'})
+    fabric.Image.fromURL('/sample.jpg',(img)=>{
+      img.set({left:0,top:0,selectable:false})
+      if(fx.fabricOptions.filter) img.filters=[fx.fabricOptions.filter]
+      img.applyFilters()
+      c.add(img); c.renderAll()
+    })
+    return ()=>c.dispose()
+  },[])
+  return <canvas ref={ref}/>
+}
+4.3 Aplicar ao objeto
+Dentro de applyEffect verifique se o alvo é image; caso contrário, avise o usuário ou converta texto/shape em imagem com toDataURL() + fabric.Image.fromURL.
+
+5 ▪ Efeitos textFX ausentes
+Crie libs/TextFX.ts exportando snippets que alteram shadow, fill, strokeDashArray, etc.
+
+No modal TextEffectsModal mapeie os botões de preset:
+
+tsx
+Copiar
+Editar
+import { textEffects } from '@/libs/TextFX';
+
+<button onClick={()=>onApplyEffect(textEffects['glitch'])}>Glitch</button>
+applyTextEffect já existe e salva no histórico. ✔
+
+6 ▪ Mostrar “Canvas Background / Grid” só quando nada está selecionado
+Envolva esses painéis num condicional bem simples:
+
+tsx
+Copiar
+Editar
+{/* Canvas & Grid – só quando selectedObject == null */}
+{!selectedObject && (
+  <>
+    {/* Canvas Background Controls */} …
+    {/* Grid Controls */} …
+  </>
+)}
+Assim, ao clicar em qualquer layer o espaço é tomado pelas propriedades do objeto; ao clicar no vazio as opções do workspace reaparecem.
+
+7 ▪ Undo/Redo ainda “some” a imagem se não clicar no canvas
+Isso acontece porque o Fabric não repinta enquanto está em modo de desenho passivo (nenhum evento de mouse). Use o flag renderOnAddRemove:true (já ativado) e chame canvas.requestRenderAll() DEPOIS de cada loadFromJSON. Você já fez isso — apenas remova o antigo renderAll() que ainda existe em algumas funções de história para evitar flash branco.
+
+Resumo
+Troque setZoom → zoomToPoint (centro fixo).
+
+Chame fitToScreen() logo após mudar Format.
+
+Altere cores do grid e o CSS de xadrez para fundo transparente.
+
+Use setBackgroundColor(null) para real transparência.
+
+Registre e preview a biblioteca visualEffects; ligue-a em applyEffect.
+
+Importe textEffects e exponha no modal.
+
+Mostre Canvas/Grid só quando nada estiver selecionado.
+
+Implemente esses diffs, recarregue e verifique:
+
+O zoom deve agora crescer ou reduzir mantendo o centro.
+
+Formatos diferentes sempre caberão dentro do workspace fixo.
+
+Grid cinza-claro é visível; xadrez aparece quando fundo é “Transparent”.
+
+Efeitos visuais exibem miniatura + aplicam no clique.
+
+TextFX disponíveis no modal.
+
+Propriedades de workspace aparecem apenas em contexto correto.

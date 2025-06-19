@@ -1,0 +1,29 @@
+// ZentrawHistory.ts
+import { useRef } from 'react';
+import { fabric } from 'fabric';
+
+export function useHistory(canvasRef: React.MutableRefObject<fabric.Canvas | null>) {
+  const history = useRef<string[]>([]);
+  const redoStack = useRef<string[]>([]);
+
+  const saveState = () => {
+    const json = canvasRef.current?.toJSON();
+    if (json) history.current.push(JSON.stringify(json));
+  };
+
+  const undo = () => {
+    if (history.current.length < 2) return;
+    redoStack.current.push(history.current.pop()!);
+    const previous = JSON.parse(history.current[history.current.length - 1]);
+    canvasRef.current?.loadFromJSON(previous, () => canvasRef.current?.renderAll());
+  };
+
+  const redo = () => {
+    const next = redoStack.current.pop();
+    if (!next) return;
+    history.current.push(next);
+    canvasRef.current?.loadFromJSON(JSON.parse(next), () => canvasRef.current?.renderAll());
+  };
+
+  return { saveState, undo, redo };
+}

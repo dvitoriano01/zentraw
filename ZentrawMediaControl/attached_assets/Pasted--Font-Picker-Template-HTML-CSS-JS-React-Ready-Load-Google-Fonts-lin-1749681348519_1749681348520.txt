@@ -1,0 +1,132 @@
+<!-- 🎨 Font Picker Template (HTML + CSS + JS + React Ready) -->
+
+<!-- Load Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Antonio&family=Playfair+Display&family=Libre+Baskerville&family=Monoton&family=Major+Mono+Display&family=Rye&family=Special+Elite&family=Press+Start+2P&family=Outfit&family=Rajdhani&family=Michroma&family=Inter&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    background: #111;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    padding: 2rem;
+  }
+  .font-preview {
+    font-size: 2rem;
+    margin: 2rem 0;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    max-width: 90%;
+    word-break: break-word;
+  }
+  .preview-container {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-image: url('https://placehold.co/800x800/png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border: 2px solid #444;
+    margin-top: 2rem;
+  }
+  .font-preview-overlay {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+  }
+  select, input {
+    font-size: 1rem;
+    padding: 0.6rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    background: #222;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+  }
+</style>
+
+<h1>🧠 Font Picker UI</h1>
+<label for="fontInput">Texto:</label>
+<input id="fontInput" type="text" placeholder="ARTISTA – TRACK NAME" value="ARTISTA – TRACK NAME" oninput="updateText()" />
+
+<label for="fontSelect">Fonte:</label>
+<select id="fontSelect" onchange="updateFont()">
+  <option value="Orbitron">Orbitron (Futurista)</option>
+  <option value="Antonio">Antonio (Condensada)</option>
+  <option value="Rajdhani">Rajdhani (Tech)</option>
+  <option value="Outfit">Outfit (Clean)</option>
+  <option value="Michroma">Michroma (Caps Futurista)</option>
+  <option value="Playfair Display">Playfair Display (Elegante)</option>
+  <option value="Libre Baskerville">Libre Baskerville (Clássica)</option>
+  <option value="Monoton">Monoton (Neon)</option>
+  <option value="Major Mono Display">Major Mono Display (Retro Tech)</option>
+  <option value="Rye">Rye (Vintage Western)</option>
+  <option value="Special Elite">Special Elite (Typewriter)</option>
+  <option value="Press Start 2P">Press Start 2P (Pixel)</option>
+</select>
+
+<div class="preview-container">
+  <div id="preview" class="font-preview font-preview-overlay" style="font-family: 'Orbitron', sans-serif;">
+    ARTISTA – TRACK NAME
+  </div>
+</div>
+
+<script>
+  function updateFont() {
+    const selectedFont = document.getElementById("fontSelect").value;
+    const preview = document.getElementById("preview");
+    preview.style.fontFamily = `'${selectedFont}', sans-serif`;
+  }
+
+  function updateText() {
+    const input = document.getElementById("fontInput").value;
+    document.getElementById("preview").innerText = input;
+  }
+</script>
+
+<!-- ✅ React Equivalent Component Below -->
+
+<!--
+import React, { useState } from 'react';
+
+export default function FontPreviewer() {
+  const [font, setFont] = useState("Orbitron");
+  const [text, setText] = useState("ARTISTA – TRACK NAME");
+
+  return (
+    <div className="p-4 bg-black text-white">
+      <input
+        className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 mr-2"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <select
+        className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1"
+        value={font}
+        onChange={(e) => setFont(e.target.value)}
+      >
+        {["Orbitron", "Antonio", "Rajdhani", "Outfit", "Michroma",
+          "Playfair Display", "Libre Baskerville", "Monoton",
+          "Major Mono Display", "Rye", "Special Elite", "Press Start 2P"].map((f) => (
+          <option key={f} value={f}>{f}</option>
+        ))}
+      </select>
+      <div
+        className="relative aspect-square w-full border border-neutral-800 mt-4"
+        style={{ backgroundImage: "url('https://placehold.co/800x800/png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        <div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 rounded text-center"
+          style={{ fontFamily: `'${font}', sans-serif` }}
+        >
+          {text}
+        </div>
+      </div>
+    </div>
+  );
+}
+-->

@@ -1,0 +1,27 @@
+Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+    at Provider (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/react-beautiful-dnd.js?v=afd0956f:1738:20)
+    at App (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/react-beautiful-dnd.js?v=afd0956f:8281:25)
+    at ErrorBoundary2 (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/react-beautiful-dnd.js?v=afd0956f:2778:35)
+    at DragDropContext (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/react-beautiful-dnd.js?v=afd0956f:8401:19)
+    at div
+    at div
+    at div
+    at https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-PCKAHLT2.js?v=afd0956f:42:13
+    at Presence (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-SC43U7J7.js?v=afd0956f:24:11)
+    at https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=afd0956f:173:13
+    at _c5 (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/src/components/ui/tabs.tsx:72:12)
+    at div
+    at https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-PCKAHLT2.js?v=afd0956f:42:13
+    at Provider (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-SYCFHCMA.js?v=afd0956f:43:15)
+    at https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=afd0956f:51:7
+    at div
+    at div
+    at div
+    at PhotoEditor (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/src/pages/PhotoEditorFixed.tsx:63:43)
+    at Route (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=afd0956f:323:16)
+    at Switch (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=afd0956f:379:17)
+    at Router
+    at Provider (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-SYCFHCMA.js?v=afd0956f:43:15)
+    at TooltipProvider (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=afd0956f:61:5)
+    at QueryClientProvider (https://f83d2806-ed7c-4926-9031-1be53b86f472-00-3cpz9klbxqjj5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=afd0956f:2805:3)
+    at App

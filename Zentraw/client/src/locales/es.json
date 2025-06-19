@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "content": "Contenido",
+    "profile": "Perfil",
+    "gallery": "Galería",
+    "templates": "Plantillas",
+    "logout": "Cerrar Sesión"
+  },
+  "coverGenerator": {
+    "title": "Generador de Portadas",
+    "artistName": "Nombre del Artista",
+    "trackName": "Nombre de la Canción",
+    "albumName": "Nombre del Álbum",
+    "generationType": "Tipo de Generación",
+    "generateByAI": "Generar por IA",
+    "uploadImage": "Subir Imagen",
+    "chooseFromAPI": "Elegir de API",
+    "imageDescription": "Descripción de la Imagen",
+    "style": "Estilo",
+    "styles": {
+      "modern": "Moderno",
+      "futuristic": "Futurista",
+      "vintage": "Vintage",
+      "urban": "Urbano",
+      "classic": "Clásico",
+      "cyberpunk": "Cyberpunk",
+      "abstract": "Abstracto"
+    },
+    "useThisImage": "Usar Esta Imagen",
+    "nextStep": "Siguiente Paso",
+    "generate": "Generar",
+    "generating": "Generando..."
+  },
+  "editor": {
+    "title": "Editor de Portadas",
+    "watermark": "Marca de Agua",
+    "templates": "Plantillas",
+    "textEditor": "Editor de Texto",
+    "artistText": "Texto del Artista",
+    "trackText": "Texto de la Canción",
+    "font": "Fuente",
+    "size": "Tamaño",
+    "color": "Color",
+    "opacity": "Opacidad",
+    "flip": "Voltear",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "overlay": "Superposición",
+    "intensity": "Intensidad",
+    "soft": "Suave",
+    "hard": "Fuerte",
+    "filters": "Filtros",
+    "glitch": "Glitch",
+    "scanlines": "Líneas de Escaneo",
+    "noise": "Ruido",
+    "zoom": "Zoom",
+    "position": "Posición",
+    "download": "Descargar",
+    "save": "Guardar",
+    "reset": "Reiniciar"
+  },
+  "gallery": {
+    "title": "Galería",
+    "recent": "Imágenes Recientes",
+    "covers": "Portadas Guardadas",
+    "releases": "Lanzamientos",
+    "pressKits": "Kits de Prensa",
+    "rename": "Renombrar",
+    "download": "Descargar",
+    "remove": "Eliminar",
+    "empty": "No se encontraron imágenes"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "upload": "Subir",
+    "search": "Buscar"
+  },
+  "messages": {
+    "uploadSuccess": "¡Imagen subida exitosamente!",
+    "generateSuccess": "¡Portada generada exitosamente!",
+    "saveSuccess": "¡Proyecto guardado exitosamente!"
+  }
+}

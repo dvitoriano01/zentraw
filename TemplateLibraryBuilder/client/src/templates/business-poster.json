@@ -1,0 +1,196 @@
+{
+  "id": "business-poster-modern",
+  "name": "Business Poster - Modern",
+  "category": "Business",
+  "tags": ["business", "professional", "modern", "corporate"],
+  "previewUrl": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=600",
+  "dimensions": {
+    "width": 2480,
+    "height": 3508
+  },
+  "layers": [
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 2480,
+      "height": 3508,
+      "fill": "#ffffff",
+      "selectable": false,
+      "evented": false
+    },
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 2480,
+      "height": 800,
+      "fill": "#1f2937"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 200,
+      "text": "BUSINESS",
+      "fontFamily": "Inter",
+      "fontSize": 72,
+      "fontWeight": "bold",
+      "fill": "#ffffff",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center",
+      "charSpacing": 5
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 320,
+      "text": "CONFERENCE 2024",
+      "fontFamily": "Inter",
+      "fontSize": 48,
+      "fill": "#6366f1",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 480,
+      "text": "Innovation • Growth • Success",
+      "fontFamily": "Inter",
+      "fontSize": 32,
+      "fill": "#d1d5db",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "rect",
+      "left": 200,
+      "top": 1000,
+      "width": 2080,
+      "height": 4,
+      "fill": "#6366f1"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 1200,
+      "text": "Join industry leaders and innovators\nfor three days of networking,\nlearning, and growth opportunities.",
+      "fontFamily": "Inter",
+      "fontSize": 42,
+      "fill": "#374151",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center",
+      "lineHeight": 1.4
+    },
+    {
+      "type": "rect",
+      "left": 400,
+      "top": 1600,
+      "width": 600,
+      "height": 300,
+      "fill": "#f3f4f6",
+      "rx": 20,
+      "ry": 20
+    },
+    {
+      "type": "i-text",
+      "left": 700,
+      "top": 1650,
+      "text": "KEYNOTE\nSPEAKERS",
+      "fontFamily": "Inter",
+      "fontSize": 28,
+      "fontWeight": "bold",
+      "fill": "#1f2937",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "rect",
+      "left": 1480,
+      "top": 1600,
+      "width": 600,
+      "height": 300,
+      "fill": "#f3f4f6",
+      "rx": 20,
+      "ry": 20
+    },
+    {
+      "type": "i-text",
+      "left": 1780,
+      "top": 1650,
+      "text": "NETWORKING\nOPPORTUNITIES",
+      "fontFamily": "Inter",
+      "fontSize": 28,
+      "fontWeight": "bold",
+      "fill": "#1f2937",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "rect",
+      "left": 200,
+      "top": 2200,
+      "width": 2080,
+      "height": 200,
+      "fill": "#6366f1",
+      "rx": 10,
+      "ry": 10
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 2300,
+      "text": "MARCH 15-17, 2024 • CONVENTION CENTER",
+      "fontFamily": "Inter",
+      "fontSize": 36,
+      "fontWeight": "bold",
+      "fill": "#ffffff",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 2600,
+      "text": "Register now at www.businessconf2024.com",
+      "fontFamily": "Inter",
+      "fontSize": 32,
+      "fill": "#6366f1",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 3200,
+      "text": "Early Bird Pricing Available",
+      "fontFamily": "Inter",
+      "fontSize": 28,
+      "fill": "#ef4444",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 1240,
+      "top": 3300,
+      "text": "Limited Seats • Premium Location • Expert Speakers",
+      "fontFamily": "Inter",
+      "fontSize": 24,
+      "fill": "#6b7280",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+A seguir está um roteiro — com diffs pontuais — que resolve cada bug que você citou e reestrutura o editor para ficar mais “Photoshop-like”.
+
+1. Migrar “Text Effects” → “Visual Effects” dentro de Adjustments
+1.1 Criar o novo painel
+tsx
+Copiar
+Editar
+// components/editor/VisualEffectsPanel.tsx
+import { visualEffects } from '@/libs/VisualEffects';   // sua lib de overlays/FX
+import { Slider } from '@/components/ui/slider';
+
+export function VisualEffectsPanel({ selectedObject, applyEffect }) {
+  if (!selectedObject) return null;
+
+  return (
+    <div className="space-y-4">
+      {visualEffects.map((fx) => (
+        <button key={fx.id}
+          onClick={() => applyEffect(fx.fabricOptions)}
+          className="w-full h-8 rounded bg-[#3a3a3a] hover:bg-[#4a4a4a] text-xs">
+          {fx.label}
+        </button>
+      ))}
+      {/* Exemplo de parámetro contínuo */}
+      <Slider label="Intensity"
+              min={0} max={100} step={1}
+              value={selectedObject.fxIntensity ?? 50}
+              onChange={(v)=>{ selectedObject.fxIntensity=v; applyEffect({})}}/>
+    </div>
+  );
+}
+1.2 Mover o painel
+diff
+Copiar
+Editar
+- {/* Text Effects Panel */}
+- <div className="border-t ...">
+-   <TextFXPanel ... />
+- </div>
++ {/* fica só o Properties puro; removemos o painel aqui */}  :contentReference[oaicite:0]{index=0}
+diff
+Copiar
+Editar
+<TabsContent value="adjustments" ... >
+   <div className="p-4 space-y-4">
+     ...parâmetros de Hue/Sat...  :contentReference[oaicite:1]{index=1}
++
++    {/* Novo painel de Visual Effects */}
++    <VisualEffectsPanel
++        selectedObject={selectedObject}
++        applyEffect={applyTextEffect /* já existe */}/>
+   </div>
+ </TabsContent>
+1.3 Trocar o modal “Text FX”
+No topo (botão Text FX) continue abrindo o TextFXModal com a sua biblioteca de distorções/skew etc. Nenhum outro ajuste é necessário - o modal já importa TextFXPanel, você só renomeia se quiser.
+
+2. Workspace “cinza Photoshop” + grid + snap
+2.1 Cor de fundo
+diff
+Copiar
+Editar
+-className="flex-1 bg-[#2a2a2a] relative"
++className="flex-1 bg-[#4c4c4c] relative"   // cinza neutro  :contentReference[oaicite:2]{index=2}
+2.2 Grid opcional
+tsx
+Copiar
+Editar
+// novo estado
+const [showGrid, setShowGrid] = useState(true);
+const [gridSize, setGridSize] = useState(20);
+
+// helper
+const gridCSS = (size:number) => `
+  repeating-linear-gradient(90deg,#3d3d3d 0 ${size-1}px,transparent ${size-1}px ${size}px),
+  repeating-linear-gradient(0deg ,#3d3d3d 0 ${size-1}px,transparent ${size-1}px ${size}px)
+`;
+
+// no style do container
+style={{
+  backgroundImage: showGrid ? gridCSS(gridSize) : 'none',
+  backgroundSize: `${gridSize}px ${gridSize}px`,
+  ...
+}}
+2.3 Atalho + UI
+tsx
+Copiar
+Editar
+// keydown
+if(e.key==='\''){    // Ctrl+' alterna grid
+  setShowGrid((s)=>!s);
+}
+
+// slider na sidebar
+<ParameterInput label="Grid" min={5} max={100}
+  value={gridSize} onChange={setGridSize}/>
+<Button onClick={()=>setShowGrid(s=>!s)}>
+  {showGrid?'Hide grid':'Show grid'}
+</Button>
+2.4 Snap-to-grid
+ts
+Copiar
+Editar
+canvas.on('object:moving', (e)=>{
+  if(!showGrid) return;
+  const snap = 5;          // pixels de tolerância
+  const s = gridSize;
+  const obj = e.target;
+  obj.set({
+    left: Math.round(obj.left/s)*s,
+    top : Math.round(obj.top /s)*s,
+  });
+});
+3. Undo / Redo não renderiza
+Causa: renderOnAddRemove: false + o callback de loadFromJSON nem sempre dispara repaint.
+
+Correção rápida: ative o auto-render ou force um requestRenderAll().
+
+diff
+Copiar
+Editar
+- renderOnAddRemove: false,
++ renderOnAddRemove: true,        :contentReference[oaicite:3]{index=3}
+diff
+Copiar
+Editar
+fabricCanvasRef.current.loadFromJSON(JSON.parse(state), ()=>{
+-  fabricCanvasRef.current!.renderAll();
++  fabricCanvasRef.current!.requestRenderAll();
+   updateLayersList();
+});                                   :contentReference[oaicite:4]{index=4}
+Faça o mesmo em redo 
+.
+Se quiser manter renderOnAddRemove:false, basta deixar como está e trocar renderAll()→requestRenderAll().
+
+4. Atalhos Ctrl+Z / Ctrl+Shift+Z
+O listener já existe, mas não captura quando o foco está em <input> ou <textarea>. Mude para capture phase:
+
+ts
+Copiar
+Editar
+window.addEventListener('keydown', handleKeyDown, { capture:true });
+E adicione:
+
+ts
+Copiar
+Editar
+if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement){
+  // só se for Ctrl/Cmd
+  if(!(e.ctrlKey||e.metaKey)) return;
+}
+5. “Format” não altera o canvas
+Depois de setDimensions, centralize o conteúdo e salve estado:
+
+diff
+Copiar
+Editar
+fabricCanvasRef.current.setDimensions(dimensions);
+fabricCanvasRef.current.calcOffset();
+fabricCanvasRef.current.viewportCenterObject && fabricCanvasRef.current.viewportCenterObject(
+  fabricCanvasRef.current.getActiveObject() || null
+);
+fabricCanvasRef.current.requestRenderAll();
+saveState();           :contentReference[oaicite:6]{index=6}
+Dica: se quiser que o workspace acompanhe o novo tamanho, coloque width e height também no style do wrapper que contém o <canvas>.
+
+6. Pequena limpeza final
+Arquivo/Local	Alteração
+useCanvasZoomPan	Troque qualquer style.transform por chamadas canvas.zoomToPoint como sugerido anteriormente.
+PhotoEditor.tsx	Atualize os imports para VisualEffectsPanel. Remova TextFXPanel se não for mais usado.
+libs	Exporte a nova biblioteca VisualEffects conforme o modelo que você já usa em TextFX.

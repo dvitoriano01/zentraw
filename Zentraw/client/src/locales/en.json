@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "content": "Content",
+    "profile": "Profile",
+    "gallery": "Gallery",
+    "templates": "Templates",
+    "logout": "Logout"
+  },
+  "coverGenerator": {
+    "title": "Cover Generator",
+    "artistName": "Artist Name",
+    "trackName": "Track Name",
+    "albumName": "Album Name",
+    "generationType": "Generation Type",
+    "generateByAI": "Generate by AI",
+    "uploadImage": "Upload Image",
+    "chooseFromAPI": "Choose from API",
+    "imageDescription": "Image Description",
+    "style": "Style",
+    "styles": {
+      "modern": "Modern",
+      "futuristic": "Futuristic", 
+      "vintage": "Vintage",
+      "urban": "Urban",
+      "classic": "Classic",
+      "cyberpunk": "Cyberpunk",
+      "abstract": "Abstract"
+    },
+    "useThisImage": "Use This Image",
+    "nextStep": "Next Step",
+    "generate": "Generate",
+    "generating": "Generating..."
+  },
+  "editor": {
+    "title": "Cover Editor",
+    "watermark": "Watermark",
+    "templates": "Templates",
+    "textEditor": "Text Editor",
+    "artistText": "Artist Text",
+    "trackText": "Track Text",
+    "font": "Font",
+    "size": "Size",
+    "color": "Color",
+    "opacity": "Opacity",
+    "flip": "Flip",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "overlay": "Overlay",
+    "intensity": "Intensity",
+    "soft": "Soft",
+    "hard": "Hard",
+    "filters": "Filters",
+    "glitch": "Glitch",
+    "scanlines": "Scanlines",
+    "noise": "Noise",
+    "zoom": "Zoom",
+    "position": "Position",
+    "download": "Download",
+    "save": "Save",
+    "reset": "Reset"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "recent": "Recent Images",
+    "covers": "Saved Covers",
+    "releases": "Releases",
+    "pressKits": "Press Kits",
+    "rename": "Rename",
+    "download": "Download",
+    "remove": "Remove",
+    "empty": "No images found"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "upload": "Upload",
+    "search": "Search"
+  },
+  "messages": {
+    "uploadSuccess": "Image uploaded successfully!",
+    "generateSuccess": "Cover generated successfully!",
+    "saveSuccess": "Project saved successfully!"
+  }
+}

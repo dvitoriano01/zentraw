@@ -1,0 +1,148 @@
+// Adições e correções pontuais para o editor de imagem baseado no seu código anterior.
+// Copie e cole essas partes diretamente no seu projeto para corrigir as funcionalidades mencionadas.
+
+//--------------------------------------------
+// 1. ZOOM COM MOUSE SCROLL (substitui ou complementa o zoom atual)
+//--------------------------------------------
+useEffect(() => {
+  const canvas = fabricCanvasRef.current;
+  if (!canvas) return;
+
+  const handleWheel = (opt: WheelEvent) => {
+    opt.preventDefault();
+    const delta = opt.deltaY;
+    let zoom = canvas.getZoom();
+    zoom *= 0.999 ** delta;
+    zoom = Math.max(0.1, Math.min(5, zoom));
+    canvas.zoomToPoint({ x: opt.offsetX, y: opt.offsetY }, zoom);
+    setCurrentZoom(zoom);
+  };
+
+  canvas.on('mouse:wheel', handleWheel as any);
+
+  return () => {
+    canvas.off('mouse:wheel', handleWheel as any);
+  };
+}, []);
+
+//--------------------------------------------
+// 2. CORREÇÃO DE FORMATO: COVER ART E FIT FIXO
+//--------------------------------------------
+// Adicione ao seu dicionário de formatos:
+const formatDimensions = {
+  'cover-art': { width: 2000, height: 2000 },
+  'instagram-post': { width: 1080, height: 1080 },
+  'instagram-story': { width: 1080, height: 1920 },
+  'facebook-post': { width: 1200, height: 630 },
+  'twitter-post': { width: 1024, height: 512 },
+  'linkedin-post': { width: 1200, height: 627 },
+  'youtube-thumbnail': { width: 1280, height: 720 },
+  'a4-print': { width: 2480, height: 3508 },
+  'business-card': { width: 1050, height: 600 },
+  'banner': { width: 1500, height: 500 },
+  'custom': { width: 800, height: 600 },
+};
+
+// Use como valor inicial do formato:
+const [selectedFormat, setSelectedFormat] = useState('cover-art');
+
+// No select do dropdown:
+<select>
+  <option value="cover-art">Cover Art (2000x2000)</option>
+  <option value="instagram-post">Instagram Post (1080x1080)</option>
+  <option value="instagram-story">Instagram Story (1080x1920)</option>
+  <option value="facebook-post">Facebook Post (1200x630)</option>
+  <option value="twitter-post">Twitter Post (1024x512)</option>
+  <option value="linkedin-post">LinkedIn Post (1200x627)</option>
+  <option value="youtube-thumbnail">YouTube Thumbnail (1280x720)</option>
+  <option value="a4-print">A4 Print (2480x3508)</option>
+  <option value="business-card">Business Card (1050x600)</option>
+  <option value="banner">Banner (1500x500)</option>
+  <option value="custom">Custom (800x600)</option>
+</select>
+
+// Dentro de handleFormatChange, após setDimensions:
+canvas.setDimensions(dimensions, { backstoreOnly: true });
+canvas.calcOffset();
+canvas.renderAll();
+
+//--------------------------------------------
+// 3. APLICAR EFEITOS VISUAIS (CORRIGIR VISUAL EFFECTS)
+//--------------------------------------------
+// Substituir a função applyEffect (em VisualEffectsPanel) por algo como:
+applyEffect={(effect) => {
+  if (selectedObject && selectedObject.filters !== undefined) {
+    const filters = [];
+    if (effect.type === 'brightness') {
+      filters.push(new fabric.Image.filters.Brightness({ brightness: effect.value }));
+    }
+    // Adicione outros efeitos conforme necessário...
+    selectedObject.filters = filters;
+    selectedObject.applyFilters();
+    fabricCanvasRef.current?.renderAll();
+    saveState();
+  }
+}}
+
+//--------------------------------------------
+// 4. EFEITOS DE TEXTO - SKEW / DISTORÇÃO BÁSICA
+//--------------------------------------------
+// Na função applyTextEffect():
+const applyTextEffect = (effect: any) => {
+  if (!fabricCanvasRef.current || !selectedObject || selectedObject.type !== 'i-text') return;
+
+  if (effect.skewX || effect.skewY) {
+    selectedObject.set({
+      skewX: effect.skewX || 0,
+      skewY: effect.skewY || 0,
+    });
+  }
+
+  // Para efeitos avançados (wave/ripple), considere converter para SVG ou path.
+  fabricCanvasRef.current.renderAll();
+  saveState();
+};
+
+//--------------------------------------------
+// 5. GRID COM SNAP TO GRID
+//--------------------------------------------
+// Função para desenhar o grid (chame em useEffect se showGrid for true)
+const drawGrid = (canvas: Canvas, spacing = 50) => {
+  for (let i = 0; i < canvas.getWidth(); i += spacing) {
+    const line = new fabric.Line([i, 0, i, canvas.getHeight()], {
+      stroke: '#444', selectable: false, evented: false
+    });
+    canvas.add(line);
+    line.sendToBack();
+  }
+  for (let i = 0; i < canvas.getHeight(); i += spacing) {
+    const line = new fabric.Line([0, i, canvas.getWidth(), i], {
+      stroke: '#444', selectable: false, evented: false
+    });
+    canvas.add(line);
+    line.sendToBack();
+  }
+};
+
+// Adicione isso no useEffect após inicializar o canvas:
+if (showGrid) drawGrid(canvas);
+
+// Snap ao mover objetos:
+useEffect(() => {
+  const canvas = fabricCanvasRef.current;
+  if (!canvas) return;
+  
+  const snap = 10; // pixels
+  const handleSnap = (opt: any) => {
+    const target = opt.target;
+    if (target) {
+      target.set({
+        left: Math.round(target.left / snap) * snap,
+        top: Math.round(target.top / snap) * snap,
+      });
+    }
+  };
+
+  canvas.on('object:moving', handleSnap);
+  return () => canvas.off('object:moving', handleSnap);
+}, [showGrid]);

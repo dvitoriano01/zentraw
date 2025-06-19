@@ -1,0 +1,19 @@
+/* Zentraw V3 - Fontes Customizadas */
+
+/* Exemplo de como adicionar fontes customizadas */
+/*
+@font-face {
+  font-family: 'CustomFont';
+  src: url('./woff2/CustomFont.woff2') format('woff2'),
+       url('./woff/CustomFont.woff') format('woff'),
+       url('./ttf/CustomFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* Fontes do Google Fonts - Já carregadas via API */
+/* Bebas Neue, Montserrat, Oswald, Playfair Display, etc. */
+
+/* Adicione suas fontes customizadas aqui seguindo o padrão acima */

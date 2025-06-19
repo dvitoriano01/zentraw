@@ -1,0 +1,26 @@
+svg {
+  width: 100%;
+  height: 150px;
+}
+
+text {
+  font-size: 80px;
+  fill: white;
+  font-weight: 700;
+  font-family: 'Arial Black', Gadget, sans-serif;
+}
+
+.g-ants .text-copy {
+  fill: none;
+  stroke: white;
+  stroke-dasharray: 7% 28%;
+  stroke-width: 5px;
+  stroke-dashoffset: 0;
+  animation: stroke-offset 6s linear infinite;
+}
+
+@keyframes stroke-offset {
+  100% {
+    stroke-dashoffset: -35%;
+  }
+}

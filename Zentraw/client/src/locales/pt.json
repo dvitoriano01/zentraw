@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Início",
+    "dashboard": "Painel",
+    "content": "Conteúdo",
+    "profile": "Perfil",
+    "gallery": "Galeria",
+    "templates": "Templates",
+    "logout": "Sair"
+  },
+  "coverGenerator": {
+    "title": "Gerador de Capas",
+    "artistName": "Nome do Artista",
+    "trackName": "Nome da Faixa",
+    "albumName": "Nome do Álbum",
+    "generationType": "Tipo de Geração",
+    "generateByAI": "Gerar por IA",
+    "uploadImage": "Enviar Imagem",
+    "chooseFromAPI": "Escolher da API",
+    "imageDescription": "Descrição da Imagem",
+    "style": "Estilo",
+    "styles": {
+      "modern": "Moderno",
+      "futuristic": "Futurista",
+      "vintage": "Vintage",
+      "urban": "Urbano",
+      "classic": "Clássico",
+      "cyberpunk": "Cyberpunk",
+      "abstract": "Abstrato"
+    },
+    "useThisImage": "Usar Esta Imagem",
+    "nextStep": "Próximo Passo",
+    "generate": "Gerar",
+    "generating": "Gerando..."
+  },
+  "editor": {
+    "title": "Editor de Capas",
+    "watermark": "Marca d'água",
+    "templates": "Templates",
+    "textEditor": "Editor de Texto",
+    "artistText": "Texto do Artista",
+    "trackText": "Texto da Faixa",
+    "font": "Fonte",
+    "size": "Tamanho",
+    "color": "Cor",
+    "opacity": "Opacidade",
+    "flip": "Inverter",
+    "horizontal": "Horizontal",
+    "vertical": "Vertical",
+    "overlay": "Sobreposição",
+    "intensity": "Intensidade",
+    "soft": "Suave",
+    "hard": "Forte",
+    "filters": "Filtros",
+    "glitch": "Glitch",
+    "scanlines": "Linhas de Varredura",
+    "noise": "Ruído",
+    "zoom": "Zoom",
+    "position": "Posição",
+    "download": "Baixar",
+    "save": "Salvar",
+    "reset": "Redefinir"
+  },
+  "gallery": {
+    "title": "Galeria",
+    "recent": "Imagens Recentes",
+    "covers": "Capas Salvas",
+    "releases": "Lançamentos",
+    "pressKits": "Press Kits",
+    "rename": "Renomear",
+    "download": "Baixar",
+    "remove": "Remover",
+    "empty": "Nenhuma imagem encontrada"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "upload": "Enviar",
+    "search": "Pesquisar"
+  },
+  "messages": {
+    "uploadSuccess": "Imagem enviada com sucesso!",
+    "generateSuccess": "Capa gerada com sucesso!",
+    "saveSuccess": "Projeto salvo com sucesso!"
+  }
+}

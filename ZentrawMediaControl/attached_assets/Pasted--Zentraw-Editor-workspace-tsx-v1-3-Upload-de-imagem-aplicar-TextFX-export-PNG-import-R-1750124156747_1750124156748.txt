@@ -1,0 +1,281 @@
+// Zentraw Editor: workspace.tsx (v1.3)
+// Upload de imagem, aplicar TextFX, export PNG
+
+import React, { useRef, useState, useEffect } from 'react';
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+import '@/styles/fonts.css';
+
+interface CanvasElement {
+  id: string;
+  type: 'text' | 'image' | 'overlay';
+  x: number;
+  y: number;
+  text?: string;
+  font?: string;
+  size?: number;
+  color?: string;
+  src?: string;
+  opacity?: number;
+  blendMode?: string;
+  effect?: string;
+}
+
+const availableFonts = ['Arial', 'ZentrawGrunge', 'ZentrawFuturist'];
+const blendModes = ['normal', 'multiply', 'screen', 'overlay', 'lighten', 'darken'];
+
+const textFX = {
+  glitch: {
+    textShadow: '2px 0 red, -2px 0 cyan',
+    filter: 'contrast(1.2)',
+  },
+  neon: {
+    textShadow: '0 0 5px #fff, 0 0 15px #0ff',
+    color: '#0ff',
+  },
+  chrome: {
+    filter: 'grayscale(0.2) brightness(1.3)',
+    color: '#ccc',
+  },
+};
+
+const visualFX = [
+  { id: 'grain', label: 'Grain', src: '/overlays/grain.png' },
+  { id: 'vhs', label: 'VHS', src: '/overlays/vhs.png' },
+  { id: 'scanlines', label: 'Scanlines', src: '/overlays/scanlines.png' },
+];
+
+export default function Workspace() {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [zoom, setZoom] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const [elements, setElements] = useState<CanvasElement[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [gridSize, setGridSize] = useState(30);
+  const [showGrid, setShowGrid] = useState(true);
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+
+  const canvasWidth = 1080;
+  const canvasHeight = 1080;
+
+  function addText() {
+    const newElement: CanvasElement = {
+      id: crypto.randomUUID(),
+      type: 'text',
+      x: 200,
+      y: 200,
+      text: 'Novo Texto',
+      font: 'ZentrawGrunge',
+      size: 48,
+      color: '#ffffff',
+      opacity: 1,
+      blendMode: 'normal',
+    };
+    setElements((prev) => [...prev, newElement]);
+    setSelectedId(newElement.id);
+  }
+
+  function addOverlay(src: string) {
+    const overlay: CanvasElement = {
+      id: crypto.randomUUID(),
+      type: 'overlay',
+      x: 0,
+      y: 0,
+      src,
+      opacity: 0.6,
+      blendMode: 'screen',
+    };
+    setElements((prev) => [...prev, overlay]);
+  }
+
+  function addImageFromUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const newImg: CanvasElement = {
+        id: crypto.randomUUID(),
+        type: 'image',
+        x: 100,
+        y: 100,
+        src: reader.result as string,
+        opacity: 1,
+        blendMode: 'normal',
+      };
+      setElements((prev) => [...prev, newImg]);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function applyTextEffect(effectName: keyof typeof textFX) {
+    if (!selectedId) return;
+    setElements((prev) =>
+      prev.map((el) =>
+        el.id === selectedId ? { ...el, effect: effectName } : el
+      )
+    );
+  }
+
+  async function exportPNG() {
+    if (!canvasRef.current) return;
+    const canvasArea = canvasRef.current;
+    const canvasImage = await html2canvas(canvasArea);
+    canvasImage.toBlob((blob) => {
+      if (blob) saveAs(blob, 'cover.png');
+    });
+  }
+
+  const transform = `scale(${zoom}) translate(${offset.x}px, ${offset.y}px)`;
+
+  function handleDrag(e: React.MouseEvent, el: CanvasElement) {
+    const bounds = canvasRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    const x = (e.clientX - bounds.left) / zoom;
+    const y = (e.clientY - bounds.top) / zoom;
+    const snappedX = Math.round(x / gridSize) * gridSize;
+    const snappedY = Math.round(y / gridSize) * gridSize;
+    setElements((prev) =>
+      prev.map((item) => (item.id === el.id ? { ...item, x: snappedX, y: snappedY } : item))
+    );
+  }
+
+  return (
+    <div className="flex h-screen bg-[#2b2b2b]">
+      <div className="w-64 p-4 border-r border-gray-700 space-y-4">
+        <h2 className="text-white font-bold">Ferramentas</h2>
+        <button className="bg-blue-600 text-white px-3 py-1 rounded" onClick={addText}>Texto</button>
+        <button className="bg-indigo-600 text-white px-3 py-1 rounded" onClick={() => fileInputRef.current?.click()}>Upload Imagem</button>
+        <input ref={fileInputRef} type="file" accept="image/*" hidden onChange={addImageFromUpload} />
+        <button className="bg-green-600 text-white px-3 py-1 rounded" onClick={exportPNG}>Exportar PNG</button>
+        <div>
+          <label className="text-white">Zoom: {Math.round(zoom * 100)}%</label>
+          <input type="range" min="0.2" max="2" step="0.05" value={zoom} onChange={(e) => setZoom(parseFloat(e.target.value))} />
+        </div>
+        <div>
+          <label className="text-white">Grid</label>
+          <input type="checkbox" checked={showGrid} onChange={(e) => setShowGrid(e.target.checked)} />
+          <input type="range" min="10" max="100" value={gridSize} onChange={(e) => setGridSize(parseInt(e.target.value))} />
+        </div>
+        <div className="pt-4">
+          <h3 className="text-white font-semibold">Text FX</h3>
+          {Object.keys(textFX).map((fx) => (
+            <button
+              key={fx}
+              className="text-xs text-white bg-gray-700 rounded px-2 py-1 my-1 block"
+              onClick={() => applyTextEffect(fx as keyof typeof textFX)}
+            >
+              {fx}
+            </button>
+          ))}
+        </div>
+        <div className="pt-4">
+          <h3 className="text-white font-semibold">Visual FX</h3>
+          {visualFX.map((fx) => (
+            <button
+              key={fx.id}
+              className="text-xs text-white bg-gray-600 rounded px-2 py-1 my-1 block"
+              onClick={() => addOverlay(fx.src)}
+            >
+              {fx.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex-1 flex justify-center items-center overflow-auto">
+        <div
+          className="relative"
+          ref={canvasRef}
+          style={{
+            width: canvasWidth,
+            height: canvasHeight,
+            backgroundImage: showGrid
+              ? `repeating-linear-gradient(0deg, #444 0 1px, transparent 1px ${gridSize}px),
+                 repeating-linear-gradient(90deg, #444 0 1px, transparent 1px ${gridSize}px)`
+              : 'none',
+            backgroundColor: '#2e2e2e',
+            transform,
+            transformOrigin: 'top left',
+            border: '1px solid #666',
+          }}
+        >
+          {elements.map((el) => {
+            const fx = el.effect ? textFX[el.effect as keyof typeof textFX] : {};
+            return (
+              <div
+                key={el.id}
+                className="absolute cursor-move select-none"
+                onClick={() => setSelectedId(el.id)}
+                onMouseDown={() => setDraggingId(el.id)}
+                onMouseUp={() => setDraggingId(null)}
+                onMouseMove={(e) => draggingId === el.id && handleDrag(e, el)}
+                style={{
+                  top: el.y,
+                  left: el.x,
+                  fontFamily: el.font,
+                  fontSize: el.size,
+                  color: el.color,
+                  textShadow: fx.textShadow,
+                  filter: fx.filter,
+                  opacity: el.opacity ?? 1,
+                  mixBlendMode: el.blendMode ?? 'normal',
+                  pointerEvents: 'auto',
+                }}
+              >
+                {el.type === 'text' && el.text}
+                {el.type === 'overlay' && el.src && (
+                  <img src={el.src} alt="fx" className="w-full h-full object-cover pointer-events-none" />
+                )}
+                {el.type === 'image' && el.src && (
+                  <img src={el.src} alt="user" className="max-w-xs max-h-xs" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="w-64 p-4 border-l border-gray-700 space-y-4">
+        <h2 className="text-white font-bold">Propriedades</h2>
+        {selectedId ? (
+          elements
+            .filter((el) => el.id === selectedId)
+            .map((el) => (
+              <div key={el.id} className="space-y-2">
+                {el.type === 'text' && (
+                  <>
+                    <input className="w-full p-1 rounded" value={el.text} onChange={(e) => {
+                      const newText = e.target.value;
+                      setElements((prev) => prev.map((item) => item.id === el.id ? { ...item, text: newText } : item));
+                    }} />
+                    <select className="w-full" value={el.font} onChange={(e) => {
+                      const newFont = e.target.value;
+                      setElements((prev) => prev.map((item) => item.id === el.id ? { ...item, font: newFont } : item));
+                    }}>
+                      {availableFonts.map((f) => <option key={f} value={f}>{f}</option>)}
+                    </select>
+                  </>
+                )}
+                <input type="color" value={el.color || '#ffffff'} onChange={(e) => {
+                  setElements((prev) => prev.map((item) => item.id === el.id ? { ...item, color: e.target.value } : item));
+                }} />
+                <label className="text-white text-xs">Opacidade</label>
+                <input type="range" min="0" max="1" step="0.05" value={el.opacity ?? 1} onChange={(e) => {
+                  const newVal = parseFloat(e.target.value);
+                  setElements((prev) => prev.map((item) => item.id === el.id ? { ...item, opacity: newVal } : item));
+                }} />
+                <label className="text-white text-xs">Blend Mode</label>
+                <select className="w-full" value={el.blendMode} onChange={(e) => {
+                  const mode = e.target.value;
+                  setElements((prev) => prev.map((item) => item.id === el.id ? { ...item, blendMode: mode } : item));
+                }}>
+                  {blendModes.map((m) => <option key={m} value={m}>{m}</option>)}
+                </select>
+              </div>
+            ))
+        ) : <p className="text-gray-400">Clique em um elemento ou no canvas.</p>}
+      </div>
+    </div>
+  );
+}

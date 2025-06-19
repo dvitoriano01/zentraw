@@ -1,0 +1,180 @@
+🛠️ Alternativa via código (sem mexer no SVG)
+No seu applyTemplate(), altere o trecho replaceArtistText() para detectar e tratar esse id="TITLE" com estrutura estilizada como sendo o ARTIST.
+
+🔄 Atualize o início da função assim:
+tsx
+Copiar
+Editar
+const replaceArtistText = (svgRoot: Element, newText: string) => {
+  console.log('Procurando elemento ARTIST...');
+
+  // ⚠️ Procurar por text[id="ARTIST"] OU text[id="TITLE"] como fallback para casos como o SVG atual
+  let artistEl = svgRoot.querySelector('text[id="ARTIST"]') 
+                || svgRoot.querySelector('text[id="TITLE"]'); // <- fallback
+
+  if (artistEl) {
+    console.log('Encontrado elemento de artista:', artistEl.getAttribute('id'));
+
+    while (artistEl.firstChild) {
+      artistEl.removeChild(artistEl.firstChild);
+    }
+
+    artistEl.setAttribute('font-family', selectedFont);
+    artistEl.setAttribute('fill', textColor);
+
+    for (let i = 0; i < newText.length; i++) {
+      const tspan = svgRoot.ownerDocument.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+      tspan.textContent = newText[i];
+      artistEl.appendChild(tspan);
+    }
+    return;
+  }
+
+  console.warn('Elemento de ARTIST não encontrado em nenhuma estrutura conhecida');
+};
+✅ Resultado
+Com isso, mesmo que o SVG esteja usando id="TITLE" para o nome do artista (como neste caso), o nome será substituído corretamente com efeitos tspan, fonte Freepik aplicada e cor definida.
+
+Se você preferir que eu envie uma nova função applyTemplate() completa e atualizada, posso gerar agora. Deseja? 
+
+
+
+
+
+
+
+Você disse:
+sim
+
+
+O ChatGPT disse:
+Perfeito! Abaixo está a função applyTemplate() completa e atualizada, versão compatível com o Replit, SVG com tspan, fontes Freepik e proporção 1:1.
+
+✅ Função applyTemplate() completa (ZENTRAW V2.13)
+tsx
+Copiar
+Editar
+const applyTemplate = async () => {
+  if (!selectedTemplate || !canvasLayoutRef.current) return;
+
+  try {
+    const baseImageSrc = exportedImages[0]?.url || imageIA || uploadedCover;
+    if (!baseImageSrc) {
+      toast({ title: "Imagem não encontrada", description: "Gere ou envie uma imagem de capa antes", variant: "destructive" });
+      return;
+    }
+
+    const baseImg = new Image();
+    baseImg.crossOrigin = 'anonymous';
+    await new Promise((res, rej) => {
+      baseImg.onload = res;
+      baseImg.onerror = rej;
+      baseImg.src = baseImageSrc;
+    });
+
+    // Parse SVG
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(selectedTemplate.svg, 'image/svg+xml');
+    const svgRoot = svgDoc.documentElement;
+
+    // Forçar 1:1 proporção
+    svgRoot.setAttribute('width', '1080');
+    svgRoot.setAttribute('height', '1080');
+    svgRoot.setAttribute('viewBox', '0 0 1080 1080');
+
+    // Injeção da fonte Freepik
+    const fontObj = [...customFonts, ...baseFonts].find(f => f.name === selectedFont);
+    const fontFormat = fontObj?.ext === 'ttf' ? 'truetype' :
+                       fontObj?.ext === 'otf' ? 'opentype' :
+                       fontObj?.ext === 'woff2' ? 'woff2' : 'woff';
+
+    if (fontObj?.base64) {
+      const styleEl = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
+      styleEl.textContent = `
+        @font-face {
+          font-family: '${selectedFont}';
+          src: url(data:font/${fontObj.ext};base64,${fontObj.base64}) format('${fontFormat}');
+          font-display: swap;
+        }
+        text, tspan {
+          font-family: '${selectedFont}' !important;
+          fill: ${textColor} !important;
+        }
+      `;
+      svgRoot.insertBefore(styleEl, svgRoot.firstChild);
+    }
+
+    // Substituir título (direto)
+    const titleEl = svgRoot.querySelector('text[id="TITLE"]');
+    if (titleEl && formData.songTitle) {
+      titleEl.textContent = formData.songTitle;
+      titleEl.setAttribute('font-family', selectedFont);
+      titleEl.setAttribute('fill', textColor);
+    }
+
+    // Substituir artista com tspan e efeitos visuais
+    const replaceArtistText = (root: Element, newText: string) => {
+      let artistEl = root.querySelector('text[id="ARTIST"]')
+                  || root.querySelector('text[id="TITLE"]'); // fallback se ARTIST estiver ausente
+
+      if (!artistEl || !newText) return;
+
+      while (artistEl.firstChild) {
+        artistEl.removeChild(artistEl.firstChild);
+      }
+
+      artistEl.setAttribute('font-family', selectedFont);
+      artistEl.setAttribute('fill', textColor);
+
+      for (let i = 0; i < newText.length; i++) {
+        const tspan = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        tspan.textContent = newText[i];
+        artistEl.appendChild(tspan);
+      }
+    };
+
+    replaceArtistText(svgRoot, formData.artistName || 'ARTIST');
+
+    // Gerar imagem final
+    const svgString = new XMLSerializer().serializeToString(svgRoot);
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+
+    const svgImg = new Image();
+    svgImg.crossOrigin = 'anonymous';
+    await new Promise((res, rej) => {
+      svgImg.onload = res;
+      svgImg.onerror = rej;
+      svgImg.src = svgUrl;
+    });
+
+    const canvas = canvasLayoutRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas context not found');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    ctx.clearRect(0, 0, 1080, 1080);
+    ctx.drawImage(baseImg, 0, 0, 1080, 1080);
+    ctx.drawImage(svgImg, 0, 0, 1080, 1080);
+
+    canvas.toBlob((blob) => {
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        setFinalLayoutImage(url);
+        toast({ title: 'Layout finalizado', description: 'Texto e fonte aplicados' });
+      }
+    }, 'image/png');
+
+    URL.revokeObjectURL(svgUrl);
+  } catch (err: any) {
+    console.error('Erro ao aplicar template:', err);
+    toast({ title: 'Erro ao gerar layout', description: err.message, variant: 'destructive' });
+  }
+};
+✅ Recapitulando melhorias
+Funcionalidade	Resolvido
+Fontes Freepik aplicadas corretamente	✅
+Substituição de TITLE (text simples)	✅
+Substituição de ARTIST (via tspan, com fallback e efeitos)	✅
+Proporção 1:1 no Canvas e SVG	✅
+Compatível com Replit e Supabase	✅

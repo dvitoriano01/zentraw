@@ -1,0 +1,32 @@
+/* Exemplo de como adicionar uma fonte customizada */
+
+/* 
+Para adicionar uma nova fonte:
+1. Coloque os arquivos da fonte nas pastas correspondentes:
+   - /public/fonts/woff2/MinhaFonte.woff2
+   - /public/fonts/woff/MinhaFonte.woff  
+   - /public/fonts/ttf/MinhaFonte.ttf
+
+2. Adicione a declaração @font-face no arquivo fonts.css:
+
+@font-face {
+  font-family: 'MinhaFonte';
+  src: url('./woff2/MinhaFonte.woff2') format('woff2'),
+       url('./woff/MinhaFonte.woff') format('woff'),
+       url('./ttf/MinhaFonte.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+3. Adicione 'MinhaFonte' na lista freepikFonts do PhotoshopEditor
+*/
+
+/* Fonte de exemplo usando uma fonte do sistema como fallback */
+@font-face {
+  font-family: 'Zentraw Custom';
+  src: local('Arial Black'), local('Arial-Black');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}

@@ -1,0 +1,204 @@
+Prompt para Replit — Construtor de Biblioteca de Templates & Editor de Imagens Zentraw
+
+Visão Geral
+
+Você é um agente no Replit responsável por criar um editor de imagens semelhante ao Canva Pro para a plataforma Zentraw. O projeto deve nascer modular e escalável, permitindo a adição de planos de assinatura (Basic, Pro, Advanced) e um painel de administração completo. Nosso primeiro objetivo é substituir o Template Manager (admin‑complete.tsx) por uma alternativa criada do zero que:
+
+Salve cada template como um arquivo JSON independente dentro de /src/templates.
+
+Organize todos os templates em uma biblioteca facilmente consultável por slug, tags e categoria.
+
+Exponha funções CRUD (Create, Read, Update, Delete) para que o editor e o painel admin façam uso desses templates.
+
+Seja simples de integrar na página/app inicial da Zentraw.
+
+Stack & Dependências Sugeridas
+
+| Área | Lib/Stack |
+| — | — |
+| UI Framework | React 18 + Vite + TypeScript |
+| Canvas Engine | Fabric.js (ou Konva) |
+| State Mgmt | Zustand |
+| UI Kit | Tailwind CSS + Headless UI |
+| Auth | placeholder: Next‑Auth ou Clerk |
+| Build/Test | Vitest + Playwright |
+
+IMPORTANTE: se já existir outra stack no workspace, adapte as instruções mantendo compatibilidade.
+
+Estrutura de Pastas Alvo
+
+├─ public/
+│  └─ assets/
+├─ src/
+│  ├─ components/
+│  │  ├─ editor/
+│  │  ├─ templates/
+│  │  └─ ui/
+│  ├─ hooks/
+│  ├─ pages/        # ou /routes se usar React Router
+│  ├─ services/
+│  │  └─ templateService.ts
+│  ├─ store/
+│  ├─ templates/    # <— JSONs de template ficam aqui
+│  └─ utils/
+└─ README.md
+
+Fases & Entregas
+
+Divida o desenvolvimento nos 5 fases abaixo. Finalize cada fase com um commit e rodando testes.
+
+Fase 0 — Bootstrap (🟢 Iniciar)
+
+Criar projeto React/Vite com TypeScript.
+
+Configurar Tailwind CSS.
+
+Adicionar Fabric.js e Zustand.
+
+Criar README com instruções de dev setup.
+
+Fase 1 — Core do Editor
+
+Implementar <CanvasEditor /> com:
+
+Adição/remoção/movimentação de shapes, textos e imagens.
+
+Suporte a layers e undo/redo.
+
+Exportação em PNG/JPEG/SVG.
+
+Criar store global (Zustand) para estado do documento.
+
+Escrever testes unitários para actions principais.
+
+Fase 2 — Módulo de Templates
+
+Definir interface TemplateSchema (id, name, category, tags[], previewUrl, layers[]…).
+
+Implementar templateService.ts com:
+
+loadAll() → lista todos JSONs em /src/templates.
+
+load(id)
+
+save(template)
+
+update(id, patch)
+
+remove(id)
+
+Gerar 3 templates de exemplo (Cartaz, Post IG, Capa Single) salvos como JSON.
+
+Criar <TemplateGallery /> filtrável.
+
+Conectar <TemplateGallery /> ao <CanvasEditor />: clicar → carrega no editor.
+
+Fase 3 — Planos & Controle de Acesso
+
+Criar enum PlanTier (Basic|Pro|Advanced).
+
+Mockar sistema de autenticação (e.g. dummy user context).
+
+Gatear recursos:
+
+Basic: 720p export, 10 templates, sem efeitos premium.
+
+Pro: 1080p export, 100 templates, efeitos premium.
+
+Advanced: 4K export, templates ilimitados, batch‑render de assets.
+
+Adicionar banner de upgrade quando usuário exceder limite.
+
+Fase 4 — Painel Admin
+
+Rota /admin protegida.
+
+Dashboard cards com métricas (total users, templates, renders).
+
+CRUD GUI para templates (usa templateService).
+
+Ferramenta de importação/exportação de coleção de templates (.zip + manifest).
+
+Fase 5 — Integração Final + QA
+
+Integrar tudo na landing/app inicial da Zentraw (placeholder /app).
+
+Rodar e documentar testes e2e.
+
+Checklist de performance (Lighthouse ≥ 90) e acessibilidade.
+
+Atualizar README.
+
+Regras de Ouro para o Agente do Replit
+
+Não quebre funcionalidades existentes ao corrigir bugs — escreva testes antes de mexer.
+
+Commits semânticos (feat:, fix:, chore: etc.).
+
+Termine cada fase com npm test e npm run lint passando.
+
+Documente qualquer decisão arquitetural no README.
+
+Comentários de código devem ser em inglês; README e UI, em PT‑BR.
+
+Formato dos Templates
+
+{
+  "id": "capa-single-glitch",
+  "name": "Capa Single Glitch",
+  "category": "Music",
+  "tags": ["capa", "glitch", "vhs"],
+  "previewUrl": "/assets/previews/capa-single-glitch.png",
+  "thumbnailUrl": "/assets/thumbnails/capa-single-glitch.jpg",
+  "layers": [
+    // Cada layer segue o schema do Fabric.js
+  ]
+}
+
+Entrega Esperada ao Final das Fases
+
+Projeto executável em Replit (npm run dev).
+
+Biblioteca de templates organizada e documentada.
+
+Página/App inicial da Zentraw importando editor + gallery.
+
+README com instruções de deploy e roadmap futuro.
+
+Próximos Passos
+
+Quando concluir Fase 0, pare e aguarde autorização para continuar. Isso garante que nenhuma fase seguinte atrapalhe as anteriores.
+
+Boa sorte 🚀
+
+
+INSTRUÇÕES:
+Por favor, execute agora todas as tarefas da Fase 0:
+- Criar projeto React com Tailwind
+- Instalar e configurar Fabric.js e Zustand
+- Criar o README inicial com instruções
+- Pronto para testes (npm run dev)
+
++++++++++++++++
+
+README.md
+
+# Zentraw Image Editor — Fase 0
+
+Editor de imagens avançado inspirado no Canva Pro, voltado para artistas, criadores e designers. Este repositório marca o início do desenvolvimento com a estrutura base, dependências e configuração da UI.
+
+## 🚀 Stack
+
+- React 18 + TypeScript
+- Tailwind CSS
+- Zustand (gerenciamento de estado)
+- Fabric.js (motor de canvas)
+- Vite (em fases futuras)
+  
+## 📦 Dependências iniciais
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+npm install fabric zustand classnames

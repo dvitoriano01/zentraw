@@ -1,0 +1,91 @@
+Replit version 09923d8e, pid2 version 0.0.1411
+_app-12ff4c5513dacd15.js:38 
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      
+_app-12ff4c5513dacd15.js:38 [LaunchDarkly] LaunchDarkly client initialized
+/~:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+16Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.Understand this error
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'ambient-light-sensor'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'battery'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'execution-while-not-rendered'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'execution-while-out-of-viewport'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'layout-animations'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'legacy-image-formats'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'navigation-override'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'oversized-images'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'publickey-credentials'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'speaker-selection'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'unoptimized-images'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'unsized-media'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Unrecognized feature: 'pointer-lock'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Allow attribute will take precedence over 'allowfullscreen'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+framework-053504fa78f841b4.js:1 Allow attribute will take precedence over 'allowpaymentrequest'.
+_ @ framework-053504fa78f841b4.js:1Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+Console.js:61 Fonts query state: Object
+Console.js:61 Fonts query state: Object
+Console.js:61 Fonts query state: Object
+Console.js:61 Aplicando fonte do sistema: Impact, "Arial Black", sans-serif
+Console.js:61 SVG original: <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1080"><defs><style>.cls-1{isolation:isolate;}.cls-2{font-size:72px;font-family:Arial-Black, Arial;font-weight:800;}.cls-2,.cls-6{fill:#fff;}.cls-3{letter-spacing:-0.02em;}.cls-4{letter-spacing:-0.01em;}.cls-5{fill:#d7ff00;}.cls-7{opacity:0.47;mix-blend-mode:lighten;}.cls-8{opacity:0.8;mix-blend-mode:multiply;}</style></defs><g class="cls-1"><g id="Camada_1" data-name="Camada 1"><text id="TITLE" c...
+Console.js:61 Procurando elemento ARTIST ou PlayitAgain...
+Console.js:61 Procurando "PlayitAgain" em 5 elementos...
+Console.js:61 Elemento 0 (text): "TRACK NAME"
+Console.js:61 Elemento 1 (tspan): "A"
+Console.js:61 Elemento 2 (tspan): "CK"
+Console.js:61 Elemento 3 (tspan): "N"
+Console.js:61 Elemento 4 (tspan): "AME"
+Console.js:61 Texto "PlayitAgain" não encontrado no SVG
+Mt.forEach.n.<computed> @ Console.js:61Understand this warning
+Console.js:61 Estrutura completa do SVG: <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1080" width="1080" height="1080"><style>
+          
+          text, tspan {
+            font-family: Impact, "Arial Black", sans-serif !important;
+            fill: #ffffff !important;
+          }
+        </style><defs><style>.cls-1{isolation:isolate;}.cls-2{font-size:72px;font-family:Arial-Black, Arial;font-weight:800;}.cls-2,.cls-6{fill:#fff;}.cls-3{letter-spacing:-0.02em;}.cls-4{letter-spacing:-0.01em;}.cls-5{fill:#d7ff00;}.cls-7{opacity:0.47;mix-blend-mode:lighten;}.cls-8{opacity:0.8;mix-blend-mode:multiply;}</style></defs><g class="cls-1"><g id="Camada_1" data-name="Camada 1"><text id="TITLE" class="cls-2" transform="translate(271.04 987.55)">TR<tspan class="cls-3" x="108" y="0">A</tspan><tspan x="162.7" y="0">CK </tspan><tspan class="cls-4" x="302.7" y="0">N</tspan><tspan x="361.97" y="0">AME</tspan></text><g id="ARTIST"><path class="cls-5" d="M260.65,219.82a19.22,19.22,0,0,1-10.9
+Console.js:61 SVG final: <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1080" width="1080" height="1080"><style>
+          
+          text, tspan {
+            font-family: Impact, "Arial Black", sans-serif !important;
+            fill: #ffffff !important;
+          }
+        </style><defs><style>.cls-1{isolation:isolate;}.cls-2{font-size:72px;font-family:Arial-Black, Arial;font-weight:800;}.cls-2,.cls-6{fill:#fff;}.cls-3{letter-spacing:-0.02em;}.cls-4{letter-spacing...

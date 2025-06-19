@@ -1,0 +1,222 @@
+🔧 Próximos passos (V2.12)
+1. Integração de Fontes Freepik (manualmente e por código no SVG)
+Para que as novas fontes do Freepik sejam usadas automaticamente:
+
+📁 As fontes devem estar hospedadas (por ex. via Google Fonts ou local no projeto).
+
+📌 Inseriremos o @font-face dentro do SVG ou usaremos CSS no editor/admin.
+
+✅ Ação no código:
+
+Permitir o upload de fontes (.ttf, .woff2) no Admin.
+
+Adicionar essas fontes ao availableFonts dinamicamente.
+
+Injetar <style> no SVG com o @font-face e aplicar nas tags <text>.
+
+tsx
+Copiar
+Editar
+// Exemplo de injeção no SVG
+const fontFace = `
+  @font-face {
+    font-family: 'NovaFonteFreepik';
+    src: url('data:font/woff2;base64,${base64Fonte}') format('woff2');
+  }
+`;
+
+const styledSvg = `
+  <svg ...>
+    <style>
+      ${fontFace}
+      text { font-family: 'NovaFonteFreepik'; }
+    </style>
+    ...
+  </svg>
+`;
+2. Painel Admin - Editor de Imagem
+Um novo painel do tipo TabsTrigger value="admin" será criado, com:
+
+🎨 Editor de imagem no canvas (crop, redimensionar, aplicar filtros).
+
+🔠 Upload de novas fontes + visualização das fontes aplicadas.
+
+⚙️ Editor avançado de SVG (texto, camadas, efeitos, cores específicas).
+
+✅ Estrutura inicial do painel:
+
+tsx
+Copiar
+Editar
+<TabsTrigger value="admin" className="flex items-center gap-2">
+  <Settings className="h-4 w-4" />
+  Admin
+</TabsTrigger>
+
+<TabsContent value="admin">
+  <Card className="bg-white/10 backdrop-blur-md border border-white/20">
+    <CardContent className="p-6">
+      <h2 className="text-2xl font-bold text-white mb-4">Painel Admin / Editor</h2>
+
+      {/* Upload de fontes */}
+      <div className="mb-6">
+        <label className="block text-white mb-2">Upload de Fonte (.woff2 ou .ttf)</label>
+        <input type="file" accept=".woff2,.ttf" onChange={handleUploadFont} />
+      </div>
+
+      {/* Editor de imagem */}
+      <div className="mb-6">
+        <label className="block text-white mb-2">Editor de Imagem</label>
+        <canvas ref={adminCanvasRef} width={500} height={500} className="border border-white/20 rounded-md" />
+        <Button onClick={handleApplyFilter}>Aplicar Filtro</Button>
+        <Button onClick={handleCrop}>Recortar</Button>
+      </div>
+    </CardContent>
+  </Card>
+</TabsContent>
+3. Controles extras no SVG (efeitos, cor de frames, elementos customizados)
+Você pode controlar efeitos de elementos adicionais no SVG com atributos dinâmicos:
+
+tsx
+Copiar
+Editar
+// No parsing SVG
+svgDoc.querySelectorAll('[data-effect="glow"]').forEach(el => {
+  el.setAttribute('filter', 'url(#glowEffect)');
+});
+
+svgDoc.querySelectorAll('[data-color]').forEach(el => {
+  el.setAttribute('fill', userColor || '#ffffff');
+});
+Também pode adicionar controles visuais para o admin ajustar isso (ex: sliders, cor de borda, etc.).
+
+✅ Próximas entregas no código:
+ Função handleUploadFont para adicionar fontes à lista disponível.
+
+ Suporte à inserção automática de @font-face no SVG.
+
+ Editor visual para elementos do SVG (cores, efeitos, fontes).
+
+ Tab Admin com preview, canvas e ferramentas básicas de edição.
+
+Se quiser, posso:
+
+Gerar agora a função handleUploadFont() com persistência local.
+
+Adicionar o novo <TabsTrigger value="admin"> com painel inicial.
+
+Integrar leitura do SVG anexado (TEMPLATE_001_COVER_2.svg) e demonstrar como aplicar fonte e texto dinamicamente nele.
+
+Posso seguir com isso?
+
+
+
+
+
+
+
+Você disse:
+sim
+
+
+O ChatGPT disse:
+Ótimo! Vamos seguir com a implementação prática da próxima versão, com os seguintes blocos de código prontos para uso no Replit:
+
+✅ 1. handleUploadFont() – Upload e uso da fonte no editor
+tsx
+Copiar
+Editar
+// Font upload e leitura como Base64
+const handleUploadFont = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64 = btoa(reader.result as string); // Base64 da fonte
+    const fontName = file.name.split('.')[0];
+
+    // Adiciona ao availableFonts
+    setAvailableFonts((prev) => [
+      ...prev,
+      {
+        name: fontName,
+        label: `${fontName} (Freepik)`,
+        category: 'Custom',
+        base64: base64,
+        ext: file.name.split('.').pop(),
+      },
+    ]);
+
+    toast({
+      title: "Fonte adicionada",
+      description: `A fonte "${fontName}" foi carregada para uso.`,
+    });
+  };
+  reader.readAsBinaryString(file);
+};
+✅ 2. Inserção automática no SVG (applyTemplate)
+No momento da renderização do SVG no canvas, antes de criar o svgBlob, injete isso:
+
+tsx
+Copiar
+Editar
+// Se a fonte for custom (base64), adiciona o @font-face ao SVG
+let fontFaceBlock = '';
+const selectedFontObj = availableFonts.find((f) => f.name === selectedFont);
+if (selectedFontObj?.base64) {
+  fontFaceBlock = `
+    @font-face {
+      font-family: '${selectedFontObj.name}';
+      src: url(data:font/${selectedFontObj.ext};base64,${selectedFontObj.base64}) format('${selectedFontObj.ext}');
+    }
+  `;
+}
+
+// Injeta no <style> dentro do SVG
+const styleEl = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
+styleEl.innerHTML = fontFaceBlock + `text { font-family: '${selectedFontObj.name}', sans-serif; fill: ${textColor}; }`;
+svgDoc.documentElement.insertBefore(styleEl, svgDoc.documentElement.firstChild);
+✅ 3. Novo painel "Admin" com editor de imagem (tab e estrutura)
+Adicione isso na UI onde ficam os <TabsTrigger>:
+
+tsx
+Copiar
+Editar
+<TabsTrigger value="admin" className="flex items-center gap-2">
+  <Settings className="h-4 w-4" />
+  Admin
+</TabsTrigger>
+E crie o painel:
+
+tsx
+Copiar
+Editar
+<TabsContent value="admin">
+  <Card className="bg-white/10 backdrop-blur-md border border-white/20">
+    <CardContent className="p-6">
+      <h2 className="text-2xl font-bold text-white mb-4">Admin / Editor de Layout</h2>
+
+      <div className="mb-6">
+        <label className="block text-white mb-2">Upload de Fonte Freepik</label>
+        <input type="file" accept=".woff2,.ttf" onChange={handleUploadFont} className="text-white" />
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-lg text-white mb-2">Canvas Editor</h3>
+        <canvas ref={adminCanvasRef} width={500} height={500} className="border border-white/20 rounded-md" />
+        <div className="flex gap-4 mt-4">
+          <Button onClick={() => applyFilter('grayscale')}>Tons de cinza</Button>
+          <Button onClick={() => applyFilter('invert')}>Inverter</Button>
+          <Button onClick={() => applyFilter('sepia')}>Sépia</Button>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+</TabsContent>
+🔄 Próximo passo (se quiser):
+Incluir parsing completo do SVG TEMPLATE_001_COVER_2.svg que você anexou.
+
+Integrar a leitura de IDs personalizados além de ARTIST e TITLE (por exemplo, camadas com data-effect, cor específica, etc.).
+
+Permitir salvar e reaplicar configurações do Admin via LocalStorage.

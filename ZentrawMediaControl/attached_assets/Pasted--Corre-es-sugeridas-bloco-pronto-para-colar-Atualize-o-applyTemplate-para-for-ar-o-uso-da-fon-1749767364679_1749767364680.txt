@@ -1,0 +1,68 @@
+✅ Correções sugeridas (bloco pronto para colar)
+🔄 Atualize o applyTemplate para forçar o uso da fonte + substituir texto recursivamente:
+tsx
+Copiar
+Editar
+const replaceTextRecursive = (node: Element) => {
+  if (node.childNodes.length === 0) return;
+
+  node.childNodes.forEach((child) => {
+    if (child.nodeType === Node.TEXT_NODE && child.nodeValue) {
+      if (child.nodeValue.includes('ARTIST')) {
+        child.nodeValue = child.nodeValue.replace(/ARTIST/g, artistName);
+      }
+      if (child.nodeValue.includes('TITLE')) {
+        child.nodeValue = child.nodeValue.replace(/TITLE/g, songTitle);
+      }
+    } else if (child.nodeType === Node.ELEMENT_NODE) {
+      replaceTextRecursive(child as Element);
+    }
+  });
+};
+Em seguida, troque o loop textElements.forEach(...) por:
+
+tsx
+Copiar
+Editar
+textElements.forEach(textEl => {
+  replaceTextRecursive(textEl);
+
+  const currentSize = parseInt(textEl.getAttribute('font-size') || '40');
+  const textContent = textEl.textContent || '';
+  const newSize = calculateFontSize(textContent, currentSize, 30);
+  textEl.setAttribute('font-size', newSize.toString());
+
+  // Força fonte e cor
+  textEl.setAttribute('font-family', selectedFont);
+  textEl.setAttribute('fill', textColor);
+});
+🧠 Certifique-se que o CSS da fonte no <style> do SVG também é injetado:
+tsx
+Copiar
+Editar
+if (customFontObj && customFontObj.base64) {
+  const styleEl = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
+  const fontFormat = customFontObj.ext === 'ttf' ? 'truetype' :
+                    customFontObj.ext === 'otf' ? 'opentype' :
+                    customFontObj.ext === 'woff2' ? 'woff2' : 'woff';
+
+  styleEl.textContent = `
+    @font-face {
+      font-family: '${customFontObj.name}';
+      src: url(data:font/${customFontObj.ext};base64,${customFontObj.base64}) format('${fontFormat}');
+      font-display: swap;
+    }
+
+    text {
+      font-family: '${customFontObj.name}', sans-serif;
+      fill: ${textColor};
+    }
+  `;
+  svgDoc.documentElement.insertBefore(styleEl, svgDoc.documentElement.firstChild);
+}
+✅ Resultado após essas correções:
+As fontes Freepik carregadas do Supabase serão aplicadas corretamente no preview e no SVG.
+
+Os placeholders ARTIST e TITLE funcionarão mesmo se estiverem dentro de <tspan> ou nested tags.
+
+O painel final gerará a imagem com texto dinâmico, fonte correta e estilização esperada.

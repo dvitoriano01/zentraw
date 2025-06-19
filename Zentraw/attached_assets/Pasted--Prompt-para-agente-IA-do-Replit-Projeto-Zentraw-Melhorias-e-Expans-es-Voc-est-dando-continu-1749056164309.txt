@@ -1,0 +1,177 @@
+🧠 Prompt para agente IA do Replit — Projeto Zentraw (Melhorias e Expansões)
+Você está dando continuidade ao desenvolvimento do projeto Zentraw, uma plataforma criativa voltada para artistas, especialmente músicos e produtores, que oferece ferramentas visuais e promocionais. A base do projeto já está criada no Replit, com bibliotecas personalizadas como textFX e VisualFilters.
+
+Sua missão agora é expandir e refinar a plataforma com foco em performance, escalabilidade e experiência de usuário. Siga as instruções abaixo com fidelidade.
+
+🔧 1. Banco de Dados – Supabase
+Integre o banco de dados do Supabase para autenticação de usuários e armazenamento persistente de dados (galeria, capas geradas, histórico).
+
+Use o módulo:
+
+js
+Copiar
+Editar
+const { createClient } = require('@supabase/supabase-js');
+A SUPABASE_URL e a SUPABASE_KEY devem ser solicitadas via campo seguro (não codificar direto no projeto).
+
+Configure as tabelas:
+
+users (usuários)
+
+generated_images (últimas 5 imagens criadas por usuário)
+
+saved_projects (capas, releases, press kits salvos)
+
+templates (dados dos templates disponíveis)
+
+settings (preferências do usuário e configurações do dev)
+
+🌐 2. Internacionalização (i18n)
+A base do site deve ser construída em inglês.
+
+Se possível, adicionar suporte multilíngue (inglês, português, espanhol, japonês, chinês mandarim e russo).
+
+Use uma biblioteca como i18next para suporte a múltiplos idiomas, com estrutura modular de traduções.
+
+🎨 3. Geração de Capas (Cover Generator)
+Fases e Funcionalidades a incluir:
+
+🔹 Inputs iniciais:
+Nome do artista
+
+Nome do single/álbum
+
+Tipo de geração:
+
+Geração por IA:
+
+Campo "Descrição da Imagem"
+
+Campo "Estilo" (ex: cyberpunk, urbano, abstrato)
+
+Upload de imagem (mínimo de 2000px)
+
+Escolha de imagem por API:
+
+Integrar APIs do Pexels e Pixabay
+
+Exibir imagens com botão “Usar esta imagem”
+
+Após a escolha da imagem, o usuário deve avançar para a etapa de edição.
+
+✏️ 4. Editor de Capas
+Etapas e Ferramentas:
+
+Marca d'água
+
+Adicionar "zentraw.com" ao centro da imagem
+
+Tamanho: 10% da imagem
+
+Opacidade: 80%
+
+Templates
+
+Mostrar previews de templates com a imagem do usuário em background
+
+Separar por estilo: Moderno, Futurista, Vintage, Urbano, Clássico
+
+3 templates por estilo, com rolagem horizontal se necessário
+
+Editor visual
+
+Interface com imagem à direita e ferramentas à esquerda:
+
+Zoom e posicionamento da imagem
+
+Textos separados por:
+
+Nome do artista
+
+Nome da faixa
+
+Para cada texto:
+
+Fonte: tamanho, cor, opacidade
+
+Flip: esquerda/direita (template também se adapta com flip horizontal ou vertical)
+
+Criar função para definir tipo de flip permitido por template no modo dev
+
+Overlay do template
+
+Controle de intensidade (soft/hard)
+
+Definido com range controlado internamente pelo admin
+
+Aplicação de filtros
+
+Usar biblioteca VisualFilters
+
+Habilitar filtros como glitch, scanlines, noise, etc.
+
+Finalização
+
+Blend da imagem + template
+
+Download da arte final em PNG
+
+⚙️ 5. Painel do Desenvolvedor (Modo Admin)
+Adicionar uma área de admin oculta ou autenticada para configuração de:
+
+Upload e categorização de novos templates (checkbox por estilo)
+
+Controle de:
+
+Tipo de flip permitido (horizontal, vertical ou ambos)
+
+Ranges permitidos de opacidade dos overlays
+
+Tamanho de fonte permitido
+
+Ferramentas para manipulação de texto:
+
+Stretch horizontal/vertical
+
+Ativação/remoção de filtros por template
+
+Integração com bibliotecas textFX e VisualFilters
+
+🖼️ 6. Galeria do Usuário
+Requisitos:
+
+Salvar últimas 5 imagens geradas automaticamente (temporárias)
+
+Pastas separadas para:
+
+Capas salvas
+
+Releases
+
+Press kits e demais arquivos
+
+Integrar com Supabase para persistência por usuário
+
+Mostrar imagens com opção de "renomear", "baixar" ou "remover"
+
+📦 7. Outros Pontos Técnicos Importantes
+O site já está hospedado no Replit, com bibliotecas:
+
+textFX (efeitos tipográficos animados com CSS/JS/GSAP)
+
+VisualFilters (filtros gráficos)
+
+Organize os códigos com estrutura modular por:
+
+components/
+
+utils/
+
+api/
+
+effects/
+
+Use async/await com tratamento de erros
+
+Documente as funções importantes com JSDoc ou comentários claros
+

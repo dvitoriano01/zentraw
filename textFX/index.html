@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TextFX Library Demo</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/glitch.css">
+  <link rel="stylesheet" href="styles/chromatic.css">
+  <link rel="stylesheet" href="styles/scanlines.css">
+  <link rel="stylesheet" href="styles/typing.css">
+  <link rel="stylesheet" href="styles/stretchBounce.css">
+  <link rel="stylesheet" href="styles/morphing.css">
+  <link rel="stylesheet" href="styles/gsap.css">
+  <link rel="stylesheet" href="styles/p5.css">
+  <link rel="stylesheet" href="styles/three.css">
+  <link rel="stylesheet" href="styles/blotter.css">
+  <link rel="stylesheet" href="styles/zdog.css">
+  <link rel="stylesheet" href="styles/panel.css">
+
+  <!-- JS Libraries (via CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/SplitText.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blotterjs@0.1.0/build/blotter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zdog@1.1.3/dist/zdog.dist.min.js"></script>
+</head>
+
+<body>
+  <h1>TextFX Library - Full Demo</h1>
+
+  <div id="control-panel">
+    <label for="effect-select">Choose an effect:</label>
+    <select id="effect-select">
+      <option value="glitch">Glitch</option>
+      <option value="chromatic">Chromatic Aberration</option>
+      <option value="scanlines">VHS Scanlines</option>
+      <option value="typing">Typing Effect</option>
+      <option value="stretch">Stretch + Bounce</option>
+      <option value="morphing">Text Morphing</option>
+      <option value="gsap">GSAP SplitText</option>
+      <option value="p5">p5.js</option>
+      <option value="three">Three.js</option>
+      <option value="blotter">Blotter.js</option>
+      <option value="zdog">Zdog</option>
+    </select>
+  </div>
+
+  <section id="glitch" class="effect-section">
+    <h2 class="glitch-text" data-text="GLITCH EFFECT">GLITCH EFFECT</h2>
+  </section>
+
+  <section id="chromatic" class="effect-section">
+    <h2 class="chromatic-text">CHROMATIC ABERRATION</h2>
+  </section>
+
+  <section id="scanlines" class="effect-section">
+    <h2 class="scanlines-text">VHS SCANLINES</h2>
+  </section>
+
+  <section id="typing" class="effect-section">
+    <h2 id="typing-text">Typing Effect</h2>
+  </section>
+
+  <section id="stretch" class="effect-section">
+    <h2 class="stretch-text">Stretch + Bounce</h2>
+  </section>
+
+  <section id="morphing" class="effect-section">
+    <svg viewBox="0 0 960 300">
+      <symbol id="s-text">
+        <text text-anchor="middle" x="50%" y="80%">Morphing</text>
+      </symbol>
+      <g class="g-ants">
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+      </g>
+    </svg>
+  </section>
+
+  <section id="gsap" class="effect-section">
+    <h2 id="gsap-text">GSAP SplitText</h2>
+  </section>
+
+  <section id="p5" class="effect-section">
+    <div id="p5-canvas"></div>
+  </section>
+
+  <section id="three" class="effect-section">
+    <div id="three-canvas"></div>
+  </section>
+
+  <section id="blotter" class="effect-section">
+    <div id="blotter-text">BLOTTER.JS TEXT</div>
+  </section>
+
+  <section id="zdog" class="effect-section">
+    <canvas id="zdog-canvas" width="240" height="240"></canvas>
+  </section>
+
+  <!-- Effect Scripts -->
+  <script src="textfx.js"></script>
+  <script src="effects/glitchText.js"></script>
+  <script src="effects/chromatic.js"></script>
+  <script src="effects/scanlines.js"></script>
+  <script src="effects/typingEffect.js"></script>
+  <script src="effects/stretchBounce.js"></script>
+  <script src="effects/morphing.js"></script>
+  <script src="effects/splitTextGSAP.js"></script>
+  <script src="effects/p5Effects.js"></script>
+  <script src="effects/threeText.js"></script>
+  <script src="effects/blotterText.js"></script>
+  <script src="effects/zdogText.js"></script>
+  <script src="effects/controlPanel.js"></script>
+</body>
+
+</html>

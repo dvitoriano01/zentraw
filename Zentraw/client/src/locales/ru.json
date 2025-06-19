@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Главная",
+    "dashboard": "Панель",
+    "content": "Контент",
+    "profile": "Профиль",
+    "gallery": "Галерея",
+    "templates": "Шаблоны",
+    "logout": "Выйти"
+  },
+  "coverGenerator": {
+    "title": "Генератор Обложек",
+    "artistName": "Имя Артиста",
+    "trackName": "Название Трека",
+    "albumName": "Название Альбома",
+    "generationType": "Тип Генерации",
+    "generateByAI": "Генерировать ИИ",
+    "uploadImage": "Загрузить Изображение",
+    "chooseFromAPI": "Выбрать из API",
+    "imageDescription": "Описание Изображения",
+    "style": "Стиль",
+    "styles": {
+      "modern": "Современный",
+      "futuristic": "Футуристический",
+      "vintage": "Винтаж",
+      "urban": "Городской",
+      "classic": "Классический",
+      "cyberpunk": "Киберпанк",
+      "abstract": "Абстрактный"
+    },
+    "useThisImage": "Использовать Это Изображение",
+    "nextStep": "Следующий Шаг",
+    "generate": "Генерировать",
+    "generating": "Генерация..."
+  },
+  "editor": {
+    "title": "Редактор Обложек",
+    "watermark": "Водяной Знак",
+    "templates": "Шаблоны",
+    "textEditor": "Редактор Текста",
+    "artistText": "Текст Артиста",
+    "trackText": "Текст Трека",
+    "font": "Шрифт",
+    "size": "Размер",
+    "color": "Цвет",
+    "opacity": "Прозрачность",
+    "flip": "Отразить",
+    "horizontal": "Горизонтально",
+    "vertical": "Вертикально",
+    "overlay": "Наложение",
+    "intensity": "Интенсивность",
+    "soft": "Мягкий",
+    "hard": "Жесткий",
+    "filters": "Фильтры",
+    "glitch": "Глитч",
+    "scanlines": "Линии Сканирования",
+    "noise": "Шум",
+    "zoom": "Масштаб",
+    "position": "Позиция",
+    "download": "Скачать",
+    "save": "Сохранить",
+    "reset": "Сбросить"
+  },
+  "gallery": {
+    "title": "Галерея",
+    "recent": "Последние Изображения",
+    "covers": "Сохраненные Обложки",
+    "releases": "Релизы",
+    "pressKits": "Пресс-киты",
+    "rename": "Переименовать",
+    "download": "Скачать",
+    "remove": "Удалить",
+    "empty": "Изображения не найдены"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успех",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "close": "Закрыть",
+    "upload": "Загрузить",
+    "search": "Поиск"
+  },
+  "messages": {
+    "uploadSuccess": "Изображение успешно загружено!",
+    "generateSuccess": "Обложка успешно сгенерирована!",
+    "saveSuccess": "Проект успешно сохранен!"
+  }
+}

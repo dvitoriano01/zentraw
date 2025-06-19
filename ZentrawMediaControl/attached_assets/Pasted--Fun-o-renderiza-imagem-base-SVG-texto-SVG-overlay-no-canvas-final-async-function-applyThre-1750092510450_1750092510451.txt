@@ -1,0 +1,83 @@
+// Função: renderiza imagem base + SVG texto + SVG overlay no canvas final
+async function applyThreeLayerTemplate({
+  baseImageUrl,
+  textSvgContent,
+  overlaySvgContent,
+  canvasRef,
+  formData,
+  selectedFont,
+  textColor,
+  fonts
+}: {
+  baseImageUrl: string;
+  textSvgContent: string;
+  overlaySvgContent: string;
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  formData: any;
+  selectedFont: string;
+  textColor: string;
+  fonts: any[];
+}) {
+  try {
+    const loadImage = (src: string) => new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+
+    const injectFonts = (svgDoc: Document) => {
+      const styleEl = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
+      let css = '';
+      fonts.forEach(font => {
+        const format = font.ext === 'ttf' ? 'truetype' : font.ext === 'otf' ? 'opentype' : 'woff2';
+        css += `@font-face { font-family: '${font.name}'; src: url(data:font/${font.ext};base64,${font.base64}) format('${format}'); font-display: swap; }`;
+      });
+      css += `text, tspan { font-family: '${selectedFont}'; fill: ${textColor}; }`;
+      styleEl.textContent = css;
+      svgDoc.documentElement.insertBefore(styleEl, svgDoc.documentElement.firstChild);
+    };
+
+    const substituteText = (svgDoc: Document) => {
+      const artistEl = svgDoc.querySelector('text[id="ARTIST"]');
+      const titleEl = svgDoc.querySelector('text[id="TITLE"]');
+      if (artistEl && formData.artistName) artistEl.textContent = formData.artistName;
+      if (titleEl && formData.songTitle) titleEl.textContent = formData.songTitle;
+    };
+
+    const serializeToDataURL = (svgString: string) => {
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      return URL.createObjectURL(blob);
+    };
+
+    const baseImage = await loadImage(baseImageUrl);
+
+    const parser = new DOMParser();
+    const textSvgDoc = parser.parseFromString(textSvgContent, 'image/svg+xml');
+    injectFonts(textSvgDoc);
+    substituteText(textSvgDoc);
+    const textSvgUrl = serializeToDataURL(new XMLSerializer().serializeToString(textSvgDoc));
+    const textImage = await loadImage(textSvgUrl);
+
+    const overlaySvgDoc = parser.parseFromString(overlaySvgContent, 'image/svg+xml');
+    const overlaySvgUrl = serializeToDataURL(new XMLSerializer().serializeToString(overlaySvgDoc));
+    const overlayImage = await loadImage(overlaySvgUrl);
+
+    const canvas = canvasRef.current;
+    if (!canvas) throw new Error("Canvas not found");
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error("Canvas context missing");
+
+    // Desenhar camadas
+    ctx.drawImage(baseImage, 0, 0, 1080, 1080);
+    ctx.drawImage(textImage, 0, 0, 1080, 1080);
+    ctx.drawImage(overlayImage, 0, 0, 1080, 1080);
+
+    console.log("Template de 3 camadas aplicado com sucesso.");
+  } catch (err) {
+    console.error("Erro ao aplicar layout 3 camadas:", err);
+  }
+}

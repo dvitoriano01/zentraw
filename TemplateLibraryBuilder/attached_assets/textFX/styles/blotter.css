@@ -1,0 +1,9 @@
+#blotter-text {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  background: black;
+  text-transform: uppercase;
+  user-select: none;
+  padding: 20px;
+}

@@ -1,0 +1,103 @@
+{
+  "id": "album-cover-glitch",
+  "name": "Album Cover - Glitch Style",
+  "category": "Music",
+  "tags": ["album", "music", "glitch", "retro", "vinyl"],
+  "previewUrl": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+  "dimensions": {
+    "width": 3000,
+    "height": 3000
+  },
+  "layers": [
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 3000,
+      "height": 3000,
+      "fill": "linear-gradient(45deg, #ff006e, #fb5607, #ffbe0b, #8338ec)",
+      "selectable": false,
+      "evented": false
+    },
+    {
+      "type": "rect",
+      "left": 200,
+      "top": 200,
+      "width": 2600,
+      "height": 2600,
+      "fill": "rgba(0, 0, 0, 0.7)",
+      "rx": 50,
+      "ry": 50
+    },
+    {
+      "type": "rect",
+      "left": 400,
+      "top": 400,
+      "width": 400,
+      "height": 80,
+      "fill": "#ff006e",
+      "angle": 15
+    },
+    {
+      "type": "rect",
+      "left": 2200,
+      "top": 600,
+      "width": 300,
+      "height": 60,
+      "fill": "#ffbe0b",
+      "angle": -10
+    },
+    {
+      "type": "i-text",
+      "left": 1500,
+      "top": 1200,
+      "text": "ARTIST NAME",
+      "fontFamily": "Arial",
+      "fontSize": 120,
+      "fontWeight": "bold",
+      "fill": "#ffffff",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center",
+      "charSpacing": 10
+    },
+    {
+      "type": "i-text",
+      "left": 1500,
+      "top": 1400,
+      "text": "Album Title",
+      "fontFamily": "Arial",
+      "fontSize": 80,
+      "fill": "#ffbe0b",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "circle",
+      "left": 1500,
+      "top": 2000,
+      "radius": 300,
+      "fill": "transparent",
+      "stroke": "#8338ec",
+      "strokeWidth": 8,
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 1500,
+      "top": 2600,
+      "text": "EXPLICIT",
+      "fontFamily": "Arial",
+      "fontSize": 32,
+      "fontWeight": "bold",
+      "fill": "#ffffff",
+      "backgroundColor": "#ff006e",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    }
+  ]
+}

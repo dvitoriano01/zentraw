@@ -1,0 +1,148 @@
+// Zentraw Artist Toolkit V2.10 - Salvamento no Supabase + Pré-ajuste de fonte dinâmico (simples)
+
+import React, { useState, useRef, useEffect } from 'react';
+import { TabsContent, TabsTrigger, TabsList, Tabs } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
+export default function ZentrawToolkit() {
+  const [templateSVGs, setTemplateSVGs] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [formData, setFormData] = useState({
+    artistName: 'Nome do Artista',
+    songTitle: 'Título do Single'
+  });
+  const [uploadedSVG, setUploadedSVG] = useState(null);
+  const [blendedImage, setBlendedImage] = useState(null);
+  const canvasBlendRef = useRef(null);
+
+  useEffect(() => {
+    const initialTemplates = [
+      {
+        id: 'template1',
+        name: 'Minimal',
+        svg: `<svg width="1080" height="1080" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="transparent"/>
+          <text id="artistName" x="50%" y="60%" font-size="60" text-anchor="middle" fill="white" font-family="Arial">ARTIST</text>
+          <text id="songTitle" x="50%" y="70%" font-size="40" text-anchor="middle" fill="white" font-family="Arial">TITLE</text>
+        </svg>`
+      }
+    ];
+    setTemplateSVGs(initialTemplates);
+    setSelectedTemplate(initialTemplates[0]);
+  }, []);
+
+  const handleUploadSVG = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const newTemplate = {
+        id: `tpl-${Date.now()}`,
+        name: file.name.replace('.svg', ''),
+        svg: reader.result
+      };
+      setTemplateSVGs(prev => [...prev, newTemplate]);
+      setSelectedTemplate(newTemplate);
+    };
+    reader.readAsText(file);
+  };
+
+  const applyTemplate = async () => {
+    const baseImg = new Image();
+    baseImg.crossOrigin = 'anonymous';
+    baseImg.src = blendedImage || 'https://via.placeholder.com/1080';
+
+    let svg = selectedTemplate.svg;
+    const maxFontSize = 80;
+    const artistLength = formData.artistName.length;
+    const titleLength = formData.songTitle.length;
+    const fontSizeArtist = Math.max(32, maxFontSize - artistLength);
+    const fontSizeTitle = Math.max(28, maxFontSize - titleLength);
+
+    svg = svg.replace('font-size="60"', `font-size="${fontSizeArtist}"`);
+    svg = svg.replace('font-size="40"', `font-size="${fontSizeTitle}"`);
+
+    const svgWithText = svg
+      .replace('ARTIST', formData.artistName)
+      .replace('TITLE', formData.songTitle);
+
+    const svgBlob = new Blob([svgWithText], { type: 'image/svg+xml;charset=utf-8' });
+    const svgUrl = URL.createObjectURL(svgBlob);
+
+    const svgImg = new Image();
+    svgImg.src = svgUrl;
+    svgImg.onload = () => {
+      const canvas = canvasBlendRef.current;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(baseImg, 0, 0, 1080, 1080);
+      ctx.drawImage(svgImg, 0, 0, 1080, 1080);
+      URL.revokeObjectURL(svgUrl);
+    };
+  };
+
+  const exportFinalCover = async () => {
+    const canvas = canvasBlendRef.current;
+    const dataUrl = canvas.toDataURL('image/png');
+    const blob = await (await fetch(dataUrl)).blob();
+    const filename = `cover_${Date.now()}.png`;
+    const { data, error } = await supabase.storage.from('zentraw-files').upload(`final-covers/${filename}`, blob, {
+      cacheControl: '3600', upsert: true
+    });
+
+    if (!error) {
+      alert('Capa final salva no Supabase com sucesso!');
+    } else {
+      alert('Erro ao salvar capa: ' + error.message);
+    }
+
+    const link = document.createElement('a');
+    link.download = `${formData.artistName}_${formData.songTitle}_cover.png`;
+    link.href = dataUrl;
+    link.click();
+  };
+
+  return (
+    <Tabs defaultValue="layout" className="w-full">
+      <TabsList className="grid grid-cols-7 mb-6">
+        <TabsTrigger value="bio">Bio</TabsTrigger>
+        <TabsTrigger value="release">Release</TabsTrigger>
+        <TabsTrigger value="midia">Fotos & Áudio</TabsTrigger>
+        <TabsTrigger value="capa">Capa</TabsTrigger>
+        <TabsTrigger value="kit">Kit Final</TabsTrigger>
+        <TabsTrigger value="recentes">Recentes</TabsTrigger>
+        <TabsTrigger value="layout">Layout Final</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="layout">
+        <Card><CardContent className="grid gap-4 p-4">
+          <h2 className="text-xl font-bold">Escolher Template de Capa</h2>
+          <Input type="file" accept=".svg" onChange={handleUploadSVG} />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {templateSVGs.map((tpl) => (
+              <Button
+                key={tpl.id}
+                onClick={() => setSelectedTemplate(tpl)}
+                variant={selectedTemplate?.id === tpl.id ? 'default' : 'outline'}
+              >
+                {tpl.name}
+              </Button>
+            ))}
+          </div>
+
+          <h3 className="text-lg font-semibold mt-4">Preview com Template</h3>
+          <canvas ref={canvasBlendRef} width={1080} height={1080} className="border rounded w-full max-w-xl" />
+          <div className="flex gap-4 mt-4">
+            <Button onClick={applyTemplate}>Aplicar Template</Button>
+            <Button onClick={exportFinalCover} variant="outline">Exportar e Salvar Capa Final</Button>
+          </div>
+        </CardContent></Card>
+      </TabsContent>
+    </Tabs>
+  );
+}

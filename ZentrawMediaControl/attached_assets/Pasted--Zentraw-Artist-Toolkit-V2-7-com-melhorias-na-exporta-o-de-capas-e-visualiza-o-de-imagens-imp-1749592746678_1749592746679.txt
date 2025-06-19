@@ -1,0 +1,128 @@
+// Zentraw Artist Toolkit V2.7 com melhorias na exportação de capas e visualização de imagens
+
+import React, { useState, useRef, useEffect } from 'react';
+
+// ... (importações existentes)
+
+const ImageModal = ({ imageUrl, onClose }) => (
+  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+    <div className="bg-white p-4 rounded shadow-xl max-w-2xl w-full relative">
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-white bg-red-500 rounded-full w-8 h-8 flex items-center justify-center"
+      >×</button>
+      <img src={imageUrl} alt="Visualização" className="w-full rounded" />
+    </div>
+  </div>
+);
+
+export default function ZentrawToolkit() {
+  // ... (states existentes)
+  const [exportedImages, setExportedImages] = useState([]);
+  const [modalImageUrl, setModalImageUrl] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const [projects, setProjects] = useState([]);
+
+  const canvasRef = useRef(null);
+
+  const exportCoverSizes = () => {
+    const canvas = canvasRef.current;
+    const sizes = [
+      { name: 'spotify', w: 2048, h: 2048 },
+      { name: 'instagram_post', w: 1080, h: 1350 },
+      { name: 'reel_story', w: 1080, h: 1920 },
+      { name: 'youtube', w: 1920, h: 1080 },
+    ];
+    const results = [];
+    sizes.forEach(({ name, w, h }) => {
+      const temp = document.createElement('canvas');
+      temp.width = w;
+      temp.height = h;
+      const ctx = temp.getContext('2d');
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, w, h);
+      ctx.fillStyle = '#fff';
+      ctx.font = `${w * 0.05}px sans-serif`;
+      ctx.fillText(formData?.artistName || '', 40, 80);
+      ctx.font = `${w * 0.04}px sans-serif`;
+      ctx.fillText(formData?.songTitle || '', 40, 140);
+      const url = temp.toDataURL();
+      results.push({ name, url });
+    });
+    setExportedImages(results);
+  };
+
+  return (
+    <div className="w-full">
+      {/* Modal global */}
+      {modalImageUrl && <ImageModal imageUrl={modalImageUrl} onClose={() => setModalImageUrl(null)} />}
+
+      {/* Aba de capa com previews */}
+      <TabsContent value="capa">
+        <Card><CardContent className="grid gap-4 p-4">
+          <h2 className="text-xl font-bold">Gerar Capa Visual</h2>
+          <canvas ref={canvasRef} width={400} height={400} style={{ border: '1px solid #ccc' }} />
+          <Button onClick={exportCoverSizes}>Exportar Capas em Vários Tamanhos</Button>
+
+          {exportedImages.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+              {exportedImages.map(img => (
+                <div key={img.name} className="text-center">
+                  <p className="text-sm text-white mb-2">{img.name}</p>
+                  <img
+                    src={img.url}
+                    alt={img.name}
+                    className="rounded shadow-md cursor-pointer"
+                    onClick={() => setModalImageUrl(img.url)}
+                  />
+                  <a
+                    href={img.url}
+                    download={`${img.name}.png`}
+                    className="text-xs text-blue-400 underline block mt-2"
+                  >Baixar</a>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent></Card>
+      </TabsContent>
+
+      {/* Aba de mídia com preview e modal */}
+      <TabsContent value="midia">
+        <Card><CardContent className="grid gap-4 p-4">
+          <h2 className="text-xl font-bold">Fotos & Áudio</h2>
+          {photoPreview && (
+            <img
+              src={photoPreview}
+              alt="Preview"
+              className="w-full max-w-xs rounded cursor-pointer"
+              onClick={() => setModalImageUrl(photoPreview)}
+            />
+          )}
+          {/* Suporte para áudio pode ser expandido futuramente */}
+        </CardContent></Card>
+      </TabsContent>
+
+      {/* Aba de projetos recentes com visualização de imagens */}
+      <TabsContent value="recentes">
+        <Card><CardContent className="grid gap-4 p-4">
+          {projects.map((proj) => (
+            <div key={proj.id} className="border p-3 rounded shadow space-y-2">
+              <p><strong>{proj.artist_name}</strong> - {proj.song_title}</p>
+              <p><em>{new Date(proj.created_at).toLocaleString()}</em></p>
+              {proj.image_url && (
+                <img
+                  src={proj.image_url}
+                  alt="foto"
+                  className="max-w-xs rounded cursor-pointer"
+                  onClick={() => setModalImageUrl(proj.image_url)}
+                />
+              )}
+              {proj.audio_url && <audio controls src={proj.audio_url} className="w-full" />}
+            </div>
+          ))}
+        </CardContent></Card>
+      </TabsContent>
+    </div>
+  );
+}

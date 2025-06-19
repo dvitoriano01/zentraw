@@ -1,0 +1,117 @@
+// ZentrawFXPanel.tsx
+import { fabric } from 'fabric';
+
+export default function ZentrawFXPanel({
+  object,
+  canvasRef,
+  fontList
+}: {
+  object: fabric.Object | null;
+  canvasRef: React.MutableRefObject<fabric.Canvas | null>;
+  fontList: string[];
+}) {
+  if (!object) return <p className="text-sm text-gray-400">Nenhum objeto selecionado</p>;
+
+  const isText = object.type === 'textbox';
+
+  const applyFilter = (filter: fabric.IBaseFilter) => {
+    object.filters = object.filters || [];
+    object.filters.push(filter);
+    (object as any).applyFilters();
+    canvasRef.current?.renderAll();
+  };
+
+  const clearFilters = () => {
+    object.filters = [];
+    (object as any).applyFilters();
+    canvasRef.current?.renderAll();
+  };
+
+  return (
+    <div className="space-y-3 text-xs">
+      <h3 className="font-bold text-sm mb-2">Character / FX</h3>
+
+      {isText && (
+        <>
+          <label>Fonte</label>
+          <select
+            value={object.fontFamily as string}
+            onChange={(e) => {
+              object.set({ fontFamily: e.target.value });
+              canvasRef.current?.renderAll();
+            }}
+          >
+            {fontList.map((font) => (
+              <option key={font} value={font}>{font}</option>
+            ))}
+          </select>
+
+          <label>Tamanho</label>
+          <input
+            type="range"
+            min="10"
+            max="150"
+            value={object.fontSize as number || 48}
+            onChange={(e) => {
+              object.set({ fontSize: parseInt(e.target.value) });
+              canvasRef.current?.renderAll();
+            }}
+          />
+
+          <label>Cor</label>
+          <input
+            type="color"
+            value={object.fill as string}
+            onChange={(e) => {
+              object.set({ fill: e.target.value });
+              canvasRef.current?.renderAll();
+            }}
+          />
+        </>
+      )}
+
+      <label>Blend Mode</label>
+      <select
+        onChange={(e) => {
+          object.globalCompositeOperation = e.target.value as any;
+          canvasRef.current?.renderAll();
+        }}
+        defaultValue="source-over"
+      >
+        <option value="source-over">Normal</option>
+        <option value="multiply">Multiply</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="difference">Difference</option>
+      </select>
+
+      <hr className="my-2 border-gray-700" />
+
+      <h4 className="text-sm font-semibold">Filtros de Imagem</h4>
+      <div className="flex flex-wrap gap-2 text-xs">
+        <button onClick={() => applyFilter(new fabric.Image.filters.Blur({ blur: 0.2 }))}>Blur</button>
+        <button onClick={() => applyFilter(new fabric.Image.filters.Grayscale())}>Grayscale</button>
+        <button onClick={() => applyFilter(new fabric.Image.filters.Sepia())}>Sepia</button>
+        <button onClick={() => applyFilter(new fabric.Image.filters.Contrast({ contrast: 0.5 }))}>Contrast</button>
+        <button onClick={() => applyFilter(new fabric.Image.filters.Brightness({ brightness: 0.3 }))}>Brightness</button>
+        <button onClick={clearFilters}>Limpar</button>
+      </div>
+
+      {isText && (
+        <>
+          <h4 className="text-sm mt-3">FX Texto</h4>
+          <button onClick={() => {
+            object.set({ skewX: 20 });
+            canvasRef.current?.renderAll();
+          }}>Warp</button>
+          <button onClick={() => {
+            const clone = fabric.util.object.clone(object);
+            clone.set({ left: (object.left || 0) + 3, top: (object.top || 0) + 3, fill: 'red' });
+            canvasRef.current?.add(clone);
+            canvasRef.current?.renderAll();
+          }}>Glitch</button>
+        </>
+      )}
+    </div>
+  );
+}

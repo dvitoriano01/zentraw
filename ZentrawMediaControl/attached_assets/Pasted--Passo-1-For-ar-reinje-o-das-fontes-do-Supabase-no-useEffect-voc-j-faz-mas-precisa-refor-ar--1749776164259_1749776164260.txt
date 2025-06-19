@@ -1,0 +1,84 @@
+🔁 Passo 1: Forçar reinjeção das fontes do Supabase no useEffect (você já faz, mas precisa reforçar)
+Garanta que isso aconteça em todas as telas com preview/template:
+
+tsx
+Copiar
+Editar
+useEffect(() => {
+  if (serverFonts && serverFonts.length > 0) {
+    setCustomFonts(serverFonts); // já faz
+    injectFontsIntoDOM(serverFonts); // importante!
+  }
+}, [serverFonts]);
+💾 Passo 2: Armazenar fontes no Supabase com ID estável
+Certifique-se de que o name da fonte seja único e consistente.
+
+Se a mesma fonte for reupada, substitua no servidor.
+
+📥 Passo 3: Reforçar o injectFontsIntoDOM para manter estilo vivo
+Atualize sua função para remover e recriar o <style id="zentraw-custom-fonts">:
+
+tsx
+Copiar
+Editar
+const injectFontsIntoDOM = (fonts: any[]) => {
+  const existing = document.getElementById('zentraw-custom-fonts');
+  if (existing) existing.remove();
+
+  const style = document.createElement('style');
+  style.id = 'zentraw-custom-fonts';
+  let css = '';
+
+  fonts.forEach(font => {
+    if (font.base64) {
+      const format = font.ext === 'ttf' ? 'truetype' :
+                     font.ext === 'otf' ? 'opentype' :
+                     font.ext === 'woff2' ? 'woff2' : 'woff';
+
+      css += `
+        @font-face {
+          font-family: '${font.name}';
+          src: url(data:font/${font.ext};base64,${font.base64}) format('${format}');
+          font-display: swap;
+        }
+      `;
+    }
+  });
+
+  style.textContent = css;
+  document.head.appendChild(style);
+};
+🧠 Passo 4: Evitar dependência de cache
+Como alternativa extra:
+
+Você pode salvar os dados das fontes em um JSON local (no Supabase) que retorna todas as fontes serializadas em base64 e lê via API de /api/fonts.json.
+
+Ou manter em cache via LocalStorage (no lado do cliente), assim:
+
+tsx
+Copiar
+Editar
+useEffect(() => {
+  const cached = localStorage.getItem('zentraw_fonts');
+  if (cached) {
+    const parsed = JSON.parse(cached);
+    injectFontsIntoDOM(parsed);
+    setCustomFonts(parsed);
+  }
+}, []);
+
+useEffect(() => {
+  if (customFonts.length > 0) {
+    localStorage.setItem('zentraw_fonts', JSON.stringify(customFonts));
+  }
+}, [customFonts]);
+✅ Resultado final esperado:
+Fontes Freepik serão:
+
+Persistidas no Supabase.
+
+Recarregadas e injetadas no DOM sempre que a app abrir.
+
+Utilizáveis no preview e export da imagem via applyTemplate.
+
+Mesmo que Replit limpe a memória temporária, as fontes serão restauradas automaticamente.

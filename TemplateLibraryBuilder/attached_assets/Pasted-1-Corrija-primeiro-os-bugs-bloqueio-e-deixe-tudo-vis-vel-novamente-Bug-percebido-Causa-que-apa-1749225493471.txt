@@ -1,0 +1,116 @@
+1 ▪ Corrija primeiro os “bugs-bloqueio” (e deixe tudo visível novamente)
+Bug percebido	Causa que aparece no código	Como arrumar
+Shapes e texto entram na “Layers” mas não aparecem no canvas.	Você congelou toda a viewport do Fabric (sobretudo em canvas.setViewportTransform) e, ao mesmo tempo, o hook useCanvasZoomPan aplica transform: scale() por CSS. Assim, as coordenadas lógicas (400 × 300) já não correspondem mais ao ponto real na tela – os objetos ficam fora da área visível. 
+Remova o bloco que começa em // Completely disable all viewport manipulations (até o setViewportTransform falsificado).
+Depois ajuste o hook: em vez de dar style.transform, faça zoom “nativo” usando canvas.zoomToPoint e pan com canvas.relativePan. Isso mantém Fabric e DOM sempre em sincronia.
+Não dá para ver o grid original; fundo está branco.	O <canvas> tem className="… bg-white" 
+ que cobre o padrão quadriculado do contêiner e faz parecer que o fundo é branco. Além disso, setCanvasBackground('transparent') só limpa o backgroundColor, mas o bg-white continua.	Retire bg-white da classe do <canvas> ou troque por bg-transparent.
+Background transparente continua branco mesmo depois de clicar no botão “Transparent”.	O estado canvasBackground vai para 'transparent', mas ao atualizar você faz fabricCanvas.backgroundColor = '', o que equivale a undefined – o Fabric cai no default white. 
+Use canvas.setBackgroundColor(null, canvas.renderAll.bind(canvas)).
+Isso força Background = realmente transparente.
+Zoom não reage à UI (0 %-∞).	useCanvasZoomPan está operando só no CSS; como você travou a viewport, o valor de zoom muda na UI mas nada acontece. 
+Após remover o bloqueio da viewport (primeira linha da tabela) troque o hook para algo assim:
+```ts
+const zoomIn = () => {		
+const point = new fabric.Point(canvas.width/2, canvas.height/2);		
+canvas.zoomToPoint(point, canvas.getZoom() + 0.1);		
+};		
+
+<br>Faça
+Copiar
+Editar
+| **`renderOnAddRemove: false`** força você a chamar `canvas.renderAll()` manualmente em *todo* lugar; se esquecer uma vez, o objeto não aparece. :contentReference[oaicite:4]{index=4} | Simplesmente defina `renderOnAddRemove: true` ou remova a opção – o padrão do Fabric já é true. |
+
+> **Checklist mínimo para voltar a funcionar**  
+> 1. Apague o “congelamento” da viewport.  
+> 2. Remova `bg-white` do `<canvas>`.  
+> 3. Troque a lógica de background transparente (use `null`).  
+> 4. Ligue de volta `renderOnAddRemove`.  
+> 5. Faça o hook de zoom chamar os métodos nativos do Fabric.
+
+Depois desses quatro passos você já consegue:
+
+* Clicar em **Text / Rectangle / Circle / Triangle** e ver imediatamente no canvas.  
+* Alternar cor ou transparência do fundo.  
+* Usar o zoom da UI e validar que a porcentagem reflete o zoom real.  
+* Manter o grid quadriculado de fundo (canvas transparente sobre o “tabuleiro”).
+
+---
+
+### 2 ▪ Evoluir para um “mini-Photoshop” (road-map de features viáveis)
+
+| Fase | Ferramentas / Painéis | Bibliotecas sugeridas | Dicas de implementação |
+|------|-----------------------|-----------------------|------------------------|
+| **A. Básico**<br>(já iniciado) | • Move / Select<br>• Shapes primárias<br>• Texto<br>• Camadas+blend mode | Fabric.js | Use `globalCompositeOperation` por camada (já mapeado no select de blend mode). |
+| **B. Efeitos** | 1. **Filters** (Hue/Sat/Brightness, Blur, Vignette…)<br>2. **Text FX** (Glitch, Chromatic Aberration, Typewriter…)<br>3. **Visual FX** (Noise, Scanlines, VHS overlay…) | • **fabric.Image.filters** para ajustes “CPU”<br>• **@pixi/core + @pixi/filter-* or glfx.js** para filtros WebGL triviais<br>• A _lib_ **TextFX** que criamos (exporta funções que devolvem um objeto `{ shadow:string; fill:string; fontVariationSettings?:string }`) | Crie um `FiltersPanel` e um `EffectsPipeline`.<br>Cada vez que o usuário marcar um efeito, empurre uma função para um array e, no final, rode `canvas.renderAll()`. |
+| **C. Templates & Assets** | • Modal de Templates (já tem um gatilho “Templates”)<br>• Biblioteca de *VisualEffects* (overlays PNG/SVG)<br>• Gerador de Mockups (inserir PSD-like Smart Object) |  | Guarde cada template como JSON do Fabric: basta carregar com `canvas.loadFromJSON`. |
+| **D. Produtividade tipo Photoshop** | • _Undo/Redo_ (já existe) + Histórico visual (mini‐thumbnails)<br>• Drag-and-drop reordenável na lista de camadas (já usa **react-beautiful-dnd**) |  | O hook de histórico já grava até 50 estados – acrescente uma `<ul>` à direita que mostre uma miniatura do JSON (use `canvas.toDataURL({width:120,height:90})`). |
+| **E. Export & Sharing** | • PNG, JPEG, SVG (já existe)<br>• GIF/MP4 simples (capturando sequência de estados)<br>• Upload direto para Zentraw S3 / Wix MediaManager | **gif.js** ou **ffmpeg.wasm** para gerar animações client‐side | Lembre‐se de multiplicar a resolução (`multiplier:2-4`) na exportação para mídias sociais. |
+
+---
+
+### 3 ▪ Trecho-guia para o novo _hook_ de zoom/pan
+
+```ts
+// useFabricZoomPan.ts
+export function useFabricZoomPan(canvasRef: React.MutableRefObject<fabric.Canvas|null>) {
+  const zoomStep = 0.1
+  const minZoom = 0.1
+  const maxZoom = 5
+
+  const zoomIn = () => {
+    if (!canvasRef.current) return
+    const z = Math.min(canvasRef.current.getZoom() + zoomStep, maxZoom)
+    canvasRef.current.zoomToPoint(
+      new fabric.Point(canvasRef.current.getWidth()/2, canvasRef.current.getHeight()/2),
+      z
+    )
+  }
+
+  const zoomOut = () => {
+    if (!canvasRef.current) return
+    const z = Math.max(canvasRef.current.getZoom() - zoomStep, minZoom)
+    canvasRef.current.zoomToPoint(
+      new fabric.Point(canvasRef.current.getWidth()/2, canvasRef.current.getHeight()/2),
+      z
+    )
+  }
+
+  const resetZoom = () => {
+    canvasRef.current?.setViewportTransform([1,0,0,1,0,0])
+  }
+
+  return { zoomIn, zoomOut, resetZoom }
+}
+Substitua o antigo useCanvasZoomPan pela nova versão; depois, no componente principal, basta:
+
+ts
+Copiar
+Editar
+const { zoomIn, zoomOut, resetZoom } = useFabricZoomPan(fabricCanvasRef)
+e remover qualquer style.transform em containerRef.
+
+4 ▪ Resumo rápido de “dif-patches”
+diff
+Copiar
+Editar
+- renderOnAddRemove: false,
++ renderOnAddRemove: true,
+
+- className="border border-gray-600 shadow-2xl bg-white"
++ className="border border-gray-600 shadow-2xl bg-transparent"
+
+- // Completely disable all viewport manipulations
+- const noOp = ...
+- canvas.setViewportTransform = ...
++ // (removido)
+
+- if (canvasBackground === 'transparent') {
+-   fabricCanvas.backgroundColor = '';
+- } else {
+-   ...
+- }
++ fabricCanvas.setBackgroundColor(
++   canvasBackground === 'transparent' ? null : canvasBackground,
++   fabricCanvas.renderAll.bind(fabricCanvas)
++ )

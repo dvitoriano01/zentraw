@@ -1,0 +1,60 @@
+{
+  "id": "instagram-post-minimal",
+  "name": "Instagram Post - Minimal",
+  "category": "Social Media",
+  "tags": ["instagram", "social", "minimal", "modern"],
+  "previewUrl": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+  "thumbnailUrl": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+  "dimensions": {
+    "width": 1080,
+    "height": 1080
+  },
+  "layers": [
+    {
+      "type": "rect",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 1080,
+      "fill": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "selectable": false,
+      "evented": false
+    },
+    {
+      "type": "circle",
+      "left": 540,
+      "top": 300,
+      "radius": 150,
+      "fill": "rgba(255, 255, 255, 0.1)",
+      "stroke": "rgba(255, 255, 255, 0.3)",
+      "strokeWidth": 3,
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 540,
+      "top": 600,
+      "text": "Your Amazing\nContent Here",
+      "fontFamily": "Inter",
+      "fontSize": 48,
+      "fontWeight": "bold",
+      "fill": "#ffffff",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    },
+    {
+      "type": "i-text",
+      "left": 540,
+      "top": 750,
+      "text": "@yourusername",
+      "fontFamily": "Inter",
+      "fontSize": 24,
+      "fill": "rgba(255, 255, 255, 0.8)",
+      "textAlign": "center",
+      "originX": "center",
+      "originY": "center"
+    }
+  ]
+}

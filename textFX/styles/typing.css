@@ -1,0 +1,16 @@
+#typing-text {
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: nowrap;
+  border-right: 0.15em solid orange;
+  overflow: hidden;
+  width: 20ch;
+  animation: caret 0.75s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    border-color: transparent;
+  }
+}

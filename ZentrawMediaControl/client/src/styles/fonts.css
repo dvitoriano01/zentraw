@@ -1,0 +1,57 @@
+/* Zentraw V1.3 - Fontes Customizadas */
+
+/* Fontes Freepik - Caminhos corretos para subpastas */
+@font-face {
+  font-family: 'AkuiNa Bold';
+  src: url('/fonts/ttf/akuina-akuina-bold-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Custody Script';
+  src: url('/fonts/otf/custody-custody-regular-script-400.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vibes Arcade';
+  src: url('/fonts/ttf/vibes-arcade.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neon Display';
+  src: url('/fonts/otf/neon-display.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Future Grunge';
+  src: url('/fonts/ttf/future-grunge.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fontes do sistema como fallback */
+@font-face {
+  font-family: 'System Bold';
+  src: local('Arial Black'), local('Arial-Black');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'System Script';
+  src: local('Brush Script MT'), local('BrushScriptMT');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,128 @@
+✅ Pronto! Agora o documento no seu Replit contém a versão consolidada e funcional completa do Zentraw Artist Toolkit (V7), com todas as funções principais e complementares integradas em um único código.
+
+Incluído na versão final:
+🔄 Estrutura completa:
+Interface com abas (Tabs) para cada etapa do processo
+
+Formulários com campos para bio, release, uploads e geração de arte
+
+Conexões com Supabase e OpenAI
+
+📦 Funcionalidades integradas:
+Geração de bio e release com IA
+
+Upload de imagem e áudio para Supabase Storage
+
+Visualização e carregamento de projetos salvos
+
+Atualização de projetos existentes
+
+Exclusão de projetos
+
+Download direto de imagem e áudio
+
+Geração de imagem com DALL·E
+
+Exportação de capa em múltiplos formatos (Spotify, Reels, etc.)
+
+Exportação de mini-site HTML presskit
+
+✅ Você pode agora:
+Testar localmente no Replit
+
+Integrar com autenticação real (se desejar)
+
+Publicar versões para mobile, dashboard e automações futuras
+
+Se quiser, posso ajudar com o deploy (Vercel, Netlify, Replit web), autenticação por login, ou integração com ferramentas externas como Spotify ou Linkfire. Deseja isso?
+
+
+
+
+
+
+Você disse:
+Vamos chama essa versão de V2.7, ok?
+Além deste código, eu preciso enviar um prompt com algumas instruções? (cirar arquivos, ou bibliotecas)
+
+
+O ChatGPT disse:
+Perfeito! A partir de agora, você pode considerar essa versão como a Zentraw Artist Toolkit V2.7 ✅
+
+✅ O que enviar ao Replit para rodar 100%:
+1. 📁 Estrutura de arquivos esperada:
+bash
+Copiar
+Editar
+/src
+  └── App.jsx        ← (cole o código atual aqui)
+.env (use o Secrets do Replit)
+index.html
+package.json
+2. 🧾 package.json com bibliotecas obrigatórias:
+json
+Copiar
+Editar
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "@supabase/supabase-js": "^2.39.0",
+    "html2pdf.js": "^0.10.1"
+  },
+  "scripts": {
+    "start": "react-scripts start"
+  }
+}
+Comando para instalar as dependências (no shell do Replit):
+
+bash
+Copiar
+Editar
+npm install
+3. 🔐 Secrets (variáveis no .env ou Replit Secrets):
+No painel de "Secrets" do Replit, adicione:
+
+ini
+Copiar
+Editar
+SUPABASE_URL=https://<seu-projeto>.supabase.co
+SUPABASE_ANON_KEY=eyJ...  (a chave anônima do Supabase)
+OPENAI_API_KEY=sk-...     (sua chave secreta da OpenAI)
+4. 🗃️ Supabase Setup (uma vez no painel Supabase):
+Bucket chamado: zentraw-files (visibilidade: pública)
+
+Tabela chamada: projects com as colunas:
+
+plaintext
+Copiar
+Editar
+id (int, primary key, autoincrement)
+user_id (text)
+artist_name (text)
+song_title (text)
+genre (text)
+mood (text)
+bio (text)
+release (text)
+image_url (text)
+audio_url (text)
+created_at (timestamp, default: now())
+5. 🚀 Prompt que você pode usar para configurar o ambiente automaticamente no Replit:
+prompt
+Copiar
+Editar
+Crie um projeto React com:
+- Biblioteca @supabase/supabase-js
+- Biblioteca html2pdf.js
+- Conexão com OpenAI via fetch
+- Layout com Tabs para múltiplas seções (bio, release, mídia, capa, kit final, recentes)
+- Upload de arquivos para Supabase Storage (imagem e áudio)
+- Autenticação anônima no Supabase
+- Geração de bio e release com OpenAI
+- Geração de imagem com DALL·E
+- Exportação de capa em múltiplos formatos
+- Exportação de mini site em HTML
+- CRUD completo de projetos com visualização, edição, exclusão e download
+Use o código central no arquivo `App.jsx` com o título Zentraw Artist Toolkit V2.7.

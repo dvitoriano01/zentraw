@@ -1,0 +1,393 @@
+Skip to content
+Home
+Apps
+Deployments
+Usage
+Teams
+Explore Replit
+Bounties
+Templates
+Learn
+Documentation
+Install Replit on
+Search & run commands
+Search & run commands
+Ctrl
+.
+
+
+zentraw
+Hi @zentraw, what do you want to make?
+Agent GPT-4
+App type
+
+Auto
+Your recent Apps
+
+TemplateLibraryBuilder
+TemplateLibraryBuilder
+2 days ago
+
+VisualFilters
+VisualFilters
+6 days ago
+
+textFX
+textFX
+3 days ago
+Pasted-Voc-um-assistente-de-desenvolvimento-fullstack-Vou-te-passar-o-contexto-Projeto-Zentraw-Art-1749492134797_1749492134798.txt
+Você é um assistente de desenvolvimento fullstack. Vou te passar o contexto:
+
+Projeto: Zentraw Artist Toolkit — plataforma React/Next.js para artistas criarem bios, releases, capas, PDFs, com uploads de imagens e áudio.
+
+Contexto atual: 
+- Frontend React já criado (campos de artista, música, uploads).
+- Backend Python Flask simples disponível.
+- Supabase configurado para autenticação e banco (PostgreSQL).
+
+Sua tarefa:
+
+1) Criar uma API Flask que:
+  - Recebe via POST um formulário com:
+    * artistName (string)
+    * songTitle (string)
+    * image (arquivo)
+    * audio (arquivo)
+  - Usa MoviePy para gerar um vídeo de até 20 segundos:
+    * Fundo com a imagem enviada (redimensionada para 1080p).
+    * Texto animado com "artistName - songTitle" na parte inferior.
+    * Trilha sonora com o áudio enviado.
+  - Salva o vídeo gerado temporariamente.
+  - Salva os dados no Supabase (tabela "videos"):
+    * id (UUID)
+    * artist_name
+    * song_title
+    * video_url (link público do arquivo armazenado no Supabase Storage)
+    * created_at (timestamp)
+  - Faz upload do vídeo para Supabase Storage (bucket "videos") com visibilidade pública.
+  - Retorna URL pública do vídeo no JSON da resposta.
+
+2) Integrar no frontend React:
+  - Formulário para artista, música, imagem e áudio.
+  - Ao enviar, chama a API Flask via fetch.
+  - Mostra loading durante processamento.
+  - Ao receber resposta, exibe o vídeo com player e link para download.
+  - Salva a resposta com URL no estado e exibe.
+
+3) Usar as variáveis de ambiente do Supabase já configuradas para autenticação e upload:
+  - SUPABASE_URL
+  - SUPABASE_ANON_KEY
+
+4) Documentar os passos e código para fácil manutenção.
+
+5) Usar estrutura limpa e separação entre frontend/backend.
+
+---
+
+Considere que:
+
+- Flask backend está rodando no Replit no mesmo domínio (mesma origem).
+- Para upload no Supabase Storage, use o SDK oficial supabase-py.
+- Frontend está com React 18, hooks.
+- Backend Python usa Flask e MoviePy.
+- Limite o vídeo a 20s para não estourar processamento.
+
+---
+
+Gere o código completo para backend `main.py`, exemplo de integração no frontend React (App.jsx) e as dependências necessárias no `requirements.txt` e `package.json` para o projeto. Explique brevemente o que cada parte faz.
+
+---
+
+Inicie pela API Flask no backend.
+
+
+
+
+Crie uma aplicação fullstack para o projeto Zentraw Artist Toolkit com as seguintes características:
+
+Backend em Python Flask que recebe upload de imagem (foto do artista) e áudio (single), nome do artista e título da música via POST.
+
+Backend gera um vídeo de até 20 segundos usando MoviePy, com a imagem como plano de fundo e o áudio tocando, adicionando o nome do artista e título da música como texto animado no vídeo.
+
+O vídeo gerado deve ser enviado para um bucket do Supabase Storage configurado previamente.
+
+Dados do vídeo (id, nome do artista, título da música, URL pública do vídeo, data de criação) devem ser salvos em uma tabela no banco Supabase.
+
+Frontend React que apresenta um formulário para inserir nome do artista, título da música e fazer upload dos arquivos de imagem e áudio.
+
+Frontend deve enviar esses dados para o backend, exibir um loading enquanto o vídeo está sendo processado, e após o sucesso mostrar o vídeo gerado em player HTML5 com opção de download.
+
+Usar variáveis de ambiente para as chaves do Supabase (URL e Service Role Key).
+
+Código deve ser claro e modular, pronto para futuras expansões.
+
+Incluir instruções para instalar dependências (requirements.txt e package.json).
+
+Gere todo o código backend e frontend, além dos arquivos de configuração necessários.
+
+Se quiser, posso gerar o código e arquivos para você copiar e colar no Replit, ou montar um repositório com tudo pronto. Quer?
+
+
+
+
+
+
+Você disse:
+Se quiser, posso gerar o código e arquivos para você copiar e colar no Replit
+
+isso, tudo junto
+
+
+O ChatGPT disse:
+Perfeito! Vou gerar para você tudo o que precisa — backend Python Flask, frontend React, integração com Supabase, uploads, geração de vídeo com MoviePy, salvamento no Supabase Storage e banco, além das instruções de instalação — tudo junto, para você copiar e colar direto no Replit.
+
+Zentraw Artist Toolkit — Código Completo Fullstack
+1. Backend (Python Flask + MoviePy + Supabase)
+requirements.txt
+txt
+Copiar
+Editar
+Flask==2.3.2
+moviepy==1.0.3
+requests==2.31.0
+python-dotenv==1.0.0
+supabase==1.0.0
+app.py
+python
+Copiar
+Editar
+import os
+from flask import Flask, request, jsonify
+from moviepy.editor import ImageClip, AudioFileClip, CompositeVideoClip, TextClip
+from supabase import create_client, Client
+from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+import uuid
+from datetime import datetime
+
+load_dotenv()
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+
+def generate_video(image_path, audio_path, artist_name, song_title):
+    audio = AudioFileClip(audio_path)
+    duration = min(audio.duration, 20)  # max 20s
+
+    image = ImageClip(image_path).set_duration(duration)
+    image = image.resize(height=720)  # keep aspect ratio, max height 720
+
+    txt_artist = TextClip(f"Artista: {artist_name}", fontsize=50, color='white', font='Arial-Bold')
+    txt_artist = txt_artist.set_position(("center", 50)).set_duration(duration)
+
+    txt_song = TextClip(f"Música: {song_title}", fontsize=40, color='white', font='Arial-Bold')
+    txt_song = txt_song.set_position(("center", 120)).set_duration(duration)
+
+    video = CompositeVideoClip([image, txt_artist, txt_song]).set_audio(audio).set_duration(duration)
+
+    output_path = os.path.join(app.config['UPLOAD_FOLDER'], f"video_{uuid.uuid4()}.mp4")
+    video.write_videofile(output_path, fps=24, codec='libx264', audio_codec='aac', verbose=False, logger=None)
+
+    return output_path
+
+def upload_to_supabase(file_path, filename):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    bucket = supabase.storage.from_('zentraw-videos')
+    res = bucket.upload(f"videos/{filename}", data, {'cacheControl': '3600', 'upsert': False})
+    if res.get("error"):
+        raise Exception(res["error"]["message"])
+    public_url = bucket.get_public_url(f"videos/{filename}")['publicURL']
+    return public_url
+
+@app.route('/api/upload', methods=['POST'])
+def upload():
+    artist_name = request.form.get('artistName')
+    song_title = request.form.get('songTitle')
+    image_file = request.files.get('image')
+    audio_file = request.files.get('audio')
+
+    if not (artist_name and song_title and image_file and audio_file):
+        return jsonify({"error": "Missing fields"}), 400
+
+    image_filename = secure_filename(image_file.filename)
+    audio_filename = secure_filename(audio_file.filename)
+
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+    audio_path = os.path.join(app.config['UPLOAD_FOLDER'], audio_filename)
+
+    image_file.save(image_path)
+    audio_file.save(audio_path)
+
+    try:
+        video_path = generate_video(image_path, audio_path, artist_name, song_title)
+
+        video_filename = os.path.basename(video_path)
+        public_url = upload_to_supabase(video_path, video_filename)
+
+        # Save metadata to Supabase
+        supabase.table('videos').insert({
+            'artist_name': artist_name,
+            'song_title': song_title,
+            'video_url': public_url,
+            'created_at': datetime.utcnow().isoformat()
+        }).execute()
+
+        # Cleanup
+        os.remove(image_path)
+        os.remove(audio_path)
+        os.remove(video_path)
+
+        return jsonify({"videoUrl": public_url})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
+2. Frontend (React)
+package.json (depende do seu template no Replit, só certifique das libs):
+json
+Copiar
+Editar
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "axios": "^1.4.0"
+  }
+}
+src/App.js
+jsx
+Copiar
+Editar
+import React, { useState } from "react";
+import axios from "axios";
+
+export default function App() {
+  const [formData, setFormData] = useState({
+    artistName: "",
+    songTitle: "",
+    image: null,
+    audio: null,
+  });
+
+  const [videoUrl, setVideoUrl] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.name === "image" || e.target.name === "audio") {
+      setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setVideoUrl("");
+    if (!formData.artistName || !formData.songTitle || !formData.image || !formData.audio) {
+      setError("Preencha todos os campos e envie arquivos.");
+      return;
+    }
+
+    const data = new FormData();
+    data.append("artistName", formData.artistName);
+    data.append("songTitle", formData.songTitle);
+    data.append("image", formData.image);
+    data.append("audio", formData.audio);
+
+    setLoading(true);
+    try {
+      const res = await axios.post("/api/upload", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setVideoUrl(res.data.videoUrl);
+    } catch (err) {
+      setError(err.response?.data?.error || "Erro ao gerar vídeo");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
+      <h1>Zentraw Artist Toolkit - Vídeo Gerado</h1>
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 15 }}>
+        <input
+          type="text"
+          name="artistName"
+          placeholder="Nome do Artista"
+          value={formData.artistName}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="songTitle"
+          placeholder="Título da Música"
+          value={formData.songTitle}
+          onChange={handleChange}
+          required
+        />
+        <input type="file" name="image" accept="image/*" onChange={handleChange} required />
+        <input type="file" name="audio" accept="audio/*" onChange={handleChange} required />
+        <button type="submit" disabled={loading}>
+          {loading ? "Gerando vídeo..." : "Gerar Vídeo"}
+        </button>
+      </form>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {videoUrl && (
+        <div style={{ marginTop: 30 }}>
+          <h2>Vídeo Gerado:</h2>
+          <video src={videoUrl} controls width="100%" />
+          <a href={videoUrl} download target="_blank" rel="noreferrer" style={{ display: "block", marginTop: 10 }}>
+            Baixar Vídeo
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+3. .env (defina no Replit secrets)
+ini
+Copiar
+Editar
+SUPABASE_URL=seu_supabase_url
+SUPABASE_SERVICE_KEY=sua_supabase_service_role_key
+4. Configurações no Supabase
+Crie um bucket público chamado: zentraw-videos
+
+Crie uma tabela videos com campos:
+
+id (serial, primary key)
+
+artist_name (text)
+
+song_title (text)
+
+video_url (text)
+
+created_at (timestamp)
+
+5. Rodando o projeto
+Instale backend: pip install -r requirements.txt
+
+Inicie Flask: python app.py
+
+Instale frontend: npm install (ou yarn install)
+
+Inicie frontend: npm start
+
+Garanta que o frontend envie as requisições para http://localhost:5000/api/upload (ou ajuste proxy no package.json)
+

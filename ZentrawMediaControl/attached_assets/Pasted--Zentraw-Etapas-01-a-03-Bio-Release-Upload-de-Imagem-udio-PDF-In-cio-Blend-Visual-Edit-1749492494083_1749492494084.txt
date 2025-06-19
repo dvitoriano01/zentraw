@@ -1,0 +1,190 @@
+// Zentraw - Etapas 01 a 03: Bio/Release + Upload de Imagem/Áudio + PDF + Início Blend Visual + Editor Admin
+
+import React, { useState, useRef, useEffect } from 'react';
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import html2pdf from 'html2pdf.js';
+
+const OpenAI_API_KEY = process.env.OPENAI_API_KEY;
+
+export default function BioReleaseGenerator() {
+  const [formData, setFormData] = useState({
+    artistName: '',
+    genre: '',
+    achievements: '',
+    influences: '',
+    tone: 'formal',
+    audience: 'press',
+    songTitle: '',
+    musicStyle: '',
+    mood: '',
+    releaseDate: '',
+    collaborators: '',
+    releaseAudience: '',
+    themeMessage: '',
+    audioFile: null,
+    pressPhoto: null
+  });
+
+  const [bioOutput, setBioOutput] = useState('');
+  const [releaseOutput, setReleaseOutput] = useState('');
+  const [photoPreview, setPhotoPreview] = useState(null);
+  const [audioPreview, setAudioPreview] = useState(null);
+  const canvasRef = useRef(null);
+  const [showEditor, setShowEditor] = useState(false);
+
+  useEffect(() => {
+    if (formData.pressPhoto) {
+      setPhotoPreview(URL.createObjectURL(formData.pressPhoto));
+    }
+  }, [formData.pressPhoto]);
+
+  useEffect(() => {
+    if (formData.audioFile) {
+      setAudioPreview(URL.createObjectURL(formData.audioFile));
+    }
+  }, [formData.audioFile]);
+
+  const generateBio = async () => {
+    const prompt = `Crie uma biografia profissional e envolvente para um artista musical com base nas seguintes informações:\n
+Nome artístico: ${formData.artistName}\nGênero musical: ${formData.genre}\nConquistas: ${formData.achievements}\nInfluências: ${formData.influences}\nTom: ${formData.tone}\nPúblico-alvo: ${formData.audience}\n
+Inclua uma versão curta (até 300 caracteres) e uma versão completa (3 parágrafos).`;
+
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OpenAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4",
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    const data = await res.json();
+    setBioOutput(data.choices[0].message.content);
+  };
+
+  const generateRelease = async () => {
+    const prompt = `Crie um press release para um lançamento musical com as seguintes informações:\n
+Título da música: ${formData.songTitle}\nArtista: ${formData.artistName}\nEstilo musical: ${formData.musicStyle}\nClima da música: ${formData.mood}\nData de lançamento: ${formData.releaseDate}\nColaborações: ${formData.collaborators}\nPúblico-alvo: ${formData.releaseAudience}\nMensagem principal: ${formData.themeMessage}\nResumo da biografia do artista: ${bioOutput}\n
+Crie uma versão curta (até 300 caracteres) e uma completa (até 3 parágrafos) com estilo jornalístico e cativante.`;
+
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OpenAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4",
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    const data = await res.json();
+    setReleaseOutput(data.choices[0].message.content);
+  };
+
+  const downloadPDF = () => {
+    const element = document.getElementById("export-section");
+    html2pdf()
+      .set({
+        margin: 0.5,
+        filename: `${formData.artistName}_Release.pdf`,
+        html2canvas: {},
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      })
+      .from(element)
+      .save();
+  };
+
+  const renderCanvas = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#fff';
+    ctx.font = '30px sans-serif';
+    ctx.fillText(formData.artistName, 40, 60);
+    ctx.font = '20px sans-serif';
+    ctx.fillText(formData.songTitle, 40, 100);
+  };
+
+  return (
+    <div className="grid gap-6 p-4">
+      {/* BIO */}
+      <Card>
+        <CardContent className="grid gap-4 p-4">
+          <h2 className="text-xl font-bold">Biografia do Artista</h2>
+          <Input placeholder="Nome artístico" onChange={e => setFormData({ ...formData, artistName: e.target.value })} />
+          <Input placeholder="Gênero musical" onChange={e => setFormData({ ...formData, genre: e.target.value })} />
+          <Textarea placeholder="Conquistas / carreira" onChange={e => setFormData({ ...formData, achievements: e.target.value })} />
+          <Input placeholder="Influências / referências (opcional)" onChange={e => setFormData({ ...formData, influences: e.target.value })} />
+          <select onChange={e => setFormData({ ...formData, tone: e.target.value })}>
+            <option value="formal">Formal</option>
+            <option value="leve">Leve</option>
+            <option value="criativo">Criativo</option>
+            <option value="direto">Direto</option>
+          </select>
+          <select onChange={e => setFormData({ ...formData, audience: e.target.value })}>
+            <option value="press">Imprensa</option>
+            <option value="spotify">Spotify</option>
+            <option value="social">Redes Sociais</option>
+          </select>
+          <Button onClick={generateBio}>Gerar Biografia</Button>
+          <Textarea value={bioOutput} rows={10} readOnly />
+        </CardContent>
+      </Card>
+
+      {/* RELEASE */}
+      <Card>
+        <CardContent className="grid gap-4 p-4">
+          <h2 className="text-xl font-bold">Release Musical</h2>
+          <Input placeholder="Título da música" onChange={e => setFormData({ ...formData, songTitle: e.target.value })} />
+          <Input placeholder="Estilo musical" onChange={e => setFormData({ ...formData, musicStyle: e.target.value })} />
+          <Input placeholder="Clima da música" onChange={e => setFormData({ ...formData, mood: e.target.value })} />
+          <Input placeholder="Data de lançamento" onChange={e => setFormData({ ...formData, releaseDate: e.target.value })} />
+          <Input placeholder="Colaboradores" onChange={e => setFormData({ ...formData, collaborators: e.target.value })} />
+          <Input placeholder="Público-alvo" onChange={e => setFormData({ ...formData, releaseAudience: e.target.value })} />
+          <Textarea placeholder="Mensagem principal" onChange={e => setFormData({ ...formData, themeMessage: e.target.value })} />
+          <Button onClick={generateRelease}>Gerar Release</Button>
+          <Textarea value={releaseOutput} rows={10} readOnly />
+          <Button onClick={downloadPDF}>Exportar como PDF</Button>
+        </CardContent>
+      </Card>
+
+      {/* UPLOAD IMAGEM / AUDIO */}
+      <Card>
+        <CardContent className="grid gap-4 p-4 rounded-2xl shadow-md">
+          <h2 className="text-xl font-bold">Uploads: Imagem & Áudio</h2>
+          <input type="file" accept="image/*" onChange={e => setFormData({ ...formData, pressPhoto: e.target.files[0] })} />
+          {photoPreview && <img src={photoPreview} alt="Preview" className="w-full max-w-xs rounded" />}
+          <input type="file" accept="audio/mpeg" onChange={e => setFormData({ ...formData, audioFile: e.target.files[0] })} />
+          {audioPreview && <audio controls src={audioPreview} className="w-full" />}
+        </CardContent>
+      </Card>
+
+      {/* VISUAL PREVIEW */}
+      <Card>
+        <CardContent className="grid gap-4 p-4" id="export-section">
+          <h2 className="text-xl font-bold">Preview Capa com Texto</h2>
+          <canvas ref={canvasRef} width={400} height={400} style={{ border: '1px solid #ccc' }} />
+          <Button onClick={renderCanvas}>Gerar Capa com Texto</Button>
+          <Button onClick={() => setShowEditor(!showEditor)}>
+            {showEditor ? 'Fechar Editor Admin' : 'Abrir Editor Admin'}
+          </Button>
+          {showEditor && (
+            <div className="p-4 border rounded">
+              <p className="text-sm">Editor avançado será integrado aqui (Admin/Premium)</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

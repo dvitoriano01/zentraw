@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "dashboard": "ダッシュボード",
+    "content": "コンテンツ",
+    "profile": "プロフィール",
+    "gallery": "ギャラリー",
+    "templates": "テンプレート",
+    "logout": "ログアウト"
+  },
+  "coverGenerator": {
+    "title": "カバージェネレーター",
+    "artistName": "アーティスト名",
+    "trackName": "トラック名",
+    "albumName": "アルバム名",
+    "generationType": "生成タイプ",
+    "generateByAI": "AIで生成",
+    "uploadImage": "画像をアップロード",
+    "chooseFromAPI": "APIから選択",
+    "imageDescription": "画像の説明",
+    "style": "スタイル",
+    "styles": {
+      "modern": "モダン",
+      "futuristic": "未来的",
+      "vintage": "ヴィンテージ",
+      "urban": "アーバン",
+      "classic": "クラシック",
+      "cyberpunk": "サイバーパンク",
+      "abstract": "抽象的"
+    },
+    "useThisImage": "この画像を使用",
+    "nextStep": "次のステップ",
+    "generate": "生成",
+    "generating": "生成中..."
+  },
+  "editor": {
+    "title": "カバーエディター",
+    "watermark": "ウォーターマーク",
+    "templates": "テンプレート",
+    "textEditor": "テキストエディター",
+    "artistText": "アーティストテキスト",
+    "trackText": "トラックテキスト",
+    "font": "フォント",
+    "size": "サイズ",
+    "color": "色",
+    "opacity": "不透明度",
+    "flip": "フリップ",
+    "horizontal": "水平",
+    "vertical": "垂直",
+    "overlay": "オーバーレイ",
+    "intensity": "強度",
+    "soft": "ソフト",
+    "hard": "ハード",
+    "filters": "フィルター",
+    "glitch": "グリッチ",
+    "scanlines": "スキャンライン",
+    "noise": "ノイズ",
+    "zoom": "ズーム",
+    "position": "位置",
+    "download": "ダウンロード",
+    "save": "保存",
+    "reset": "リセット"
+  },
+  "gallery": {
+    "title": "ギャラリー",
+    "recent": "最近の画像",
+    "covers": "保存されたカバー",
+    "releases": "リリース",
+    "pressKits": "プレスキット",
+    "rename": "名前変更",
+    "download": "ダウンロード",
+    "remove": "削除",
+    "empty": "画像が見つかりません"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "close": "閉じる",
+    "upload": "アップロード",
+    "search": "検索"
+  },
+  "messages": {
+    "uploadSuccess": "画像のアップロードが成功しました！",
+    "generateSuccess": "カバーの生成が成功しました！",
+    "saveSuccess": "プロジェクトの保存が成功しました！"
+  }
+}

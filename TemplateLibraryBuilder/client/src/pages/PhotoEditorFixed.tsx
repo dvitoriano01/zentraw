@@ -1,9 +1,9 @@
-import FontFaceObserver from "fontfaceobserver";
-import { freepikFonts } from "@/constants/freepikFonts";
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
+import FontFaceObserver from 'fontfaceobserver';
+import { freepikFonts } from '@/constants/freepikFonts';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Slider } from '@/components/ui/slider';
 import {
   Square,
   Circle,
@@ -27,11 +27,11 @@ import {
   Lock,
   Unlock,
   Trash2,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { ParameterInput } from "@/components/editor/ParameterInput";
-import { ObjectPropertiesPanel } from "@/components/editor/ObjectPropertiesPanel";
-import { useCanvasZoomPan } from "@/hooks/useCanvasZoomPan";
+import { ParameterInput } from '@/components/editor/ParameterInput';
+import { ObjectPropertiesPanel } from '@/components/editor/ObjectPropertiesPanel';
+import { useCanvasZoomPan } from '@/hooks/useCanvasZoomPan';
 import {
   Canvas,
   FabricObject,
@@ -40,16 +40,24 @@ import {
   Circle as FabricCircle,
   Triangle as FabricTriangle,
   FabricImage,
-} from "fabric";
+} from 'fabric';
 
-import { TemplatesModal } from "@/components/editor/TemplatesModal";
-import { SVGLayoutModal } from "@/components/editor/SVGLayoutModal";
-import { TextPropertiesPanel } from "@/components/editor/TextPropertiesPanel";
-import { TextFXPanel } from "@/components/editor/TextFXPanel";
-import { FormatsModal } from "@/components/editor/FormatsModal";
-import { FiltersModal } from "@/components/editor/FiltersModal";
-import { TextEffectsModal } from "@/components/editor/TextEffectsModal";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { TemplatesModal } from '@/components/editor/TemplatesModal';
+import { SVGLayoutModal } from '@/components/editor/SVGLayoutModal';
+import { TextPropertiesPanel } from '@/components/editor/TextPropertiesPanel';
+import { TextFXPanel } from '@/components/editor/TextFXPanel';
+import { FormatsModal } from '@/components/editor/FormatsModal';
+import { FiltersModal } from '@/components/editor/FiltersModal';
+import { TextEffectsModal } from '@/components/editor/TextEffectsModal';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+// Função utilitária para garantir que a fonte está carregada
+async function ensureFontLoaded(fontFamily: string) {
+  if (!fontFamily) return;
+  if (document.fonts.check(`1em ${fontFamily}`)) return;
+  const observer = new FontFaceObserver(fontFamily);
+  await observer.load(null, 5000);
+}
 
 interface Layer {
   id: string;
@@ -60,21 +68,21 @@ interface Layer {
 }
 
 const tools = [
-  { id: "select", icon: MousePointer, label: "Select" },
-  { id: "move", icon: Move, label: "Move" },
-  { id: "rectangle", icon: Square, label: "Rectangle" },
-  { id: "circle", icon: Circle, label: "Circle" },
-  { id: "triangle", icon: Triangle, label: "Triangle" },
-  { id: "text", icon: Type, label: "Text" },
-  { id: "image", icon: ImageIcon, label: "Image" },
+  { id: 'select', icon: MousePointer, label: 'Select' },
+  { id: 'move', icon: Move, label: 'Move' },
+  { id: 'rectangle', icon: Square, label: 'Rectangle' },
+  { id: 'circle', icon: Circle, label: 'Circle' },
+  { id: 'triangle', icon: Triangle, label: 'Triangle' },
+  { id: 'text', icon: Type, label: 'Text' },
+  { id: 'image', icon: ImageIcon, label: 'Image' },
 ];
 
 export default function PhotoEditor() {
   // State management
-  const [selectedTool, setSelectedTool] = useState("select");
+  const [selectedTool, setSelectedTool] = useState('select');
   const [activePropertiesTab, setActivePropertiesTab] = useState<
-    "character" | "paragraph" | "textfx" | "properties"
-  >("properties");
+    'character' | 'paragraph' | 'textfx' | 'properties'
+  >('properties');
   const [templatesModalOpen, setTemplatesModalOpen] = useState(false);
   const [svgLayoutModalOpen, setSvgLayoutModalOpen] = useState(false);
   const [formatsModalOpen, setFormatsModalOpen] = useState(false);
@@ -83,11 +91,11 @@ export default function PhotoEditor() {
 
   // Text properties
   const [fontSize, setFontSize] = useState(32);
-  const [fontFamily, setFontFamily] = useState("Arial");
-  const [fontWeight, setFontWeight] = useState("normal");
-  const [fontStyle, setFontStyle] = useState("normal");
-  const [textAlign, setTextAlign] = useState("left");
-  const [textColor, setTextColor] = useState("#000000");
+  const [fontFamily, setFontFamily] = useState('Arial');
+  const [fontWeight, setFontWeight] = useState('normal');
+  const [fontStyle, setFontStyle] = useState('normal');
+  const [textAlign, setTextAlign] = useState('left');
+  const [textColor, setTextColor] = useState('#000000');
   const [letterSpacing, setLetterSpacing] = useState(0);
   const [lineHeight, setLineHeight] = useState(1.2);
 
@@ -95,13 +103,13 @@ export default function PhotoEditor() {
   const [hue, setHue] = useState(0);
   const [saturation, setSaturation] = useState(0);
   const [brightness, setBrightness] = useState(0);
-  const [canvasBackground, setCanvasBackground] = useState("transparent");
+  const [canvasBackground, setCanvasBackground] = useState('transparent');
   const [layers, setLayers] = useState<Layer[]>([]);
   const [selectedObject, setSelectedObject] = useState<any>(null);
   const [selectedLayer, setSelectedLayer] = useState<Layer | null>(null);
   const [layerOpacity, setLayerOpacity] = useState(100);
-  const [layerBlendMode, setLayerBlendMode] = useState("normal");
-  const [selectedFormat, setSelectedFormat] = useState("instagram-post");
+  const [layerBlendMode, setLayerBlendMode] = useState('normal');
+  const [selectedFormat, setSelectedFormat] = useState('instagram-post');
   const [canvasHistory, setCanvasHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
@@ -155,7 +163,7 @@ export default function PhotoEditor() {
       const canvas = new Canvas(canvasRef.current, {
         width: 800,
         height: 600,
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         selection: true,
         preserveObjectStacking: true,
         renderOnAddRemove: true,
@@ -166,7 +174,7 @@ export default function PhotoEditor() {
       // Configure canvas container
       if (containerRef.current) {
         const container = containerRef.current;
-        container.style.overflow = "hidden";
+        container.style.overflow = 'hidden';
       }
 
       fabricCanvasRef.current = canvas;
@@ -177,40 +185,40 @@ export default function PhotoEditor() {
       setHistoryIndex(0);
 
       // Object selection events
-      canvas.on("selection:created", (e) => {
+      canvas.on('selection:created', (e) => {
         const obj = e.selected?.[0];
         setSelectedObject(obj || null);
         if (obj) {
           setLayerOpacity((obj.opacity || 1) * 100);
-          setLayerBlendMode((obj as any).globalCompositeOperation || "normal");
+          setLayerBlendMode((obj as any).globalCompositeOperation || 'normal');
         }
         updateLayersList();
       });
 
-      canvas.on("selection:updated", (e) => {
+      canvas.on('selection:updated', (e) => {
         const obj = e.selected?.[0];
         setSelectedObject(obj || null);
         if (obj) {
           setLayerOpacity((obj.opacity || 1) * 100);
-          setLayerBlendMode((obj as any).globalCompositeOperation || "normal");
+          setLayerBlendMode((obj as any).globalCompositeOperation || 'normal');
         }
         updateLayersList();
       });
 
-      canvas.on("selection:cleared", () => {
+      canvas.on('selection:cleared', () => {
         setSelectedObject(null);
         updateLayersList();
       });
 
-      canvas.on("object:added", () => {
+      canvas.on('object:added', () => {
         updateLayersList();
       });
 
-      canvas.on("object:removed", () => {
+      canvas.on('object:removed', () => {
         updateLayersList();
       });
 
-      canvas.on("object:modified", () => {
+      canvas.on('object:modified', () => {
         updateLayersList();
       });
 
@@ -227,8 +235,8 @@ export default function PhotoEditor() {
   // Update canvas background
   useEffect(() => {
     if (fabricCanvasRef.current) {
-      if (canvasBackground === "transparent") {
-        fabricCanvasRef.current.backgroundColor = "";
+      if (canvasBackground === 'transparent') {
+        fabricCanvasRef.current.backgroundColor = '';
       } else {
         fabricCanvasRef.current.backgroundColor = canvasBackground;
       }
@@ -298,14 +306,14 @@ export default function PhotoEditor() {
       const formatDimensions: {
         [key: string]: { width: number; height: number };
       } = {
-        "instagram-post": { width: 1080, height: 1080 },
-        "instagram-story": { width: 1080, height: 1920 },
-        "facebook-post": { width: 1200, height: 630 },
-        "twitter-post": { width: 1024, height: 512 },
-        "linkedin-post": { width: 1200, height: 627 },
-        "youtube-thumbnail": { width: 1280, height: 720 },
-        "a4-print": { width: 2480, height: 3508 },
-        "business-card": { width: 1050, height: 600 },
+        'instagram-post': { width: 1080, height: 1080 },
+        'instagram-story': { width: 1080, height: 1920 },
+        'facebook-post': { width: 1200, height: 630 },
+        'twitter-post': { width: 1024, height: 512 },
+        'linkedin-post': { width: 1200, height: 627 },
+        'youtube-thumbnail': { width: 1280, height: 720 },
+        'a4-print': { width: 2480, height: 3508 },
+        'business-card': { width: 1050, height: 600 },
         banner: { width: 1500, height: 500 },
         custom: { width: 800, height: 600 },
       };
@@ -343,7 +351,7 @@ export default function PhotoEditor() {
       if (!selectedObject || !fabricCanvasRef.current) return;
 
       setLayerOpacity(opacity);
-      selectedObject.set("opacity", opacity / 100);
+      selectedObject.set('opacity', opacity / 100);
       fabricCanvasRef.current.renderAll();
       saveState();
     },
@@ -354,19 +362,30 @@ export default function PhotoEditor() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey) {
-        if (e.key === "z" && !e.shiftKey) {
+        if (e.key === 'z' && !e.shiftKey) {
           e.preventDefault();
           undo();
-        } else if (e.key === "y" || (e.key === "z" && e.shiftKey)) {
+        } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
           e.preventDefault();
           redo();
         }
       }
+      // Atalho para deletar objeto selecionado
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        if (fabricCanvasRef.current && selectedObject) {
+          fabricCanvasRef.current.remove(selectedObject);
+          fabricCanvasRef.current.discardActiveObject();
+          fabricCanvasRef.current.renderAll();
+          setSelectedObject(null);
+          updateLayersList();
+          saveState();
+        }
+      }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, selectedObject, saveState]);
 
   const updateLayersList = useCallback(() => {
     if (!fabricCanvasRef.current) {
@@ -378,24 +397,24 @@ export default function PhotoEditor() {
     const newLayers = objects
       .map((obj, index) => {
         const layerId = (obj as any).layerId || `layer-${index}`;
-        let name = "Unknown";
+        let name = 'Unknown';
 
-        if (obj.type === "i-text") {
-          name = `Text: ${(obj as IText).text?.substring(0, 20) || "Empty"}`;
-        } else if (obj.type === "rect") {
-          name = "Rectangle";
-        } else if (obj.type === "circle") {
-          name = "Circle";
-        } else if (obj.type === "triangle") {
-          name = "Triangle";
-        } else if (obj.type === "image") {
-          name = "Image";
+        if (obj.type === 'i-text') {
+          name = `Text: ${(obj as IText).text?.substring(0, 20) || 'Empty'}`;
+        } else if (obj.type === 'rect') {
+          name = 'Rectangle';
+        } else if (obj.type === 'circle') {
+          name = 'Circle';
+        } else if (obj.type === 'triangle') {
+          name = 'Triangle';
+        } else if (obj.type === 'image') {
+          name = 'Image';
         }
 
         return {
           id: layerId,
           name,
-          type: obj.type || "unknown",
+          type: obj.type || 'unknown',
           visible: obj.visible !== false,
           locked: !obj.selectable,
         };
@@ -409,15 +428,15 @@ export default function PhotoEditor() {
   const setTool = (toolId: string) => {
     setSelectedTool(toolId);
 
-    if (toolId === "rectangle") {
+    if (toolId === 'rectangle') {
       addRectangle();
-    } else if (toolId === "circle") {
+    } else if (toolId === 'circle') {
       addCircle();
-    } else if (toolId === "triangle") {
+    } else if (toolId === 'triangle') {
       addTriangle();
-    } else if (toolId === "text") {
+    } else if (toolId === 'text') {
       addText();
-    } else if (toolId === "image") {
+    } else if (toolId === 'image') {
       fileInputRef.current?.click();
     }
   };
@@ -430,8 +449,8 @@ export default function PhotoEditor() {
       top: 250,
       width: 100,
       height: 80,
-      fill: "#ff0000",
-      stroke: "#000000",
+      fill: '#ff0000',
+      stroke: '#000000',
       strokeWidth: 2,
     });
 
@@ -449,8 +468,8 @@ export default function PhotoEditor() {
       left: 350,
       top: 250,
       radius: 50,
-      fill: "#00ff00",
-      stroke: "#000000",
+      fill: '#00ff00',
+      stroke: '#000000',
       strokeWidth: 2,
     });
 
@@ -469,8 +488,8 @@ export default function PhotoEditor() {
       top: 250,
       width: 100,
       height: 100,
-      fill: "#0000ff",
-      stroke: "#000000",
+      fill: '#0000ff',
+      stroke: '#000000',
       strokeWidth: 2,
     });
 
@@ -481,80 +500,73 @@ export default function PhotoEditor() {
     saveState();
   };
 
-  const addText = () => {
+  // Função de texto com carregamento de fonte customizada
+  const addText = async () => {
     if (!fabricCanvasRef.current) return;
 
-    const canvas = fabricCanvasRef.current;
+    const fontToUse = fontFamily || 'Arial';
+    await ensureFontLoaded(fontToUse);
 
-    // Calculate center position based on current canvas dimensions
+    const canvas = fabricCanvasRef.current;
     const canvasCenter = {
       x: canvas.width! / 2,
       y: canvas.height! / 2,
     };
 
-    // Create text at center without viewport manipulation
-    const text = new IText("Double-click to edit", {
+    const text = new IText('Double-click to edit', {
       left: canvasCenter.x,
       top: canvasCenter.y,
       fontSize: 32,
-      fontFamily: "Arial",
-      fill: "#000000",
+      fontFamily: fontToUse,
+      fill: '#000000',
       selectable: true,
       evented: true,
       editable: true,
-      originX: "center",
-      originY: "center",
+      originX: 'center',
+      originY: 'center',
     });
 
     (text as any).layerId = `text-${Date.now()}`;
-
-    // Add text without triggering viewport changes
     canvas.add(text);
     canvas.setActiveObject(text);
     canvas.renderAll();
 
     setSelectedObject(text);
-    setActivePropertiesTab("properties");
+    setActivePropertiesTab('properties');
     saveState();
   };
 
-  const updateTextProperties = (properties: any) => {
-    if (
-      !fabricCanvasRef.current ||
-      !selectedObject ||
-      selectedObject.type !== "i-text"
-    )
-      return;
+  // Atualização de propriedades de texto com carregamento de fonte
+  const updateTextProperties = async (properties: any) => {
+    if (!fabricCanvasRef.current || !selectedObject || selectedObject.type !== 'i-text') return;
+
+    if (properties.fontFamily) {
+      await ensureFontLoaded(properties.fontFamily);
+    }
 
     selectedObject.set(properties);
     fabricCanvasRef.current.renderAll();
     saveState();
   };
-
   const applyTextEffect = (effect: any) => {
-    if (
-      !fabricCanvasRef.current ||
-      !selectedObject ||
-      selectedObject.type !== "i-text"
-    )
-      return;
+    if (!fabricCanvasRef.current || !selectedObject || selectedObject.type !== 'i-text') return;
 
     selectedObject.set(effect);
     fabricCanvasRef.current.renderAll();
     saveState();
   };
 
-  const exportCanvas = (format: "png" | "jpeg" | "svg" = "png") => {
+  const exportCanvas = (format: 'png' | 'jpeg' | 'svg' = 'png') => {
     if (!fabricCanvasRef.current) return;
 
     const canvas = fabricCanvasRef.current;
     const dataURL = canvas.toDataURL({
-      format: format,
+      format: undefined,
       quality: 1.0,
       multiplier: 2,
     });
 
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.download = `canvas-export.${format}`;
     link.href = dataURL;
     document.body.appendChild(link);
@@ -568,12 +580,11 @@ export default function PhotoEditor() {
 
     const objects = fabricCanvasRef.current.getObjects();
     const obj = objects.find(
-      (o, index) =>
-        (o as any).layerId === layerId || `layer-${index}` === layerId,
+      (o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId,
     );
 
     if (obj) {
-      obj.set("visible", !obj.visible);
+      obj.set('visible', !obj.visible);
       fabricCanvasRef.current.renderAll();
       updateLayersList();
       saveState();
@@ -585,13 +596,12 @@ export default function PhotoEditor() {
 
     const objects = fabricCanvasRef.current.getObjects();
     const obj = objects.find(
-      (o, index) =>
-        (o as any).layerId === layerId || `layer-${index}` === layerId,
+      (o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId,
     );
 
     if (obj) {
-      obj.set("selectable", !obj.selectable);
-      obj.set("evented", !obj.evented);
+      obj.set('selectable', !obj.selectable);
+      obj.set('evented', !obj.evented);
       fabricCanvasRef.current.renderAll();
       updateLayersList();
       saveState();
@@ -603,8 +613,7 @@ export default function PhotoEditor() {
 
     const objects = fabricCanvasRef.current.getObjects();
     const obj = objects.find(
-      (o, index) =>
-        (o as any).layerId === layerId || `layer-${index}` === layerId,
+      (o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId,
     );
 
     if (obj) {
@@ -644,8 +653,7 @@ export default function PhotoEditor() {
 
     const objects = fabricCanvasRef.current.getObjects();
     const obj = objects.find(
-      (o, index) =>
-        (o as any).layerId === layer.id || `layer-${index}` === layer.id,
+      (o, index) => (o as any).layerId === layer.id || `layer-${index}` === layer.id,
     );
 
     if (obj) {
@@ -739,7 +747,7 @@ export default function PhotoEditor() {
             variant="ghost"
             size="sm"
             className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
-            onClick={() => exportCanvas("png")}
+            onClick={() => exportCanvas('png')}
           >
             <Download className="w-3 h-3 mr-1" />
             Export
@@ -758,9 +766,7 @@ export default function PhotoEditor() {
                 variant="ghost"
                 size="sm"
                 className={`p-2 w-12 h-12 flex items-center justify-center hover:bg-[#4a4a4a] ${
-                  selectedTool === toolItem.id
-                    ? "bg-[#0078d4] hover:bg-[#106ebe]"
-                    : ""
+                  selectedTool === toolItem.id ? 'bg-[#0078d4] hover:bg-[#106ebe]' : ''
                 }`}
                 onClick={() => setTool(toolItem.id)}
                 title={toolItem.label}
@@ -770,535 +776,375 @@ export default function PhotoEditor() {
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+  {
+    /* Main Canvas Area */
+  }
+  <div className="flex-1 flex flex-col min-h-0">
+    {/* Canvas Controls */}
+    <div className="h-10 bg-[#2a2a2a] border-b border-[#4a4a4a] flex items-center px-4 gap-4 flex-shrink-0">
+      <div className="flex items-center gap-2">
+        <label className="text-xs text-gray-400">Format:</label>
+        <select
+          value={selectedFormat}
+          onChange={(e) => handleFormatChange(e.target.value)}
+          className="bg-[#1e1e1e] border border-gray-600 rounded px-2 py-1 text-xs text-gray-300"
+        >
+          <option value="instagram-post">Instagram Post (1080x1080)</option>
+          <option value="instagram-story">Instagram Story (1080x1920)</option>
+          <option value="facebook-post">Facebook Post (1200x630)</option>
+          <option value="twitter-post">Twitter Post (1024x512)</option>
+          <option value="linkedin-post">LinkedIn Post (1200x627)</option>
+          <option value="youtube-thumbnail">YouTube Thumbnail (1280x720)</option>
+          <option value="a4-print">A4 Print (2480x3508)</option>
+          <option value="business-card">Business Card (1050x600)</option>
+          <option value="banner">Banner (1500x500)</option>
+          <option value="custom">Custom (800x600)</option>
+        </select>
+      </div>
 
-        {/* Main Canvas Area */}
-        <div className="flex-1 flex flex-col min-h-0">
-          {/* Canvas Controls */}
-          <div className="h-10 bg-[#2a2a2a] border-b border-[#4a4a4a] flex items-center px-4 gap-4 flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <label className="text-xs text-gray-400">Format:</label>
-              <select
-                value={selectedFormat}
-                onChange={(e) => handleFormatChange(e.target.value)}
-                className="bg-[#1e1e1e] border border-gray-600 rounded px-2 py-1 text-xs text-gray-300"
-              >
-                <option value="instagram-post">
-                  Instagram Post (1080x1080)
-                </option>
-                <option value="instagram-story">
-                  Instagram Story (1080x1920)
-                </option>
-                <option value="facebook-post">Facebook Post (1200x630)</option>
-                <option value="twitter-post">Twitter Post (1024x512)</option>
-                <option value="linkedin-post">LinkedIn Post (1200x627)</option>
-                <option value="youtube-thumbnail">
-                  YouTube Thumbnail (1280x720)
-                </option>
-                <option value="a4-print">A4 Print (2480x3508)</option>
-                <option value="business-card">Business Card (1050x600)</option>
-                <option value="banner">Banner (1500x500)</option>
-                <option value="custom">Custom (800x600)</option>
-              </select>
-            </div>
+      <div className="flex items-center gap-2 ml-auto">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={zoomOut}
+          className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
+        >
+          <ZoomOut className="w-3 h-3" />
+        </Button>
 
-            <div className="flex items-center gap-2 ml-auto">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={zoomOut}
-                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
-              >
-                <ZoomOut className="w-3 h-3" />
-              </Button>
+        <span className="text-xs text-gray-400 min-w-[60px] text-center">
+          {Math.round(currentZoom * 100)}%
+        </span>
 
-              <span className="text-xs text-gray-400 min-w-[60px] text-center">
-                {Math.round(currentZoom * 100)}%
-              </span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={zoomIn}
+          className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
+        >
+          <ZoomIn className="w-3 h-3" />
+        </Button>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={zoomIn}
-                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
-              >
-                <ZoomIn className="w-3 h-3" />
-              </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={fitToScreen}
+          className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
+        >
+          <Maximize className="w-3 h-3" />
+        </Button>
+      </div>
+    </div>
 
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={fitToScreen}
-                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
-              >
-                <Maximize className="w-3 h-3" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Canvas Container */}
-          <div
-            ref={containerRef}
-            className="flex-1 bg-[#2a2a2a] relative"
-            style={{
-              backgroundImage: `
+    {/* Canvas Container */}
+    <div
+      ref={containerRef}
+      className="flex-1 bg-[#2a2a2a] relative"
+      style={{
+        backgroundImage: `
                 linear-gradient(45deg, #333 25%, transparent 25%),
                 linear-gradient(-45deg, #333 25%, transparent 25%),
                 linear-gradient(45deg, transparent 75%, #333 75%),
                 linear-gradient(-45deg, transparent 75%, #333 75%)
               `,
-              backgroundSize: "20px 20px",
-              backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0px",
-              overflow: "hidden",
-              position: "relative",
-            }}
-          >
-            <div className="flex items-center justify-center min-h-full p-8">
-              <div className="relative">
-                <canvas
-                  ref={canvasRef}
-                  className="border border-gray-600 shadow-2xl bg-transparent"
-                />
-              </div>
-            </div>
-          </div>
+        backgroundSize: '20px 20px',
+        backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+    >
+      <div className="flex items-center justify-center min-h-full p-8">
+        <div className="relative">
+          <canvas ref={canvasRef} className="border border-gray-600 shadow-2xl bg-transparent" />
         </div>
+      </div>
+    </div>
+  </div>;
 
-        {/* Right Panels */}
-        <div className="w-80 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
-          {/* Properties Panel */}
-          <Tabs
-            value={activePropertiesTab}
-            onValueChange={(value: any) => setActivePropertiesTab(value)}
-            className="flex flex-col h-full min-h-0"
-          >
-            <div className="p-2 border-b border-[#4a4a4a] flex-shrink-0">
-              <TabsList className="grid w-full grid-cols-3 bg-[#1e1e1e]">
-                <TabsTrigger value="properties" className="text-xs">
-                  Properties
-                </TabsTrigger>
-                <TabsTrigger value="adjustments" className="text-xs">
-                  Adjustments
-                </TabsTrigger>
-                <TabsTrigger value="libraries" className="text-xs">
-                  Libraries
-                </TabsTrigger>
-              </TabsList>
-            </div>
+  {
+    /* Right Panels */
+  }
+  <div className="w-80 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
+    {/* Properties Panel */}
+    <Tabs
+      value={activePropertiesTab}
+      onValueChange={(value: any) => setActivePropertiesTab(value)}
+      className="flex flex-col h-full min-h-0"
+    >
+      <div className="p-2 border-b border-[#4a4a4a] flex-shrink-0">
+        <TabsList className="grid w-full grid-cols-3 bg-[#1e1e1e]">
+          <TabsTrigger value="properties" className="text-xs">
+            Properties
+          </TabsTrigger>
+          <TabsTrigger value="adjustments" className="text-xs">
+            Adjustments
+          </TabsTrigger>
+          <TabsTrigger value="libraries" className="text-xs">
+            Libraries
+          </TabsTrigger>
+        </TabsList>
+      </div>
 
-            <TabsContent
-              value="properties"
-              className="flex-1 flex flex-col m-0 min-h-0"
-            >
-              <div className="flex flex-col h-full min-h-0">
-                {/* Canvas Background Controls */}
-                <div className="p-4 border-b border-[#4a4a4a] flex-shrink-0">
-                  <label className="text-sm font-medium text-gray-300 mb-2 block">
-                    Canvas Background
-                  </label>
-                  <div className="grid grid-cols-4 gap-2 mb-4">
-                    <button
-                      onClick={() => setCanvasBackground("transparent")}
-                      className={`h-8 border rounded relative overflow-hidden ${canvasBackground === "transparent" ? "ring-2 ring-blue-500" : "border-gray-600"}`}
-                      title="Transparent"
-                    >
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          backgroundImage: `
+      <TabsContent value="properties" className="flex-1 flex flex-col m-0 min-h-0">
+        <div className="flex flex-col h-full min-h-0">
+          {/* Canvas Background Controls */}
+          <div className="p-4 border-b border-[#4a4a4a] flex-shrink-0">
+            <label className="text-sm font-medium text-gray-300 mb-2 block">
+              Canvas Background
+            </label>
+            <div className="grid grid-cols-4 gap-2 mb-4">
+              <button
+                onClick={() => setCanvasBackground('transparent')}
+                className={`h-8 border rounded relative overflow-hidden ${canvasBackground === 'transparent' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                title="Transparent"
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `
                             linear-gradient(45deg, #ffffff 25%, transparent 25%),
                             linear-gradient(-45deg, #ffffff 25%, transparent 25%),
                             linear-gradient(45deg, transparent 75%, #ffffff 75%),
                             linear-gradient(-45deg, transparent 75%, #ffffff 75%)
                           `,
-                          backgroundSize: "8px 8px",
-                          backgroundPosition: "0 0, 0 4px, 4px -4px, -4px 0px",
-                          backgroundColor: "#f0f0f0",
-                        }}
-                      />
-                    </button>
-                    <button
-                      onClick={() => setCanvasBackground("#ffffff")}
-                      className={`h-8 bg-white border rounded ${canvasBackground === "#ffffff" ? "ring-2 ring-blue-500" : "border-gray-600"}`}
-                      title="White"
-                    />
-                    <button
-                      onClick={() => setCanvasBackground("#000000")}
-                      className={`h-8 bg-black border rounded ${canvasBackground === "#000000" ? "ring-2 ring-blue-500" : "border-gray-600"}`}
-                      title="Black"
-                    />
-                    <button
-                      onClick={() => setCanvasBackground("#808080")}
-                      className={`h-8 bg-gray-500 border rounded ${canvasBackground === "#808080" ? "ring-2 ring-blue-500" : "border-gray-600"}`}
-                      title="Gray"
-                    />
-                  </div>
-                  <input
-                    type="color"
-                    value={
-                      canvasBackground === "transparent"
-                        ? "#ffffff"
-                        : canvasBackground
-                    }
-                    onChange={(e) => setCanvasBackground(e.target.value)}
-                    className="w-full h-8 border border-gray-600 rounded"
-                    title="Custom color"
+                    backgroundSize: '8px 8px',
+                    backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
+                    backgroundColor: '#f0f0f0',
+                  }}
+                />
+              </button>
+              <button
+                onClick={() => setCanvasBackground('#ffffff')}
+                className={`h-8 bg-white border rounded ${canvasBackground === '#ffffff' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                title="White"
+              />
+              <button
+                onClick={() => setCanvasBackground('#000000')}
+                className={`h-8 bg-black border rounded ${canvasBackground === '#000000' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                title="Black"
+              />
+              <button
+                onClick={() => setCanvasBackground('#808080')}
+                className={`h-8 bg-gray-500 border rounded ${canvasBackground === '#808080' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                title="Gray"
+              />
+            </div>
+            <input
+              type="color"
+              value={canvasBackground === 'transparent' ? '#ffffff' : canvasBackground}
+              onChange={(e) => setCanvasBackground(e.target.value)}
+              className="w-full h-8 border border-gray-600 rounded"
+              title="Custom color"
+            />
+          </div>
+
+          {/* Scrollable Content Area */}
+          <div className="flex-1 overflow-y-auto min-h-0">
+            {/* Text Properties Panel */}
+            {selectedObject && selectedObject.type === 'i-text' ? (
+              <div>
+                <div className="p-4">
+                  <TextPropertiesPanel
+                    selectedObject={selectedObject}
+                    onUpdateText={updateTextProperties}
                   />
                 </div>
 
-                {/* Scrollable Content Area */}
-                <div className="flex-1 overflow-y-auto min-h-0">
-                  {/* Text Properties Panel */}
-                  {selectedObject && selectedObject.type === "i-text" ? (
-                    <div>
-                      <div className="p-4">
-                        <TextPropertiesPanel
-                          selectedObject={selectedObject}
-                          onUpdateText={updateTextProperties}
+                {/* Text Effects Panel */}
+                <div className="border-t border-[#4a4a4a] p-4">
+                  <TextFXPanel selectedObject={selectedObject} onApplyEffect={applyTextEffect} />
+                </div>
+              </div>
+            ) : selectedObject ? (
+              <div className="p-4">
+                {/* Layer Properties for Selected Object */}
+                <div className="space-y-4 mb-6">
+                  <label className="text-sm font-medium text-gray-300 mb-2 block">
+                    Layer Properties
+                  </label>
+
+                  {/* Opacity */}
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Opacity</label>
+                    <div className="space-y-1">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={layerOpacity}
+                        onChange={(e) => handleOpacityChange(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                      />
+                      <span className="text-xs text-gray-500">{layerOpacity}%</span>
+                    </div>
+                  </div>
+
+                  {/* Blend Mode */}
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Blend Mode</label>
+                    <select
+                      value={layerBlendMode}
+                      onChange={(e) => handleBlendModeChange(e.target.value)}
+                      className="w-full p-2 bg-[#2a2a2a] border border-gray-600 rounded text-xs text-gray-300"
+                    >
+                      <option value="normal">Normal</option>
+                      <option value="multiply">Multiply</option>
+                      <option value="screen">Screen</option>
+                      <option value="overlay">Overlay</option>
+                      <option value="soft-light">Soft Light</option>
+                      <option value="hard-light">Hard Light</option>
+                      <option value="color-dodge">Color Dodge</option>
+                      <option value="color-burn">Color Burn</option>
+                      <option value="darken">Darken</option>
+                      <option value="lighten">Lighten</option>
+                      <option value="difference">Difference</option>
+                      <option value="exclusion">Exclusion</option>
+                    </select>
+                  </div>
+
+                  {/* Shape Properties for non-text objects */}
+                  {selectedObject.type !== 'i-text' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1">Fill Color</label>
+                        <input
+                          type="color"
+                          value={selectedObject.fill || '#000000'}
+                          onChange={(e) => {
+                            selectedObject.set('fill', e.target.value);
+                            fabricCanvasRef.current?.renderAll();
+                            saveState();
+                          }}
+                          className="w-full h-8 border border-gray-600 rounded"
                         />
                       </div>
 
-                      {/* Text Effects Panel */}
-                      <div className="border-t border-[#4a4a4a] p-4">
-                        <TextFXPanel
-                          selectedObject={selectedObject}
-                          onApplyEffect={applyTextEffect}
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1">Stroke Color</label>
+                        <input
+                          type="color"
+                          value={selectedObject.stroke || '#000000'}
+                          onChange={(e) => {
+                            selectedObject.set('stroke', e.target.value);
+                            fabricCanvasRef.current?.renderAll();
+                            saveState();
+                          }}
+                          className="w-full h-8 border border-gray-600 rounded"
                         />
                       </div>
-                    </div>
-                  ) : selectedObject ? (
-                    <div className="p-4">
-                      {/* Layer Properties for Selected Object */}
-                      <div className="space-y-4 mb-6">
-                        <label className="text-sm font-medium text-gray-300 mb-2 block">
-                          Layer Properties
-                        </label>
 
-                        {/* Opacity */}
-                        <div>
-                          <label className="text-xs text-gray-400 block mb-1">
-                            Opacity
-                          </label>
-                          <div className="space-y-1">
-                            <input
-                              type="range"
-                              min="0"
-                              max="100"
-                              value={layerOpacity}
-                              onChange={(e) =>
-                                handleOpacityChange(Number(e.target.value))
-                              }
-                              className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
-                            />
-                            <span className="text-xs text-gray-500">
-                              {layerOpacity}%
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Blend Mode */}
-                        <div>
-                          <label className="text-xs text-gray-400 block mb-1">
-                            Blend Mode
-                          </label>
-                          <select
-                            value={layerBlendMode}
-                            onChange={(e) =>
-                              handleBlendModeChange(e.target.value)
-                            }
-                            className="w-full p-2 bg-[#2a2a2a] border border-gray-600 rounded text-xs text-gray-300"
-                          >
-                            <option value="normal">Normal</option>
-                            <option value="multiply">Multiply</option>
-                            <option value="screen">Screen</option>
-                            <option value="overlay">Overlay</option>
-                            <option value="soft-light">Soft Light</option>
-                            <option value="hard-light">Hard Light</option>
-                            <option value="color-dodge">Color Dodge</option>
-                            <option value="color-burn">Color Burn</option>
-                            <option value="darken">Darken</option>
-                            <option value="lighten">Lighten</option>
-                            <option value="difference">Difference</option>
-                            <option value="exclusion">Exclusion</option>
-                          </select>
-                        </div>
-
-                        {/* Shape Properties for non-text objects */}
-                        {selectedObject.type !== "i-text" && (
-                          <div className="space-y-4">
-                            <div>
-                              <label className="text-xs text-gray-400 block mb-1">
-                                Fill Color
-                              </label>
-                              <input
-                                type="color"
-                                value={selectedObject.fill || "#000000"}
-                                onChange={(e) => {
-                                  selectedObject.set("fill", e.target.value);
-                                  fabricCanvasRef.current?.renderAll();
-                                  saveState();
-                                }}
-                                className="w-full h-8 border border-gray-600 rounded"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="text-xs text-gray-400 block mb-1">
-                                Stroke Color
-                              </label>
-                              <input
-                                type="color"
-                                value={selectedObject.stroke || "#000000"}
-                                onChange={(e) => {
-                                  selectedObject.set("stroke", e.target.value);
-                                  fabricCanvasRef.current?.renderAll();
-                                  saveState();
-                                }}
-                                className="w-full h-8 border border-gray-600 rounded"
-                              />
-                            </div>
-
-                            <div>
-                              <label className="text-xs text-gray-400 block mb-1">
-                                Stroke Width
-                              </label>
-                              <input
-                                type="range"
-                                min="0"
-                                max="20"
-                                value={selectedObject.strokeWidth || 0}
-                                onChange={(e) => {
-                                  selectedObject.set(
-                                    "strokeWidth",
-                                    Number(e.target.value),
-                                  );
-                                  fabricCanvasRef.current?.renderAll();
-                                  saveState();
-                                }}
-                                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
-                              />
-                              <span className="text-xs text-gray-500">
-                                {selectedObject.strokeWidth || 0}px
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                      <div>
+                        <label className="text-xs text-gray-400 block mb-1">Stroke Width</label>
+                        <input
+                          type="range"
+                          min="0"
+                          max="20"
+                          value={selectedObject.strokeWidth || 0}
+                          onChange={(e) => {
+                            selectedObject.set('strokeWidth', Number(e.target.value));
+                            fabricCanvasRef.current?.renderAll();
+                            saveState();
+                          }}
+                          className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                        />
+                        <span className="text-xs text-gray-500">
+                          {selectedObject.strokeWidth || 0}px
+                        </span>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="p-4 text-gray-400 text-center">
-                      Select an object to edit its properties
                     </div>
                   )}
                 </div>
               </div>
-            </TabsContent>
-
-            <TabsContent value="adjustments" className="flex-1 m-0">
-              <div className="p-4 space-y-4">
-                <ParameterInput
-                  label="Hue"
-                  value={hue}
-                  min={-180}
-                  max={180}
-                  step={1}
-                  unit="°"
-                  defaultValue={0}
-                  onChange={setHue}
-                  onReset={() => setHue(0)}
-                />
-
-                <ParameterInput
-                  label="Saturation"
-                  value={saturation}
-                  min={-100}
-                  max={100}
-                  step={1}
-                  unit="%"
-                  defaultValue={0}
-                  onChange={setSaturation}
-                  onReset={() => setSaturation(0)}
-                />
-
-                <ParameterInput
-                  label="Brightness"
-                  value={brightness}
-                  min={-100}
-                  max={100}
-                  step={1}
-                  unit="%"
-                  defaultValue={0}
-                  onChange={setBrightness}
-                  onReset={() => setBrightness(0)}
-                />
+            ) : (
+              <div className="p-4 text-gray-400 text-center">
+                Select an object to edit its properties
               </div>
-            </TabsContent>
-
-            <TabsContent value="libraries" className="flex-1 m-0">
-              <div className="flex flex-col h-full">
-                {/* Layers Panel */}
-                <div className="p-4 border-b border-[#4a4a4a]">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-medium text-gray-300">
-                      Layers
-                    </h3>
-                    <Layers className="w-4 h-4 text-gray-400" />
-                  </div>
-
-                  <DragDropContext onDragEnd={reorderLayers}>
-                    <Droppable droppableId="layers">
-                      {(provided) => (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          className="space-y-1"
-                        >
-                          {layers.map((layer, index) => (
-                            <Draggable
-                              key={layer.id}
-                              draggableId={layer.id}
-                              index={index}
-                            >
-                              {(provided) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  className={`flex items-center p-2 rounded text-xs cursor-pointer hover:bg-[#4a4a4a] ${
-                                    selectedLayer?.id === layer.id
-                                      ? "bg-[#0078d4]"
-                                      : "bg-[#3a3a3a]"
-                                  }`}
-                                  onClick={() => selectLayer(layer)}
-                                >
-                                  <div className="flex-1 min-w-0">
-                                    <div className="truncate text-gray-200">
-                                      {layer.name}
-                                    </div>
-                                    <div className="text-gray-500">
-                                      {layer.type}
-                                    </div>
-                                  </div>
-
-                                  <div className="flex items-center space-x-1 ml-2">
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        toggleLayerVisibility(layer.id);
-                                      }}
-                                      className="p-1 hover:bg-[#4a4a4a] rounded"
-                                    >
-                                      {layer.visible ? (
-                                        <Eye className="w-3 h-3 text-gray-400" />
-                                      ) : (
-                                        <EyeOff className="w-3 h-3 text-gray-500" />
-                                      )}
-                                    </button>
-
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        toggleLayerLock(layer.id);
-                                      }}
-                                      className="p-1 hover:bg-[#4a4a4a] rounded"
-                                    >
-                                      {layer.locked ? (
-                                        <Lock className="w-3 h-3 text-gray-400" />
-                                      ) : (
-                                        <Unlock className="w-3 h-3 text-gray-400" />
-                                      )}
-                                    </button>
-
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        deleteLayer(layer.id);
-                                      }}
-                                      className="p-1 hover:bg-red-600 rounded"
-                                    >
-                                      <Trash2 className="w-3 h-3 text-gray-400 hover:text-white" />
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+            )}
+          </div>
         </div>
-      </div>
+      </TabsContent>
 
-      {/* Hidden file input for image uploads */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file && fabricCanvasRef.current) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-              const imgElement = new Image();
-              imgElement.onload = () => {
-                FabricImage.fromURL(event.target?.result as string).then(
-                  (img) => {
-                    img.scaleToWidth(200);
-                    img.set({
-                      left: 350,
-                      top: 250,
-                    });
-                    (img as any).layerId = `image-${Date.now()}`;
-                    fabricCanvasRef.current?.add(img);
-                    fabricCanvasRef.current?.renderAll();
-                    saveState();
-                  },
-                );
-              };
-              imgElement.src = event.target?.result as string;
-            };
-            reader.readAsDataURL(file);
-          }
-        }}
-      />
+      <TabsContent value="adjustments" className="flex-1 m-0">
+        <div className="p-4 space-y-4">
+          <ParameterInput
+            label="Hue"
+            value={hue}
+            min={-180}
+            max={180}
+            step={1}
+            unit="°"
+            defaultValue={0}
+            onChange={setHue}
+            onReset={() => setHue(0)}
+          />
 
-      {/* Modals */}
-      <TemplatesModal
-        open={templatesModalOpen}
-        onOpenChange={setTemplatesModalOpen}
-        onTemplateSelect={() => {}}
-      />
+          <ParameterInput
+            label="Saturation"
+            value={saturation}
+            min={-100}
+            max={100}
+            step={1}
+            unit="%"
+            defaultValue={0}
+            onChange={setSaturation}
+            onReset={() => setSaturation(0)}
+          />
 
-      <SVGLayoutModal
-        open={svgLayoutModalOpen}
-        onOpenChange={setSvgLayoutModalOpen}
-        onLayoutSelect={() => {}}
-      />
+          <ParameterInput
+            label="Brightness"
+            value={brightness}
+            min={-100}
+            max={100}
+            step={1}
+            unit="%"
+            defaultValue={0}
+            onChange={setBrightness}
+            onReset={() => setBrightness(0)}
+          />
+        </div>
+      </TabsContent>
 
-      <FormatsModal
-        open={formatsModalOpen}
-        onOpenChange={setFormatsModalOpen}
-        selectedFormat={selectedFormat}
-        onFormatSelect={handleFormatChange}
-      />
+      <TabsContent value="libraries" className="flex-1 m-0">
+        <div className="flex flex-col h-full">
+          {/* Layers Panel */}
+          <div className="p-4 border-b border-[#4a4a4a]">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-gray-300">Layers</h3>
+              <Layers className="w-4 h-4 text-gray-400" />
+            </div>
 
-      <FiltersModal
-        open={filtersModalOpen}
-        onOpenChange={setFiltersModalOpen}
-      />
-
-      <TextEffectsModal
-        open={textEffectsModalOpen}
-        onOpenChange={setTextEffectsModalOpen}
-        selectedObject={selectedObject}
-        onApplyEffect={applyTextEffect}
-      />
-    </div>
-  );
+            <DragDropContext onDragEnd={reorderLayers}>
+              <Droppable droppableId="layers">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-1">
+                    {layers.map((layer, index) => (
+                      <Draggable key={layer.id} draggableId={layer.id} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className={`flex items-center p-2 rounded text-xs cursor-pointer hover:bg-gray-700 ${
+                              selectedLayer?.id === layer.id ? 'bg-blue-600' : 'bg-gray-800'
+                            }`}
+                          >
+                            <span className="truncate flex-1">{layer.name}</span>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+          {/* ... outros conteúdos do painel, se houver ... */}
+        </div>
+      </TabsContent>
+    </Tabs>
+  </div>;
 }

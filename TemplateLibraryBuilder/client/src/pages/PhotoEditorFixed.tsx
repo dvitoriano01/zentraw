@@ -252,6 +252,51 @@ export default function PhotoEditor() {
     }
   }, [fabricCanvasRef.current]);
 
+  // Atualiza layers ao mudar ordem no canvas (z-index)
+  useEffect(() => {
+    if (!fabricCanvasRef.current) return;
+    const canvas = fabricCanvasRef.current;
+    // Patch nos métodos de ordem
+    const origBringToFront = fabric.Object.prototype.bringToFront;
+    const origSendToBack = fabric.Object.prototype.sendToBack;
+    const origMoveTo = fabric.Object.prototype.moveTo;
+    const origSendForward = fabric.Object.prototype.bringForward;
+    const origSendBackwards = fabric.Object.prototype.sendBackwards;
+
+    fabric.Object.prototype.bringToFront = function () {
+      const res = origBringToFront.apply(this, arguments);
+      if (typeof updateLayersList === 'function') updateLayersList();
+      return res;
+    };
+    fabric.Object.prototype.sendToBack = function () {
+      const res = origSendToBack.apply(this, arguments);
+      if (typeof updateLayersList === 'function') updateLayersList();
+      return res;
+    };
+    fabric.Object.prototype.moveTo = function (index) {
+      const res = origMoveTo.apply(this, arguments);
+      if (typeof updateLayersList === 'function') updateLayersList();
+      return res;
+    };
+    fabric.Object.prototype.bringForward = function (intersecting) {
+      const res = origSendForward.apply(this, arguments);
+      if (typeof updateLayersList === 'function') updateLayersList();
+      return res;
+    };
+    fabric.Object.prototype.sendBackwards = function (intersecting) {
+      const res = origSendBackwards.apply(this, arguments);
+      if (typeof updateLayersList === 'function') updateLayersList();
+      return res;
+    };
+    return () => {
+      fabric.Object.prototype.bringToFront = origBringToFront;
+      fabric.Object.prototype.sendToBack = origSendToBack;
+      fabric.Object.prototype.moveTo = origMoveTo;
+      fabric.Object.prototype.bringForward = origSendForward;
+      fabric.Object.prototype.sendBackwards = origSendBackwards;
+    };
+  }, []);
+
   // History management functions
   const saveState = useCallback(() => {
     if (!fabricCanvasRef.current) return;
@@ -388,41 +433,49 @@ export default function PhotoEditor() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [undo, redo, selectedObject, saveState]);
 
+  // Atualizar layersList SEMPRE com useCallback estável
   const updateLayersList = useCallback(() => {
-    if (!fabricCanvasRef.current) {
+    try {
+      if (!fabricCanvasRef.current) {
+        setLayers([]);
+        return;
+      }
+      const objects = fabricCanvasRef.current.getObjects();
+      if (!Array.isArray(objects) || objects.length === 0) {
+        setLayers([]);
+        return;
+      }
+      const newLayers = objects
+        .map((obj, index) => {
+          if (!obj) return null;
+          const layerId = (obj as any).layerId || `layer-${index}`;
+          let name = 'Unknown';
+          if (obj.type === 'i-text') {
+            name = `Text: ${(obj as IText).text?.substring(0, 20) || 'Empty'}`;
+          } else if (obj.type === 'rect') {
+            name = 'Rectangle';
+          } else if (obj.type === 'circle') {
+            name = 'Circle';
+          } else if (obj.type === 'triangle') {
+            name = 'Triangle';
+          } else if (obj.type === 'image') {
+            name = 'Image';
+          }
+          return {
+            id: layerId,
+            name,
+            type: obj.type || 'unknown',
+            visible: obj.visible !== false,
+            locked: !obj.selectable,
+          };
+        })
+        .filter((layer): layer is Layer => !!layer)
+        .reverse();
+      setLayers(newLayers);
+    } catch (err) {
       setLayers([]);
-      return;
+      // Opcional: console.error('Erro ao atualizar layers:', err);
     }
-
-    const objects = fabricCanvasRef.current.getObjects();
-    const newLayers = objects
-      .map((obj, index) => {
-        const layerId = (obj as any).layerId || `layer-${index}`;
-        let name = 'Unknown';
-
-        if (obj.type === 'i-text') {
-          name = `Text: ${(obj as IText).text?.substring(0, 20) || 'Empty'}`;
-        } else if (obj.type === 'rect') {
-          name = 'Rectangle';
-        } else if (obj.type === 'circle') {
-          name = 'Circle';
-        } else if (obj.type === 'triangle') {
-          name = 'Triangle';
-        } else if (obj.type === 'image') {
-          name = 'Image';
-        }
-
-        return {
-          id: layerId,
-          name,
-          type: obj.type || 'unknown',
-          visible: obj.visible !== false,
-          locked: !obj.selectable,
-        };
-      })
-      .reverse();
-
-    setLayers(newLayers);
   }, []);
 
   // Tool functions
@@ -635,34 +688,54 @@ export default function PhotoEditor() {
 
     if (fromIndex === toIndex) return;
 
-    const objects = fabricCanvasRef.current.getObjects();
+    // Ordem reversa: painel mostra topo = último do array do Fabric
+    const objects = (fabricCanvasRef.current as fabric.Canvas).getObjects();
+    if (!Array.isArray(objects) || objects.length === 0) return;
+
+    // Debug: log arrays e índices
+    // console.log('layers:', layers);
+    // console.log('fabric objects:', objects);
+    // console.log('fromIndex:', fromIndex, 'toIndex:', toIndex);
+
+    // O painel mostra layers.reverse(), então:
+    // index do painel 0 = objects[objects.length - 1]
+    // index do painel N = objects[objects.length - 1 - N]
     const reversedFromIndex = objects.length - 1 - fromIndex;
     const reversedToIndex = objects.length - 1 - toIndex;
-
-    const objectToMove = objects[reversedFromIndex];
+    const objectToMove = objects[reversedFromIndex] as fabric.Object;
     if (objectToMove) {
-      fabricCanvasRef.current.remove(objectToMove);
-      fabricCanvasRef.current.insertAt(reversedToIndex, objectToMove);
-      fabricCanvasRef.current.renderAll();
+      (fabricCanvasRef.current as fabric.Canvas).remove(objectToMove);
+      const newObjects = (fabricCanvasRef.current as fabric.Canvas).getObjects();
+      // O índice correto é reversedToIndex após remover
+      let insertIndex = reversedToIndex;
+      if (insertIndex < 0) insertIndex = 0;
+      if (insertIndex > newObjects.length) insertIndex = newObjects.length;
+      (fabricCanvasRef.current as fabric.Canvas).insertAt(insertIndex, objectToMove);
+      (fabricCanvasRef.current as fabric.Canvas).setActiveObject(objectToMove);
+      (fabricCanvasRef.current as fabric.Canvas).renderAll();
       updateLayersList();
       saveState();
     }
   };
 
+  // Função para "linkar" layers: seleciona múltiplos objetos ao clicar com Ctrl
+  // [REMOVIDO] const [linkedLayers, setLinkedLayers] = useState<string[]>([]);
+  // [REMOVIDO] const toggleLinkLayer = (layerId: string) => { ... };
+
+  // Ao selecionar uma layer, seleciona apenas ela no canvas e destaca no painel
   const selectLayer = (layer: Layer) => {
     if (!fabricCanvasRef.current) return;
-
     const objects = fabricCanvasRef.current.getObjects();
     const obj = objects.find(
-      (o, index) => (o as any).layerId === layer.id || `layer-${index}` === layer.id,
+      (o, index) => ((o as any).layerId || `layer-${index}`) === layer.id
     );
-
     if (obj) {
+      fabricCanvasRef.current.discardActiveObject();
       fabricCanvasRef.current.setActiveObject(obj);
-      fabricCanvasRef.current.renderAll();
       setSelectedObject(obj);
       setSelectedLayer(layer);
       setLayerOpacity(Math.round((obj.opacity || 1) * 100));
+      fabricCanvasRef.current.renderAll();
     }
   };
 
@@ -922,7 +995,6 @@ export default function PhotoEditor() {
 
         {/* Right Panels */}
         <div className="w-80 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
-          {/* Properties Panel */}
           <Tabs
             value={activePropertiesTab}
             onValueChange={(value: any) => setActivePropertiesTab(value)}
@@ -941,7 +1013,6 @@ export default function PhotoEditor() {
                 </TabsTrigger>
               </TabsList>
             </div>
-
             <TabsContent value="properties" className="flex-1 flex flex-col m-0 min-h-0">
               <div className="flex flex-col h-full min-h-0">
                 {/* Canvas Background Controls */}
@@ -1176,36 +1247,82 @@ export default function PhotoEditor() {
                     <h3 className="text-sm font-medium text-gray-300">Layers</h3>
                     <Layers className="w-4 h-4 text-gray-400" />
                   </div>
-
-                  <DragDropContext onDragEnd={reorderLayers}>
-                    <Droppable droppableId="layers">
-                      {(provided) => (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          className="space-y-1"
-                        >
-                          {layers.map((layer, index) => (
-                            <Draggable key={layer.id} draggableId={layer.id} index={index}>
-                              {(provided) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  className={`flex items-center p-2 rounded text-xs cursor-pointer hover:bg-gray-700 ${
-                                    selectedLayer?.id === layer.id ? 'bg-blue-600' : 'bg-gray-800'
-                                  }`}
-                                >
-                                  <span className="truncate flex-1">{layer.name}</span>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
+                  {layers.length === 0 ? (
+                    <div className="text-gray-500 text-xs text-center py-8">No layers yet</div>
+                  ) : (
+                    <DragDropContext onDragEnd={reorderLayers}>
+                      <Droppable droppableId="layers">
+                        {(provided) => (
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            className="space-y-1"
+                          >
+                            {layers.map((layer, index) => (
+                              <Draggable key={layer.id} draggableId={layer.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={{
+                                      ...provided.draggableProps.style,
+                                      userSelect: 'none',
+                                      background: snapshot.isDragging ? '#2563eb' : (selectedLayer?.id === layer.id ? '#2563eb' : '#1e293b'),
+                                      color: 'white',
+                                      borderRadius: 6,
+                                      padding: '8px',
+                                      marginBottom: 4,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      cursor: 'pointer',
+                                    }}
+                                    onClick={() => selectLayer(layer)}
+                                  >
+                                    <span className="truncate flex-1">{layer.name}</span>
+                                    {/* Show/Hide button */}
+                                    <button
+                                      className="ml-2 text-gray-400 hover:text-white"
+                                      title={layer.visible ? 'Hide Layer' : 'Show Layer'}
+                                      onClick={e => {
+                                        e.stopPropagation();
+                                        toggleLayerVisibility(layer.id);
+                                      }}
+                                    >
+                                      {layer.visible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                                    </button>
+                                    {/* Lock/Unlock button */}
+                                    <button
+                                      className="ml-1 text-gray-400 hover:text-white"
+                                      title={layer.locked ? 'Unlock Layer' : 'Lock Layer'}
+                                      onClick={e => {
+                                        e.stopPropagation();
+                                        toggleLayerLock(layer.id);
+                                      }}
+                                    >
+                                      {layer.locked ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                                    </button>
+                                    {/* Delete button */}
+                                    <button
+                                      className="ml-1 text-gray-400 hover:text-red-500"
+                                      title="Delete Layer"
+                                      onClick={e => {
+                                        e.stopPropagation();
+                                        deleteLayer(layer.id);
+                                      }}
+                                    >
+                                      <Trash2 className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
+                    </DragDropContext>
+                  )}
                 </div>
                 {/* ... outros conteúdos do painel, se houver ... */}
               </div>

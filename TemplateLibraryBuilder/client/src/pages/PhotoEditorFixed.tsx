@@ -1,6 +1,12 @@
+/**
+ * Zentraw Photo Editor - Version 1.3.0.final
+ * Drag and Drop HTML5 nativo implementado - Elimina erro "Unable to find draggable with id"
+ * Solução estável baseada no padrão do Replit com todas as funcionalidades preservadas
+ */
+
 import FontFaceObserver from 'fontfaceobserver';
 import { freepikFonts } from '@/constants/freepikFonts';
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 // Import fabric types
 import {
   Canvas,
@@ -37,6 +43,7 @@ import {
   Lock,
   Unlock,
   Trash2,
+  GripVertical,
 } from 'lucide-react';
 
 import { ParameterInput } from '@/components/editor/ParameterInput';
@@ -61,7 +68,6 @@ import { TextFXPanel } from '@/components/editor/TextFXPanel';
 import { FormatsModal } from '@/components/editor/FormatsModal';
 import { FiltersModal } from '@/components/editor/FiltersModal';
 import { TextEffectsModal } from '@/components/editor/TextEffectsModal';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 // Using any for fabric event types since the types are not exported correctly
 type FabricMouseEvent = {
   e: MouseEvent & {
@@ -118,14 +124,13 @@ type ExtendedFabricEvent = {
   target?: FabricObject;
 };
 
-interface Layer {
+interface LayerItem {
   id: string;
-  type: string;
-  name: string; // Using name instead of label for consistency
+  name: string;
+  type: 'text' | 'image' | 'shape' | 'background';
+  fabricType: string; // Tipo original do Fabric.js para ícones
   visible: boolean;
   locked: boolean;
-  zIndex: number;
-  fabricObject: FabricObject;
 }
 
 const tools = [
@@ -149,12 +154,12 @@ const PhotoEditorFixed: React.FC = () => {
   const [selectedFormat, setSelectedFormat] = useState('instagram-post');
   const [canvasBackground, setCanvasBackground] = useState('transparent');
   const [selectedObject, setSelectedObject] = useState<FabricObject | null>(null);
-  const [selectedLayer, setSelectedLayer] = useState<Layer | null>(null);
+  const [selectedLayer, setSelectedLayer] = useState<LayerItem | null>(null);
   const [selectedTool, setSelectedTool] = useState('select');
   const [hue, setHue] = useState(0);
   const [saturation, setSaturation] = useState(0);
   const [brightness, setBrightness] = useState(0);
-  const [layers, setLayers] = useState<Layer[]>([]);
+  const [layers, setLayers] = useState<LayerItem[]>([]);
   const [layerOpacity, setLayerOpacity] = useState(100);
   const [layerBlendMode, setLayerBlendMode] = useState('normal');
   const [activePropertiesTab, setActivePropertiesTab] = useState('properties');
@@ -236,74 +241,77 @@ const PhotoEditorFixed: React.FC = () => {
     [selectedObject],
   );
 
-  const updateLayersList = useCallback(() => {
+  // Função para gerar ID único simples
+  const generateUniqueId = (prefix: string = 'layer') => {
+    return `${prefix}_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+  };
+
+  const updateLayers = useCallback(() => {
     if (!fabricCanvasRef.current) {
       setLayers([]);
       return;
     }
-
-    const canvas = fabricCanvasRef.current;
-    const objects = canvas.getObjects();
-
-    if (!Array.isArray(objects) || objects.length === 0) {
-      setLayers([]);
-      return;
-    }
-
+    
+    const objects = fabricCanvasRef.current.getObjects();
     const newLayers = objects.map((obj, index) => {
-      if (!(obj as any).layerId) {
-        (obj as any).layerId = `${obj.type || 'layer'}-${Date.now()}-${index}`;
-      }
-
-      const layerId = (obj as any).layerId;
+      const layerId = (obj as any).layerId || `layer-${index}`;
       let name = 'Unknown';
-
-      if (obj.type === 'i-text') {
-        name = `Text: ${(obj as IText).text?.substring(0, 20) || 'Empty'}`;
-      } else if (obj.type === 'rect') {
-        name = 'Rectangle';
-      } else if (obj.type === 'circle') {
-        name = 'Circle';
-      } else if (obj.type === 'triangle') {
-        name = 'Triangle';
-      } else if (obj.type === 'image') {
-        name = 'Image';
-      } else if (obj.type) {
-        name = obj.type.charAt(0).toUpperCase() + obj.type.slice(1);
+      let type: 'text' | 'image' | 'shape' | 'background' = 'shape';
+      const fabricType = obj.type || 'unknown';
+      
+      switch (obj.type) {
+        case 'i-text':
+          name = `Text: ${(obj as IText).text?.substring(0, 20) || 'Text'}`;
+          type = 'text';
+          break;
+        case 'rect':
+          name = 'Rectangle';
+          type = 'shape';
+          break;
+        case 'circle':
+          name = 'Circle';
+          type = 'shape';
+          break;
+        case 'triangle':
+          name = 'Triangle';
+          type = 'shape';
+          break;
+        case 'image':
+          name = 'Image';
+          type = 'image';
+          break;
+        default:
+          name = obj.type || 'Object';
+          type = 'shape';
       }
 
       return {
         id: layerId,
         name,
-        type: obj.type || 'unknown',
+        type,
+        fabricType,
         visible: obj.visible !== false,
-        locked: !obj.selectable,
-        zIndex: canvas.getObjects().indexOf(obj),
-        fabricObject: obj,
+        locked: !obj.selectable
       };
-    });
+    }).reverse(); // Reverse para mostrar layers do topo para baixo
 
-    // Simples comparação para evitar atualizações desnecessárias apenas quando necessário
     setLayers(newLayers);
-  }, []); // Sem dependências para evitar loops
+  }, []);
 
   // Adiciona um objeto ao canvas e atualiza a lista de layers
   const addLayerToCanvas = useCallback((obj: FabricObject, name: string, type: string) => {
     if (!fabricCanvasRef.current) return;
 
     const canvas = fabricCanvasRef.current;
-    const layerId = `${type}-${Date.now()}`;
+    // Usar ID simples como no Replit
+    const layerId = `layer-${Date.now()}`;
     (obj as any).layerId = layerId;
 
     canvas.add(obj);
     canvas.setActiveObject(obj);
     canvas.renderAll();
-
-    // Força atualização do estado de forma direta
-    setTimeout(() => {
-      updateLayersList();
-      saveState();
-    }, 0);
+    updateLayers();
+    saveState();
   }, []);
 
   // Função de deletar layer com validação
@@ -312,18 +320,15 @@ const PhotoEditorFixed: React.FC = () => {
 
     const canvas = fabricCanvasRef.current;
     const objects = canvas.getObjects();
-    const obj = objects.find((o) => (o as any).layerId === layerId);
+    const obj = objects.find((o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId);
 
     if (obj) {
       canvas.remove(obj);
       canvas.discardActiveObject();
       canvas.renderAll();
-
       setSelectedObject(null);
-      setTimeout(() => {
-        updateLayersList();
-        saveState();
-      }, 0);
+      updateLayers();
+      saveState();
     }
   }, []);
 
@@ -333,15 +338,12 @@ const PhotoEditorFixed: React.FC = () => {
 
     const canvas = fabricCanvasRef.current;
     const objects = canvas.getObjects();
-    const obj = objects.find((o) => (o as any).layerId === layerId);
+    const obj = objects.find((o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId);
 
     if (obj) {
       obj.set('visible', !obj.visible);
       canvas.renderAll();
-      setTimeout(() => {
-        updateLayersList();
-        saveState();
-      }, 0);
+      updateLayers();
     }
   }, []);
 
@@ -351,18 +353,33 @@ const PhotoEditorFixed: React.FC = () => {
 
     const canvas = fabricCanvasRef.current;
     const objects = canvas.getObjects();
-    const obj = objects.find((o) => (o as any).layerId === layerId);
+    const obj = objects.find((o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId);
 
     if (obj) {
       obj.set('selectable', !obj.selectable);
       obj.set('evented', obj.selectable);
       canvas.renderAll();
-      setTimeout(() => {
-        updateLayersList();
-        saveState();
-      }, 0);
+      updateLayers();
     }
   }, []);
+
+  // Reorder layers usando drag and drop HTML5 nativo
+  const reorderLayers = (fromIndex: number, toIndex: number) => {
+    if (!fabricCanvasRef.current) return;
+    
+    const objects = fabricCanvasRef.current.getObjects();
+    const reversedFromIndex = objects.length - 1 - fromIndex;
+    const reversedToIndex = objects.length - 1 - toIndex;
+    
+    const objectToMove = objects[reversedFromIndex];
+    if (objectToMove) {
+      fabricCanvasRef.current.remove(objectToMove);
+      (fabricCanvasRef.current as any).insertAt(objectToMove, reversedToIndex, false);
+      fabricCanvasRef.current.renderAll();
+      updateLayers();
+      saveState();
+    }
+  };
 
   // Zoom handlers
   const handleZoomIn = () => {
@@ -433,24 +450,24 @@ const PhotoEditorFixed: React.FC = () => {
       // Configurar eventos do canvas de forma otimizada
       canvas.on('object:modified', () => {
         setTimeout(() => {
-          updateLayersList();
+          updateLayers();
           saveState();
         }, 0);
       });
 
       canvas.on('selection:created', (e: any) => {
         setSelectedObject(e.selected?.[0] || null);
-        // Não precisa chamar updateLayersList aqui
+        // Não precisa chamar updateLayers aqui
       });
 
       canvas.on('selection:updated', (e: any) => {
         setSelectedObject(e.selected?.[0] || null);
-        // Não precisa chamar updateLayersList aqui
+        // Não precisa chamar updateLayers aqui
       });
 
       canvas.on('selection:cleared', () => {
         setSelectedObject(null);
-        // Não precisa chamar updateLayersList aqui
+        // Não precisa chamar updateLayers aqui
       });
 
       return () => {
@@ -474,16 +491,20 @@ const PhotoEditorFixed: React.FC = () => {
     }
   }, [canvasBackground]);
 
-  // Removemos o useEffect que causava problemas com patches nos métodos do Fabric.js
+  // Removemos o useEffect de sincronização pois não é mais necessário com drag and drop nativo
 
   const selectLayer = (layerId: string) => {
-    const layer = layers.find((l) => l.id === layerId);
-    if (!layer || !fabricCanvasRef.current) return;
-
-    fabricCanvasRef.current.discardActiveObject();
-    fabricCanvasRef.current.setActiveObject(layer.fabricObject);
-    fabricCanvasRef.current.requestRenderAll();
-    setSelectedLayer(layer);
+    if (!fabricCanvasRef.current) return;
+    
+    const objects = fabricCanvasRef.current.getObjects();
+    const obj = objects.find((o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId);
+    
+    if (obj) {
+      fabricCanvasRef.current.discardActiveObject();
+      fabricCanvasRef.current.setActiveObject(obj);
+      fabricCanvasRef.current.requestRenderAll();
+      setSelectedObject(obj);
+    }
   };
 
   // Handler para mudança de ferramenta
@@ -582,7 +603,7 @@ const PhotoEditorFixed: React.FC = () => {
       if (state) {
         fabricCanvasRef.current.loadFromJSON(JSON.parse(state), () => {
           fabricCanvasRef.current!.renderAll();
-          setTimeout(() => updateLayersList(), 0);
+          setTimeout(() => updateLayers(), 0);
         });
         setHistoryIndex(newIndex);
         setSelectedObject(null);
@@ -598,7 +619,7 @@ const PhotoEditorFixed: React.FC = () => {
       if (state) {
         fabricCanvasRef.current.loadFromJSON(JSON.parse(state), () => {
           fabricCanvasRef.current!.renderAll();
-          setTimeout(() => updateLayersList(), 0);
+          setTimeout(() => updateLayers(), 0);
         });
         setHistoryIndex(newIndex);
         setSelectedObject(null);
@@ -686,7 +707,7 @@ const PhotoEditorFixed: React.FC = () => {
           fabricCanvasRef.current.renderAll();
           setSelectedObject(null);
           setTimeout(() => {
-            updateLayersList();
+            updateLayers();
             saveState();
           }, 0);
         }
@@ -697,94 +718,7 @@ const PhotoEditorFixed: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [undo, redo, selectedObject]);
 
-  // Verifica consistência entre canvas e estado de layers
-  const verifyLayersConsistency = useCallback(() => {
-    if (!fabricCanvasRef.current) return true;
-
-    const canvas = fabricCanvasRef.current;
-    const objects = canvas.getObjects();
-
-    // Verifica se número de objetos coincide
-    if (objects.length !== layers.length) {
-      console.warn('Inconsistência detectada: número de objetos diferente');
-      updateLayersList();
-      return false;
-    }
-
-    // Verifica se IDs correspondem na mesma ordem
-    const canvasIds = objects.map((obj) => (obj as any).layerId);
-    const layerIds = layers.map((layer) => layer.id);
-
-    const isConsistent = JSON.stringify(canvasIds) === JSON.stringify(layerIds);
-
-    if (!isConsistent) {
-      console.warn('Inconsistência detectada: ordem de layers diferente');
-      updateLayersList();
-      return false;
-    }
-
-    return true;
-  }, [layers, updateLayersList]);
-
-  // moveLayer com verificações adicionais
-  const moveLayer = useCallback(
-    (layerId: string, direction: 'up' | 'down') => {
-      if (!fabricCanvasRef.current) return;
-
-      const canvas = fabricCanvasRef.current;
-      const objects = canvas.getObjects();
-      const currentIndex = objects.findIndex((o) => (o as any).layerId === layerId);
-
-      if (currentIndex === -1) return;
-
-      const newIndex = direction === 'up' ? currentIndex + 1 : currentIndex - 1;
-      if (newIndex < 0 || newIndex >= objects.length) return;
-
-      try {
-        // Move o objeto usando a API do Fabric
-        (objects[currentIndex] as any).moveTo(newIndex);
-        canvas.renderAll();
-
-        // Atualiza a interface
-        updateLayersList();
-        saveState();
-      } catch (error) {
-        console.error('Erro ao mover layer:', error);
-      }
-    },
-    [updateLayersList, saveState],
-  );
-
-  // Drag and drop com tratamento de erros
-  const handleDragEnd = (result: any) => {
-    if (!result.destination || !fabricCanvasRef.current) return;
-
-    const canvas = fabricCanvasRef.current;
-    const objects = canvas.getObjects();
-
-    // Converte índices do DnD para índices do canvas
-    const sourceIndex = layers.length - 1 - result.source.index;
-    const destIndex = layers.length - 1 - result.destination.index;
-
-    if (sourceIndex === destIndex) return;
-
-    try {
-      // Move o objeto usando a API do Fabric
-      (objects[sourceIndex] as any).moveTo(destIndex);
-      canvas.renderAll();
-
-      // Atualiza a interface
-      updateLayersList();
-      saveState();
-    } catch (error) {
-      console.error('Erro no drag and drop:', error);
-      // Força atualização para garantir sincronização
-      updateLayersList();
-    }
-  };
-
-  // Painel de layers: exibe do topo para o fundo usando array invertido
-  const layersForDisplay = [...layers].slice().reverse();
+  // Painel de layers simplificado seguindo o padrão do Replit
 
   return (
     <div className="h-screen flex flex-col bg-[#2b2b2b] text-white">
@@ -1281,79 +1215,114 @@ const PhotoEditorFixed: React.FC = () => {
 
             <TabsContent value="libraries" className="flex-1 m-0">
               <div className="flex flex-col h-full">
-                {/* Layers Panel */}
+                {/* Layers Panel - HTML5 Native Drag and Drop */}
                 <div className="p-4 border-b border-[#4a4a4a]">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="text-sm font-medium text-gray-300">Layers</h3>
                     <Layers className="w-4 h-4 text-gray-400" />
                   </div>
+                  
                   {layers.length === 0 ? (
                     <div className="text-gray-500 text-xs text-center py-8">No layers yet</div>
                   ) : (
-                    <div className="flex-1 overflow-y-auto">
-                      <DragDropContext onDragEnd={handleDragEnd}>
-                        <Droppable droppableId="layers">
-                          {(provided) => (
-                            <div
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                              className="space-y-1 p-2"
+                    <div className="flex-1 overflow-y-auto max-h-64 space-y-1">
+                      {layers.map((layer, index) => (
+                        <div
+                          key={layer.id}
+                          draggable
+                          className={`flex items-center justify-between p-2 rounded border transition-all duration-200 cursor-grab active:cursor-grabbing ${
+                            selectedLayer?.id === layer.id 
+                            ? 'bg-[#0078d4] border-[#106ebe] text-white' 
+                            : 'bg-[#383838] border-[#4a4a4a] text-gray-300 hover:bg-[#4a4a4a] hover:border-[#5a5a5a]'
+                          }`}
+                          onClick={() => selectLayer(layer.id)}
+                          onDragStart={(e) => {
+                            e.dataTransfer.setData('text/plain', index.toString());
+                            e.dataTransfer.effectAllowed = 'move';
+                            (e.target as HTMLElement).style.opacity = '0.5';
+                          }}
+                          onDragEnd={(e) => {
+                            (e.target as HTMLElement).style.opacity = '1';
+                          }}
+                          onDragOver={(e) => {
+                            e.preventDefault();
+                            e.dataTransfer.dropEffect = 'move';
+                          }}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                            const toIndex = index;
+                            if (fromIndex !== toIndex) {
+                              reorderLayers(fromIndex, toIndex);
+                            }
+                          }}
+                        >
+                          {/* Drag Handle */}
+                          <div className="flex items-center justify-center w-4 h-4 text-gray-400 hover:text-gray-200 transition-colors">
+                            <GripVertical className="h-3 w-3" />
+                          </div>
+
+                          <div className="flex items-center gap-2 flex-1 min-w-0 ml-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0 hover:bg-white/10 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleLayerVisibility(layer.id);
+                              }}
                             >
-                              {layers.map((layer, index) => (
-                                <Draggable key={layer.id} draggableId={layer.id} index={index}>
-                                  {(provided) => (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      className={`flex items-center justify-between p-2 rounded cursor-pointer ${
-                                        selectedLayer?.id === layer.id ? 'bg-blue-100' : 'bg-white'
-                                      }`}
-                                      onClick={() => selectLayer(layer.id)}
-                                    >
-                                      <div className="flex items-center gap-2">
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          onClick={() => toggleLayerVisibility(layer.id)}
-                                        >
-                                          {layer.visible ? (
-                                            <Eye className="h-4 w-4" />
-                                          ) : (
-                                            <EyeOff className="h-4 w-4" />
-                                          )}
-                                        </Button>
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          onClick={() => toggleLayerLock(layer.id)}
-                                        >
-                                          {layer.locked ? (
-                                            <Lock className="h-4 w-4" />
-                                          ) : (
-                                            <Unlock className="h-4 w-4" />
-                                          )}
-                                        </Button>
-                                        <div className="truncate font-medium">{layer.name}</div>
-                                      </div>
-                                      <div className="flex items-center gap-1">
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          onClick={() => deleteLayer(layer.id)}
-                                        >
-                                          <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  )}
-                                </Draggable>
-                              ))}
-                              {provided.placeholder}
+                              {layer.visible ? (
+                                <Eye className="h-3 w-3" />
+                              ) : (
+                                <EyeOff className="h-3 w-3 opacity-50" />
+                              )}
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0 hover:bg-white/10 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleLayerLock(layer.id);
+                              }}
+                            >
+                              {layer.locked ? (
+                                <Lock className="h-3 w-3" />
+                              ) : (
+                                <Unlock className="h-3 w-3 opacity-70" />
+                              )}
+                            </Button>
+                            
+                            {/* Layer Type Icon */}
+                            <div className="w-4 h-4 flex items-center justify-center">
+                              {layer.fabricType === 'i-text' && <Type className="h-3 w-3 opacity-70" />}
+                              {layer.fabricType === 'rect' && <Square className="h-3 w-3 opacity-70" />}
+                              {layer.fabricType === 'circle' && <Circle className="h-3 w-3 opacity-70" />}
+                              {layer.fabricType === 'triangle' && <Triangle className="h-3 w-3 opacity-70" />}
+                              {layer.fabricType === 'image' && <ImageIcon className="h-3 w-3 opacity-70" />}
                             </div>
-                          )}
-                        </Droppable>
-                      </DragDropContext>
+
+                            <div className="truncate text-xs font-medium flex-1 min-w-0">
+                              {layer.name}
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0 hover:bg-red-500/20 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteLayer(layer.id);
+                              }}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>

@@ -1,37 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { 
-  Bold, 
-  Italic, 
-  Underline, 
-  AlignLeft, 
-  AlignCenter, 
-  AlignRight, 
+import {
+  Bold,
+  Italic,
+  Underline,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
   AlignJustify,
   Type,
-  Palette
+  Palette,
 } from 'lucide-react';
+import { FreepikFontManager } from '@/utils/FreepikFontManager';
+import FontPreview from '@/components/FontPreview';
 
 interface TextPropertiesProps {
   selectedObject: any;
   onUpdateText: (properties: any) => void;
 }
 
-const FONT_FAMILIES = [
-  'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Verdana', 
-  'Tahoma', 'Impact', 'Comic Sans MS', 'Trebuchet MS', 'Courier New',
-  'Lucida Console', 'Palatino', 'Garamond', 'Bookman', 'Avant Garde'
+// Fontes de sistema como fallback
+const SYSTEM_FONTS = [
+  'Arial',
+  'Helvetica',
+  'Times New Roman',
+  'Georgia',
+  'Verdana',
+  'Tahoma',
+  'Impact',
+  'Comic Sans MS',
+  'Trebuchet MS',
+  'Courier New',
+  'Lucida Console',
+  'Palatino',
+  'Garamond',
+  'Bookman',
+  'Avant Garde',
 ];
 
 const FONT_SIZES = [
-  8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72
+  8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72,
 ];
 
 export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
+  const [availableFonts, setAvailableFonts] = useState<Array<{ label: string; value: string }>>([]);
+  const fontManager = FreepikFontManager.getInstance();
+
   const [textProperties, setTextProperties] = useState({
     fontFamily: 'Arial',
     fontSize: 16,
@@ -48,8 +72,34 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
     marginLeft: 0,
     marginRight: 0,
     textIndent: 0,
-    hyphenate: false
+    hyphenate: false,
   });
+
+  // Carregar fontes disponíveis
+  useEffect(() => {
+    const loadAvailableFonts = () => {
+      const freepikFonts = fontManager.getAvailableFonts();
+      const systemFonts = SYSTEM_FONTS.map((font) => ({ label: font, value: font }));
+
+      // Combinar fontes Freepik + sistema, removendo duplicatas
+      const allFonts = [
+        ...freepikFonts,
+        ...systemFonts.filter(
+          (sysFont) => !freepikFonts.some((fpFont) => fpFont.value === sysFont.value),
+        ),
+      ];
+
+      setAvailableFonts(allFonts);
+    };
+
+    // Carregar imediatamente e também escutar mudanças
+    loadAvailableFonts();
+
+    // Recarregar a cada 2 segundos para capturar fontes que carregaram depois
+    const interval = setInterval(loadAvailableFonts, 2000);
+
+    return () => clearInterval(interval);
+  }, [fontManager]);
 
   useEffect(() => {
     if (selectedObject && selectedObject.type === 'i-text') {
@@ -68,7 +118,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
         marginLeft: 0,
         marginRight: 0,
         textIndent: 0,
-        hyphenate: false
+        hyphenate: false,
       });
     }
   }, [selectedObject]);
@@ -76,10 +126,16 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
   const updateProperty = (property: string, value: any) => {
     const newProperties = { ...textProperties, [property]: value };
     setTextProperties(newProperties);
-    
-    // Map properties to Fabric.js property names
-    const fabricProperty = property === 'letterSpacing' ? 'charSpacing' : property;
-    onUpdateText({ [fabricProperty]: value });
+
+    // Para fontFamily, usar o FontManager para garantir fallback
+    if (property === 'fontFamily') {
+      const fontWithFallback = fontManager.getFontWithFallback(value);
+      onUpdateText({ fontFamily: fontWithFallback });
+    } else {
+      // Map properties to Fabric.js property names
+      const fabricProperty = property === 'letterSpacing' ? 'charSpacing' : property;
+      onUpdateText({ [fabricProperty]: value });
+    }
   };
 
   const toggleBold = () => {
@@ -120,8 +176,12 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="bg-[#323232] px-3 py-1">
           <TabsList className="grid w-full grid-cols-2 bg-[#1e1e1e] h-8">
-            <TabsTrigger value="character" className="text-xs py-1">Character</TabsTrigger>
-            <TabsTrigger value="paragraph" className="text-xs py-1">Paragraph</TabsTrigger>
+            <TabsTrigger value="character" className="text-xs py-1">
+              Character
+            </TabsTrigger>
+            <TabsTrigger value="paragraph" className="text-xs py-1">
+              Paragraph
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -130,16 +190,50 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
           {/* Font Family */}
           <div>
             <label className="text-xs text-gray-400 mb-1 block">Font Family</label>
-            <Select value={textProperties.fontFamily} onValueChange={(value) => updateProperty('fontFamily', value)}>
+            <Select
+              value={textProperties.fontFamily}
+              onValueChange={(value) => updateProperty('fontFamily', value)}
+            >
               <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
-                {FONT_FAMILIES.map(font => (
-                  <SelectItem key={font} value={font} className="text-xs">
-                    <span style={{ fontFamily: font }}>{font}</span>
-                  </SelectItem>
-                ))}
+              <SelectContent className="max-h-64 overflow-y-auto">
+                {/* Freepik Fonts Section */}
+                {availableFonts.length > 0 && (
+                  <>
+                    <div className="px-2 py-1 text-xs font-semibold text-blue-400 bg-[#1a1a1a]">
+                      🎨 Fontes Freepik (
+                      {availableFonts.filter((f) => !SYSTEM_FONTS.includes(f.value)).length})
+                    </div>
+                    {availableFonts
+                      .filter((font) => !SYSTEM_FONTS.includes(font.value))
+                      .map((font) => (
+                        <SelectItem key={font.value} value={font.value} className="text-xs">
+                          <div className="flex items-center justify-between w-full">
+                            <span className="font-medium">{font.label}</span>
+                            <FontPreview
+                              fontFamily={fontManager.getFontWithFallback(font.value)}
+                              text="Abc"
+                              size={12}
+                              className="text-blue-300 ml-2"
+                            />
+                          </div>
+                        </SelectItem>
+                      ))}
+                  </>
+                )}
+
+                {/* System Fonts Section */}
+                <div className="px-2 py-1 text-xs font-semibold text-gray-400 bg-[#1a1a1a] mt-1">
+                  🖥️ Fontes do Sistema
+                </div>
+                {availableFonts
+                  .filter((font) => SYSTEM_FONTS.includes(font.value))
+                  .map((font) => (
+                    <SelectItem key={font.value} value={font.value} className="text-xs">
+                      <span style={{ fontFamily: font.value }}>{font.label}</span>
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
           </div>
@@ -148,15 +242,15 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
           <div className="grid grid-cols-2 gap-2">
             <div>
               <label className="text-xs text-gray-400 mb-1 block">Size</label>
-              <Select 
-                value={textProperties.fontSize.toString()} 
+              <Select
+                value={textProperties.fontSize.toString()}
                 onValueChange={(value) => updateProperty('fontSize', parseInt(value))}
               >
                 <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {FONT_SIZES.map(size => (
+                  {FONT_SIZES.map((size) => (
                     <SelectItem key={size} value={size.toString()} className="text-xs">
                       {size} pt
                     </SelectItem>
@@ -355,7 +449,9 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
               onChange={(e) => updateProperty('hyphenate', e.target.checked)}
               className="w-4 h-4"
             />
-            <label htmlFor="hyphenate" className="text-xs text-gray-400">Hyphenate</label>
+            <label htmlFor="hyphenate" className="text-xs text-gray-400">
+              Hyphenate
+            </label>
           </div>
         </TabsContent>
       </Tabs>

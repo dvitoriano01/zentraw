@@ -8,6 +8,14 @@
       "group": "build",
       "isBackground": false,
       "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Start Zentraw Frontend with FREEPIK FONTS v1.3.0.c.4",
+      "type": "shell",
+      "command": "cd TemplateLibraryBuilder && npm run dev:front",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": []
     }
   ]
 }

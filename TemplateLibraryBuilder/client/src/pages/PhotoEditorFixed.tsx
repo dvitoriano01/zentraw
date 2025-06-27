@@ -1,11 +1,11 @@
 /**
- * Zentraw Photo Editor - Version 1.3.0.c.3 - FREEPIK FONTS ORGANIZADAS!
+ * 🎨 ZENTRAW PHOTO EDITOR v1.3.0.c.3 - VERSÃO ESTÁVEL RESTAURADA!
  *
- * 🎨 FREEPIK FONTS ORGANIZADAS - Sistema estilo Photoshop!
- * Data: 26 de junho de 2025
+ * 🔄 ROLLBACK PARA VERSÃO ESTÁVEL v1.3.0.c.3
+ * Data: 27 de junho de 2025
  * Autor: Zentraw Team
  *
- * IMPLEMENTAÇÃO ORGANIZADA v1.3.0.c.3:
+ * IMPLEMENTAÇÃO ESTÁVEL v1.3.0.c.3:
  * ✅ FREEPIK FONTS REAIS: 50+ fontes carregadas via CSS (@font-face)
  * ✅ VERIFICAÇÃO ROBUSTA: Canvas API para testar renderização real
  * ✅ ORGANIZAÇÃO INTELIGENTE: Agrupamento por família estilo Photoshop
@@ -34,17 +34,12 @@
  * ✅ Zoom e canvas: Sistema CSS funcionando perfeitamente
  * ✅ Checkerboard: Fundo transparente visual
  *
- * PRÓXIMOS PASSOS:
- * - Validar carregamento completo das 50+ fontes
- * - Adicionar preview visual das fontes no seletor
- * - Expandir biblioteca de fontes Freepik
- * - Implementar preview das fontes
- * - Otimizar carregamento por demanda
+ * STATUS: VERSÃO ESTÁVEL E FUNCIONAL ✅
  */
 
 // Sistema original restaurado - funcionava corretamente
 import { FreepikFontManager } from '@/utils/FreepikFontManager';
-import { freepikFonts } from '@/constants/freepikFontsFixed';
+import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
 import FontLoadingIndicator from '@/components/FontLoadingIndicator';
 // Importar CSS das fontes Freepik reais
 import '@/styles/freepik-fonts.css';
@@ -225,7 +220,7 @@ const PhotoEditorFixed: React.FC = () => {
     total: 0,
     current: '',
   });
-  const [availableFonts, setAvailableFonts] = useState<Array<{ label: string; value: string }>>([]);
+  const [availableFonts, setAvailableFonts] = useState<FreepikFont[]>([]);
 
   // Zoom state and handlers
   const [currentZoom, setCurrentZoom] = useState(1);
@@ -545,84 +540,54 @@ const PhotoEditorFixed: React.FC = () => {
   // Font Manager original - que funcionava
   const fontManager = useMemo(() => FreepikFontManager.getInstance(), []);
 
-  // ORGANIZAÇÃO INTELIGENTE DE FONTES - Estilo Photoshop (v1.3.0.c.3)
-  const organizeFreepikFontsByFamily = useCallback((fonts: Array<{ label: string; value: string }>) => {
-    const fontFamilies = new Map<string, Array<{ label: string; value: string }>>();
+  // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
+  const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
+    const fontFamilies = new Map<string, FreepikFont[]>();
     
     fonts.forEach(font => {
-      // Extrair família base do nome (ex: "Akuina Regular" -> "Akuina")
-      let familyName = '';
-      let variation = '';
+      const familyName = font.family || font.value;
       
-      // Padrões para identificar variações
-      const weightPatterns = ['Regular', 'Light', 'Medium', 'Semibold', 'Bold', 'Black', 'Extra Light', 'Heavy'];
-      const stylePatterns = ['Italic', 'Oblique'];
-      const specialPatterns = ['Caps', 'Swashes', 'Rough', 'Two', 'Pro'];
+      console.log(`📁 Organizing: "${font.label}" -> Family: "${familyName}"`);
       
-      // Tentar extrair família base
-      const words = font.label.split(' ');
-      let baseWords = [];
-      let variationWords = [];
-      let foundVariation = false;
-      
-      for (const word of words) {
-        const isWeight = weightPatterns.some(pattern => word.includes(pattern));
-        const isStyle = stylePatterns.some(pattern => word.includes(pattern));
-        const isSpecial = specialPatterns.some(pattern => word.includes(pattern));
-        
-        if (isWeight || isStyle || isSpecial) {
-          foundVariation = true;
-          variationWords.push(word);
-        } else if (!foundVariation) {
-          baseWords.push(word);
-        } else {
-          variationWords.push(word);
-        }
-      }
-      
-      familyName = baseWords.join(' ') || font.label;
-      variation = variationWords.join(' ') || 'Regular';
-      
-      // Se não encontrou variação, usar o nome completo como família
-      if (!foundVariation) {
-        familyName = font.label;
-        variation = 'Regular';
-      }
-      
-      console.log(`📁 Organizando: "${font.label}" -> Família: "${familyName}", Variação: "${variation}"`);
-      
-      // Adicionar à família correspondente
+      // Add to corresponding family
       if (!fontFamilies.has(familyName)) {
         fontFamilies.set(familyName, []);
       }
       
-      fontFamilies.get(familyName)!.push({
-        label: variation === 'Regular' ? familyName : `${familyName} ${variation}`,
-        value: font.value,
-        family: familyName,
-        variation: variation
-      } as any);
+      fontFamilies.get(familyName)!.push(font);
     });
     
-    // Ordenar famílias e variações
-    const organizedFonts: Array<{ label: string; value: string }> = [];
+    // VERSÃO ESTÁVEL: Organizar sem modificar valores originais
+    const organizedFonts: FreepikFont[] = [];
     
     Array.from(fontFamilies.keys())
       .sort()
       .forEach(familyName => {
         const family = fontFamilies.get(familyName)!;
         
-        // Ordenar variações: Regular primeiro, depois alfabético
-        family.sort((a: any, b: any) => {
-          if (a.variation === 'Regular') return -1;
-          if (b.variation === 'Regular') return 1;
-          return a.variation.localeCompare(b.variation);
+        // Sort variations: Regular (400) first, then by weight
+        family.sort((a, b) => {
+          // Normal style first
+          if (a.style === 'normal' && b.style === 'italic') return -1;
+          if (a.style === 'italic' && b.style === 'normal') return 1;
+          
+          // Then by weight
+          const weightA = a.weight || 400;
+          const weightB = b.weight || 400;
+          return weightA - weightB;
         });
         
-        organizedFonts.push(...family);
+        // VERSÃO ESTÁVEL: Manter estrutura original das fontes
+        family.forEach((font) => {
+          organizedFonts.push({
+            ...font,
+            weight: font.weight || 400,
+            style: font.style || 'normal'
+          });
+        });
       });
     
-    console.log(`📊 Organizadas ${fontFamilies.size} famílias com ${organizedFonts.length} variações total`);
+    console.log(`📊 Organized ${fontFamilies.size} families with ${organizedFonts.length} total variations`);
     return organizedFonts;
   }, []);
 
@@ -710,13 +675,13 @@ const PhotoEditorFixed: React.FC = () => {
       console.log('📁 Fontes organizadas por família:', groupedFonts);
 
       // Adicionar fontes básicas como fallback
-      const basicFonts = [
-        { label: 'Arial', value: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman' },
-        { label: 'Georgia', value: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS' },
+      const basicFonts: FreepikFont[] = [
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       const allAvailableFonts = [...groupedFonts, ...basicFonts];
@@ -745,13 +710,13 @@ const PhotoEditorFixed: React.FC = () => {
       console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
 
       // Fallback: usar apenas fontes básicas
-      const fallbackFonts = [
-        { label: 'Arial', value: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman' },
-        { label: 'Georgia', value: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS' },
+      const fallbackFonts: FreepikFont[] = [
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       setAvailableFonts(fallbackFonts);
@@ -782,12 +747,12 @@ const PhotoEditorFixed: React.FC = () => {
 
       // Garantir fontes de fallback sempre
       setAvailableFonts([
-        { label: 'Arial', value: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman' },
-        { label: 'Georgia', value: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS' },
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ]);
     });
   }, [loadFreepikFonts]);

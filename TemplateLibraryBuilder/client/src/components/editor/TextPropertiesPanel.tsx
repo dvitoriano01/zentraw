@@ -55,6 +55,7 @@ const FONT_SIZES = [
 export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
+  const [selectedFamilyForModal, setSelectedFamilyForModal] = useState<string | null>(null);
   const fontManager = FreepikFontManager.getInstance();
 
   // Use fonts passed as prop (robustly verified) or fallback
@@ -188,318 +189,358 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
     );
   }
 
+  // Agrupa as fontes por família (deve ficar no topo do componente)
+  const groupedFonts: { [family: string]: FreepikFont[] } = {};
+  (propAvailableFonts ?? []).forEach((font: FreepikFont) => {
+    if (!SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === font.value)) {
+      const family = font.family || font.label.split(' ')[0];
+      if (!groupedFonts[family]) groupedFonts[family] = [];
+      groupedFonts[family].push(font);
+    }
+  });
+
   return (
-    <div className="bg-[#383838] border border-[#4a4a4a] rounded-lg overflow-hidden">
-      {/* Header */}
-      <div className="bg-[#2d2d2d] px-3 py-2 border-b border-[#4a4a4a]">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-300">Text Properties</span>
-          <Type className="w-4 h-4 text-gray-400" />
-        </div>
-      </div>
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="bg-[#323232] px-3 py-1">
-          <TabsList className="grid w-full grid-cols-2 bg-[#1e1e1e] h-8">
-            <TabsTrigger value="character" className="text-xs py-1">
-              Character
-            </TabsTrigger>
-            <TabsTrigger value="paragraph" className="text-xs py-1">
-              Paragraph
-            </TabsTrigger>
-          </TabsList>
+    <>
+      <div className="bg-[#383838] border border-[#4a4a4a] rounded-lg overflow-hidden">
+        {/* Header */}
+        <div className="bg-[#2d2d2d] px-3 py-2 border-b border-[#4a4a4a]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-gray-300">Text Properties</span>
+            <Type className="w-4 h-4 text-gray-400" />
+          </div>
         </div>
 
-        {/* Character Tab */}
-        <TabsContent value="character" className="m-0 p-4 space-y-4">
-          {/* Font Family */}
-          <div>
-            <label className="text-xs text-gray-400 mb-1 block">Font Family</label>
-            <Select
-              value={textProperties.fontFamily}
-              onValueChange={(value) => updateProperty('fontFamily', value)}
-            >
-              <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-64 overflow-y-auto">
-                {/* Freepik Fonts Section - ORGANIZADAS por família */}
-                {(propAvailableFonts ?? []).length > 0 && (
-                  <>
-                    <div className="px-2 py-1 text-xs font-semibold text-blue-400 bg-[#1a1a1a]">
-                      🎨 Freepik Fonts Organized (
-                      {(propAvailableFonts ?? []).filter((f: FreepikFont) => !SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === f.value)).length})
-                    </div>
-                    {(() => {
-                      const freepikFonts = (propAvailableFonts ?? []).filter((font: FreepikFont) => !SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === font.value));
-                      let currentFamily = '';
-                      
-                      return freepikFonts.map((font: FreepikFont, index: number) => {
-                        // Extract base family name
-                        const familyName = font.family || font.label.split(' ')[0];
-                        const isNewFamily = familyName !== currentFamily;
-                        currentFamily = familyName;
-                        
-                        return (
-                          <div key={`${font.value}-${font.weight}-${font.style}`}>
-                            {/* Family separator */}
-                            {isNewFamily && index > 0 && (
-                              <div className="border-t border-[#2a2a2a] my-1" />
-                            )}
-                            <SelectItem 
-                              value={font.value} 
-                              className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] max-w-[220px] overflow-hidden"
-                            >
-                              <div className="flex items-center justify-between w-full max-w-[210px] overflow-hidden">
-                                <span style={{ fontFamily: font.value, fontWeight: font.weight, fontStyle: font.style || 'normal', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 150 }}>
-                                  {font.label}
-                                </span>
-                                {font.weight && font.weight !== 400 && (
-                                  <span className="text-[10px] text-gray-500 ml-2">
-                                    {font.weight}{font.style === 'italic' ? 'i' : ''}
-                                  </span>
-                                )}
-                              </div>
-                            </SelectItem>
-                          </div>
-                        );
-                      });
-                    })()}
-                  </>
-                )}
-
-                {/* System Fonts Section */}
-                <div className="px-2 py-1 text-xs font-semibold text-gray-400 bg-[#1a1a1a]">
-                  🔧 System Fonts ({SYSTEM_FONTS.length})
-                </div>
-                {SYSTEM_FONTS.map((font) => (
-                  <SelectItem key={font.value} value={font.value} className="text-xs">
-                    {font.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="bg-[#323232] px-3 py-1">
+            <TabsList className="grid w-full grid-cols-2 bg-[#1e1e1e] h-8">
+              <TabsTrigger value="character" className="text-xs py-1">
+                Character
+              </TabsTrigger>
+              <TabsTrigger value="paragraph" className="text-xs py-1">
+                Paragraph
+              </TabsTrigger>
+            </TabsList>
           </div>
 
-          {/* Font Size & Style Controls */}
-          <div className="grid grid-cols-2 gap-2">
+          {/* Character Tab */}
+          <TabsContent value="character" className="m-0 p-4 space-y-4">
+            {/* Font Family */}
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Size</label>
+              <label className="text-xs text-gray-400 mb-1 block">Font Family</label>
               <Select
-                value={textProperties.fontSize.toString()}
-                onValueChange={(value) => updateProperty('fontSize', parseInt(value))}
+                value={textProperties.fontFamily}
+                onValueChange={(value) => {
+                  // Verifica se é uma família customizada (Freepik)
+                  const font = (propAvailableFonts ?? []).find(f => f.value === value);
+                  if (font && !SYSTEM_FONTS.some(sf => sf.value === font.value)) {
+                    // Abre o modal para a família
+                    const family = font.family || font.label.split(' ')[0];
+                    setSelectedFamilyForModal(family);
+                  } else {
+                    // System font: aplica direto
+                    updateProperty('fontFamily', value);
+                  }
+                }}
               >
                 <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  {FONT_SIZES.map((size) => (
-                    <SelectItem key={size} value={size.toString()} className="text-xs">
-                      {size} pt
+                <SelectContent className="max-h-64 overflow-y-auto">
+                  {/* Freepik Fonts Section - ORGANIZADAS por família */}
+                  {(propAvailableFonts ?? []).length > 0 && (
+                    <>
+                      <div className="px-2 py-1 text-xs font-semibold text-blue-400 bg-[#1a1a1a]">
+                        🎨 Freepik Fonts Organized (
+                        {(propAvailableFonts ?? []).filter((f: FreepikFont) => !SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === f.value)).length})
+                      </div>
+                      {(() => {
+                        return Object.entries(groupedFonts).map(([family, fonts]) => (
+                          <SelectItem 
+                            key={family}
+                            value={fonts[0].value}
+                            className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] max-w-[220px] overflow-hidden"
+                          >
+                            <div className="flex items-center justify-between w-full max-w-[210px] overflow-hidden">
+                              <span style={{ fontFamily: fonts[0].value, fontWeight: fonts[0].weight, fontStyle: fonts[0].style || 'normal', display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 150 }}>
+                                {family}
+                              </span>
+                              <span className="text-[10px] text-gray-500 ml-2">
+                                {fonts.length > 1 ? `${fonts.length} estilos` : `${fonts[0].weight}${fonts[0].style === 'italic' ? 'i' : ''}`}
+                              </span>
+                            </div>
+                          </SelectItem>
+                        ));
+                      })()}
+                    </>
+                  )}
+
+                  {/* System Fonts Section */}
+                  <div className="px-2 py-1 text-xs font-semibold text-gray-400 bg-[#1a1a1a]">
+                    🔧 System Fonts ({SYSTEM_FONTS.length})
+                  </div>
+                  {SYSTEM_FONTS.map((font) => (
+                    <SelectItem key={font.value} value={font.value} className="text-xs">
+                      {font.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Font Size & Style Controls */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Size</label>
+                <Select
+                  value={textProperties.fontSize.toString()}
+                  onValueChange={(value) => updateProperty('fontSize', parseInt(value))}
+                >
+                  <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {FONT_SIZES.map((size) => (
+                      <SelectItem key={size} value={size.toString()} className="text-xs">
+                        {size} pt
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Color</label>
+                <div className="flex items-center space-x-1">
+                  <input
+                    type="color"
+                    value={textProperties.fill}
+                    onChange={(e) => updateProperty('fill', e.target.value)}
+                    className="w-7 h-7 border border-[#4a4a4a] rounded cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={textProperties.fill}
+                    onChange={(e) => updateProperty('fill', e.target.value)}
+                    className="flex-1 h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
+                    placeholder="#000000"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Style Buttons */}
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Color</label>
-              <div className="flex items-center space-x-1">
+              <label className="text-xs text-gray-400 mb-2 block">Style</label>
+              <div className="flex space-x-1">
+                <Button
+                  variant={textProperties.fontWeight === 'bold' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={toggleBold}
+                  className="w-8 h-8 p-0"
+                >
+                  <Bold className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={textProperties.fontStyle === 'italic' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={toggleItalic}
+                  className="w-8 h-8 p-0"
+                >
+                  <Italic className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={textProperties.textDecoration === 'underline' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={toggleUnderline}
+                  className="w-8 h-8 p-0"
+                >
+                  <Underline className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Letter Spacing */}
+            <div>
+              <label className="text-xs text-gray-400 mb-2 block">
+                Letter Spacing: {textProperties.letterSpacing}px
+              </label>
+              <Slider
+                value={[textProperties.letterSpacing]}
+                onValueChange={(value) => updateProperty('letterSpacing', value[0])}
+                min={-5}
+                max={20}
+                step={0.1}
+                className="w-full"
+              />
+            </div>
+
+            {/* Line Height */}
+            <div>
+              <label className="text-xs text-gray-400 mb-2 block">
+                Line Height: {textProperties.lineHeight}
+              </label>
+              <Slider
+                value={[textProperties.lineHeight]}
+                onValueChange={(value) => updateProperty('lineHeight', value[0])}
+                min={0.5}
+                max={3}
+                step={0.1}
+                className="w-full"
+              />
+            </div>
+          </TabsContent>
+
+          {/* Paragraph Tab */}
+          <TabsContent value="paragraph" className="m-0 p-4 space-y-4">
+            {/* Text Alignment */}
+            <div>
+              <label className="text-xs text-gray-400 mb-2 block">Alignment</label>
+              <div className="flex space-x-1">
+                <Button
+                  variant={textProperties.textAlign === 'left' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => updateProperty('textAlign', 'left')}
+                  className="w-8 h-8 p-0"
+                >
+                  <AlignLeft className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={textProperties.textAlign === 'center' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => updateProperty('textAlign', 'center')}
+                  className="w-8 h-8 p-0"
+                >
+                  <AlignCenter className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={textProperties.textAlign === 'right' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => updateProperty('textAlign', 'right')}
+                  className="w-8 h-8 p-0"
+                >
+                  <AlignRight className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={textProperties.textAlign === 'justify' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => updateProperty('textAlign', 'justify')}
+                  className="w-8 h-8 p-0"
+                >
+                  <AlignJustify className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Margins */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Before</label>
                 <input
-                  type="color"
-                  value={textProperties.fill}
-                  onChange={(e) => updateProperty('fill', e.target.value)}
-                  className="w-7 h-7 border border-[#4a4a4a] rounded cursor-pointer"
+                  type="number"
+                  value={textProperties.marginTop}
+                  onChange={(e) => updateProperty('marginTop', parseInt(e.target.value) || 0)}
+                  className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
+                  placeholder="0 pt"
                 />
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">After</label>
                 <input
-                  type="text"
-                  value={textProperties.fill}
-                  onChange={(e) => updateProperty('fill', e.target.value)}
-                  className="flex-1 h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
-                  placeholder="#000000"
+                  type="number"
+                  value={textProperties.marginBottom}
+                  onChange={(e) => updateProperty('marginBottom', parseInt(e.target.value) || 0)}
+                  className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
+                  placeholder="0 pt"
                 />
               </div>
             </div>
-          </div>
 
-          {/* Style Buttons */}
-          <div>
-            <label className="text-xs text-gray-400 mb-2 block">Style</label>
-            <div className="flex space-x-1">
-              <Button
-                variant={textProperties.fontWeight === 'bold' ? 'default' : 'outline'}
-                size="sm"
-                onClick={toggleBold}
-                className="w-8 h-8 p-0"
-              >
-                <Bold className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={textProperties.fontStyle === 'italic' ? 'default' : 'outline'}
-                size="sm"
-                onClick={toggleItalic}
-                className="w-8 h-8 p-0"
-              >
-                <Italic className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={textProperties.textDecoration === 'underline' ? 'default' : 'outline'}
-                size="sm"
-                onClick={toggleUnderline}
-                className="w-8 h-8 p-0"
-              >
-                <Underline className="w-4 h-4" />
-              </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Left</label>
+                <input
+                  type="number"
+                  value={textProperties.marginLeft}
+                  onChange={(e) => updateProperty('marginLeft', parseInt(e.target.value) || 0)}
+                  className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
+                  placeholder="0 pt"
+                />
+              </div>
+              <div>
+                <label className="text-xs text-gray-400 mb-1 block">Right</label>
+                <input
+                  type="number"
+                  value={textProperties.marginRight}
+                  onChange={(e) => updateProperty('marginRight', parseInt(e.target.value) || 0)}
+                  className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
+                  placeholder="0 pt"
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Letter Spacing */}
-          <div>
-            <label className="text-xs text-gray-400 mb-2 block">
-              Letter Spacing: {textProperties.letterSpacing}px
-            </label>
-            <Slider
-              value={[textProperties.letterSpacing]}
-              onValueChange={(value) => updateProperty('letterSpacing', value[0])}
-              min={-5}
-              max={20}
-              step={0.1}
-              className="w-full"
-            />
-          </div>
-
-          {/* Line Height */}
-          <div>
-            <label className="text-xs text-gray-400 mb-2 block">
-              Line Height: {textProperties.lineHeight}
-            </label>
-            <Slider
-              value={[textProperties.lineHeight]}
-              onValueChange={(value) => updateProperty('lineHeight', value[0])}
-              min={0.5}
-              max={3}
-              step={0.1}
-              className="w-full"
-            />
-          </div>
-        </TabsContent>
-
-        {/* Paragraph Tab */}
-        <TabsContent value="paragraph" className="m-0 p-4 space-y-4">
-          {/* Text Alignment */}
-          <div>
-            <label className="text-xs text-gray-400 mb-2 block">Alignment</label>
-            <div className="flex space-x-1">
-              <Button
-                variant={textProperties.textAlign === 'left' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => updateProperty('textAlign', 'left')}
-                className="w-8 h-8 p-0"
-              >
-                <AlignLeft className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={textProperties.textAlign === 'center' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => updateProperty('textAlign', 'center')}
-                className="w-8 h-8 p-0"
-              >
-                <AlignCenter className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={textProperties.textAlign === 'right' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => updateProperty('textAlign', 'right')}
-                className="w-8 h-8 p-0"
-              >
-                <AlignRight className="w-4 h-4" />
-              </Button>
-              <Button
-                variant={textProperties.textAlign === 'justify' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => updateProperty('textAlign', 'justify')}
-                className="w-8 h-8 p-0"
-              >
-                <AlignJustify className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Margins */}
-          <div className="grid grid-cols-2 gap-2">
+            {/* Text Indent */}
             <div>
-              <label className="text-xs text-gray-400 mb-1 block">Before</label>
+              <label className="text-xs text-gray-400 mb-1 block">First Line Indent</label>
               <input
                 type="number"
-                value={textProperties.marginTop}
-                onChange={(e) => updateProperty('marginTop', parseInt(e.target.value) || 0)}
+                value={textProperties.textIndent}
+                onChange={(e) => updateProperty('textIndent', parseInt(e.target.value) || 0)}
                 className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
                 placeholder="0 pt"
               />
             </div>
-            <div>
-              <label className="text-xs text-gray-400 mb-1 block">After</label>
+
+            {/* Hyphenate */}
+            <div className="flex items-center space-x-2">
               <input
-                type="number"
-                value={textProperties.marginBottom}
-                onChange={(e) => updateProperty('marginBottom', parseInt(e.target.value) || 0)}
-                className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
-                placeholder="0 pt"
+                type="checkbox"
+                id="hyphenate"
+                checked={textProperties.hyphenate}
+                onChange={(e) => updateProperty('hyphenate', e.target.checked)}
+                className="w-4 h-4"
               />
+              <label htmlFor="hyphenate" className="text-xs text-gray-400">
+                Hyphenate
+              </label>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+      {selectedFamilyForModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-[#232323] rounded-lg p-6 min-w-[300px] max-w-[90vw]">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-base font-semibold text-gray-200">Escolha o peso/estilo para {selectedFamilyForModal}</span>
+              <button onClick={() => setSelectedFamilyForModal(null)} className="text-gray-400 hover:text-gray-200">✕</button>
+            </div>
+            <div className="grid gap-2">
+              {Object.entries(groupedFonts).find(([family]) => family === selectedFamilyForModal)?.[1].map((font) => {
+                const safeFontFamily = font.value || 'Arial';
+                const safeFontWeight = font.weight || 400;
+                const safeFontStyle = font.style || 'normal';
+                return (
+                  <button
+                    key={safeFontFamily + safeFontWeight + safeFontStyle}
+                    className="flex items-center justify-between w-full px-3 py-2 rounded hover:bg-[#333] text-left"
+                    style={{ fontFamily: safeFontFamily, fontWeight: safeFontWeight, fontStyle: safeFontStyle }}
+                    onClick={() => {
+                      console.log('Selecionando fonte:', safeFontFamily, safeFontWeight, safeFontStyle);
+                      updateProperty('fontFamily', safeFontFamily);
+                      updateProperty('fontWeight', safeFontWeight);
+                      updateProperty('fontStyle', safeFontStyle);
+                      setSelectedFamilyForModal(null);
+                    }}
+                  >
+                    <span>{font.label}</span>
+                    <span className="text-[10px] text-gray-500 ml-2">{safeFontWeight}{safeFontStyle === 'italic' ? 'i' : ''}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="text-xs text-gray-400 mb-1 block">Left</label>
-              <input
-                type="number"
-                value={textProperties.marginLeft}
-                onChange={(e) => updateProperty('marginLeft', parseInt(e.target.value) || 0)}
-                className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
-                placeholder="0 pt"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-400 mb-1 block">Right</label>
-              <input
-                type="number"
-                value={textProperties.marginRight}
-                onChange={(e) => updateProperty('marginRight', parseInt(e.target.value) || 0)}
-                className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
-                placeholder="0 pt"
-              />
-            </div>
-          </div>
-
-          {/* Text Indent */}
-          <div>
-            <label className="text-xs text-gray-400 mb-1 block">First Line Indent</label>
-            <input
-              type="number"
-              value={textProperties.textIndent}
-              onChange={(e) => updateProperty('textIndent', parseInt(e.target.value) || 0)}
-              className="w-full h-7 text-xs bg-[#2d2d2d] border border-[#4a4a4a] rounded px-2"
-              placeholder="0 pt"
-            />
-          </div>
-
-          {/* Hyphenate */}
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="hyphenate"
-              checked={textProperties.hyphenate}
-              onChange={(e) => updateProperty('hyphenate', e.target.checked)}
-              className="w-4 h-4"
-            />
-            <label htmlFor="hyphenate" className="text-xs text-gray-400">
-              Hyphenate
-            </label>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -245,28 +245,53 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-64 overflow-y-auto">
-                {/* Freepik Fonts Section */}
+                {/* Freepik Fonts Section - ORGANIZADAS por família */}
                 {availableFonts.length > 0 && (
                   <>
                     <div className="px-2 py-1 text-xs font-semibold text-blue-400 bg-[#1a1a1a]">
-                      🎨 Fontes Freepik (
+                      🎨 Fontes Freepik Organizadas (
                       {availableFonts.filter((f) => !SYSTEM_FONTS.includes(f.value)).length})
                     </div>
-                    {availableFonts
-                      .filter((font) => !SYSTEM_FONTS.includes(font.value))
-                      .map((font) => (
-                        <SelectItem key={font.value} value={font.value} className="text-xs">
-                          <div className="flex items-center justify-between w-full">
-                            <span className="font-medium">{font.label}</span>
-                            <FontPreview
-                              fontFamily={fontManager.getFontWithFallback(font.value)}
-                              text="Abc"
-                              size={12}
-                              className="text-blue-300 ml-2"
-                            />
+                    {(() => {
+                      const freepikFonts = availableFonts.filter((font) => !SYSTEM_FONTS.includes(font.value));
+                      let currentFamily = '';
+                      
+                      return freepikFonts.map((font, index) => {
+                        // Extrair família base
+                        const familyName = (font as any).family || font.label.split(' ')[0];
+                        const isNewFamily = familyName !== currentFamily;
+                        currentFamily = familyName;
+                        
+                        return (
+                          <div key={font.value}>
+                            {/* Separador de família */}
+                            {isNewFamily && index > 0 && (
+                              <div className="border-t border-[#2a2a2a] my-1" />
+                            )}
+                            
+                            {/* Item da fonte */}
+                            <SelectItem value={font.value} className="text-xs">
+                              <div className="flex items-center justify-between w-full">
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{font.label}</span>
+                                  {(font as any).variation && (font as any).variation !== 'Regular' && (
+                                    <span className="text-gray-500 text-xs">
+                                      {(font as any).variation}
+                                    </span>
+                                  )}
+                                </div>
+                                <FontPreview
+                                  fontFamily={fontManager.getFontWithFallback(font.value)}
+                                  text="Abc"
+                                  size={12}
+                                  className="text-blue-300 ml-2"
+                                />
+                              </div>
+                            </SelectItem>
                           </div>
-                        </SelectItem>
-                      ))}
+                        );
+                      });
+                    })()}
                   </>
                 )}
 

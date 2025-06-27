@@ -1,31 +1,31 @@
 /**
- * Zentraw Photo Editor - Version 1.3.0.c.3 - FREEPIK FONTS ROBUSTAS!
+ * Zentraw Photo Editor - Version 1.3.0.c.3 - FREEPIK FONTS ORGANIZADAS!
  *
- * 🎨 FREEPIK FONTS ROBUSTAS - Verificação real implementada!
+ * 🎨 FREEPIK FONTS ORGANIZADAS - Sistema estilo Photoshop!
  * Data: 26 de junho de 2025
  * Autor: Zentraw Team
  *
- * IMPLEMENTAÇÃO ROBUSTA v1.3.0.c.3:
+ * IMPLEMENTAÇÃO ORGANIZADA v1.3.0.c.3:
  * ✅ FREEPIK FONTS REAIS: 50+ fontes carregadas via CSS (@font-face)
  * ✅ VERIFICAÇÃO ROBUSTA: Canvas API para testar renderização real
- * ✅ Teste de largura: Comparação com Arial para detectar fonte ativa
- * ✅ Aplicação garantida: Só aplica fonte que realmente funciona
- * ✅ Fallback inteligente: Arial quando fonte Freepik não funciona
- * ✅ TextPropertiesPanel: Integrado com verificação robusta
- * ✅ Console logging: Debug completo de todo processo
+ * ✅ ORGANIZAÇÃO INTELIGENTE: Agrupamento por família estilo Photoshop
+ * ✅ Separação de variações: Regular, Bold, Light, etc. organizadas
+ * ✅ UI melhorada: Separadores visuais entre famílias
+ * ✅ Ordenação automática: Regular primeiro, depois alfabético
+ * ✅ Logs organizados: Mostra famílias e variações detectadas
  *
- * CORREÇÕES DESTA VERSÃO:
- * 🔧 Sistema de verificação dupla: document.fonts.check() + Canvas API
- * 🔧 Teste real de renderização para garantir funcionamento
- * 🔧 TextPropertiesPanel recebe fontes verificadas do componente pai
- * 🔧 Aplicação robusta ao criar texto e alterar fonte de texto selecionado
- * 🔧 Logs detalhados de cada etapa da verificação e aplicação
+ * ORGANIZAÇÃO INTELIGENTE:
+ * 🔧 Detecta famílias: "Akuina Regular", "Akuina Bold" -> família "Akuina"
+ * 🔧 Agrupa variações: Regular, Light, Medium, Semibold, Bold, Black
+ * 🔧 Identifica estilos: Italic, Oblique, Caps, Swashes, Rough
+ * 🔧 Ordena logicamente: Regular primeiro, depois alfabético
+ * 🔧 Separadores visuais: Linhas entre famílias diferentes
  *
  * DIFERENCIAIS COMPETITIVOS:
- * 🎨 50+ FONTES FREEPIK EXCLUSIVAS com garantia de funcionamento
+ * 🎨 50+ FONTES FREEPIK EXCLUSIVAS organizadas profissionalmente
+ * 📁 ORGANIZAÇÃO ESTILO PHOTOSHOP (famílias agrupadas)
  * 🔬 VERIFICAÇÃO ROBUSTA via Canvas API (mais confiável)
  * 🎯 Aplicação garantida: só aplica fonte que realmente renderiza
- * 💎 Sistema inteligente de fallback quando fonte não funciona
  * 
  * BUGS MANTIDOS CORRIGIDOS:
  * ✅ Histórico Ctrl+Z/Redo: Preserva zoom e background
@@ -545,6 +545,87 @@ const PhotoEditorFixed: React.FC = () => {
   // Font Manager original - que funcionava
   const fontManager = useMemo(() => FreepikFontManager.getInstance(), []);
 
+  // ORGANIZAÇÃO INTELIGENTE DE FONTES - Estilo Photoshop (v1.3.0.c.3)
+  const organizeFreepikFontsByFamily = useCallback((fonts: Array<{ label: string; value: string }>) => {
+    const fontFamilies = new Map<string, Array<{ label: string; value: string }>>();
+    
+    fonts.forEach(font => {
+      // Extrair família base do nome (ex: "Akuina Regular" -> "Akuina")
+      let familyName = '';
+      let variation = '';
+      
+      // Padrões para identificar variações
+      const weightPatterns = ['Regular', 'Light', 'Medium', 'Semibold', 'Bold', 'Black', 'Extra Light', 'Heavy'];
+      const stylePatterns = ['Italic', 'Oblique'];
+      const specialPatterns = ['Caps', 'Swashes', 'Rough', 'Two', 'Pro'];
+      
+      // Tentar extrair família base
+      const words = font.label.split(' ');
+      let baseWords = [];
+      let variationWords = [];
+      let foundVariation = false;
+      
+      for (const word of words) {
+        const isWeight = weightPatterns.some(pattern => word.includes(pattern));
+        const isStyle = stylePatterns.some(pattern => word.includes(pattern));
+        const isSpecial = specialPatterns.some(pattern => word.includes(pattern));
+        
+        if (isWeight || isStyle || isSpecial) {
+          foundVariation = true;
+          variationWords.push(word);
+        } else if (!foundVariation) {
+          baseWords.push(word);
+        } else {
+          variationWords.push(word);
+        }
+      }
+      
+      familyName = baseWords.join(' ') || font.label;
+      variation = variationWords.join(' ') || 'Regular';
+      
+      // Se não encontrou variação, usar o nome completo como família
+      if (!foundVariation) {
+        familyName = font.label;
+        variation = 'Regular';
+      }
+      
+      console.log(`📁 Organizando: "${font.label}" -> Família: "${familyName}", Variação: "${variation}"`);
+      
+      // Adicionar à família correspondente
+      if (!fontFamilies.has(familyName)) {
+        fontFamilies.set(familyName, []);
+      }
+      
+      fontFamilies.get(familyName)!.push({
+        label: variation === 'Regular' ? familyName : `${familyName} ${variation}`,
+        value: font.value,
+        family: familyName,
+        variation: variation
+      } as any);
+    });
+    
+    // Ordenar famílias e variações
+    const organizedFonts: Array<{ label: string; value: string }> = [];
+    
+    Array.from(fontFamilies.keys())
+      .sort()
+      .forEach(familyName => {
+        const family = fontFamilies.get(familyName)!;
+        
+        // Ordenar variações: Regular primeiro, depois alfabético
+        family.sort((a: any, b: any) => {
+          if (a.variation === 'Regular') return -1;
+          if (b.variation === 'Regular') return 1;
+          return a.variation.localeCompare(b.variation);
+        });
+        
+        organizedFonts.push(...family);
+      });
+    
+    console.log(`📊 Organizadas ${fontFamilies.size} famílias com ${organizedFonts.length} variações total`);
+    return organizedFonts;
+  }, []);
+
   // Sistema FREEPIK FONTS - Nosso diferencial!
   // Sistema FREEPIK FONTS REAL com verificação ROBUSTA - Nosso diferencial! (v1.3.0.c.3)
   const loadFreepikFonts = useCallback(async () => {
@@ -624,6 +705,10 @@ const PhotoEditorFixed: React.FC = () => {
       // Remover canvas de teste
       testCanvas.remove();
 
+      // ORGANIZAÇÃO INTELIGENTE - Agrupar fontes por família (estilo Photoshop)
+      const groupedFonts = organizeFreepikFontsByFamily(availableFreepikFonts);
+      console.log('📁 Fontes organizadas por família:', groupedFonts);
+
       // Adicionar fontes básicas como fallback
       const basicFonts = [
         { label: 'Arial', value: 'Arial' },
@@ -634,7 +719,7 @@ const PhotoEditorFixed: React.FC = () => {
         { label: 'Trebuchet MS', value: 'Trebuchet MS' },
       ];
 
-      const allAvailableFonts = [...availableFreepikFonts, ...basicFonts];
+      const allAvailableFonts = [...groupedFonts, ...basicFonts];
 
       setAvailableFonts(allAvailableFonts);
 
@@ -645,9 +730,10 @@ const PhotoEditorFixed: React.FC = () => {
         current: 'Verificação completa!',
       });
 
-      console.log(`🎉 [FREEPIK FONTS VERIFICADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`);
+      console.log(`🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`);
       console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
       console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
+      console.log(`📁 Organizadas em ${groupedFonts.length} entradas (famílias + variações)`);
 
       // Se nenhuma fonte Freepik foi carregada, avisar
       if (loadedCount === 0) {

@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Zentraw FREEPIK FONTS ROBUSTAS v1.3.0.c.3",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
+    }
+  ]
+}

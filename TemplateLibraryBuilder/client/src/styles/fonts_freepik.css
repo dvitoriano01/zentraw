@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'Aerohate Aerohate Caps 400';
+  font-family: 'Aerohate Caps';
   src: url('/fonts/freepik/aerohate-aerohate-caps-400.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Akuina Akuina Black 800';
+  font-family: 'Akuina Black';
   src: url('/fonts/freepik/akuina-akuina-black-800.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: 800;
   font-style: normal;
 }
 

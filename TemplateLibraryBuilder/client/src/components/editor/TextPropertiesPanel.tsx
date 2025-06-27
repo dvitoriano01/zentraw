@@ -26,6 +26,7 @@ import FontPreview from '@/components/FontPreview';
 interface TextPropertiesProps {
   selectedObject: any;
   onUpdateText: (properties: any) => void;
+  availableFonts?: Array<{ label: string; value: string }>; // Receber fontes verificadas do componente pai
 }
 
 // Fontes de sistema como fallback
@@ -51,10 +52,13 @@ const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72,
 ];
 
-export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextPropertiesProps) {
+export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
-  const [availableFonts, setAvailableFonts] = useState<Array<{ label: string; value: string }>>([]);
+  const [localAvailableFonts, setLocalAvailableFonts] = useState<Array<{ label: string; value: string }>>([]);
   const fontManager = FreepikFontManager.getInstance();
+
+  // Usar fontes passadas como prop (verificadas robustamente) ou fallback
+  const availableFonts = propAvailableFonts || localAvailableFonts;
 
   const [textProperties, setTextProperties] = useState({
     fontFamily: 'Arial',
@@ -75,31 +79,33 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
     hyphenate: false,
   });
 
-  // Carregar fontes disponíveis
+  // Carregar fontes disponíveis apenas se não foram passadas como prop
   useEffect(() => {
-    const loadAvailableFonts = () => {
-      const freepikFonts = fontManager.getAvailableFonts();
-      const systemFonts = SYSTEM_FONTS.map((font) => ({ label: font, value: font }));
+    if (!propAvailableFonts) {
+      const loadAvailableFonts = () => {
+        const freepikFonts = fontManager.getAvailableFonts();
+        const systemFonts = SYSTEM_FONTS.map((font) => ({ label: font, value: font }));
 
-      // Combinar fontes Freepik + sistema, removendo duplicatas
-      const allFonts = [
-        ...freepikFonts,
-        ...systemFonts.filter(
-          (sysFont) => !freepikFonts.some((fpFont) => fpFont.value === sysFont.value),
-        ),
-      ];
+        // Combinar fontes Freepik + sistema, removendo duplicatas
+        const allFonts = [
+          ...freepikFonts,
+          ...systemFonts.filter(
+            (sysFont) => !freepikFonts.some((fpFont) => fpFont.value === sysFont.value),
+          ),
+        ];
 
-      setAvailableFonts(allFonts);
-    };
+        setLocalAvailableFonts(allFonts);
+      };
 
-    // Carregar imediatamente e também escutar mudanças
-    loadAvailableFonts();
+      // Carregar imediatamente e também escutar mudanças
+      loadAvailableFonts();
 
-    // Recarregar a cada 2 segundos para capturar fontes que carregaram depois
-    const interval = setInterval(loadAvailableFonts, 2000);
+      // Recarregar a cada 2 segundos para capturar fontes que carregaram depois
+      const interval = setInterval(loadAvailableFonts, 2000);
 
-    return () => clearInterval(interval);
-  }, [fontManager]);
+      return () => clearInterval(interval);
+    }
+  }, [fontManager, propAvailableFonts]);
 
   useEffect(() => {
     if (selectedObject && selectedObject.type === 'i-text') {
@@ -127,10 +133,51 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
     const newProperties = { ...textProperties, [property]: value };
     setTextProperties(newProperties);
 
-    // Para fontFamily, usar o FontManager para garantir fallback
+    // Para fontFamily, aplicar verificação robusta FREEPIK (v1.3.0.c.3)
     if (property === 'fontFamily') {
-      const fontWithFallback = fontManager.getFontWithFallback(value);
-      onUpdateText({ fontFamily: fontWithFallback });
+      console.log(`🎨 [TextPropertiesPanel] Aplicando fonte FREEPIK: ${value}`);
+      
+      // VERIFICAÇÃO ROBUSTA: Testar se a fonte realmente funciona
+      let finalFont = value;
+      let fontVerified = false;
+
+      try {
+        const testCanvas = document.createElement('canvas');
+        const testCtx = testCanvas.getContext('2d');
+        
+        if (testCtx) {
+          // Testar renderização da fonte
+          const testText = 'Test';
+          const fontSize = 20;
+          
+          // Medir com Arial (referência)
+          testCtx.font = `${fontSize}px Arial`;
+          const arialWidth = testCtx.measureText(testText).width;
+          
+          // Medir com a fonte selecionada
+          testCtx.font = `${fontSize}px "${value}", Arial`;
+          const targetWidth = testCtx.measureText(testText).width;
+          
+          // Se as larguras são diferentes, a fonte está funcionando
+          fontVerified = Math.abs(targetWidth - arialWidth) > 1;
+          
+          if (fontVerified) {
+            console.log(`✅ Fonte VERIFICADA para texto selecionado: ${value}`);
+            finalFont = value;
+          } else {
+            console.warn(`⚠️ Fonte ${value} não funciona, mantendo Arial`);
+            finalFont = 'Arial';
+          }
+          
+          testCanvas.remove();
+        }
+      } catch (error) {
+        console.warn(`❌ Erro na verificação da fonte ${value}:`, error);
+        finalFont = 'Arial';
+      }
+
+      console.log(`🎯 Aplicando fonte FINAL ao texto: ${finalFont} (verificada: ${fontVerified})`);
+      onUpdateText({ fontFamily: finalFont });
     } else {
       // Map properties to Fabric.js property names
       const fabricProperty = property === 'letterSpacing' ? 'charSpacing' : property;

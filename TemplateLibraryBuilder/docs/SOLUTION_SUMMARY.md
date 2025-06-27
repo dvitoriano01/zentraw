@@ -1,79 +1,105 @@
-# 📋 Zentraw v1.3.0.c.1 - Resumo das Soluções Implementadas
+# 📋 Zentraw v1.3.0.c.2 - FREEPIK FONTS & CORREÇÕES CRÍTICAS
 
 **⭐ DOCUMENTO PRINCIPAL - LEITURA OBRIGATÓRIA**
 
 ## 🎯 **SITUAÇÃO ATUAL RESOLVIDA**
 
-**Status**: 🟢 **SISTEMA ESTÁVEL** após rollback completo  
-**Versão**: v1.3.0.c.1 (Estado Estável Restaurado)  
+**Status**: 🟢 **SISTEMA OTIMIZADO** com foco nas FREEPIK FONTS  
+**Versão**: v1.3.0.c.2 (Freepik Fonts + Ctrl+Z Fix)  
 **Data**: 26/06/2025
 
 ### ✅ **PROBLEMAS SOLUCIONADOS**
 
 | Bug                              | Status       | Solução                                               |
 | -------------------------------- | ------------ | ----------------------------------------------------- |
-| Apenas 7 fontes carregavam       | ✅ RESOLVIDO | Rollback para FreepikFontManager original (20 fontes) |
-| Ctrl+Z instável/apagava objetos  | ✅ RESOLVIDO | Gerenciamento de histórico estabilizado               |
+| Ctrl+Z fazia tela "sumir"        | ✅ RESOLVIDO | Preservação do canvas durante undo/redo              |
+| Fontes com borda por padrão      | ✅ RESOLVIDO | strokeWidth: 0 por padrão em textos                  |
+| Google Fonts (não nosso diferencial) | ✅ REMOVIDO | Foco total nas FREEPIK FONTS (60+ fontes exclusivas) |
+| Sistema de carregamento          | ✅ MELHORADO | FreepikFontManager com indicador de progresso        |
 | Seleção bugada (desselecionava)  | ✅ RESOLVIDO | Eventos de seleção corrigidos                         |
 | Contorno não acompanha zoom      | ✅ RESOLVIDO | Wrapper CSS com transform scale                       |
-| Fontes pixeladas/baixa qualidade | ✅ RESOLVIDO | Renderização melhorada com aspas e fallbacks          |
 
 ---
 
 ## 🛠️ **SOLUÇÕES TÉCNICAS IMPLEMENTADAS**
 
-### 1. **🎨 SISTEMA DE FONTES RESTAURADO**
+### 1. **🎨 FREEPIK FONTS - NOSSO DIFERENCIAL!**
 
-**Problema**: OptimizedFontManager carregava apenas 7 fontes  
-**Solução**: Volta ao FreepikFontManager original
+**Mudança Estratégica**: Foco total nas FREEPIK FONTS como diferencial competitivo  
+**Solução**: Sistema FreepikFontManager robusto com 60+ fontes exclusivas
 
 ```typescript
-// ❌ REMOVIDO (causava regressão)
-const fontManager = useMemo(() => OptimizedFontManager.getInstance(), []);
+// ✅ FREEPIK FONTS - Nosso diferencial!
+const result = await fontManager.loadAllFreepikFonts((loaded, total, current) => {
+  setFontLoadingState({
+    isLoading: true,
+    loaded,
+    total,
+    current,
+  });
+});
 
-// ✅ RESTAURADO (funcionava)
-const fontManager = useMemo(() => FreepikFontManager.getInstance(), []);
+// Usar as fontes Freepik reais da constante
+setAvailableFonts(freepikFonts); // 60+ fontes exclusivas
 
-// Lista de 20 fontes Google Fonts reais
-const fontsToLoad = [
-  'Orbitron',
-  'Dancing Script',
-  'Bungee',
-  'Black Ops One',
-  'Righteous',
-  'Creepster',
-  'Satisfy',
-  'Press Start 2P',
-  // ... total 20 fontes
-];
+// Texto criado com fonte FREEPIK aleatória
+const randomFreepikFont = availableFonts[Math.floor(Math.random() * availableFonts.length)];
+shape = new fabric.IText('Digite seu texto', {
+  fontFamily: randomFreepikFont.value, // Fonte Freepik exclusiva
+  stroke: '', // SEM BORDA por padrão!
+  strokeWidth: 0, // Borda zerada por padrão
+});
 ```
 
-**Resultado**: ✅ 18-20 fontes carregando consistentemente
+**Resultado**: ✅ 60+ fontes FREEPIK exclusivas carregando com indicador de progresso
 
-### 2. **↶ HISTÓRICO (CTRL+Z) ESTABILIZADO**
+### 2. **↶ CTRL+Z CORRIGIDO - TELA NÃO SOME MAIS**
 
-**Problema**: UNDO apagava objetos inesperadamente  
-**Solução**: Gerenciamento de estado melhorado
+**Problema**: Ctrl+Z fazia a tela "sumir" temporariamente  
+**Solução**: Preservação das configurações do canvas durante undo/redo
 
 ```typescript
 const undo = useCallback(() => {
-  if (historyIndex > 0 && fabricCanvasRef.current && canvasHistory.length > 0) {
-    const newIndex = historyIndex - 1;
-    const state = canvasHistory[newIndex];
+  // Preservar configurações importantes antes de carregar o estado
+  const currentZoom = canvas.getZoom();
+  const currentBackground = canvas.backgroundColor;
 
-    // ✅ Carregar estado sem disparar eventos extras
-    canvas.loadFromJSON(JSON.parse(state), () => {
+  canvas.loadFromJSON(JSON.parse(state), () => {
+    // Restaurar configurações após carregamento
+    canvas.setZoom(currentZoom);
+    canvas.backgroundColor = currentBackground;
+    
+    // Garantir que o canvas seja visível
+    canvas.renderAll();
+    
+    setTimeout(() => {
+      // Forçar re-render para garantir visibilidade
       canvas.renderAll();
-      setHistoryIndex(newIndex);
-      setTimeout(() => updateLayers(), 50);
-    });
-  }
+    }, 50);
+  });
 }, [historyIndex, canvasHistory, updateLayers]);
 ```
 
-**Resultado**: ✅ Ctrl+Z funciona sem apagar objetos
+**Resultado**: ✅ Ctrl+Z funciona sem tela "sumindo"
 
-### 3. **🖱️ SELEÇÃO DE OBJETOS CORRIGIDA**
+### 3. **🎨 TEXTO SEM BORDA POR PADRÃO**
+
+**Problema**: Textos criados com borda preta por padrão  
+**Solução**: strokeWidth: 0 por padrão, borda removida
+
+```typescript
+shape = new fabric.IText('Digite seu texto', {
+  fontFamily: randomFreepikFont.value, // Fonte Freepik exclusiva
+  fill: '#ffffff',
+  stroke: '', // SEM BORDA por padrão!
+  strokeWidth: 0, // Borda zerada por padrão
+  textAlign: 'center',
+});
+```
+
+**Resultado**: ✅ Textos criados limpos, sem bordas indesejadas
+
+### 4. **🖱️ SELEÇÃO DE OBJETOS CORRIGIDA**
 
 **Problema**: Objetos eram desselecionados ao clicar  
 **Solução**: Eventos de seleção robustos
@@ -102,7 +128,7 @@ canvas.on('object:moving', () => {
 
 **Resultado**: ✅ Seleção estável, não desseleciona inadvertidamente
 
-### 4. **🔍 ZOOM E CONTORNO SINCRONIZADOS**
+### 5. **🔍 ZOOM E CONTORNO SINCRONIZADOS**
 
 **Problema**: Contorno não acompanhava o zoom  
 **Solução**: Já estava correto - wrapper CSS
@@ -117,7 +143,7 @@ canvas.on('object:moving', () => {
 
 **Resultado**: ✅ Contorno acompanha zoom perfeitamente
 
-### 5. **🔤 QUALIDADE DAS FONTES MELHORADA**
+### 6. **🔤 QUALIDADE DAS FONTES MELHORADA**
 
 **Problema**: Fontes pixeladas, renderização ruim  
 **Solução**: Propriedades de renderização otimizadas

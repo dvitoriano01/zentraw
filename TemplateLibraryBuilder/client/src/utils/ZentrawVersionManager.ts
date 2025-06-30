@@ -20,7 +20,7 @@ export interface VersionInfo {
 export class ZentrawVersionManager {
   private static instance: ZentrawVersionManager;
   private readonly STORAGE_KEY = 'zentraw_version_history';
-  private readonly CURRENT_VERSION = '1.3.0.c.4_ok';
+  private readonly CURRENT_VERSION = '1.3.0.c.5';
 
   static getInstance(): ZentrawVersionManager {
     if (!ZentrawVersionManager.instance) {
@@ -33,31 +33,20 @@ export class ZentrawVersionManager {
     return {
       version: this.CURRENT_VERSION,
       timestamp: Date.now(),
-      description: 'VERSÃO ESTÁVEL v1.3.0.c.4_ok - Fontes Freepik Organizadas + Amostra Visual',
+      description: 'VERSÃO EM DESENVOLVIMENTO v1.3.0.c.5 - Melhorias no seletor de fontes',
       features: [
-        'Sistema de 50+ fontes Freepik REAIS',
-        'Organização estilo Photoshop',
-        'Amostra visual de cada fonte no dropdown',
-        'Verificação robusta via Canvas API',
-        'Zoom visual do canvas inteiro',
-        'Contorno acompanha zoom',
-        'Seleção estável',
-        'Ctrl+Z estabilizado',
+        'Dropdown principal com famílias de fontes',
+        'Submenus para variações de peso/estilo',
+        'Auto-seleção no dropdown principal',
       ],
       bugFixes: [
-        'Corrigido: Sistema de fontes Freepik carregando',
-        'Corrigido: Organização por família',
-        'Corrigido: Contorno não acompanhava zoom',
-        'Corrigido: Ctrl+Z instável',
-        'Corrigido: Objetos desselecionados indevidamente',
-        'Rollback: Versão estável restaurada',
-        'Nova versão marcada como V1.3.0.c.4_ok',
-        'Amostra visual de fonte no dropdown',
+        'Correção de crashes ao trocar de fonte',
+        'Validações extras para evitar valores inválidos',
       ],
       rollbackInfo: {
         canRollback: true,
-        previousVersion: '1.3.0.c.3',
-        reason: 'Aprimoramento visual e estabilidade confirmada',
+        previousVersion: '1.3.0.c.4_ok',
+        reason: 'Versão em desenvolvimento para melhorias no seletor de fontes',
       },
     };
   }

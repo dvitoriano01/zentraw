@@ -168,14 +168,16 @@
 
 @font-face {
   font-family: 'Different Beginning Different Beginning Light 200';
-  src: url('/fonts/freepik/different-beginning-different-beginning-light-200.ttf') format('truetype');
+  src: url('/fonts/freepik/different-beginning-different-beginning-light-200.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Different Beginning Different Beginning Regular 400';
-  src: url('/fonts/freepik/different-beginning-different-beginning-regular-400.ttf') format('truetype');
+  src: url('/fonts/freepik/different-beginning-different-beginning-regular-400.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -189,14 +191,16 @@
 
 @font-face {
   font-family: 'Freedom Standing Freedom Standing Extra Light 100';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-100.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-100.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Freedom Standing Freedom Standing Extra Light Italic 100';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-italic-100.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-italic-100.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -210,7 +214,8 @@
 
 @font-face {
   font-family: 'Freedom Standing Freedom Standing Light Italic 200';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-italic-200.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-italic-200.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -224,7 +229,8 @@
 
 @font-face {
   font-family: 'Freedom Standing Freedom Standing Regular Italic 400';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-italic-400.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-italic-400.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -273,7 +279,8 @@
 
 @font-face {
   font-family: 'Magical Sparkle Magical Sparkle Regular Italic 400';
-  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-italic-400.ttf') format('truetype');
+  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-italic-400.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -406,7 +413,8 @@
 
 @font-face {
   font-family: 'Urban Starblues Urban Starblues Graffiti Regular 400';
-  src: url('/fonts/freepik/urban-starblues-urban-starblues-graffiti-regular-400.ttf') format('truetype');
+  src: url('/fonts/freepik/urban-starblues-urban-starblues-graffiti-regular-400.ttf')
+    format('truetype');
   font-weight: normal;
   font-style: normal;
 }

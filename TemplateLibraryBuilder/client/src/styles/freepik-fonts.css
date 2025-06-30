@@ -178,7 +178,8 @@
 
 @font-face {
   font-family: 'Different Beginning';
-  src: url('/fonts/freepik/different-beginning-different-beginning-regular-400.ttf') format('truetype');
+  src: url('/fonts/freepik/different-beginning-different-beginning-regular-400.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -186,7 +187,8 @@
 
 @font-face {
   font-family: 'Different Beginning';
-  src: url('/fonts/freepik/different-beginning-different-beginning-light-200.ttf') format('truetype');
+  src: url('/fonts/freepik/different-beginning-different-beginning-light-200.ttf')
+    format('truetype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -218,7 +220,8 @@
 
 @font-face {
   font-family: 'Freedom Standing';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-100.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-100.ttf')
+    format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -234,7 +237,8 @@
 
 @font-face {
   font-family: 'Freedom Standing';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-italic-400.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-italic-400.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -242,7 +246,8 @@
 
 @font-face {
   font-family: 'Freedom Standing';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-italic-100.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-italic-100.ttf')
+    format('truetype');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -250,7 +255,8 @@
 
 @font-face {
   font-family: 'Freedom Standing';
-  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-italic-200.ttf') format('truetype');
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-italic-200.ttf')
+    format('truetype');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -306,7 +312,8 @@
 
 @font-face {
   font-family: 'Magical Sparkle';
-  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-italic-400.ttf') format('truetype');
+  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-italic-400.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -458,7 +465,8 @@
 
 @font-face {
   font-family: 'Urban Starblues Graffiti';
-  src: url('/fonts/freepik/urban-starblues-urban-starblues-graffiti-regular-400.ttf') format('truetype');
+  src: url('/fonts/freepik/urban-starblues-urban-starblues-graffiti-regular-400.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

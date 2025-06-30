@@ -1,6 +1,7 @@
 # 📁 SISTEMA DE VERSIONAMENTO ZENTRAW - ARQUIVOS POR VERSÃO
 
 ## 🎯 **OBJETIVO**
+
 Manter cópias dos arquivos alterados para cada versão, permitindo rollback preciso e evitando regressões.
 
 ## 📋 **ESTRUTURA**
@@ -30,6 +31,7 @@ version-backups/
 ### **ANTES DE FAZER ALTERAÇÕES:**
 
 1. **Criar backup da versão atual:**
+
 ```bash
 # Criar pasta da versão
 mkdir version-backups/v[VERSION]
@@ -45,6 +47,7 @@ copy client/src/styles/freepik-fonts.css version-backups/v[VERSION]/
 ```
 
 2. **Criar version-info.json:**
+
 ```json
 {
   "version": "1.3.0.c.3",
@@ -52,15 +55,12 @@ copy client/src/styles/freepik-fonts.css version-backups/v[VERSION]/
   "description": "Sistema de fontes Freepik organizadas",
   "files": [
     "PhotoEditorFixed.tsx",
-    "TextPropertiesPanel.tsx", 
+    "TextPropertiesPanel.tsx",
     "ZentrawVersionManager.ts",
     "freepikFontsFixed.ts",
     "freepik-fonts.css"
   ],
-  "features": [
-    "50+ fontes Freepik REAIS",
-    "Organização estilo Photoshop"
-  ],
+  "features": ["50+ fontes Freepik REAIS", "Organização estilo Photoshop"],
   "status": "stable|testing|experimental"
 }
 ```
@@ -68,6 +68,7 @@ copy client/src/styles/freepik-fonts.css version-backups/v[VERSION]/
 ### **PARA FAZER ROLLBACK:**
 
 1. **Identificar versão estável:**
+
 ```bash
 # Listar versões disponíveis
 dir version-backups
@@ -77,6 +78,7 @@ type version-backups/v[VERSION]/version-info.json
 ```
 
 2. **Restaurar arquivos:**
+
 ```bash
 # Copiar arquivos da versão escolhida
 copy version-backups/v[VERSION]/* client/src/[paths]/
@@ -87,6 +89,7 @@ git checkout [COMMIT_HASH] -- client/src/components/editor/TextPropertiesPanel.t
 ```
 
 3. **Verificar funcionamento:**
+
 ```bash
 npm run dev:front
 # Validar se está funcionando sem erros
@@ -95,11 +98,13 @@ npm run dev:front
 ### **ROLLBACK VIA GIT (PREFERENCIAL):**
 
 1. **Ver histórico de commits:**
+
 ```bash
 git log --oneline --graph -10
 ```
 
 2. **Rollback completo para commit específico:**
+
 ```bash
 # Ver mudanças desde commit funcional
 git diff [COMMIT_HASH] HEAD
@@ -112,6 +117,7 @@ git reset --hard [COMMIT_HASH]
 ```
 
 3. **Rollback de arquivos específicos:**
+
 ```bash
 git checkout [COMMIT_HASH] -- client/src/pages/PhotoEditorFixed.tsx
 git checkout [COMMIT_HASH] -- client/src/components/editor/TextPropertiesPanel.tsx
@@ -120,12 +126,14 @@ git checkout [COMMIT_HASH] -- client/src/components/editor/TextPropertiesPanel.t
 ## ⚠️ **PROTOCOLOS DE EMERGÊNCIA**
 
 ### **Se build quebrar:**
+
 1. ✅ Verificar Problems tab no VS Code
 2. ✅ Usar `git status` para ver mudanças
 3. ✅ Rollback via Git para último commit funcional
 4. ✅ Restaurar arquivos do version-backups se necessário
 
 ### **Se funcionalidade regredir:**
+
 1. ✅ Marcar regressão no ZentrawVersionManager
 2. ✅ Identificar última versão estável no version-backups
 3. ✅ Fazer rollback completo

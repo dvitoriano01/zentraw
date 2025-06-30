@@ -10,14 +10,14 @@
 
 ### ✅ **PROBLEMAS SOLUCIONADOS**
 
-| Bug                              | Status       | Solução                                               |
-| -------------------------------- | ------------ | ----------------------------------------------------- |
-| Ctrl+Z fazia tela "sumir"        | ✅ RESOLVIDO | Preservação do canvas durante undo/redo              |
-| Fontes com borda por padrão      | ✅ RESOLVIDO | strokeWidth: 0 por padrão em textos                  |
-| Google Fonts (não nosso diferencial) | ✅ REMOVIDO | Foco total nas FREEPIK FONTS (60+ fontes exclusivas) |
-| Sistema de carregamento          | ✅ MELHORADO | FreepikFontManager com indicador de progresso        |
-| Seleção bugada (desselecionava)  | ✅ RESOLVIDO | Eventos de seleção corrigidos                         |
-| Contorno não acompanha zoom      | ✅ RESOLVIDO | Wrapper CSS com transform scale                       |
+| Bug                                  | Status       | Solução                                              |
+| ------------------------------------ | ------------ | ---------------------------------------------------- |
+| Ctrl+Z fazia tela "sumir"            | ✅ RESOLVIDO | Preservação do canvas durante undo/redo              |
+| Fontes com borda por padrão          | ✅ RESOLVIDO | strokeWidth: 0 por padrão em textos                  |
+| Google Fonts (não nosso diferencial) | ✅ REMOVIDO  | Foco total nas FREEPIK FONTS (60+ fontes exclusivas) |
+| Sistema de carregamento              | ✅ MELHORADO | FreepikFontManager com indicador de progresso        |
+| Seleção bugada (desselecionava)      | ✅ RESOLVIDO | Eventos de seleção corrigidos                        |
+| Contorno não acompanha zoom          | ✅ RESOLVIDO | Wrapper CSS com transform scale                      |
 
 ---
 
@@ -68,10 +68,10 @@ const undo = useCallback(() => {
     // Restaurar configurações após carregamento
     canvas.setZoom(currentZoom);
     canvas.backgroundColor = currentBackground;
-    
+
     // Garantir que o canvas seja visível
     canvas.renderAll();
-    
+
     setTimeout(() => {
       // Forçar re-render para garantir visibilidade
       canvas.renderAll();

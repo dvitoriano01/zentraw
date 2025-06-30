@@ -26,7 +26,7 @@
  * 📁 ORGANIZAÇÃO ESTILO PHOTOSHOP (famílias agrupadas)
  * 🔬 VERIFICAÇÃO ROBUSTA via Canvas API (mais confiável)
  * 🎯 Aplicação garantida: só aplica fonte que realmente renderiza
- * 
+ *
  * BUGS MANTIDOS CORRIGIDOS:
  * ✅ Histórico Ctrl+Z/Redo: Preserva zoom e background
  * ✅ Borda de texto: Removida por padrão (strokeWidth: 0)
@@ -221,6 +221,8 @@ const PhotoEditorFixed: React.FC = () => {
     current: '',
   });
   const [availableFonts, setAvailableFonts] = useState<FreepikFont[]>([]);
+  const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
+  const [selectedFontStyle, setSelectedFontStyle] = useState<string>('');
 
   // Zoom state and handlers
   const [currentZoom, setCurrentZoom] = useState(1);
@@ -543,51 +545,53 @@ const PhotoEditorFixed: React.FC = () => {
   // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
   const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
     const fontFamilies = new Map<string, FreepikFont[]>();
-    
-    fonts.forEach(font => {
+
+    fonts.forEach((font) => {
       const familyName = font.family || font.value;
-      
+
       console.log(`📁 Organizing: "${font.label}" -> Family: "${familyName}"`);
-      
+
       // Add to corresponding family
       if (!fontFamilies.has(familyName)) {
         fontFamilies.set(familyName, []);
       }
-      
+
       fontFamilies.get(familyName)!.push(font);
     });
-    
+
     // VERSÃO ESTÁVEL: Organizar sem modificar valores originais
     const organizedFonts: FreepikFont[] = [];
-    
+
     Array.from(fontFamilies.keys())
       .sort()
-      .forEach(familyName => {
+      .forEach((familyName) => {
         const family = fontFamilies.get(familyName)!;
-        
+
         // Sort variations: Regular (400) first, then by weight
         family.sort((a, b) => {
           // Normal style first
           if (a.style === 'normal' && b.style === 'italic') return -1;
           if (a.style === 'italic' && b.style === 'normal') return 1;
-          
+
           // Then by weight
           const weightA = a.weight || 400;
           const weightB = b.weight || 400;
           return weightA - weightB;
         });
-        
+
         // VERSÃO ESTÁVEL: Manter estrutura original das fontes
         family.forEach((font) => {
           organizedFonts.push({
             ...font,
             weight: font.weight || 400,
-            style: font.style || 'normal'
+            style: font.style || 'normal',
           });
         });
       });
-    
-    console.log(`📊 Organized ${fontFamilies.size} families with ${organizedFonts.length} total variations`);
+
+    console.log(
+      `📊 Organized ${fontFamilies.size} families with ${organizedFonts.length} total variations`,
+    );
     return organizedFonts;
   }, []);
 
@@ -597,7 +601,11 @@ const PhotoEditorFixed: React.FC = () => {
     console.log('🎨 [v1.3.0.c.3] Carregando FREEPIK FONTS REAIS com verificação ROBUSTA!');
 
     try {
-      setFontLoadingState((prev) => ({ ...prev, isLoading: true, current: 'Carregando fontes Freepik...' }));
+      setFontLoadingState((prev) => ({
+        ...prev,
+        isLoading: true,
+        current: 'Carregando fontes Freepik...',
+      }));
 
       // Aguardar que as fontes CSS sejam carregadas
       await document.fonts.ready;
@@ -613,21 +621,21 @@ const PhotoEditorFixed: React.FC = () => {
           // Texto de teste e tamanho
           const testText = 'ABCabc123';
           const fontSize = 20;
-          
+
           // Medir com fonte de referência (Arial)
           testCtx.font = `${fontSize}px Arial`;
           const arialWidth = testCtx.measureText(testText).width;
-          
+
           // Medir com a fonte testada (com fallback para Arial)
           testCtx.font = `${fontSize}px "${fontFamily}", Arial`;
           const testWidth = testCtx.measureText(testText).width;
-          
+
           // Se as larguras são diferentes, a fonte customizada foi carregada
           const isLoaded = Math.abs(testWidth - arialWidth) > 1;
-          
+
           // Verificação adicional: usar document.fonts.check
           const documentCheck = document.fonts.check(`${fontSize}px "${fontFamily}"`);
-          
+
           // Fonte é considerada válida se passou em pelo menos um teste
           return isLoaded || documentCheck;
         } catch (error) {
@@ -645,7 +653,7 @@ const PhotoEditorFixed: React.FC = () => {
 
       for (const font of freepikFonts) {
         const isReallyAvailable = testFontAvailability(font.value);
-        
+
         if (isReallyAvailable) {
           availableFreepikFonts.push(font);
           verifiedFonts.push(font.value);
@@ -664,7 +672,7 @@ const PhotoEditorFixed: React.FC = () => {
         });
 
         // Pequena pausa para não bloquear a UI
-        await new Promise(resolve => setTimeout(resolve, 20));
+        await new Promise((resolve) => setTimeout(resolve, 20));
       }
 
       // Remover canvas de teste
@@ -678,7 +686,12 @@ const PhotoEditorFixed: React.FC = () => {
       const basicFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
@@ -695,7 +708,9 @@ const PhotoEditorFixed: React.FC = () => {
         current: 'Verificação completa!',
       });
 
-      console.log(`🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`);
+      console.log(
+        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`,
+      );
       console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
       console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
       console.log(`📁 Organizadas em ${groupedFonts.length} entradas (famílias + variações)`);
@@ -713,7 +728,12 @@ const PhotoEditorFixed: React.FC = () => {
       const fallbackFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
@@ -749,7 +769,12 @@ const PhotoEditorFixed: React.FC = () => {
       setAvailableFonts([
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
@@ -1081,31 +1106,33 @@ const PhotoEditorFixed: React.FC = () => {
         try {
           const testCanvas = document.createElement('canvas');
           const testCtx = testCanvas.getContext('2d');
-          
+
           if (testCtx) {
             // Testar renderização da fonte
             const testText = 'Test';
             const fontSize = 32;
-            
+
             // Medir com Arial (referência)
             testCtx.font = `${fontSize}px Arial`;
             const arialWidth = testCtx.measureText(testText).width;
-            
+
             // Medir com a fonte selecionada
             testCtx.font = `${fontSize}px "${randomFreepikFont.value}", Arial`;
             const targetWidth = testCtx.measureText(testText).width;
-            
+
             // Se as larguras são diferentes, a fonte está funcionando
             fontVerified = Math.abs(targetWidth - arialWidth) > 1;
-            
+
             if (fontVerified) {
               console.log(`✅ Fonte VERIFICADA e APLICÁVEL: ${randomFreepikFont.value}`);
               finalFont = randomFreepikFont.value;
             } else {
-              console.warn(`⚠️ Fonte ${randomFreepikFont.value} não renderiza diferente de Arial, usando Arial`);
+              console.warn(
+                `⚠️ Fonte ${randomFreepikFont.value} não renderiza diferente de Arial, usando Arial`,
+              );
               finalFont = 'Arial';
             }
-            
+
             testCanvas.remove();
           }
         } catch (error) {
@@ -1161,7 +1188,7 @@ const PhotoEditorFixed: React.FC = () => {
 
         try {
           const canvas = fabricCanvasRef.current;
-          
+
           // Preservar configurações importantes antes de carregar o estado
           const currentZoom = canvas.getZoom();
           const currentBackground = canvas.backgroundColor;
@@ -1171,7 +1198,7 @@ const PhotoEditorFixed: React.FC = () => {
             // Restaurar configurações após carregamento
             canvas.setZoom(currentZoom);
             canvas.backgroundColor = currentBackground;
-            
+
             // Garantir que o canvas seja visível
             canvas.renderAll();
             setHistoryIndex(newIndex);
@@ -1203,7 +1230,7 @@ const PhotoEditorFixed: React.FC = () => {
 
         try {
           const canvas = fabricCanvasRef.current;
-          
+
           // Preservar configurações importantes antes de carregar o estado
           const currentZoom = canvas.getZoom();
           const currentBackground = canvas.backgroundColor;
@@ -1213,7 +1240,7 @@ const PhotoEditorFixed: React.FC = () => {
             // Restaurar configurações após carregamento
             canvas.setZoom(currentZoom);
             canvas.backgroundColor = currentBackground;
-            
+
             // Garantir que o canvas seja visível
             canvas.renderAll();
             setHistoryIndex(newIndex);
@@ -1378,6 +1405,21 @@ const PhotoEditorFixed: React.FC = () => {
     console.log('🎯 Formato selecionado:', selectedFormat);
   }, []);
 
+  // Dropdowns de seleção de fonte e variação (estilo)
+  const handleFontFamilyChange = (family: string) => {
+    setSelectedFontFamily(family);
+    // Seleciona a primeira variação disponível da família
+    const firstStyle = availableFonts.find((f) => f.family === family)?.style || 'normal';
+    setSelectedFontStyle(firstStyle);
+    updateTextProperties({ fontFamily: family, fontStyle: firstStyle });
+  };
+
+  const handleFontStyleChange = (style: string) => {
+    setSelectedFontStyle(style);
+    updateTextProperties({ fontStyle: style });
+  };
+
+  // JSX para dropdowns de fontes e estilos lado a lado
   return (
     <div className="h-screen flex flex-col bg-[#2b2b2b] text-white">
       {/* Top Menu Bar */}
@@ -1541,7 +1583,7 @@ const PhotoEditorFixed: React.FC = () => {
           {/* Canvas Controls */}
           <div className="h-10 bg-[#2a2a2a] border-b border-[#4a4a4a] flex items-center px-4 gap-4 flex-shrink-0">
             <div className="flex items-center gap-2">
-              <label className="text-xs text-gray-400">Format:</label>
+              <label className="text-xs text-gray-400 block mb-1">Format:</label>
               <select
                 value={selectedFormat}
                 onChange={(e) => handleFormatChange(e.target.value)}
@@ -2007,7 +2049,7 @@ const PhotoEditorFixed: React.FC = () => {
                               )}
                             </div>
 
-                            <div className="truncate text-xs font-medium flex-1 min-w-0">
+                            <div className="truncate text-xs font-medium flex-1 min-w-0 ml-2">
                               {layer.name}
                             </div>
                           </div>

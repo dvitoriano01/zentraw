@@ -47,7 +47,11 @@ const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72,
 ];
 
-export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
+export function TextPropertiesPanel({
+  selectedObject,
+  onUpdateText,
+  availableFonts: propAvailableFonts,
+}: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
   const fontManager = FreepikFontManager.getInstance();
@@ -84,7 +88,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
         const allFonts = [
           ...freepikFonts,
           ...systemFonts.filter(
-            (sysFont) => !freepikFonts.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
+            (sysFont) =>
+              !freepikFonts.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
           ),
         ];
 
@@ -124,14 +129,14 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
 
     // Handle font family specially for Freepik fonts
     if (property === 'fontFamily') {
-      const selectedFont = allFonts.find(font => font.value === value) as FreepikFont;
-      
+      const selectedFont = allFonts.find((font) => font.value === value) as FreepikFont;
+
       if (selectedFont) {
         console.log(`🎨 Applying font: ${selectedFont.label} (${selectedFont.value})`);
-        onUpdateText({ 
+        onUpdateText({
           fontFamily: selectedFont.value,
           fontWeight: selectedFont.weight || 400,
-          fontStyle: selectedFont.style || 'normal'
+          fontStyle: selectedFont.style || 'normal',
         });
       } else {
         onUpdateText({ fontFamily: value });
@@ -144,7 +149,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
   };
 
   const toggleBold = () => {
-    const newWeight = textProperties.fontWeight === 'bold' || textProperties.fontWeight === 700 ? 'normal' : 'bold';
+    const newWeight =
+      textProperties.fontWeight === 'bold' || textProperties.fontWeight === 700 ? 'normal' : 'bold';
     updateProperty('fontWeight', newWeight);
   };
 
@@ -177,19 +183,23 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
           Text Properties
         </h3>
       </div>
-      
+
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1">
         <TabsList className="grid w-full grid-cols-2 bg-[#2a2a2a] mx-4 mt-4">
-          <TabsTrigger value="character" className="text-xs">Character</TabsTrigger>
-          <TabsTrigger value="paragraph" className="text-xs">Paragraph</TabsTrigger>
+          <TabsTrigger value="character" className="text-xs">
+            Character
+          </TabsTrigger>
+          <TabsTrigger value="paragraph" className="text-xs">
+            Paragraph
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="character" className="mt-4 px-4 space-y-4">
           {/* Font Family */}
           <div className="space-y-2">
             <label className="text-xs text-gray-400">Font Family</label>
-            <Select 
-              value={textProperties.fontFamily} 
+            <Select
+              value={textProperties.fontFamily}
               onValueChange={(value) => updateProperty('fontFamily', value)}
             >
               <SelectTrigger className="w-full bg-[#2a2a2a] border-gray-600 text-white">
@@ -200,9 +210,13 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                   <>
                     {/* Freepik Fonts Section */}
                     {(() => {
-                      const freepikFonts = allFonts.filter(font => !SYSTEM_FONTS.some(sys => sys.value === font.value));
-                      const systemFonts = allFonts.filter(font => SYSTEM_FONTS.some(sys => sys.value === font.value));
-                      
+                      const freepikFonts = allFonts.filter(
+                        (font) => !SYSTEM_FONTS.some((sys) => sys.value === font.value),
+                      );
+                      const systemFonts = allFonts.filter((font) =>
+                        SYSTEM_FONTS.some((sys) => sys.value === font.value),
+                      );
+
                       return (
                         <>
                           {freepikFonts.length > 0 && (
@@ -211,8 +225,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                                 🎨 Freepik Fonts ({freepikFonts.length})
                               </div>
                               {freepikFonts.map((font) => (
-                                <SelectItem 
-                                  key={font.value} 
+                                <SelectItem
+                                  key={font.value}
                                   value={font.value}
                                   className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a]"
                                 >
@@ -220,7 +234,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                                     <span>{font.label}</span>
                                     {font.weight && font.weight !== 400 && (
                                       <span className="text-[10px] text-gray-500 ml-2">
-                                        {font.weight}{font.style === 'italic' ? 'i' : ''}
+                                        {font.weight}
+                                        {font.style === 'italic' ? 'i' : ''}
                                       </span>
                                     )}
                                   </div>
@@ -228,7 +243,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                               ))}
                             </>
                           )}
-                          
+
                           {/* System Fonts Section */}
                           {systemFonts.length > 0 && (
                             <>
@@ -236,8 +251,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                                 🔧 System Fonts ({systemFonts.length})
                               </div>
                               {systemFonts.map((font) => (
-                                <SelectItem 
-                                  key={font.value} 
+                                <SelectItem
+                                  key={font.value}
                                   value={font.value}
                                   className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a]"
                                 >
@@ -251,7 +266,9 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                     })()}
                   </>
                 ) : (
-                  <SelectItem value="Arial" className="text-xs">Loading fonts...</SelectItem>
+                  <SelectItem value="Arial" className="text-xs">
+                    Loading fonts...
+                  </SelectItem>
                 )}
               </SelectContent>
             </Select>
@@ -260,8 +277,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
           {/* Font Size */}
           <div className="space-y-2">
             <label className="text-xs text-gray-400">Font Size</label>
-            <Select 
-              value={textProperties.fontSize.toString()} 
+            <Select
+              value={textProperties.fontSize.toString()}
               onValueChange={(value) => updateProperty('fontSize', parseInt(value))}
             >
               <SelectTrigger className="w-full bg-[#2a2a2a] border-gray-600 text-white">
@@ -282,7 +299,11 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
             <label className="text-xs text-gray-400">Style</label>
             <div className="flex gap-2">
               <Button
-                variant={textProperties.fontWeight === 'bold' || textProperties.fontWeight === 700 ? 'default' : 'outline'}
+                variant={
+                  textProperties.fontWeight === 'bold' || textProperties.fontWeight === 700
+                    ? 'default'
+                    : 'outline'
+                }
                 size="sm"
                 onClick={toggleBold}
                 className="flex-1"
@@ -321,7 +342,9 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
 
           {/* Letter Spacing */}
           <div className="space-y-2">
-            <label className="text-xs text-gray-400">Letter Spacing: {textProperties.letterSpacing}px</label>
+            <label className="text-xs text-gray-400">
+              Letter Spacing: {textProperties.letterSpacing}px
+            </label>
             <Slider
               value={[textProperties.letterSpacing]}
               onValueChange={(value) => updateProperty('letterSpacing', value[0])}
@@ -334,7 +357,9 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
 
           {/* Line Height */}
           <div className="space-y-2">
-            <label className="text-xs text-gray-400">Line Height: {textProperties.lineHeight}</label>
+            <label className="text-xs text-gray-400">
+              Line Height: {textProperties.lineHeight}
+            </label>
             <Slider
               value={[textProperties.lineHeight]}
               onValueChange={(value) => updateProperty('lineHeight', value[0])}

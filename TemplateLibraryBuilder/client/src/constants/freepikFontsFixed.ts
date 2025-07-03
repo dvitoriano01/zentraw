@@ -13,40 +13,12 @@ export interface FreepikFont {
 export const freepikFonts: FreepikFont[] = [
   { label: 'Aerohate Caps', value: 'Aerohate Caps', weight: 400, family: 'Aerohate' },
 
-  // Família Akuina - todas usam font-family "Akuina" com weights diferentes
+  // Família Akuina - Otimizada para 4 melhores variações (v1.3.0.d.3)
+  // Selecionadas por uso comum, contraste visual e flexibilidade
   { label: 'Akuina Light', value: 'Akuina', weight: 200, family: 'Akuina' },
   { label: 'Akuina Regular', value: 'Akuina', weight: 400, family: 'Akuina' },
-  { label: 'Akuina Medium', value: 'Akuina', weight: 500, family: 'Akuina' },
-  { label: 'Akuina Semibold', value: 'Akuina', weight: 600, family: 'Akuina' },
+  { label: 'Akuina Regular Italic', value: 'Akuina', weight: 400, style: 'italic', family: 'Akuina' },
   { label: 'Akuina Bold', value: 'Akuina', weight: 700, family: 'Akuina' },
-  { label: 'Akuina Extra Bold', value: 'Akuina', weight: 800, family: 'Akuina' },
-  { label: 'Akuina Black', value: 'Akuina', weight: 800, family: 'Akuina' },
-
-  // Variações italic da Akuina
-  { label: 'Akuina Light Italic', value: 'Akuina', weight: 200, style: 'italic', family: 'Akuina' },
-  {
-    label: 'Akuina Regular Italic',
-    value: 'Akuina',
-    weight: 400,
-    style: 'italic',
-    family: 'Akuina',
-  },
-  {
-    label: 'Akuina Medium Italic',
-    value: 'Akuina',
-    weight: 500,
-    style: 'italic',
-    family: 'Akuina',
-  },
-  {
-    label: 'Akuina Semibold Italic',
-    value: 'Akuina',
-    weight: 600,
-    style: 'italic',
-    family: 'Akuina',
-  },
-  { label: 'Akuina Bold Italic', value: 'Akuina', weight: 700, style: 'italic', family: 'Akuina' },
-  { label: 'Akuina Black Italic', value: 'Akuina', weight: 800, style: 'italic', family: 'Akuina' },
 
   { label: 'Bestters Supply', value: 'Bestters Supply', weight: 400, family: 'Bestters Supply' },
   { label: 'Big Bang', value: 'Big Bang', weight: 400, family: 'Big Bang' },

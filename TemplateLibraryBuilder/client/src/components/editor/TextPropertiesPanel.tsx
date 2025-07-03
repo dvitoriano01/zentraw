@@ -21,7 +21,7 @@ import {
   Palette,
 } from 'lucide-react';
 import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
-import { freepikFonts } from '@/constants/freepikFontsFixed';
+import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
 
 interface TextPropertiesProps {
   selectedObject: any;
@@ -55,7 +55,6 @@ const FONT_SIZES = [
 export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
-  const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
   const fontManager = FreepikFontManagerOptimized.getInstance();
 
   // Use fonts passed as prop (robustly verified) or fallback
@@ -124,29 +123,9 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
     }
   }, [selectedObject]);
 
-  // FONT: lista de famílias únicas (mostra só uma vez cada família)
-  const fontFamiliesUnique = Array.from(
-    new Map(allFonts.map((f: FreepikFont) => [(f.family || f.label.split(' ')[0]), f])).values()
-  );
-
-  // Variações da família selecionada
-  const familyVariants = selectedFontFamily
-    ? allFonts.filter((f: FreepikFont) => (f.family || f.label.split(' ')[0]) === selectedFontFamily)
-    : [];
-
-  // Ao selecionar uma família no dropdown FONT
-  const handleFontFamilySelect = (family: string) => {
-    setSelectedFontFamily(family);
-    // Seleciona automaticamente a primeira variação (ex: Regular)
-    const variants = allFonts.filter((f: FreepikFont) => (f.family || f.label.split(' ')[0]) === family);
-    if (variants.length > 0) {
-      updateProperty('fontFamily', variants[0].value);
-    }
-  };
-
-  // Ao selecionar uma variação no dropdown Família
-  const handleFamilyVariantSelect = (value: string) => {
-    updateProperty('fontFamily', value);
+  // Direct font selection handler - no family grouping needed
+  const handleFontSelect = (fontValue: string) => {
+    updateProperty('fontFamily', fontValue);
   };
 
   // Update text property
@@ -238,28 +217,27 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
 
         {/* Character Tab */}
         <TabsContent value="character" className="m-0 p-4 space-y-4">
-          {/* Font + Família Dropdowns */}
+          {/* Single Font Dropdown - Simplified UX */}
           <div className="flex gap-2 items-end">
-            {/* Dropdown de famílias únicas (com preview) */}
-            <div className="flex-1 min-w-[140px] max-w-[220px]">
+            <div className="flex-1 min-w-[200px]">
               <label className="text-xs text-gray-400 mb-1 block">Font</label>
               <Select
-                value={selectedFontFamily}
-                onValueChange={handleFontFamilySelect}
+                value={textProperties.fontFamily}
+                onValueChange={handleFontSelect}
               >
-                <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a] max-w-[220px] truncate">
-                  <SelectValue placeholder="Font" className="truncate" />
+                <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a] truncate">
+                  <SelectValue placeholder="Select Font" className="truncate" />
                 </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto overflow-x-hidden min-w-[140px] max-w-[220px] w-full">
-                  {fontFamiliesUnique.map((font: FreepikFont) => (
+                <SelectContent className="max-h-48 overflow-y-auto overflow-x-hidden min-w-[200px] w-full">
+                  {allFonts.map((font: FreepikFont) => (
                     <SelectItem
-                      key={font.family || font.label}
-                      value={font.family || font.label.split(' ')[0]}
+                      key={`${font.label}-${font.value}-${font.weight}-${font.style || 'normal'}`}
+                      value={font.value}
                       style={{
                         fontFamily: font.value,
                         fontWeight: font.weight || 400,
                         fontStyle: font.style || 'normal',
-                        maxWidth: '200px',
+                        maxWidth: '280px',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
@@ -267,64 +245,18 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                       className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] truncate"
                     >
                       <div className="flex items-center justify-between w-full truncate">
-                        <span className="truncate">{font.family || font.label.split(' ')[0]}</span>
+                        <span className="truncate">{font.label}</span>
+                        {(font.weight && font.weight !== 400) || font.style === 'italic' ? (
+                          <span className="text-[10px] text-gray-500 ml-2">
+                            {font.weight !== 400 ? font.weight : ''}{font.style === 'italic' ? 'i' : ''}
+                          </span>
+                        ) : null}
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            {/* Dropdown de variações da família */}
-            {familyVariants.length > 1 && (
-              <div className="w-1/3 min-w-[110px] max-w-[160px]">
-                <label className="text-xs text-gray-400 mb-1 block">Family</label>
-                <Select
-                  value={textProperties.fontFamily}
-                  onValueChange={(value) => {
-                    handleFamilyVariantSelect(value);
-                    // Atualiza o selectedFontFamily para manter o dropdown sincronizado
-                    const selected = allFonts.find(f => f.value === value);
-                    if (selected) setSelectedFontFamily(selected.family || selected.label.split(' ')[0]);
-                  }}
-                >
-                  <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a] max-w-[160px] truncate">
-                    <SelectValue placeholder="Family" className="truncate" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-48 overflow-y-auto overflow-x-hidden min-w-[110px] max-w-[160px] w-full">
-                    {familyVariants.map((font: FreepikFont) => (
-                      <SelectItem
-                        key={`${font.label}-${font.value}-${font.weight}-${font.style}`}
-                        value={font.value}
-                        style={{
-                          fontFamily: font.value,
-                          fontWeight: font.weight || 400,
-                          fontStyle: font.style || 'normal',
-                          maxWidth: '140px',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
-                        className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] truncate"
-                        onClick={() => onUpdateText({
-                          fontFamily: font.originalValue || font.value,
-                          fontWeight: font.weight || 400,
-                          fontStyle: font.style || 'normal',
-                        })}
-                      >
-                        <div className="flex items-center justify-between w-full truncate">
-                          <span className="truncate">{font.label}</span>
-                          {font.weight && font.weight !== 400 && (
-                            <span className="text-[10px] text-gray-500 ml-2">
-                              {font.weight}{font.style === 'italic' ? 'i' : ''}
-                            </span>
-                          )}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
           </div>
 
           {/* Font Size & Style Controls */}

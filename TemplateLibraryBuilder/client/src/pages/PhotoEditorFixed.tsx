@@ -38,8 +38,7 @@
  */
 
 // Sistema original restaurado - funcionava corretamente
-// OTIMIZADO V1.3.0.d.2: Sistema de cache e carregamento paralelo
-import { useFontLoader } from '@/hooks/useFontLoader';
+// HOTFIX V1.3.0.d.2: Sistema de cache SEM LOOPS (integração direta)
 import { FreepikFontCacheManager } from '@/utils/FreepikFontCacheManager';
 import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
 import FontLoadingIndicatorV2 from '@/components/FontLoadingIndicatorV2';
@@ -210,16 +209,18 @@ const PhotoEditorFixed: React.FC = () => {
   const [filtersModalOpen, setFiltersModalOpen] = useState(false);
   const [textEffectsModalOpen, setTextEffectsModalOpen] = useState(false);
 
-  // OTIMIZADO V1.3.0.d.2: Hook customizado para carregamento de fontes
-  const { 
-    fontLoadingState, 
-    availableFonts: verifiedFonts, 
-    loadFonts,
-    clearCache: clearFontCache,
-    getCacheStats 
-  } = useFontLoader();
-
-  // Manter compatibilidade com código existente
+  // Font loading state - iniciar como false para não bloquear
+  const [fontLoadingState, setFontLoadingState] = useState<{
+    isLoading: boolean;
+    loaded: number;
+    total: number;
+    current: string;
+  }>({
+    isLoading: false, // Mudar para false para não bloquear inicialmente
+    loaded: 0,
+    total: 0,
+    current: '',
+  });
   const [availableFonts, setAvailableFonts] = useState<FreepikFont[]>([]);
   const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
   const [selectedFontStyle, setSelectedFontStyle] = useState<string>('');
@@ -561,7 +562,7 @@ const PhotoEditorFixed: React.FC = () => {
     }
   }, [currentZoom]);
 
-  // COMPATIBILIDADE: Manter referência ao font manager (não usado mais)
+  // COMPATIBILIDADE: Font manager não usado mais (HOTFIX V1.3.0.d.2)
   // const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
 
   // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
@@ -617,86 +618,241 @@ const PhotoEditorFixed: React.FC = () => {
     return organizedFonts;
   }, []);
 
-  // OTIMIZADO V1.3.0.d.2: Sistema de carregamento PARALELO e CACHE
-  // Substitui o sistema sequencial anterior por carregamento otimizado
-  const loadFreepikFontsOptimized = useCallback(async () => {
-    console.log('🚀 [V1.3.0.d.2] Carregando FREEPIK FONTS com CACHE e PARALELISMO!');
-    
+  // Sistema FREEPIK FONTS - HOTFIX V1.3.0.d.2 (sem loops)
+  const loadFreepikFonts = useCallback(async () => {
+    console.log('🚀 [V1.3.0.d.2] Carregando FREEPIK FONTS com CACHE!');
+
     try {
-      // Usar o hook otimizado
-      await loadFonts();
-      
-      // Converter verifiedFonts para o formato esperado pelo código existente
-      const compatibleFonts: FreepikFont[] = verifiedFonts.map(font => ({
-        label: font.label,
-        value: font.value,
-        weight: font.weight || 400,
-        style: (font.style === 'italic' ? 'italic' : 'normal') as 'normal' | 'italic',
-        family: font.value.split(',')[0].trim().replace(/['"]/g, '')
+      // OTIMIZAÇÃO 1: Verificar cache primeiro
+      const cachedFonts = FreepikFontCacheManager.loadFromCache();
+      if (cachedFonts && cachedFonts.length > 0) {
+        console.log(`✅ Fontes carregadas do CACHE: ${cachedFonts.length} fontes`);
+        
+        // Converter para formato compatível
+        const compatibleFonts = cachedFonts.map(font => ({
+          label: font.label,
+          value: font.value,
+          weight: font.weight || 400,
+          style: (font.style === 'italic' ? 'italic' : 'normal') as 'normal' | 'italic',
+          family: font.value.split(',')[0].trim().replace(/['"]/g, '')
+        }));
+
+        const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
+        const basicFonts: FreepikFont[] = [
+          { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+          { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+          { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+          { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+          { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+          { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+        ];
+
+        setAvailableFonts([...groupedFonts, ...basicFonts]);
+        
+        setFontLoadingState({
+          isLoading: false,
+          loaded: cachedFonts.length,
+          total: freepikFonts.length,
+          current: 'Carregado do cache!',
+        });
+        
+        return { loadedFonts: cachedFonts.length, totalFonts: freepikFonts.length };
+      }
+
+      // OTIMIZAÇÃO 2: Cache não encontrado, carregar normalmente
+      setFontLoadingState((prev) => ({
+        ...prev,
+        isLoading: true,
+        current: 'Carregando fontes Freepik...',
       }));
 
-      // Organizar por família (manter compatibilidade)
-      const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
-      
+      // Aguardar que as fontes CSS sejam carregadas
+      await document.fonts.ready;
+
+      // VERIFICAÇÃO ROBUSTA: Testar renderização real das fontes
+      const testCanvas = document.createElement('canvas');
+      const testCtx = testCanvas.getContext('2d');
+      if (!testCtx) throw new Error('Canvas context não disponível');
+
+      // Função para testar se uma fonte realmente está carregada
+      const testFontAvailability = (fontFamily: string): boolean => {
+        try {
+          // Texto de teste e tamanho
+          const testText = 'ABCabc123';
+          const fontSize = 20;
+
+          // Medir com fonte de referência (Arial)
+          testCtx.font = `${fontSize}px Arial`;
+          const arialWidth = testCtx.measureText(testText).width;
+
+          // Medir com a fonte testada (com fallback para Arial)
+          testCtx.font = `${fontSize}px "${fontFamily}", Arial`;
+          const testWidth = testCtx.measureText(testText).width;
+
+          // Se as larguras são diferentes, a fonte customizada foi carregada
+          const isLoaded = Math.abs(testWidth - arialWidth) > 1;
+
+          // Verificação adicional: usar document.fonts.check
+          const documentCheck = document.fonts.check(`${fontSize}px "${fontFamily}"`);
+
+          // Fonte é considerada válida se passou em pelo menos um teste
+          return isLoaded || documentCheck;
+        } catch (error) {
+          console.warn(`Erro ao testar fonte ${fontFamily}:`, error);
+          return false;
+        }
+      };
+
+      // Verificar quais fontes Freepik estão realmente disponíveis
+      let loadedCount = 0;
+      const availableFreepikFonts = [];
+      const verifiedFonts = [];
+
+      console.log('🔍 Verificando disponibilidade ROBUSTA das fontes Freepik...');
+
+      for (const font of freepikFonts) {
+        const isReallyAvailable = testFontAvailability(font.value);
+
+        if (isReallyAvailable) {
+          availableFreepikFonts.push(font);
+          verifiedFonts.push({
+            label: font.label,
+            value: font.value,
+            weight: font.weight,
+            style: font.style,
+            isVerified: true,
+            verifiedAt: Date.now(),
+          });
+          loadedCount++;
+          console.log(`✅ Fonte VERIFICADA: ${font.label} (${font.value})`);
+        } else {
+          console.log(`❌ Fonte NÃO carregada: ${font.label} (${font.value})`);
+        }
+
+        // Atualizar progresso
+        setFontLoadingState({
+          isLoading: true,
+          loaded: loadedCount,
+          total: freepikFonts.length,
+          current: `Testando: ${font.label}`,
+        });
+
+        // OTIMIZAÇÃO 3: Remover delay artificial (era 20ms x 50 = 1s perdido)
+        // await new Promise((resolve) => setTimeout(resolve, 20)); ← REMOVIDO!
+      }
+
+      // Remover canvas de teste
+      testCanvas.remove();
+
+      // ORGANIZAÇÃO INTELIGENTE - Agrupar fontes por família (estilo Photoshop)
+      const groupedFonts = organizeFreepikFontsByFamily(availableFreepikFonts);
+      console.log('📁 Fontes organizadas por família:', groupedFonts);
+
       // Adicionar fontes básicas como fallback
       const basicFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       const allAvailableFonts = [...groupedFonts, ...basicFonts];
+
       setAvailableFonts(allAvailableFonts);
 
-      console.log(`🎉 [OTIMIZADO] ${verifiedFonts.length}/${freepikFonts.length} fontes carregadas!`);
-      console.log(`� Cache: ${fontLoadingState.fromCache ? 'HIT' : 'MISS'}`);
-      
-      return { loadedFonts: verifiedFonts.length, totalFonts: freepikFonts.length };
-      
+      // OTIMIZAÇÃO 4: Salvar no cache para próximas sessões
+      if (verifiedFonts.length > 0) {
+        FreepikFontCacheManager.saveToCache(verifiedFonts);
+        console.log(`💾 Cache salvo: ${verifiedFonts.length} fontes`);
+      }
+
+      setFontLoadingState({
+        isLoading: false,
+        loaded: loadedCount,
+        total: freepikFonts.length,
+        current: 'Verificação completa!',
+      });
+
+      console.log(
+        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`,
+      );
+      console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
+      console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
+      console.log(`📁 Organizadas em ${groupedFonts.length} entradas (famílias + variações)`);
+
+      // Se nenhuma fonte Freepik foi carregada, avisar
+      if (loadedCount === 0) {
+        console.warn('⚠️ NENHUMA fonte Freepik foi carregada! Verificar CSS e arquivos de fonte.');
+      }
+
+      return { loadedFonts: loadedCount, totalFonts: freepikFonts.length };
     } catch (error) {
-      console.error('❌ Erro no carregamento otimizado:', error);
-      
-      // Fallback: apenas fontes básicas
+      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
+
+      // Fallback: usar apenas fontes básicas
       const fallbackFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       setAvailableFonts(fallbackFonts);
+
+      setFontLoadingState({
+        isLoading: false,
+        loaded: 6,
+        total: freepikFonts.length,
+        current: 'Fallback ativo',
+      });
+
       return { loadedFonts: 6, totalFonts: freepikFonts.length };
     }
-  }, [loadFonts, verifiedFonts, fontLoadingState.fromCache, organizeFreepikFontsByFamily]);
+  }, []);
 
   // Função de compatibilidade mantida
   const ensureFreepikFontsLoaded = async () => {
-    return loadFreepikFontsOptimized();
+    return loadFreepikFonts();
   };
 
-  // OTIMIZADO: Carregar fontes na inicialização
+  // Carregar FREEPIK FONTS REAIS ao montar o componente - Nosso diferencial!
   useEffect(() => {
-    console.log('🚀 [V1.3.0.d.2] Iniciando carregamento OTIMIZADO de fontes...');
-    
-    loadFreepikFontsOptimized().catch((error) => {
-      console.error('❌ Erro no carregamento otimizado:', error);
-      
-      // Garantir fontes básicas sempre
+    console.log('🎨 [v1.3.0.c.2] Iniciando carregamento FREEPIK FONTS REAIS...');
+
+    // Carregamento assíncrono não bloqueante
+    loadFreepikFonts().catch((error) => {
+      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
+
+      // Garantir fontes de fallback sempre
       setAvailableFonts([
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ]);
     });
-  }, [loadFreepikFontsOptimized]);
+  }, [loadFreepikFonts]);
 
   // Initialize Fabric.js canvas
   useEffect(() => {
@@ -2015,17 +2171,45 @@ const PhotoEditorFixed: React.FC = () => {
         </div>
       </div>
       
-      {/* OTIMIZADO V1.3.0.d.2: Indicador de loading melhorado */}
-      <FontLoadingIndicatorV2
-        isLoading={fontLoadingState.isLoading}
-        loaded={fontLoadingState.loaded}
-        total={fontLoadingState.total}
-        current={fontLoadingState.current}
-        progress={fontLoadingState.progress}
-        fromCache={fontLoadingState.fromCache}
-        errors={fontLoadingState.errors}
-        onClearCache={clearFontCache}
-      />
+      {/* HOTFIX V1.3.0.d.2: Indicador de loading simples */}
+      {fontLoadingState.isLoading && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <svg className="w-5 h-5 text-purple-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                  <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">🚀 Carregando Fontes Freepik</h3>
+                <p className="text-sm text-gray-600">Sistema otimizado V1.3.0.d.2</p>
+              </div>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>{fontLoadingState.loaded} de {fontLoadingState.total} fontes</span>
+                <span className="font-medium">{Math.round((fontLoadingState.loaded / fontLoadingState.total) * 100)}%</span>
+              </div>
+              
+              <div className="w-full bg-gray-200 rounded-full h-3">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-300"
+                  style={{ width: `${(fontLoadingState.loaded / fontLoadingState.total) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-700 truncate">{fontLoadingState.current}</p>
+            
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-500">Cache inteligente • Delay removido • Performance otimizada</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

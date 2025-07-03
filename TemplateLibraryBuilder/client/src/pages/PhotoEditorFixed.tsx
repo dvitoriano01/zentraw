@@ -38,9 +38,11 @@
  */
 
 // Sistema original restaurado - funcionava corretamente
-import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
+// OTIMIZADO V1.3.0.d.2: Sistema de cache e carregamento paralelo
+import { useFontLoader } from '@/hooks/useFontLoader';
+import { FreepikFontCacheManager } from '@/utils/FreepikFontCacheManager';
 import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
-import FontLoadingIndicator from '@/components/FontLoadingIndicator';
+import FontLoadingIndicatorV2 from '@/components/FontLoadingIndicatorV2';
 // Importar CSS das fontes Freepik reais
 import '@/styles/freepik-fonts.css';
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
@@ -208,18 +210,16 @@ const PhotoEditorFixed: React.FC = () => {
   const [filtersModalOpen, setFiltersModalOpen] = useState(false);
   const [textEffectsModalOpen, setTextEffectsModalOpen] = useState(false);
 
-  // Font loading state - iniciar como false para não bloquear
-  const [fontLoadingState, setFontLoadingState] = useState<{
-    isLoading: boolean;
-    loaded: number;
-    total: number;
-    current: string;
-  }>({
-    isLoading: false, // Mudar para false para não bloquear inicialmente
-    loaded: 0,
-    total: 0,
-    current: '',
-  });
+  // OTIMIZADO V1.3.0.d.2: Hook customizado para carregamento de fontes
+  const { 
+    fontLoadingState, 
+    availableFonts: verifiedFonts, 
+    loadFonts,
+    clearCache: clearFontCache,
+    getCacheStats 
+  } = useFontLoader();
+
+  // Manter compatibilidade com código existente
   const [availableFonts, setAvailableFonts] = useState<FreepikFont[]>([]);
   const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
   const [selectedFontStyle, setSelectedFontStyle] = useState<string>('');
@@ -617,192 +617,86 @@ const PhotoEditorFixed: React.FC = () => {
     return organizedFonts;
   }, []);
 
-  // Sistema FREEPIK FONTS - Nosso diferencial!
-  // Sistema FREEPIK FONTS REAL com verificação ROBUSTA - Nosso diferencial! (v1.3.0.c.3)
-  const loadFreepikFonts = useCallback(async () => {
-    console.log('🎨 [v1.3.0.c.3] Carregando FREEPIK FONTS REAIS com verificação ROBUSTA!');
-
+  // OTIMIZADO V1.3.0.d.2: Sistema de carregamento PARALELO e CACHE
+  // Substitui o sistema sequencial anterior por carregamento otimizado
+  const loadFreepikFontsOptimized = useCallback(async () => {
+    console.log('🚀 [V1.3.0.d.2] Carregando FREEPIK FONTS com CACHE e PARALELISMO!');
+    
     try {
-      setFontLoadingState((prev) => ({
-        ...prev,
-        isLoading: true,
-        current: 'Carregando fontes Freepik...',
+      // Usar o hook otimizado
+      await loadFonts();
+      
+      // Converter verifiedFonts para o formato esperado pelo código existente
+      const compatibleFonts: FreepikFont[] = verifiedFonts.map(font => ({
+        label: font.label,
+        value: font.value,
+        weight: font.weight || 400,
+        style: font.style || 'normal',
+        family: font.value.split(',')[0].trim().replace(/['"]/g, '')
       }));
 
-      // Aguardar que as fontes CSS sejam carregadas
-      await document.fonts.ready;
-
-      // VERIFICAÇÃO ROBUSTA: Testar renderização real das fontes
-      const testCanvas = document.createElement('canvas');
-      const testCtx = testCanvas.getContext('2d');
-      if (!testCtx) throw new Error('Canvas context não disponível');
-
-      // Função para testar se uma fonte realmente está carregada
-      const testFontAvailability = (fontFamily: string): boolean => {
-        try {
-          // Texto de teste e tamanho
-          const testText = 'ABCabc123';
-          const fontSize = 20;
-
-          // Medir com fonte de referência (Arial)
-          testCtx.font = `${fontSize}px Arial`;
-          const arialWidth = testCtx.measureText(testText).width;
-
-          // Medir com a fonte testada (com fallback para Arial)
-          testCtx.font = `${fontSize}px "${fontFamily}", Arial`;
-          const testWidth = testCtx.measureText(testText).width;
-
-          // Se as larguras são diferentes, a fonte customizada foi carregada
-          const isLoaded = Math.abs(testWidth - arialWidth) > 1;
-
-          // Verificação adicional: usar document.fonts.check
-          const documentCheck = document.fonts.check(`${fontSize}px "${fontFamily}"`);
-
-          // Fonte é considerada válida se passou em pelo menos um teste
-          return isLoaded || documentCheck;
-        } catch (error) {
-          console.warn(`Erro ao testar fonte ${fontFamily}:`, error);
-          return false;
-        }
-      };
-
-      // Verificar quais fontes Freepik estão realmente disponíveis
-      let loadedCount = 0;
-      const availableFreepikFonts = [];
-      const verifiedFonts = [];
-
-      console.log('🔍 Verificando disponibilidade ROBUSTA das fontes Freepik...');
-
-      for (const font of freepikFonts) {
-        const isReallyAvailable = testFontAvailability(font.value);
-
-        if (isReallyAvailable) {
-          availableFreepikFonts.push(font);
-          verifiedFonts.push(font.value);
-          loadedCount++;
-          console.log(`✅ Fonte VERIFICADA: ${font.label} (${font.value})`);
-        } else {
-          console.log(`❌ Fonte NÃO carregada: ${font.label} (${font.value})`);
-        }
-
-        // Atualizar progresso
-        setFontLoadingState({
-          isLoading: true,
-          loaded: loadedCount,
-          total: freepikFonts.length,
-          current: `Testando: ${font.label}`,
-        });
-
-        // Pequena pausa para não bloquear a UI
-        await new Promise((resolve) => setTimeout(resolve, 20));
-      }
-
-      // Remover canvas de teste
-      testCanvas.remove();
-
-      // ORGANIZAÇÃO INTELIGENTE - Agrupar fontes por família (estilo Photoshop)
-      const groupedFonts = organizeFreepikFontsByFamily(availableFreepikFonts);
-      console.log('📁 Fontes organizadas por família:', groupedFonts);
-
+      // Organizar por família (manter compatibilidade)
+      const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
+      
       // Adicionar fontes básicas como fallback
       const basicFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        {
-          label: 'Times New Roman',
-          value: 'Times New Roman',
-          weight: 400,
-          family: 'Times New Roman',
-        },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       const allAvailableFonts = [...groupedFonts, ...basicFonts];
-
       setAvailableFonts(allAvailableFonts);
 
-      setFontLoadingState({
-        isLoading: false,
-        loaded: loadedCount,
-        total: freepikFonts.length,
-        current: 'Verificação completa!',
-      });
-
-      console.log(
-        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`,
-      );
-      console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
-      console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
-      console.log(`📁 Organizadas em ${groupedFonts.length} entradas (famílias + variações)`);
-
-      // Se nenhuma fonte Freepik foi carregada, avisar
-      if (loadedCount === 0) {
-        console.warn('⚠️ NENHUMA fonte Freepik foi carregada! Verificar CSS e arquivos de fonte.');
-      }
-
-      return { loadedFonts: loadedCount, totalFonts: freepikFonts.length };
+      console.log(`🎉 [OTIMIZADO] ${verifiedFonts.length}/${freepikFonts.length} fontes carregadas!`);
+      console.log(`� Cache: ${fontLoadingState.fromCache ? 'HIT' : 'MISS'}`);
+      
+      return { loadedFonts: verifiedFonts.length, totalFonts: freepikFonts.length };
+      
     } catch (error) {
-      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
-
-      // Fallback: usar apenas fontes básicas
+      console.error('❌ Erro no carregamento otimizado:', error);
+      
+      // Fallback: apenas fontes básicas
       const fallbackFonts: FreepikFont[] = [
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        {
-          label: 'Times New Roman',
-          value: 'Times New Roman',
-          weight: 400,
-          family: 'Times New Roman',
-        },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ];
 
       setAvailableFonts(fallbackFonts);
-
-      setFontLoadingState({
-        isLoading: false,
-        loaded: 6,
-        total: freepikFonts.length,
-        current: 'Fallback ativo',
-      });
-
       return { loadedFonts: 6, totalFonts: freepikFonts.length };
     }
-  }, []);
+  }, [loadFonts, verifiedFonts, fontLoadingState.fromCache, organizeFreepikFontsByFamily]);
 
   // Função de compatibilidade mantida
   const ensureFreepikFontsLoaded = async () => {
-    return loadFreepikFonts();
+    return loadFreepikFontsOptimized();
   };
 
-  // Carregar FREEPIK FONTS REAIS ao montar o componente - Nosso diferencial!
+  // OTIMIZADO: Carregar fontes na inicialização
   useEffect(() => {
-    console.log('🎨 [v1.3.0.c.2] Iniciando carregamento FREEPIK FONTS REAIS...');
-
-    // Carregamento assíncrono não bloqueante
-    loadFreepikFonts().catch((error) => {
-      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
-
-      // Garantir fontes de fallback sempre
+    console.log('🚀 [V1.3.0.d.2] Iniciando carregamento OTIMIZADO de fontes...');
+    
+    loadFreepikFontsOptimized().catch((error) => {
+      console.error('❌ Erro no carregamento otimizado:', error);
+      
+      // Garantir fontes básicas sempre
       setAvailableFonts([
         { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
         { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-        {
-          label: 'Times New Roman',
-          value: 'Times New Roman',
-          weight: 400,
-          family: 'Times New Roman',
-        },
+        { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
         { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
         { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
         { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
       ]);
     });
-  }, [loadFreepikFonts]);
+  }, [loadFreepikFontsOptimized]);
 
   // Initialize Fabric.js canvas
   useEffect(() => {
@@ -2120,6 +2014,18 @@ const PhotoEditorFixed: React.FC = () => {
           </Tabs>
         </div>
       </div>
+      
+      {/* OTIMIZADO V1.3.0.d.2: Indicador de loading melhorado */}
+      <FontLoadingIndicatorV2
+        isLoading={fontLoadingState.isLoading}
+        loaded={fontLoadingState.loaded}
+        total={fontLoadingState.total}
+        current={fontLoadingState.current}
+        progress={fontLoadingState.progress}
+        fromCache={fontLoadingState.fromCache}
+        errors={fontLoadingState.errors}
+        onClearCache={clearFontCache}
+      />
     </div>
   );
 };

@@ -38,9 +38,10 @@
  */
 
 // Sistema original restaurado - funcionava corretamente
-import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
+// HOTFIX V1.3.0.d.2: Sistema de cache SEM LOOPS (integração direta)
+import { FreepikFontCacheManager } from '@/utils/FreepikFontCacheManager';
 import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
-import FontLoadingIndicator from '@/components/FontLoadingIndicator';
+import FontLoadingIndicatorV2 from '@/components/FontLoadingIndicatorV2';
 // Importar CSS das fontes Freepik reais
 import '@/styles/freepik-fonts.css';
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
@@ -561,8 +562,8 @@ const PhotoEditorFixed: React.FC = () => {
     }
   }, [currentZoom]);
 
-  // Font Manager original - que funcionava
-  const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
+  // COMPATIBILIDADE: Font manager não usado mais (HOTFIX V1.3.0.d.2)
+  // const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
 
   // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
   const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
@@ -617,12 +618,48 @@ const PhotoEditorFixed: React.FC = () => {
     return organizedFonts;
   }, []);
 
-  // Sistema FREEPIK FONTS - Nosso diferencial!
-  // Sistema FREEPIK FONTS REAL com verificação ROBUSTA - Nosso diferencial! (v1.3.0.c.3)
+  // Sistema FREEPIK FONTS - HOTFIX V1.3.0.d.2 (sem loops)
   const loadFreepikFonts = useCallback(async () => {
-    console.log('🎨 [v1.3.0.c.3] Carregando FREEPIK FONTS REAIS com verificação ROBUSTA!');
+    console.log('🚀 [V1.3.0.d.2] Carregando FREEPIK FONTS com CACHE!');
 
     try {
+      // OTIMIZAÇÃO 1: Verificar cache primeiro
+      const cachedFonts = FreepikFontCacheManager.loadFromCache();
+      if (cachedFonts && cachedFonts.length > 0) {
+        console.log(`✅ Fontes carregadas do CACHE: ${cachedFonts.length} fontes`);
+        
+        // Converter para formato compatível
+        const compatibleFonts = cachedFonts.map(font => ({
+          label: font.label,
+          value: font.value,
+          weight: font.weight || 400,
+          style: (font.style === 'italic' ? 'italic' : 'normal') as 'normal' | 'italic',
+          family: font.value.split(',')[0].trim().replace(/['"]/g, '')
+        }));
+
+        const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
+        const basicFonts: FreepikFont[] = [
+          { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+          { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+          { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+          { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+          { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+          { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+        ];
+
+        setAvailableFonts([...groupedFonts, ...basicFonts]);
+        
+        setFontLoadingState({
+          isLoading: false,
+          loaded: cachedFonts.length,
+          total: freepikFonts.length,
+          current: 'Carregado do cache!',
+        });
+        
+        return { loadedFonts: cachedFonts.length, totalFonts: freepikFonts.length };
+      }
+
+      // OTIMIZAÇÃO 2: Cache não encontrado, carregar normalmente
       setFontLoadingState((prev) => ({
         ...prev,
         isLoading: true,
@@ -678,7 +715,14 @@ const PhotoEditorFixed: React.FC = () => {
 
         if (isReallyAvailable) {
           availableFreepikFonts.push(font);
-          verifiedFonts.push(font.value);
+          verifiedFonts.push({
+            label: font.label,
+            value: font.value,
+            weight: font.weight,
+            style: font.style,
+            isVerified: true,
+            verifiedAt: Date.now(),
+          });
           loadedCount++;
           console.log(`✅ Fonte VERIFICADA: ${font.label} (${font.value})`);
         } else {
@@ -693,8 +737,8 @@ const PhotoEditorFixed: React.FC = () => {
           current: `Testando: ${font.label}`,
         });
 
-        // Pequena pausa para não bloquear a UI
-        await new Promise((resolve) => setTimeout(resolve, 20));
+        // OTIMIZAÇÃO 3: Remover delay artificial (era 20ms x 50 = 1s perdido)
+        // await new Promise((resolve) => setTimeout(resolve, 20)); ← REMOVIDO!
       }
 
       // Remover canvas de teste
@@ -722,6 +766,12 @@ const PhotoEditorFixed: React.FC = () => {
       const allAvailableFonts = [...groupedFonts, ...basicFonts];
 
       setAvailableFonts(allAvailableFonts);
+
+      // OTIMIZAÇÃO 4: Salvar no cache para próximas sessões
+      if (verifiedFonts.length > 0) {
+        FreepikFontCacheManager.saveToCache(verifiedFonts);
+        console.log(`💾 Cache salvo: ${verifiedFonts.length} fontes`);
+      }
 
       setFontLoadingState({
         isLoading: false,
@@ -2120,6 +2170,46 @@ const PhotoEditorFixed: React.FC = () => {
           </Tabs>
         </div>
       </div>
+      
+      {/* HOTFIX V1.3.0.d.2: Indicador de loading simples */}
+      {fontLoadingState.isLoading && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <svg className="w-5 h-5 text-purple-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                  <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">🚀 Carregando Fontes Freepik</h3>
+                <p className="text-sm text-gray-600">Sistema otimizado V1.3.0.d.2</p>
+              </div>
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>{fontLoadingState.loaded} de {fontLoadingState.total} fontes</span>
+                <span className="font-medium">{Math.round((fontLoadingState.loaded / fontLoadingState.total) * 100)}%</span>
+              </div>
+              
+              <div className="w-full bg-gray-200 rounded-full h-3">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-300"
+                  style={{ width: `${(fontLoadingState.loaded / fontLoadingState.total) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-700 truncate">{fontLoadingState.current}</p>
+            
+            <div className="mt-4 text-center">
+              <p className="text-xs text-gray-500">Cache inteligente • Delay removido • Performance otimizada</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

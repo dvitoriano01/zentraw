@@ -1,12 +1,14 @@
 /**
  * 🚀 ZENTRAW SaaS - Hook para Carregamento Otimizado de Fontes
- * Versão: V1.3.0.d.2
+ * Versão: V1.3.0.d.3
  * Data: 03/07/2025
  * 
  * OTIMIZAÇÕES:
  * - Carregamento paralelo (Promise.allSettled)
  * - Cache inteligente com TTL
- * - Timeout para fontes lentas
+ * - Timeout estendido para fontes pesadas (5s)
+ * - Verificação tripla: document.fonts + canvas + computed style
+ * - Melhor suporte para fontes multi-família (Different Beginning, Freedom Standing)
  * - Error handling robusto
  */
 
@@ -47,41 +49,80 @@ export function useFontLoader(): UseFontLoaderResult {
 
   /**
    * Testa se uma fonte específica está realmente carregada
-   * OTIMIZADO: Usa OffscreenCanvas quando disponível para melhor performance
+   * OTIMIZADO v1.3.0.d.3: Melhor verificação para fontes multi-família
    */
-  const testFontAvailability = useCallback(async (font: FreepikFont, timeout = 2000): Promise<VerifiedFont | null> => {
+  const testFontAvailability = useCallback(async (font: FreepikFont, timeout = 4000): Promise<VerifiedFont | null> => {
     const startTime = Date.now();
 
     try {
-      // Usar OffscreenCanvas se disponível (melhor performance)
+      // MÉTODO 1: document.fonts.check (mais preciso para fontes web)
+      const fontFace = `${font.weight || 400} ${font.style || 'normal'} 16px "${font.value}"`;
+      const documentCheck = document.fonts.check(fontFace);
+      
+      if (documentCheck) {
+        console.log(`✅ Fonte verificada via document.fonts: ${font.label}`);
+        return {
+          label: font.label,
+          value: font.value,
+          weight: font.weight,
+          style: font.style,
+          isVerified: true,
+          verifiedAt: Date.now(),
+          loadTime: Date.now() - startTime
+        };
+      }
+
+      // MÉTODO 2: Canvas measurement (fallback para fontes problemáticas)
       const canvas = typeof OffscreenCanvas !== 'undefined' 
-        ? new OffscreenCanvas(100, 50)
+        ? new OffscreenCanvas(200, 100)
         : document.createElement('canvas');
       
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('Canvas context não disponível');
 
-      const testText = 'ABCabc123';
-      const fontSize = 20;
+      const testTexts = ['ABCabc123', 'Hello World', 'Different Beginning'];
+      const fontSize = 24; // Tamanho maior para melhor detecção
 
-      // Promise com timeout
+      // Promise com timeout aumentado
       const testPromise = new Promise<VerifiedFont>((resolve, reject) => {
         try {
-          // Medir com fonte de referência
-          ctx.font = `${fontSize}px Arial`;
-          const arialWidth = ctx.measureText(testText).width;
+          let hasWidthDifference = false;
 
-          // Medir com a fonte testada
-          ctx.font = `${fontSize}px "${font.value}", Arial`;
-          const testWidth = ctx.measureText(testText).width;
+          // Testar múltiplas strings para maior precisão
+          for (const testText of testTexts) {
+            // Medir com fonte de referência (Arial)
+            ctx.font = `${font.weight || 400} ${font.style || 'normal'} ${fontSize}px Arial`;
+            const arialWidth = ctx.measureText(testText).width;
 
-          // Verificação dupla: width difference + document.fonts.check
-          const widthDiff = Math.abs(testWidth - arialWidth) > 1;
-          const documentCheck = document.fonts.check(`${fontSize}px "${font.value}"`);
+            // Medir com a fonte testada
+            ctx.font = `${font.weight || 400} ${font.style || 'normal'} ${fontSize}px "${font.value}", Arial`;
+            const testWidth = ctx.measureText(testText).width;
 
-          const isLoaded = widthDiff || documentCheck;
+            // Verificar diferença significativa (threshold maior para fontes distintas)
+            const widthDiff = Math.abs(testWidth - arialWidth);
+            if (widthDiff > 2) { // Threshold aumentado
+              hasWidthDifference = true;
+              break;
+            }
+          }
 
-          if (isLoaded) {
+          // MÉTODO 3: Verificação adicional via computed style
+          const testElement = document.createElement('span');
+          testElement.style.fontFamily = `"${font.value}", Arial, sans-serif`;
+          testElement.style.fontWeight = (font.weight || 400).toString();
+          testElement.style.fontStyle = font.style || 'normal';
+          testElement.style.visibility = 'hidden';
+          testElement.style.position = 'absolute';
+          testElement.textContent = 'Test';
+          
+          document.body.appendChild(testElement);
+          const computedStyle = window.getComputedStyle(testElement);
+          const actualFontFamily = computedStyle.fontFamily;
+          document.body.removeChild(testElement);
+
+          const styleCheck = actualFontFamily.includes(font.value);
+
+          if (hasWidthDifference || styleCheck) {
             resolve({
               label: font.label,
               value: font.value,
@@ -92,14 +133,14 @@ export function useFontLoader(): UseFontLoaderResult {
               loadTime: Date.now() - startTime
             });
           } else {
-            reject(new Error(`Fonte não carregada: ${font.label}`));
+            reject(new Error(`Fonte não detectada: ${font.label} (methods: canvas=${hasWidthDifference}, style=${styleCheck})`));
           }
         } catch (error) {
           reject(error);
         }
       });
 
-      // Timeout promise
+      // Timeout promise aumentado
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => reject(new Error(`Timeout: ${font.label}`)), timeout);
       });
@@ -168,7 +209,7 @@ export function useFontLoader(): UseFontLoaderResult {
       // Criar promises para todas as fontes simultaneamente
       const fontPromises = freepikFonts.map(async (font, index) => {
         try {
-          const result = await testFontAvailability(font, 3000); // 3s timeout por fonte
+          const result = await testFontAvailability(font, 5000); // 5s timeout por fonte (aumentado)
           
           // Atualizar progresso de forma thread-safe
           setFontLoadingState(prev => ({

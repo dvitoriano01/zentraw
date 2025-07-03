@@ -1,9 +1,10 @@
 /**
  * 🚀 ZENTRAW SaaS - Sistema de Cache Inteligente para Fontes Freepik
- * Versão: V1.3.0.d.2
+ * Versão: V1.3.0.d.3
  * Data: 03/07/2025
  * 
  * OBJETIVO: Eliminar re-carregamentos desnecessários e acelerar inicialização
+ * CORREÇÕES v1.3.0.d.3: Melhor suporte para fontes multi-família
  */
 
 export interface VerifiedFont {
@@ -25,8 +26,8 @@ export interface FontCacheData {
 }
 
 export class FreepikFontCacheManager {
-  private static readonly CACHE_KEY = 'zentraw-freepik-fonts-cache-v1.3.0.d.2';
-  private static readonly CACHE_VERSION = '1.3.0.d.2';
+  private static readonly CACHE_KEY = 'zentraw-freepik-fonts-cache-v1.3.0.d.3';
+  private static readonly CACHE_VERSION = '1.3.0.d.3';
   private static readonly CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas
   private static readonly MAX_CACHE_SIZE = 5 * 1024 * 1024; // 5MB max
   

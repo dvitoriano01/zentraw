@@ -1,40 +1,49 @@
 /**
- * 🚀 ZENTRAW PHOTO EDITOR v2.0 - VERSÃO OTIMIZADA!
+ * 🎨 ZENTRAW PHOTO EDITOR v1.3.0.c.3 - VERSÃO ESTÁVEL RESTAURADA!
  *
- * 🎯 OTIMIZAÇÕES IMPLEMENTADAS v2.0:
- * ✅ CARREGAMENTO PARALELO: 15-30s → 3-8s (5x mais rápido)
- * ✅ CACHE INTELIGENTE: Evita recarregamento desnecessário
- * ✅ PROGRESS TRACKING: Feedback visual em tempo real
- * ✅ ERROR HANDLING: Sistema robusto de fallback
- * ✅ RETRY AUTOMÁTICO: Tentativas automáticas em caso de falha
- * ✅ CANCELAMENTO: Usuário pode pular carregamento se necessário
+ * 🔄 ROLLBACK PARA VERSÃO ESTÁVEL v1.3.0.c.3
+ * Data: 27 de junho de 2025
+ * Autor: Zentraw Team
  *
- * 🔧 MELHORIAS DE PERFORMANCE:
- * 🚀 Carregamento paralelo em chunks de 10 fontes
- * 💾 Cache persistente de fontes carregadas
- * ⚡ Verificação rápida via document.fonts.check
- * 🎯 Verificação robusta via Canvas API
- * 🔄 Sistema de fallback inteligente
- * ⏰ Timeout configurável (3s por fonte)
+ * IMPLEMENTAÇÃO ESTÁVEL v1.3.0.c.3:
+ * ✅ FREEPIK FONTS REAIS: 50+ fontes carregadas via CSS (@font-face)
+ * ✅ VERIFICAÇÃO ROBUSTA: Canvas API para testar renderização real
+ * ✅ ORGANIZAÇÃO INTELIGENTE: Agrupamento por família estilo Photoshop
+ * ✅ Separação de variações: Regular, Bold, Light, etc. organizadas
+ * ✅ UI melhorada: Separadores visuais entre famílias
+ * ✅ Ordenação automática: Regular primeiro, depois alfabético
+ * ✅ Logs organizados: Mostra famílias e variações detectadas
  *
- * 🎨 MELHORIAS DE UX:
- * 📊 Progress bar animada com percentual
- * 📝 Indicação da fonte sendo carregada
- * 📈 Estatísticas em tempo real
- * 🎭 Loading indicator moderno
- * 🚫 Opção de cancelar carregamento
+ * ORGANIZAÇÃO INTELIGENTE:
+ * 🔧 Detecta famílias: "Akuina Regular", "Akuina Bold" -> família "Akuina"
+ * 🔧 Agrupa variações: Regular, Light, Medium, Semibold, Bold, Black
+ * 🔧 Identifica estilos: Italic, Oblique, Caps, Swashes, Rough
+ * 🔧 Ordena logicamente: Regular primeiro, depois alfabético
+ * 🔧 Separadores visuais: Linhas entre famílias diferentes
  *
- * STATUS: VERSÃO OTIMIZADA E PERFORMÁTICA ⚡
+ * DIFERENCIAIS COMPETITIVOS:
+ * 🎨 50+ FONTES FREEPIK EXCLUSIVAS organizadas profissionalmente
+ * 📁 ORGANIZAÇÃO ESTILO PHOTOSHOP (famílias agrupadas)
+ * 🔬 VERIFICAÇÃO ROBUSTA via Canvas API (mais confiável)
+ * 🎯 Aplicação garantida: só aplica fonte que realmente renderiza
+ *
+ * BUGS MANTIDOS CORRIGIDOS:
+ * ✅ Histórico Ctrl+Z/Redo: Preserva zoom e background
+ * ✅ Borda de texto: Removida por padrão (strokeWidth: 0)
+ * ✅ Seleção de objetos: Estável e responsiva
+ * ✅ Zoom e canvas: Sistema CSS funcionando perfeitamente
+ * ✅ Checkerboard: Fundo transparente visual
+ *
+ * STATUS: VERSÃO ESTÁVEL E FUNCIONAL ✅
  */
 
-// Imports otimizados
+// Sistema original restaurado - funcionava corretamente
+import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
 import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
-import { useFontLoaderOptimized } from '@/hooks/useFontLoaderOptimized';
-import FontLoadingIndicatorOptimized from '@/components/FontLoadingIndicatorOptimized';
+import FontLoadingIndicator from '@/components/FontLoadingIndicator';
 // Importar CSS das fontes Freepik reais
 import '@/styles/freepik-fonts.css';
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-
 // Import fabric types
 import {
   Canvas,
@@ -78,7 +87,6 @@ import { ParameterInput } from '@/components/editor/ParameterInput';
 import { ObjectPropertiesPanel } from '@/components/editor/ObjectPropertiesPanel';
 import { useCanvasZoomPan } from '@/hooks/useCanvasZoomPan';
 import 'fabric';
-
 declare const fabric: {
   Canvas: any;
   IText: any;
@@ -97,8 +105,7 @@ import { TextFXPanel } from '@/components/editor/TextFXPanel';
 import { FormatsModal } from '@/components/editor/FormatsModal';
 import { FiltersModal } from '@/components/editor/FiltersModal';
 import { TextEffectsModal } from '@/components/editor/TextEffectsModal';
-
-// Types
+// Using any for fabric event types since the types are not exported correctly
 type FabricMouseEvent = {
   e: MouseEvent & {
     deltaY?: number;
@@ -107,6 +114,19 @@ type FabricMouseEvent = {
   };
   target?: FabricObject;
 };
+
+// Função utilitária para garantir que a fonte está carregada
+async function ensureFontLoaded(font: { label: string; value: string }) {
+  if (!font || !font.value) return;
+  try {
+    const fontName = font.value.split(' ')[0]; // Pega apenas o nome da fonte
+    if (document.fonts.check(`1em ${fontName}`)) return;
+    const observer = new FontFaceObserver(fontName);
+    await observer.load(null, 2000); // Reduzido timeout para 2s
+  } catch (error) {
+    console.warn(`Erro ao carregar fonte ${font.label}, continuando...`);
+  }
+}
 
 interface FabricCanvas extends Canvas {
   isDragging?: boolean;
@@ -145,7 +165,7 @@ interface LayerItem {
   id: string;
   name: string;
   type: 'text' | 'image' | 'shape' | 'background';
-  fabricType: string;
+  fabricType: string; // Tipo original do Fabric.js para ícones
   visible: boolean;
   locked: boolean;
 }
@@ -160,7 +180,7 @@ const tools = [
   { id: 'triangle', label: 'Triangle', icon: Triangle },
 ];
 
-const PhotoEditorFixedOptimized: React.FC = () => {
+const PhotoEditorFixed: React.FC = () => {
   // Refs with proper typing
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -188,34 +208,19 @@ const PhotoEditorFixedOptimized: React.FC = () => {
   const [filtersModalOpen, setFiltersModalOpen] = useState(false);
   const [textEffectsModalOpen, setTextEffectsModalOpen] = useState(false);
 
-  // 🚀 SISTEMA DE FONTES OTIMIZADO v2.0
-  const {
-    isLoading: fontLoading,
-    progress: fontProgress,
-    availableFonts,
-    loadResult,
-    error: fontError,
-    cancelLoading,
-    reloadFonts,
-    isFontAvailable,
-    getFontFallback,
-    isComplete: fontLoadingComplete,
-    hasError: fontHasError,
-    successRate
-  } = useFontLoaderOptimized(freepikFonts, {
-    autoLoad: true,
-    timeout: 3000,
-    retryAttempts: 2,
-    enableCache: true,
-    onComplete: (result) => {
-      console.log(`🎉 [v2.0] Carregamento concluído: ${result.loadedFonts}/${result.totalFonts} fontes em ${Math.round(result.loadTime)}ms`);
-      console.log(`📊 Taxa de sucesso: ${Math.round((result.loadedFonts/result.totalFonts)*100)}%`);
-    },
-    onError: (error) => {
-      console.error('❌ [v2.0] Erro no carregamento:', error);
-    }
+  // Font loading state - iniciar como false para não bloquear
+  const [fontLoadingState, setFontLoadingState] = useState<{
+    isLoading: boolean;
+    loaded: number;
+    total: number;
+    current: string;
+  }>({
+    isLoading: false, // Mudar para false para não bloquear inicialmente
+    loaded: 0,
+    total: 0,
+    current: '',
   });
-
+  const [availableFonts, setAvailableFonts] = useState<FreepikFont[]>([]);
   const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
   const [selectedFontStyle, setSelectedFontStyle] = useState<string>('');
 
@@ -232,48 +237,6 @@ const PhotoEditorFixedOptimized: React.FC = () => {
   // Extract zoom controls
   const { zoom, panX, panY, zoomIn, zoomOut, fitToScreen } = zoomPanControls;
 
-  // 🎨 ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão OTIMIZADA v2.0
-  const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
-    const fontFamilies = new Map<string, FreepikFont[]>();
-
-    fonts.forEach((font) => {
-      const familyName = font.family || font.value;
-      console.log(`📁 [v2.0] Organizing: "${font.label}" -> Family: "${familyName}"`);
-
-      if (!fontFamilies.has(familyName)) {
-        fontFamilies.set(familyName, []);
-      }
-      fontFamilies.get(familyName)!.push(font);
-    });
-
-    const organizedFonts: FreepikFont[] = [];
-
-    Array.from(fontFamilies.keys())
-      .sort()
-      .forEach((familyName) => {
-        const family = fontFamilies.get(familyName)!;
-
-        family.sort((a, b) => {
-          if (a.style === 'normal' && b.style === 'italic') return -1;
-          if (a.style === 'italic' && b.style === 'normal') return 1;
-          const weightA = a.weight || 400;
-          const weightB = b.weight || 400;
-          return weightA - weightB;
-        });
-
-        family.forEach((font) => {
-          organizedFonts.push({
-            ...font,
-            weight: font.weight || 400,
-            style: font.style || 'normal',
-          });
-        });
-      });
-
-    console.log(`📊 [v2.0] Organized ${fontFamilies.size} families with ${organizedFonts.length} total variations`);
-    return organizedFonts;
-  }, []);
-
   // Função de saveState corrigida para evitar loops infinitos
   const saveState = useCallback(() => {
     if (!fabricCanvasRef.current) return;
@@ -284,8 +247,10 @@ const PhotoEditorFixedOptimized: React.FC = () => {
       console.log('💾 Salvando estado no histórico');
 
       setCanvasHistory((prev) => {
+        // Se estamos no meio do histórico, remover estados posteriores
         const currentHistory = historyIndex >= 0 ? prev.slice(0, historyIndex + 1) : prev;
 
+        // Verificar se o estado realmente mudou (evitar duplicatas)
         if (currentHistory.length > 0 && currentHistory[currentHistory.length - 1] === newState) {
           console.log('📋 Estado idêntico, pulando salvamento');
           return prev;
@@ -293,6 +258,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
 
         const newHistory = [...currentHistory, newState];
 
+        // Limitar histórico a 30 estados (reduzido para performance)
         if (newHistory.length > 30) {
           newHistory.shift();
           return newHistory;
@@ -302,12 +268,12 @@ const PhotoEditorFixedOptimized: React.FC = () => {
 
       setHistoryIndex((prev) => {
         const newIndex = historyIndex >= 0 ? historyIndex + 1 : prev + 1;
-        return Math.min(newIndex, 29);
+        return Math.min(newIndex, 29); // Máximo 29 (0-indexed)
       });
     } catch (error) {
       console.error('❌ Erro ao salvar estado:', error);
     }
-  }, [historyIndex]);
+  }, [historyIndex]); // Manter historyIndex como dependência
 
   // Funções utilitárias dentro do componente
   const exportCanvas = useCallback((type: string) => {
@@ -325,25 +291,49 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     document.body.removeChild(link);
   }, []);
 
+  // Atualizar as funções que dependem de saveState
   const updateTextProperties = useCallback(
     (properties: any) => {
       if (!selectedObject || !fabricCanvasRef.current) return;
-      Object.entries(properties).forEach(([key, value]) => {
-        selectedObject.set(key, value);
-      });
+
+      // Se a propriedade é fontFamily, buscar peso/estilo corretos
+      if (properties.fontFamily) {
+        // Buscar na lista de fontes disponíveis
+        const selectedFont = availableFonts.find(
+          (font) => font.value === properties.fontFamily || font.label === properties.fontFamily,
+        );
+        if (selectedFont) {
+          selectedObject.set('fontFamily', selectedFont.originalValue || selectedFont.value);
+          selectedObject.set('fontWeight', selectedFont.weight || 400);
+          selectedObject.set('fontStyle', selectedFont.style || 'normal');
+        } else {
+          // Fallback: aplica só a família
+          selectedObject.set('fontFamily', properties.fontFamily);
+        }
+        // Remover para não aplicar novamente abaixo
+        const { fontFamily, ...rest } = properties;
+        Object.entries(rest).forEach(([key, value]) => {
+          selectedObject.set(key, value);
+        });
+      } else {
+        Object.entries(properties).forEach(([key, value]) => {
+          selectedObject.set(key, value);
+        });
+      }
       fabricCanvasRef.current.renderAll();
       saveState();
     },
-    [selectedObject, saveState],
+    [selectedObject, availableFonts],
   );
 
   const applyTextEffect = useCallback(
     (effect: string) => {
       if (!selectedObject || !fabricCanvasRef.current) return;
+      // Implementar efeitos de texto aqui
       fabricCanvasRef.current.renderAll();
       saveState();
     },
-    [selectedObject, saveState],
+    [selectedObject],
   );
 
   // Função para gerar ID único simples
@@ -400,7 +390,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
           locked: !obj.selectable,
         };
       })
-      .reverse();
+      .reverse(); // Reverse para mostrar layers do topo para baixo
 
     setLayers(newLayers);
   }, []);
@@ -410,6 +400,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     if (!fabricCanvasRef.current) return;
 
     const canvas = fabricCanvasRef.current;
+    // Usar ID simples como no Replit
     const layerId = `layer-${Date.now()}`;
     (obj as any).layerId = layerId;
 
@@ -418,7 +409,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     canvas.renderAll();
     updateLayers();
     saveState();
-  }, [updateLayers, saveState]);
+  }, []);
 
   // Função de deletar layer com validação
   const deleteLayer = useCallback((layerId: string) => {
@@ -438,7 +429,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
       updateLayers();
       saveState();
     }
-  }, [updateLayers, saveState]);
+  }, []);
 
   // Toggle layer visibility
   const toggleLayerVisibility = useCallback((layerId: string) => {
@@ -455,7 +446,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
       canvas.renderAll();
       updateLayers();
     }
-  }, [updateLayers]);
+  }, []);
 
   // Toggle layer lock
   const toggleLayerLock = useCallback((layerId: string) => {
@@ -473,7 +464,7 @@ const PhotoEditorFixedOptimized: React.FC = () => {
       canvas.renderAll();
       updateLayers();
     }
-  }, [updateLayers]);
+  }, []);
 
   // Reorder layers usando drag and drop HTML5 nativo
   const reorderLayers = (fromIndex: number, toIndex: number) => {
@@ -493,18 +484,24 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     }
   };
 
-  // Zoom handlers
+  // Zoom handlers - Zoom do wrapper inteiro, incluindo contorno
   const handleZoomIn = () => {
     if (!canvasRef.current || !containerRef.current) return;
     const newZoom = Math.min(currentZoom * 1.1, 5);
+
     console.log(`🔍 Zoom In: ${Math.round(currentZoom * 100)}% → ${Math.round(newZoom * 100)}%`);
+
+    // O zoom agora é aplicado via CSS no wrapper, não diretamente no canvas
     setCurrentZoom(newZoom);
   };
 
   const handleZoomOut = () => {
     if (!canvasRef.current || !containerRef.current) return;
     const newZoom = Math.max(currentZoom * 0.9, 0.1);
+
     console.log(`🔍 Zoom Out: ${Math.round(currentZoom * 100)}% → ${Math.round(newZoom * 100)}%`);
+
+    // O zoom agora é aplicado via CSS no wrapper, não diretamente no canvas
     setCurrentZoom(newZoom);
   };
 
@@ -517,20 +514,25 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     const container = containerRef.current;
     const containerRect = container.getBoundingClientRect();
 
+    // Obter dimensões reais do canvas (não escalado)
     const canvasWidth = canvasElement.width;
     const canvasHeight = canvasElement.height;
 
+    // Calcular escala para caber no container
     const scaleX = (containerRect.width * 0.8) / canvasWidth;
     const scaleY = (containerRect.height * 0.8) / canvasHeight;
     const newZoom = Math.min(scaleX, scaleY, 1);
 
+    // O zoom agora é aplicado via CSS no wrapper, não diretamente no canvas
     setCurrentZoom(newZoom);
+
     console.log(`📐 Zoom ajustado: ${Math.round(newZoom * 100)}%`);
   };
 
-  // Adicionar suporte para zoom com wheel
+  // Adicionar suporte para zoom com wheel (scroll do mouse)
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
+      // Só aplicar zoom se estiver com Ctrl pressionado
       if (e.ctrlKey || e.metaKey) {
         e.preventDefault();
 
@@ -539,7 +541,11 @@ const PhotoEditorFixedOptimized: React.FC = () => {
         const newZoom = Math.min(Math.max(currentZoom * zoomFactor, 0.1), 5);
 
         if (newZoom !== currentZoom) {
-          console.log(`🖱️ Zoom wheel: ${Math.round(currentZoom * 100)}% → ${Math.round(newZoom * 100)}%`);
+          console.log(
+            `🖱️ Zoom wheel: ${Math.round(currentZoom * 100)}% → ${Math.round(newZoom * 100)}%`,
+          );
+
+          // O zoom agora é aplicado via CSS no wrapper, não diretamente no canvas
           setCurrentZoom(newZoom);
         }
       }
@@ -548,702 +554,1574 @@ const PhotoEditorFixedOptimized: React.FC = () => {
     const container = containerRef.current;
     if (container) {
       container.addEventListener('wheel', handleWheel, { passive: false });
+
       return () => {
         container.removeEventListener('wheel', handleWheel);
       };
     }
   }, [currentZoom]);
 
-  // 🚀 RENDER LOADING SCREEN OTIMIZADO
-  if (fontLoading) {
-    return (
-      <FontLoadingIndicatorOptimized
-        progress={fontProgress}
-        onCancel={cancelLoading}
-        showDetails={true}
-      />
-    );
-  }
+  // Font Manager original - que funcionava
+  const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
 
-  // Log de estatísticas após carregamento
-  useEffect(() => {
-    if (fontLoadingComplete && loadResult) {
-      console.log('📊 [v2.0] ESTATÍSTICAS FINAIS:');
-      console.log(`⏱️ Tempo de carregamento: ${Math.round(loadResult.loadTime)}ms`);
-      console.log(`✅ Fontes carregadas: ${loadResult.loadedFonts}/${loadResult.totalFonts}`);
-      console.log(`📈 Taxa de sucesso: ${Math.round(successRate)}%`);
-      console.log(`🎨 Total disponível: ${availableFonts.length} fontes`);
+  // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
+  const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
+    const fontFamilies = new Map<string, FreepikFont[]>();
+
+    fonts.forEach((font) => {
+      const familyName = font.family || font.value;
+
+      console.log(`📁 Organizing: "${font.label}" -> Family: "${familyName}"`);
+
+      // Add to corresponding family
+      if (!fontFamilies.has(familyName)) {
+        fontFamilies.set(familyName, []);
+      }
+
+      fontFamilies.get(familyName)!.push(font);
+    });
+
+    // VERSÃO ESTÁVEL: Organizar sem modificar valores originais
+    const organizedFonts: FreepikFont[] = [];
+
+    Array.from(fontFamilies.keys())
+      .sort()
+      .forEach((familyName) => {
+        const family = fontFamilies.get(familyName)!;
+
+        // Sort variations: Regular (400) first, then by weight
+        family.sort((a, b) => {
+          // Normal style first
+          if (a.style === 'normal' && b.style === 'italic') return -1;
+          if (a.style === 'italic' && b.style === 'normal') return 1;
+
+          // Then by weight
+          const weightA = a.weight || 400;
+          const weightB = b.weight || 400;
+          return weightA - weightB;
+        });
+
+        // VERSÃO ESTÁVEL: Manter estrutura original das fontes
+        family.forEach((font) => {
+          organizedFonts.push({
+            ...font,
+            weight: font.weight || 400,
+            style: font.style || 'normal',
+          });
+        });
+      });
+
+    console.log(
+      `📊 Organized ${fontFamilies.size} families with ${organizedFonts.length} total variations`,
+    );
+    return organizedFonts;
+  }, []);
+
+  // Sistema FREEPIK FONTS - Nosso diferencial!
+  // Sistema FREEPIK FONTS REAL com verificação ROBUSTA - Nosso diferencial! (v1.3.0.c.3)
+  const loadFreepikFonts = useCallback(async () => {
+    console.log('🎨 [v1.3.0.c.3] Carregando FREEPIK FONTS REAIS com verificação ROBUSTA!');
+
+    try {
+      setFontLoadingState((prev) => ({
+        ...prev,
+        isLoading: true,
+        current: 'Carregando fontes Freepik...',
+      }));
+
+      // Aguardar que as fontes CSS sejam carregadas
+      await document.fonts.ready;
+
+      // VERIFICAÇÃO ROBUSTA: Testar renderização real das fontes
+      const testCanvas = document.createElement('canvas');
+      const testCtx = testCanvas.getContext('2d');
+      if (!testCtx) throw new Error('Canvas context não disponível');
+
+      // Função para testar se uma fonte realmente está carregada
+      const testFontAvailability = (fontFamily: string): boolean => {
+        try {
+          // Texto de teste e tamanho
+          const testText = 'ABCabc123';
+          const fontSize = 20;
+
+          // Medir com fonte de referência (Arial)
+          testCtx.font = `${fontSize}px Arial`;
+          const arialWidth = testCtx.measureText(testText).width;
+
+          // Medir com a fonte testada (com fallback para Arial)
+          testCtx.font = `${fontSize}px "${fontFamily}", Arial`;
+          const testWidth = testCtx.measureText(testText).width;
+
+          // Se as larguras são diferentes, a fonte customizada foi carregada
+          const isLoaded = Math.abs(testWidth - arialWidth) > 1;
+
+          // Verificação adicional: usar document.fonts.check
+          const documentCheck = document.fonts.check(`${fontSize}px "${fontFamily}"`);
+
+          // Fonte é considerada válida se passou em pelo menos um teste
+          return isLoaded || documentCheck;
+        } catch (error) {
+          console.warn(`Erro ao testar fonte ${fontFamily}:`, error);
+          return false;
+        }
+      };
+
+      // Verificar quais fontes Freepik estão realmente disponíveis
+      let loadedCount = 0;
+      const availableFreepikFonts = [];
+      const verifiedFonts = [];
+
+      console.log('🔍 Verificando disponibilidade ROBUSTA das fontes Freepik...');
+
+      for (const font of freepikFonts) {
+        const isReallyAvailable = testFontAvailability(font.value);
+
+        if (isReallyAvailable) {
+          availableFreepikFonts.push(font);
+          verifiedFonts.push(font.value);
+          loadedCount++;
+          console.log(`✅ Fonte VERIFICADA: ${font.label} (${font.value})`);
+        } else {
+          console.log(`❌ Fonte NÃO carregada: ${font.label} (${font.value})`);
+        }
+
+        // Atualizar progresso
+        setFontLoadingState({
+          isLoading: true,
+          loaded: loadedCount,
+          total: freepikFonts.length,
+          current: `Testando: ${font.label}`,
+        });
+
+        // Pequena pausa para não bloquear a UI
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+
+      // Remover canvas de teste
+      testCanvas.remove();
+
+      // ORGANIZAÇÃO INTELIGENTE - Agrupar fontes por família (estilo Photoshop)
+      const groupedFonts = organizeFreepikFontsByFamily(availableFreepikFonts);
+      console.log('📁 Fontes organizadas por família:', groupedFonts);
+
+      // Adicionar fontes básicas como fallback
+      const basicFonts: FreepikFont[] = [
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+      ];
+
+      const allAvailableFonts = [...groupedFonts, ...basicFonts];
+
+      setAvailableFonts(allAvailableFonts);
+
+      setFontLoadingState({
+        isLoading: false,
+        loaded: loadedCount,
+        total: freepikFonts.length,
+        current: 'Verificação completa!',
+      });
+
+      console.log(
+        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`,
+      );
+      console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
+      console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
+      console.log(`📁 Organizadas em ${groupedFonts.length} entradas (famílias + variações)`);
+
+      // Se nenhuma fonte Freepik foi carregada, avisar
+      if (loadedCount === 0) {
+        console.warn('⚠️ NENHUMA fonte Freepik foi carregada! Verificar CSS e arquivos de fonte.');
+      }
+
+      return { loadedFonts: loadedCount, totalFonts: freepikFonts.length };
+    } catch (error) {
+      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
+
+      // Fallback: usar apenas fontes básicas
+      const fallbackFonts: FreepikFont[] = [
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+      ];
+
+      setAvailableFonts(fallbackFonts);
+
+      setFontLoadingState({
+        isLoading: false,
+        loaded: 6,
+        total: freepikFonts.length,
+        current: 'Fallback ativo',
+      });
+
+      return { loadedFonts: 6, totalFonts: freepikFonts.length };
     }
-  }, [fontLoadingComplete, loadResult, successRate, availableFonts.length]);
+  }, []);
+
+  // Função de compatibilidade mantida
+  const ensureFreepikFontsLoaded = async () => {
+    return loadFreepikFonts();
+  };
+
+  // Carregar FREEPIK FONTS REAIS ao montar o componente - Nosso diferencial!
+  useEffect(() => {
+    console.log('🎨 [v1.3.0.c.2] Iniciando carregamento FREEPIK FONTS REAIS...');
+
+    // Carregamento assíncrono não bloqueante
+    loadFreepikFonts().catch((error) => {
+      console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
+
+      // Garantir fontes de fallback sempre
+      setAvailableFonts([
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
+        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        {
+          label: 'Times New Roman',
+          value: 'Times New Roman',
+          weight: 400,
+          family: 'Times New Roman',
+        },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
+        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+      ]);
+    });
+  }, [loadFreepikFonts]);
 
   // Initialize Fabric.js canvas
   useEffect(() => {
     if (!canvasRef.current || fabricCanvasRef.current) return;
 
+    // Garante que o fabric está disponível
     if (typeof fabric === 'undefined') {
       console.error('Fabric.js não está carregado!');
       return;
     }
 
+    // Calcular dimensões iniciais baseadas no formato selecionado
     const formatDimensions: {
       [key: string]: { width: number; height: number };
     } = {
       'instagram-post': { width: 1080, height: 1080 },
       'instagram-story': { width: 1080, height: 1920 },
-      'youtube-thumbnail': { width: 1280, height: 720 },
       'facebook-post': { width: 1200, height: 630 },
       'twitter-post': { width: 1024, height: 512 },
       'linkedin-post': { width: 1200, height: 627 },
-      'pinterest-pin': { width: 1000, height: 1500 },
-      'tiktok-video': { width: 1080, height: 1920 },
-      'custom': { width: 800, height: 600 },
+      'youtube-thumbnail': { width: 1280, height: 720 },
+      'a4-print': { width: 2480, height: 3508 },
+      'business-card': { width: 1050, height: 600 },
+      banner: { width: 1500, height: 500 },
+      custom: { width: 800, height: 600 },
     };
 
-    const dimensions = formatDimensions[selectedFormat] || formatDimensions['instagram-post'];
+    const dimensions = formatDimensions[selectedFormat] || { width: 800, height: 600 };
 
-    console.log(`🎨 [v2.0] Inicializando canvas: ${dimensions.width}x${dimensions.height}`);
+    // Ajustar dimensões para caber na tela (escala inicial)
+    const maxWidth = Math.min(window.innerWidth * 0.5, 800); // 50% da largura da tela ou 800px
+    const maxHeight = Math.min(window.innerHeight * 0.7, 600); // 70% da altura da tela ou 600px
 
-    const canvas = new fabric.Canvas(canvasRef.current, {
-      width: dimensions.width,
-      height: dimensions.height,
-      backgroundColor: canvasBackground === 'transparent' ? 'transparent' : canvasBackground,
-      preserveObjectStacking: true,
-      selection: true,
-      defaultCursor: 'default',
-      hoverCursor: 'move',
-      moveCursor: 'move',
-    });
+    const scaleX = maxWidth / dimensions.width;
+    const scaleY = maxHeight / dimensions.height;
+    const initialScale = Math.min(scaleX, scaleY, 0.8); // Máximo 80% para ter espaço
 
-    fabricCanvasRef.current = canvas as FabricCanvas;
+    const canvasWidth = Math.max(400, dimensions.width * initialScale);
+    const canvasHeight = Math.max(300, dimensions.height * initialScale);
 
-    // Event handlers
-    canvas.on('selection:created', (e) => {
-      const activeObject = e.selected?.[0];
-      if (activeObject) {
-        setSelectedObject(activeObject);
-        console.log('🎯 Objeto selecionado:', activeObject.type);
-      }
-    });
+    console.log(
+      `🎨 Inicializando canvas: ${canvasWidth}x${canvasHeight} (formato: ${selectedFormat})`,
+    );
 
-    canvas.on('selection:updated', (e) => {
-      const activeObject = e.selected?.[0];
-      if (activeObject) {
-        setSelectedObject(activeObject);
-        console.log('🔄 Seleção atualizada:', activeObject.type);
-      }
-    });
+    try {
+      const canvas = new fabric.Canvas(canvasRef.current, {
+        width: canvasWidth,
+        height: canvasHeight,
+        backgroundColor: '', // Completamente transparente para mostrar o checkerboard
+        preserveObjectStacking: true,
+        selection: true,
+        controlsAboveOverlay: true,
+        centeredScaling: true,
+        snapAngle: 15,
+        snapThreshold: 15,
+        selectionColor: 'rgba(100, 100, 255, 0.3)',
+        selectionBorderColor: '#4a90e2',
+        selectionLineWidth: 1,
+        enableRetinaScaling: true,
+      });
 
-    canvas.on('selection:cleared', () => {
-      setSelectedObject(null);
-      console.log('❌ Seleção limpa');
-    });
+      // Configurações adicionais
+      canvas.setZoom(1);
+      canvas.renderAll();
 
-    canvas.on('object:modified', () => {
-      console.log('✏️ Objeto modificado');
-      updateLayers();
-      saveState();
-    });
+      fabricCanvasRef.current = canvas;
 
-    canvas.on('object:added', () => {
-      console.log('➕ Objeto adicionado');
-      updateLayers();
-    });
+      console.log('✅ Canvas inicializado com sucesso!');
 
-    canvas.on('object:removed', () => {
-      console.log('➖ Objeto removido');
-      updateLayers();
-    });
+      // Setup inicial do canvas e histórico
+      const initialState = canvas.toJSON();
+      const initialStateString = JSON.stringify(initialState);
+      setCanvasHistory([initialStateString]);
+      setHistoryIndex(0);
 
-    // Cleanup
-    return () => {
-      if (fabricCanvasRef.current) {
-        fabricCanvasRef.current.dispose();
-        fabricCanvasRef.current = null;
-      }
-    };
-  }, [selectedFormat, canvasBackground, updateLayers, saveState]);
+      console.log('📋 Estado inicial do canvas salvo no histórico');
 
-  // Tool handlers
-  const addText = useCallback(() => {
-    if (!fabricCanvasRef.current) return;
+      // Configurar eventos do canvas de forma otimizada
+      canvas.on('object:added', () => {
+        setTimeout(() => {
+          updateLayers();
+          saveState();
+        }, 100); // Delay para garantir que o objeto foi completamente adicionado
+      });
 
-    const canvas = fabricCanvasRef.current;
-    const text = new fabric.IText('Clique para editar', {
-      left: canvas.width! / 2 - 100,
-      top: canvas.height! / 2 - 20,
-      fontFamily: availableFonts.length > 0 ? availableFonts[0].value : 'Arial',
-      fontSize: 40,
-      fill: '#000000',
-      strokeWidth: 0,
-      textAlign: 'center',
-      originX: 'center',
-      originY: 'center',
-    });
+      canvas.on('object:removed', () => {
+        setTimeout(() => {
+          updateLayers();
+          saveState();
+        }, 100);
+      });
 
-    addLayerToCanvas(text, 'Texto', 'text');
-    console.log('📝 Texto adicionado com fonte:', text.fontFamily);
-  }, [availableFonts, addLayerToCanvas]);
+      canvas.on('object:modified', () => {
+        setTimeout(() => {
+          updateLayers();
+          saveState();
+        }, 100);
+      });
 
-  const addRectangle = useCallback(() => {
-    if (!fabricCanvasRef.current) return;
+      // Eventos de seleção CORRIGIDOS - mais estáveis
+      canvas.on('selection:created', (e: any) => {
+        const obj = e.selected?.[0] || e.target;
+        console.log('📋 Objeto selecionado:', obj?.type);
+        setSelectedObject(obj || null);
+      });
 
-    const canvas = fabricCanvasRef.current;
-    const rect = new fabric.Rect({
-      left: canvas.width! / 2 - 50,
-      top: canvas.height! / 2 - 50,
-      width: 100,
-      height: 100,
-      fill: '#ff0000',
-      stroke: '#000000',
-      strokeWidth: 2,
-      originX: 'center',
-      originY: 'center',
-    });
+      canvas.on('selection:updated', (e: any) => {
+        const obj = e.selected?.[0] || e.target;
+        console.log('📋 Seleção atualizada:', obj?.type);
+        setSelectedObject(obj || null);
+      });
 
-    addLayerToCanvas(rect, 'Retângulo', 'shape');
-    console.log('🟥 Retângulo adicionado');
-  }, [addLayerToCanvas]);
+      canvas.on('selection:cleared', () => {
+        console.log('📋 Seleção limpa');
+        setSelectedObject(null);
+      });
 
-  const addCircle = useCallback(() => {
-    if (!fabricCanvasRef.current) return;
-
-    const canvas = fabricCanvasRef.current;
-    const circle = new fabric.Circle({
-      left: canvas.width! / 2 - 50,
-      top: canvas.height! / 2 - 50,
-      radius: 50,
-      fill: '#00ff00',
-      stroke: '#000000',
-      strokeWidth: 2,
-      originX: 'center',
-      originY: 'center',
-    });
-
-    addLayerToCanvas(circle, 'Círculo', 'shape');
-    console.log('🟢 Círculo adicionado');
-  }, [addLayerToCanvas]);
-
-  const addTriangle = useCallback(() => {
-    if (!fabricCanvasRef.current) return;
-
-    const canvas = fabricCanvasRef.current;
-    const triangle = new fabric.Triangle({
-      left: canvas.width! / 2 - 50,
-      top: canvas.height! / 2 - 50,
-      width: 100,
-      height: 100,
-      fill: '#0000ff',
-      stroke: '#000000',
-      strokeWidth: 2,
-      originX: 'center',
-      originY: 'center',
-    });
-
-    addLayerToCanvas(triangle, 'Triângulo', 'shape');
-    console.log('🔺 Triângulo adicionado');
-  }, [addLayerToCanvas]);
-
-  const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !fabricCanvasRef.current) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const imgUrl = e.target?.result as string;
-      fabric.Image.fromURL(imgUrl, (img: any) => {
-        const canvas = fabricCanvasRef.current!;
-        
-        // Redimensionar imagem para caber no canvas
-        const maxWidth = canvas.width! * 0.8;
-        const maxHeight = canvas.height! * 0.8;
-        
-        if (img.width > maxWidth || img.height > maxHeight) {
-          const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
-          img.scale(scale);
+      // Sistema melhorado de clique - previne desseleção indevida
+      canvas.on('mouse:down', (e: any) => {
+        // Se clicou em um objeto, manter seleção
+        if (e.target) {
+          console.log('🖱️ Clique em objeto mantido:', e.target.type);
+          return;
         }
 
-        img.set({
-          left: canvas.width! / 2,
-          top: canvas.height! / 2,
+        // Só desselecionar se realmente clicou no fundo vazio
+        if (selectedTool === 'select') {
+          console.log('🖱️ Clique no fundo - mantendo seleção se existir');
+          // Não forçar desseleção - deixar o Fabric.js decidir
+        }
+      });
+
+      // Melhorar estabilidade da seleção
+      canvas.on('object:moving', () => {
+        // Manter objeto selecionado durante movimento
+        if (canvas.getActiveObject() && !selectedObject) {
+          setSelectedObject(canvas.getActiveObject());
+        }
+      });
+
+      return () => {
+        canvas.dispose();
+        fabricCanvasRef.current = null;
+      };
+    } catch (error) {
+      console.error('Erro ao inicializar o canvas:', error);
+    }
+  }, [selectedFormat]); // Dependência do formato para reinicializar quando mudar
+
+  // Update canvas background
+  useEffect(() => {
+    if (fabricCanvasRef.current) {
+      if (canvasBackground === 'transparent') {
+        // Canvas transparente para mostrar o padrão checkerboard de fundo
+        fabricCanvasRef.current.backgroundColor = '';
+      } else {
+        // Cor sólida de fundo
+        fabricCanvasRef.current.backgroundColor = canvasBackground;
+      }
+      fabricCanvasRef.current.renderAll();
+      console.log(
+        '🎨 Background alterado para:',
+        canvasBackground === 'transparent' ? 'checkerboard transparente' : canvasBackground,
+      );
+    }
+  }, [canvasBackground]);
+
+  // Responsividade: redimensionar canvas quando a janela for redimensionada
+  useEffect(() => {
+    const handleResize = () => {
+      if (fabricCanvasRef.current && containerRef.current) {
+        const container = containerRef.current;
+        const canvas = fabricCanvasRef.current;
+
+        // Obter dimensões atuais do canvas
+        const currentWidth = canvas.getWidth();
+        const currentHeight = canvas.getHeight();
+
+        // Calcular novas dimensões baseadas no container
+        const containerRect = container.getBoundingClientRect();
+        const maxWidth = Math.max(300, containerRect.width * 0.8);
+        const maxHeight = Math.max(200, containerRect.height * 0.8);
+
+        // Manter proporção
+        const currentRatio = currentWidth / currentHeight;
+        let newWidth = Math.min(maxWidth, currentWidth);
+        let newHeight = Math.min(maxHeight, currentHeight);
+
+        // Ajustar para manter a proporção
+        if (newWidth / newHeight > currentRatio) {
+          newWidth = newHeight * currentRatio;
+        } else {
+          newHeight = newWidth / currentRatio;
+        }
+
+        // Aplicar apenas se houve mudança significativa
+        if (Math.abs(newWidth - currentWidth) > 10 || Math.abs(newHeight - currentHeight) > 10) {
+          console.log(
+            `📏 Redimensionando canvas: ${Math.round(newWidth)}x${Math.round(newHeight)}`,
+          );
+          canvas.setDimensions({
+            width: newWidth,
+            height: newHeight,
+          });
+          canvas.renderAll();
+        }
+      }
+    };
+
+    // Throttle para evitar muitas chamadas
+    let resizeTimeout: number;
+    const throttledResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(handleResize, 250);
+    };
+
+    window.addEventListener('resize', throttledResize);
+
+    // Executar uma vez após montagem
+    setTimeout(handleResize, 100);
+
+    return () => {
+      window.removeEventListener('resize', throttledResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, []);
+
+  const selectLayer = (layerId: string) => {
+    if (!fabricCanvasRef.current) return;
+
+    const objects = fabricCanvasRef.current.getObjects();
+    const obj = objects.find(
+      (o, index) => (o as any).layerId === layerId || `layer-${index}` === layerId,
+    );
+
+    if (obj) {
+      fabricCanvasRef.current.discardActiveObject();
+      fabricCanvasRef.current.setActiveObject(obj);
+      fabricCanvasRef.current.requestRenderAll();
+      setSelectedObject(obj);
+    }
+  };
+
+  // Handler para mudança de ferramenta
+  const handleToolChange = (toolId: string) => {
+    setSelectedTool(toolId);
+    if (fabricCanvasRef.current) {
+      // Desativa a seleção se não estiver na ferramenta select
+      fabricCanvasRef.current.selection = toolId === 'select';
+      fabricCanvasRef.current.discardActiveObject();
+      fabricCanvasRef.current.renderAll();
+
+      // Se for uma ferramenta de forma, criar o objeto
+      if (['rectangle', 'circle', 'triangle', 'text'].includes(toolId)) {
+        createShape(toolId);
+      }
+      // Se for a ferramenta de imagem, abrir o seletor de arquivo
+      else if (toolId === 'image' && fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    }
+  };
+
+  // Funções para criar objetos
+  const createShape = useCallback((type: string) => {
+    if (!fabricCanvasRef.current) return;
+
+    const canvas = fabricCanvasRef.current;
+    const centerX = canvas.width! / 2;
+    const centerY = canvas.height! / 2;
+
+    let shape;
+    const commonProps = {
+      left: centerX - 50,
+      top: centerY - 50,
+      fill: '#4a90e2', // Azul mais visível
+      stroke: '#2171c7', // Borda mais escura
+      strokeWidth: 2,
+      cornerColor: '#2171c7',
+      cornerSize: 10,
+      transparentCorners: false,
+    };
+
+    switch (type) {
+      case 'rectangle':
+        shape = new fabric.Rect({
+          ...commonProps,
+          width: 100,
+          height: 100,
+        });
+        break;
+      case 'circle':
+        shape = new fabric.Circle({
+          ...commonProps,
+          radius: 50,
+          left: centerX,
+          top: centerY,
           originX: 'center',
           originY: 'center',
         });
-
-        addLayerToCanvas(img, 'Imagem', 'image');
-        console.log('🖼️ Imagem adicionada');
-      });
-    };
-    reader.readAsDataURL(file);
-  }, [addLayerToCanvas]);
-
-  // Tool click handlers
-  const handleToolClick = useCallback((toolId: string) => {
-    setSelectedTool(toolId);
-    console.log('🔧 Ferramenta selecionada:', toolId);
-
-    switch (toolId) {
-      case 'text':
-        addText();
-        break;
-      case 'rectangle':
-        addRectangle();
-        break;
-      case 'circle':
-        addCircle();
         break;
       case 'triangle':
-        addTriangle();
+        shape = new fabric.Triangle({
+          ...commonProps,
+          width: 100,
+          height: 100,
+        });
         break;
-      case 'image':
-        fileInputRef.current?.click();
+      case 'text':
+        // Usar uma fonte FREEPIK aleatória - nosso diferencial!
+        // Selecionar fonte FREEPIK com verificação ROBUSTA (v1.3.0.c.3)
+        const randomFreepikFont =
+          availableFonts.length > 0
+            ? availableFonts[Math.floor(Math.random() * availableFonts.length)]
+            : { label: 'Arial', value: 'Arial' };
+
+        console.log('🎨 Criando texto com fonte FREEPIK selecionada:', randomFreepikFont.label);
+
+        // VERIFICAÇÃO ROBUSTA: Garantir que a fonte realmente funciona
+        let finalFont = randomFreepikFont.value;
+        let fontVerified = false;
+
+        try {
+          const testCanvas = document.createElement('canvas');
+          const testCtx = testCanvas.getContext('2d');
+
+          if (testCtx) {
+            // Testar renderização da fonte
+            const testText = 'Test';
+            const fontSize = 32;
+
+            // Medir com Arial (referência)
+            testCtx.font = `${fontSize}px Arial`;
+            const arialWidth = testCtx.measureText(testText).width;
+
+            // Medir com a fonte selecionada
+            testCtx.font = `${fontSize}px "${randomFreepikFont.value}", Arial`;
+            const targetWidth = testCtx.measureText(testText).width;
+
+            // Se as larguras são diferentes, a fonte está funcionando
+            fontVerified = Math.abs(targetWidth - arialWidth) > 1;
+
+            if (fontVerified) {
+              console.log(`✅ Fonte VERIFICADA e APLICÁVEL: ${randomFreepikFont.value}`);
+              finalFont = randomFreepikFont.value;
+            } else {
+              console.warn(
+                `⚠️ Fonte ${randomFreepikFont.value} não renderiza diferente de Arial, usando Arial`,
+              );
+              finalFont = 'Arial';
+            }
+
+            testCanvas.remove();
+          }
+        } catch (error) {
+          console.warn(`❌ Erro na verificação da fonte ${randomFreepikFont.value}:`, error);
+          finalFont = 'Arial';
+        }
+
+        shape = new fabric.IText('Digite seu texto', {
+          left: centerX,
+          top: centerY,
+          originX: 'center',
+          originY: 'center',
+          fontFamily: finalFont, // Usar fonte VERIFICADA
+          fontSize: 32,
+          fill: '#ffffff',
+          stroke: '', // SEM BORDA por padrão!
+          strokeWidth: 0, // Borda zerada por padrão
+          textAlign: 'center',
+          // Melhorar qualidade da renderização
+          strokeDashArray: [],
+          paintFirst: 'fill',
+          charSpacing: 0,
+          lineHeight: 1.2,
+          // Forçar re-render com qualidade
+          dirty: true,
+        });
+
+        console.log(`🎯 Texto criado com fonte FINAL: ${finalFont} (verificada: ${fontVerified})`);
+        console.log('📝 Propriedades finais do texto:', {
+          fontFamily: shape.fontFamily,
+          fontSize: shape.fontSize,
+          fill: shape.fill,
+          stroke: shape.stroke,
+          strokeWidth: shape.strokeWidth,
+        });
         break;
     }
-  }, [addText, addRectangle, addCircle, addTriangle]);
 
-  // Undo/Redo handlers
-  const handleUndo = useCallback(() => {
-    if (historyIndex > 0 && fabricCanvasRef.current) {
+    if (shape) {
+      addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
+      setSelectedTool('select');
+    }
+  }, []);
+
+  // History management functions - CORRIGIDO para estabilidade (v1.3.0.c.2)
+  const undo = useCallback(() => {
+    if (historyIndex > 0 && fabricCanvasRef.current && canvasHistory.length > 0) {
       const newIndex = historyIndex - 1;
       const state = canvasHistory[newIndex];
-      
-      fabricCanvasRef.current.loadFromJSON(state, () => {
-        fabricCanvasRef.current!.renderAll();
-        setHistoryIndex(newIndex);
-        updateLayers();
-        console.log(`↶ Undo: ${newIndex + 1}/${canvasHistory.length}`);
-      });
+
+      if (state) {
+        console.log(`↶ UNDO: ${historyIndex} → ${newIndex}`);
+
+        try {
+          const canvas = fabricCanvasRef.current;
+
+          // Preservar configurações importantes antes de carregar o estado
+          const currentZoom = canvas.getZoom();
+          const currentBackground = canvas.backgroundColor;
+
+          // Carregar estado sem disparar eventos
+          canvas.loadFromJSON(JSON.parse(state), () => {
+            // Restaurar configurações após carregamento
+            canvas.setZoom(currentZoom);
+            canvas.backgroundColor = currentBackground;
+
+            // Garantir que o canvas seja visível
+            canvas.renderAll();
+            setHistoryIndex(newIndex);
+
+            // Atualizar UI após carregamento
+            setTimeout(() => {
+              updateLayers();
+              setSelectedObject(null);
+              // Forçar re-render para garantir visibilidade
+              canvas.renderAll();
+            }, 50);
+          });
+        } catch (error) {
+          console.error('❌ Erro durante UNDO:', error);
+        }
+      }
+    } else {
+      console.log(`↶ UNDO indisponível: índice=${historyIndex}, histórico=${canvasHistory.length}`);
     }
   }, [historyIndex, canvasHistory, updateLayers]);
 
-  const handleRedo = useCallback(() => {
+  const redo = useCallback(() => {
     if (historyIndex < canvasHistory.length - 1 && fabricCanvasRef.current) {
       const newIndex = historyIndex + 1;
       const state = canvasHistory[newIndex];
-      
-      fabricCanvasRef.current.loadFromJSON(state, () => {
-        fabricCanvasRef.current!.renderAll();
-        setHistoryIndex(newIndex);
-        updateLayers();
-        console.log(`↷ Redo: ${newIndex + 1}/${canvasHistory.length}`);
-      });
+
+      if (state) {
+        console.log(`↷ REDO: ${historyIndex} → ${newIndex}`);
+
+        try {
+          const canvas = fabricCanvasRef.current;
+
+          // Preservar configurações importantes antes de carregar o estado
+          const currentZoom = canvas.getZoom();
+          const currentBackground = canvas.backgroundColor;
+
+          // Carregar estado sem disparar eventos
+          canvas.loadFromJSON(JSON.parse(state), () => {
+            // Restaurar configurações após carregamento
+            canvas.setZoom(currentZoom);
+            canvas.backgroundColor = currentBackground;
+
+            // Garantir que o canvas seja visível
+            canvas.renderAll();
+            setHistoryIndex(newIndex);
+
+            // Atualizar UI após carregamento
+            setTimeout(() => {
+              updateLayers();
+              setSelectedObject(null);
+              // Forçar re-render para garantir visibilidade
+              canvas.renderAll();
+            }, 50);
+          });
+        } catch (error) {
+          console.error('❌ Erro durante REDO:', error);
+        }
+      }
+    } else {
+      console.log(`↷ REDO indisponível: índice=${historyIndex}, histórico=${canvasHistory.length}`);
     }
   }, [historyIndex, canvasHistory, updateLayers]);
 
-  // Keyboard shortcuts
+  // Format selection handler
+  const handleFormatChange = useCallback(
+    (format: string) => {
+      setSelectedFormat(format);
+
+      const formatDimensions: {
+        [key: string]: { width: number; height: number };
+      } = {
+        'instagram-post': { width: 1080, height: 1080 },
+        'instagram-story': { width: 1080, height: 1920 },
+        'facebook-post': { width: 1200, height: 630 },
+        'twitter-post': { width: 1024, height: 512 },
+        'linkedin-post': { width: 1200, height: 627 },
+        'youtube-thumbnail': { width: 1280, height: 720 },
+        'a4-print': { width: 2480, height: 3508 },
+        'business-card': { width: 1050, height: 600 },
+        banner: { width: 1500, height: 500 },
+        custom: { width: 800, height: 600 },
+      };
+
+      const dimensions = formatDimensions[format] || {
+        width: 800,
+        height: 600,
+      };
+
+      if (fabricCanvasRef.current) {
+        console.log(
+          `🔄 Mudando formato para: ${format} (${dimensions.width}x${dimensions.height})`,
+        );
+
+        // Calcular nova escala para manter o canvas visível
+        const maxWidth = Math.min(window.innerWidth * 0.5, 800);
+        const maxHeight = Math.min(window.innerHeight * 0.7, 600);
+
+        const scaleX = maxWidth / dimensions.width;
+        const scaleY = maxHeight / dimensions.height;
+        const newScale = Math.min(scaleX, scaleY, 0.8);
+
+        const newCanvasWidth = Math.max(400, dimensions.width * newScale);
+        const newCanvasHeight = Math.max(300, dimensions.height * newScale);
+
+        // Redimensionar o canvas
+        fabricCanvasRef.current.setDimensions({
+          width: newCanvasWidth,
+          height: newCanvasHeight,
+        });
+
+        // Atualizar viewport para manter proporção correta
+        fabricCanvasRef.current.setViewportTransform([1, 0, 0, 1, 0, 0]);
+        fabricCanvasRef.current.renderAll();
+
+        console.log(`✅ Canvas redimensionado: ${newCanvasWidth}x${newCanvasHeight}`);
+
+        saveState();
+      }
+    },
+    [saveState],
+  );
+
+  // Blend mode handler
+  const handleBlendModeChange = useCallback(
+    (blendMode: string) => {
+      if (!selectedObject || !fabricCanvasRef.current) return;
+
+      setLayerBlendMode(blendMode);
+      (selectedObject as any).globalCompositeOperation = blendMode;
+      fabricCanvasRef.current.renderAll();
+      saveState();
+    },
+    [selectedObject],
+  );
+
+  // Opacity handler
+  const handleOpacityChange = useCallback(
+    (opacity: number) => {
+      if (!selectedObject || !fabricCanvasRef.current) return;
+
+      setLayerOpacity(opacity);
+      selectedObject.set('opacity', opacity / 100);
+      fabricCanvasRef.current.renderAll();
+      saveState();
+    },
+    [selectedObject],
+  );
+
+  // Keyboard shortcuts corrigidos e estabilizados
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Evitar ações se estivermos editando texto
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.contentEditable === 'true'
+      ) {
+        return;
+      }
+
       if (e.ctrlKey || e.metaKey) {
-        switch (e.key) {
-          case 'z':
-            e.preventDefault();
-            if (e.shiftKey) {
-              handleRedo();
-            } else {
-              handleUndo();
-            }
-            break;
-          case 'y':
-            e.preventDefault();
-            handleRedo();
-            break;
+        if (e.key === 'z' && !e.shiftKey) {
+          e.preventDefault();
+          console.log('⌨️ Atalho Ctrl+Z detectado');
+          undo();
+        } else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) {
+          e.preventDefault();
+          console.log('⌨️ Atalho Ctrl+Y detectado');
+          redo();
+        }
+      }
+
+      // Atalho para deletar objeto selecionado
+      if ((e.key === 'Delete' || e.key === 'Backspace') && !e.ctrlKey) {
+        if (fabricCanvasRef.current && selectedObject && selectedObject.selectable) {
+          e.preventDefault();
+          console.log('⌨️ Deletando objeto selecionado');
+          fabricCanvasRef.current.remove(selectedObject);
+          fabricCanvasRef.current.discardActiveObject();
+          fabricCanvasRef.current.renderAll();
+          setSelectedObject(null);
+          setTimeout(() => {
+            updateLayers();
+            saveState();
+          }, 50);
         }
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleUndo, handleRedo]);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, selectedObject, updateLayers, saveState]);
 
+  // Carregamento de fontes removido da tela inicial - agora em background
+  // As fontes carregam em paralelo sem bloquear a interface
+
+  // Debug inicial - verificar se o componente está montando corretamente
+  useEffect(() => {
+    console.log('🎨 PhotoEditorFixed montado!');
+    console.log('📦 Fabric disponível:', typeof fabric !== 'undefined');
+    console.log('🖼️ Canvas ref:', canvasRef.current ? 'OK' : 'NULO');
+    console.log('📦 Container ref:', containerRef.current ? 'OK' : 'NULO');
+    console.log('🎯 Formato selecionado:', selectedFormat);
+  }, []);
+
+  // Dropdowns de seleção de fonte e variação (estilo)
+  const handleFontFamilyChange = (family: string) => {
+    setSelectedFontFamily(family);
+    // Seleciona a primeira variação disponível da família
+    const firstVariation = availableFonts.find((f) => f.family === family);
+    if (firstVariation) {
+      setSelectedFontStyle(firstVariation.style || 'normal');
+      updateTextProperties({
+        fontFamily: firstVariation.originalValue || firstVariation.value,
+        fontWeight: firstVariation.weight || 400,
+        fontStyle: firstVariation.style || 'normal',
+      });
+    } else {
+      // fallback: aplica só a família
+      setSelectedFontStyle('normal');
+      updateTextProperties({ fontFamily: family, fontStyle: 'normal', fontWeight: 400 });
+    }
+  };
+
+  const handleFontStyleChange = (style: string) => {
+    setSelectedFontStyle(style);
+    // Encontrar a variação da família e estilo selecionados
+    const variation = availableFonts.find((f) => f.family === selectedFontFamily && f.style === style);
+    if (variation) {
+      updateTextProperties({
+        fontFamily: variation.value,
+        fontWeight: variation.weight || 400,
+        fontStyle: variation.style || 'normal',
+      });
+    } else {
+      updateTextProperties({ fontStyle: style });
+    }
+  };
+
+  // JSX para dropdowns de fontes e estilos lado a lado
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-xl font-bold text-gray-900">
-              Zentraw Editor v2.0 ⚡
-            </h1>
-            {fontLoadingComplete && (
-              <div className="text-sm text-green-600 bg-green-50 px-2 py-1 rounded">
-                ✅ {availableFonts.length} fontes carregadas ({Math.round(successRate)}% sucesso)
-              </div>
-            )}
-            {fontHasError && (
-              <div className="text-sm text-orange-600 bg-orange-50 px-2 py-1 rounded">
-                ⚠️ Algumas fontes falharam (usando fallbacks)
-              </div>
-            )}
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleUndo}
-              disabled={historyIndex <= 0}
-            >
-              <RotateCcw className="w-4 h-4 mr-1" />
-              Desfazer
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRedo}
-              disabled={historyIndex >= canvasHistory.length - 1}
-            >
-              <RotateCcw className="w-4 h-4 mr-1 scale-x-[-1]" />
-              Refazer
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => exportCanvas('png')}
-            >
-              <Download className="w-4 h-4 mr-1" />
-              Exportar
-            </Button>
-          </div>
+    <div className="h-screen flex flex-col bg-[#2b2b2b] text-white">
+      {/* Top Menu Bar */}
+      <div className="h-12 bg-[#1e1e1e] border-b border-[#4a4a4a] flex items-center px-4">
+        <div className="flex items-center space-x-2">
+          <h1 className="text-sm font-semibold">Zentraw Photo Editor</h1>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => setTemplatesModalOpen(true)}
+          >
+            <Sparkles className="w-3 h-3 mr-1" />
+            Templates
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => setSvgLayoutModalOpen(true)}
+          >
+            SVG Layouts
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => setFormatsModalOpen(true)}
+          >
+            Formats
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => setFiltersModalOpen(true)}
+          >
+            Filters
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => setTextEffectsModalOpen(true)}
+          >
+            Text FX
+          </Button>
+
+          {/* History Controls */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs disabled:opacity-50"
+            onClick={undo}
+            disabled={historyIndex <= 0}
+            title="Undo (Ctrl+Z)"
+          >
+            <RotateCcw className="w-3 h-3" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs disabled:opacity-50"
+            onClick={redo}
+            disabled={historyIndex >= canvasHistory.length - 1}
+            title="Redo (Ctrl+Y)"
+          >
+            <RotateCcw className="w-3 h-3 rotate-180" />
+          </Button>
+
+          <div className="flex-1" />
+
+          {/* Font Loading Indicator */}
+          {availableFonts.length > 0 && (
+            <div className="text-xs text-green-400 px-2">✓ {availableFonts.length} fontes</div>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-3 py-1 h-7 hover:bg-[#4a4a4a] text-xs"
+            onClick={() => exportCanvas('png')}
+          >
+            <Download className="w-3 h-3 mr-1" />
+            Export
+          </Button>
         </div>
       </div>
 
-      <div className="flex-1 flex">
-        {/* Sidebar esquerda - Ferramentas */}
-        <div className="w-16 bg-white border-r border-gray-200 flex flex-col items-center py-4 space-y-2">
-          {tools.map((tool) => {
-            const Icon = tool.icon;
-            return (
+      {/* Main Content */}
+      <div className="flex flex-1 min-h-0">
+        {/* Left Toolbar */}
+        <div className="w-16 bg-[#383838] border-r border-[#4a4a4a] p-2 flex flex-col items-center flex-shrink-0">
+          <div className="space-y-2">
+            {tools.map((toolItem) => (
               <Button
-                key={tool.id}
-                variant={selectedTool === tool.id ? 'default' : 'ghost'}
+                key={toolItem.id}
+                variant="ghost"
                 size="sm"
-                className="w-12 h-12 p-0"
-                onClick={() => handleToolClick(tool.id)}
-                title={tool.label}
+                className={`p-2 w-12 h-12 flex items-center justify-center hover:bg-[#4a4a4a] ${
+                  selectedTool === toolItem.id ? 'bg-[#0078d4] hover:bg-[#106ebe]' : ''
+                }`}
+                onClick={() => handleToolChange(toolItem.id)}
+                title={toolItem.label}
               >
-                <Icon className="w-5 h-5" />
+                <toolItem.icon className="w-5 h-5" />
               </Button>
-            );
-          })}
+            ))}
+            {/* Hidden file input for image upload */}
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={async (e) => {
+                if (!fabricCanvasRef.current || !e.target.files?.[0]) return;
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function (f) {
+                  try {
+                    const data = f.target?.result as string;
+                    if (!fabric.Image) {
+                      alert('fabric.Image não está disponível!');
+                      return;
+                    }
+                    const htmlImg = new window.Image();
+                    htmlImg.onload = function () {
+                      const imgInstance = new fabric.Image(htmlImg, {
+                        left: 350,
+                        top: 250,
+                        scaleX: 0.5,
+                        scaleY: 0.5,
+                      });
+                      addLayerToCanvas(imgInstance, 'Image', 'image');
+                    };
+                    htmlImg.onerror = function () {
+                      alert('Erro ao carregar a imagem no navegador!');
+                    };
+                    htmlImg.src = data;
+                  } catch (err) {
+                    alert('Erro ao ler o arquivo de imagem!');
+                  }
+                };
+                reader.onerror = function () {
+                  alert('Erro ao ler o arquivo de imagem!');
+                };
+                reader.readAsDataURL(file);
+                e.target.value = '';
+              }}
+            />
+          </div>
         </div>
-
-        {/* Área principal do canvas */}
-        <div className="flex-1 flex flex-col">
-          {/* Toolbar do canvas */}
-          <div className="bg-white border-b border-gray-200 p-2 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleZoomOut}
+        {/* Main Canvas Area */}
+        <div className="flex-1 flex flex-col min-h-0">
+          {/* Canvas Controls */}
+          <div className="h-10 bg-[#2a2a2a] border-b border-[#4a4a4a] flex items-center px-4 gap-4 flex-shrink-0">
+            <div className="flex items-center gap-2">
+              <label className="text-xs text-gray-400 block mb-1">Format:</label>
+              <select
+                value={selectedFormat}
+                onChange={(e) => handleFormatChange(e.target.value)}
+                className="bg-[#1e1e1e] border border-gray-600 rounded px-2 py-1 text-xs text-gray-300"
               >
-                <ZoomOut className="w-4 h-4" />
-              </Button>
-              <span className="text-sm font-medium min-w-[60px] text-center">
-                {Math.round(currentZoom * 100)}%
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleZoomIn}
-              >
-                <ZoomIn className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleFitToScreen}
-              >
-                <Maximize className="w-4 h-4" />
-              </Button>
+                <option value="instagram-post">Instagram Post (1080x1080)</option>
+                <option value="instagram-story">Instagram Story (1080x1920)</option>
+                <option value="facebook-post">Facebook Post (1200x630)</option>
+                <option value="twitter-post">Twitter Post (1024x512)</option>
+                <option value="linkedin-post">LinkedIn Post (1200x627)</option>
+                <option value="youtube-thumbnail">YouTube Thumbnail (1280x720)</option>
+                <option value="a4-print">A4 Print (2480x3508)</option>
+                <option value="business-card">Business Card (1050x600)</option>
+                <option value="banner">Banner (1500x500)</option>
+                <option value="custom">Custom (800x600)</option>
+              </select>
             </div>
 
-            <div className="flex items-center space-x-2">
+            {/* Status das fontes */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-400">Fontes:</span>
+              <span className="text-xs text-green-400 bg-green-900/20 px-2 py-1 rounded">
+                {availableFonts.length} carregadas
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 ml-auto">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                onClick={() => setTemplatesModalOpen(true)}
+                onClick={handleZoomOut}
+                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
               >
-                <Sparkles className="w-4 h-4 mr-1" />
-                Templates
+                <ZoomOut className="w-3 h-3" />
               </Button>
+
+              <span className="text-xs text-gray-400 min-w-[60px] text-center">
+                {Math.round(currentZoom * 100)}%
+              </span>
+
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                onClick={() => setFormatsModalOpen(true)}
+                onClick={handleZoomIn}
+                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
               >
-                Formatos
+                <ZoomIn className="w-3 h-3" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleFitToScreen}
+                className="h-6 px-2 text-xs hover:bg-[#4a4a4a]"
+              >
+                <Maximize className="w-3 h-3" />
               </Button>
             </div>
           </div>
 
-          {/* Canvas container */}
+          {/* Canvas Container */}
           <div
             ref={containerRef}
-            className="flex-1 overflow-hidden bg-gray-50 relative"
+            className="flex-1 relative min-h-[400px]"
             style={{
-              backgroundImage: `
-                linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
-                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)
-              `,
-              backgroundSize: '20px 20px',
-              backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+              backgroundColor: '#282828', // Fundo Photoshop
+              overflow: 'hidden',
+              position: 'relative',
             }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex items-center justify-center min-h-full p-8">
+              {/* Canvas wrapper que escala junto com o zoom */}
               <div
+                className="relative"
                 style={{
                   transform: `scale(${currentZoom})`,
                   transformOrigin: 'center center',
-                  transition: 'transform 0.1s ease-out',
+                  transition: 'transform 0.2s ease-out',
                 }}
               >
+                {/* Canvas border que agora acompanha o zoom */}
+                <div
+                  className="absolute -inset-1 border-2 border-gray-500/30 rounded-sm pointer-events-none"
+                  style={{
+                    width: 'calc(100% + 8px)',
+                    height: 'calc(100% + 8px)',
+                    left: '-4px',
+                    top: '-4px',
+                  }}
+                />
                 <canvas
                   ref={canvasRef}
-                  className="border border-gray-300 shadow-lg bg-white"
+                  className="shadow-2xl max-w-full max-h-full block"
+                  style={{
+                    backgroundColor: '#ffffff', // Base branca
+                    backgroundImage: `
+                      linear-gradient(45deg, #dbdbdb 25%, transparent 25%),
+                      linear-gradient(-45deg, #dbdbdb 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #dbdbdb 75%),
+                      linear-gradient(-45deg, transparent 75%, #dbdbdb 75%)
+                    `,
+                    backgroundSize: '20px 20px',
+                    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sidebar direita - Propriedades e Layers */}
-        <div className="w-80 bg-white border-l border-gray-200 flex flex-col">
-          <Tabs value={activePropertiesTab} onValueChange={setActivePropertiesTab} className="flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="properties">Propriedades</TabsTrigger>
-              <TabsTrigger value="layers">
-                <Layers className="w-4 h-4 mr-1" />
-                Layers
-              </TabsTrigger>
-              <TabsTrigger value="effects">Efeitos</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="properties" className="flex-1 p-4 overflow-y-auto">
-              {selectedObject ? (
-                <ObjectPropertiesPanel
-                  selectedObject={selectedObject}
-                  onUpdateProperties={updateTextProperties}
-                  availableFonts={availableFonts}
-                />
-              ) : (
-                <div className="text-center text-gray-500 mt-8">
-                  <Type className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                  <p>Selecione um objeto para editar suas propriedades</p>
-                </div>
-              )}
-            </TabsContent>
-
-            <TabsContent value="layers" className="flex-1 p-4 overflow-y-auto">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-medium">Layers ({layers.length})</h3>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      if (selectedObject) {
-                        const layerId = (selectedObject as any).layerId;
-                        if (layerId) deleteLayer(layerId);
-                      }
-                    }}
-                    disabled={!selectedObject}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-
-                {layers.length === 0 ? (
-                  <div className="text-center text-gray-500 mt-8">
-                    <Layers className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                    <p>Nenhum layer criado ainda</p>
-                    <p className="text-sm">Adicione texto, formas ou imagens</p>
-                  </div>
-                ) : (
-                  <div className="space-y-1">
-                    {layers.map((layer, index) => (
+        {/* Right Panels */}
+        <div className="w-80 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
+          <Tabs
+            value={activePropertiesTab}
+            onValueChange={(value: any) => setActivePropertiesTab(value)}
+            className="flex flex-col h-full min-h-0"
+          >
+            <div className="p-2 border-b border-[#4a4a4a] flex-shrink-0">
+              <TabsList className="grid w-full grid-cols-3 bg-[#1e1e1e]">
+                <TabsTrigger value="properties" className="text-xs">
+                  Properties
+                </TabsTrigger>
+                <TabsTrigger value="adjustments" className="text-xs">
+                  Adjustments
+                </TabsTrigger>
+                <TabsTrigger value="libraries" className="text-xs">
+                  Libraries
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            <TabsContent value="properties" className="flex-1 flex flex-col m-0 min-h-0">
+              <div className="flex flex-col h-full min-h-0">
+                {/* Canvas Background Controls */}
+                <div className="p-4 border-b border-[#4a4a4a] flex-shrink-0">
+                  <label className="text-sm font-medium text-gray-300 mb-2 block">
+                    Canvas Background
+                  </label>
+                  <div className="grid grid-cols-4 gap-2 mb-4">
+                    <button
+                      onClick={() => setCanvasBackground('transparent')}
+                      className={`h-8 border rounded relative overflow-hidden ${canvasBackground === 'transparent' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                      title="Transparent"
+                    >
                       <div
-                        key={layer.id}
-                        className={`p-2 rounded border cursor-pointer transition-colors ${
-                          selectedLayer?.id === layer.id
-                            ? 'bg-blue-50 border-blue-200'
-                            : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                        }`}
-                        onClick={() => setSelectedLayer(layer)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2 flex-1 min-w-0">
-                            <GripVertical className="w-4 h-4 text-gray-400" />
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm font-medium truncate">
-                                {layer.name}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {layer.type}
-                              </div>
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: `
+                              linear-gradient(45deg, #ffffff 25%, transparent 25%),
+                              linear-gradient(-45deg, #ffffff 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, #ffffff 75%),
+                              linear-gradient(-45deg, transparent 75%, #ffffff 75%)
+                            `,
+                          backgroundSize: '8px 8px',
+                          backgroundPosition: '0 0, 0 4px, 4px -4px, -4px 0px',
+                          backgroundColor: '#f0f0f0',
+                        }}
+                      />
+                    </button>
+                    <button
+                      onClick={() => setCanvasBackground('#ffffff')}
+                      className={`h-8 bg-white border rounded ${canvasBackground === '#ffffff' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                      title="White"
+                    />
+                    <button
+                      onClick={() => setCanvasBackground('#000000')}
+                      className={`h-8 bg-black border rounded ${canvasBackground === '#000000' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                      title="Black"
+                    />
+                    <button
+                      onClick={() => setCanvasBackground('#808080')}
+                      className={`h-8 bg-gray-500 border rounded ${canvasBackground === '#808080' ? 'ring-2 ring-blue-500' : 'border-gray-600'}`}
+                      title="Gray"
+                    />
+                  </div>
+                  <input
+                    type="color"
+                    value={canvasBackground === 'transparent' ? '#ffffff' : canvasBackground}
+                    onChange={(e) => setCanvasBackground(e.target.value)}
+                    className="w-full h-8 border border-gray-600 rounded"
+                    title="Custom color"
+                  />
+                </div>
+
+                {/* Scrollable Content Area */}
+                <div className="flex-1 overflow-y-auto min-h-0">
+                  {/* Text Properties Panel */}
+                  {selectedObject && selectedObject.type === 'i-text' ? (
+                    <div>
+                      <div className="p-4">
+                        <TextPropertiesPanel
+                          selectedObject={selectedObject}
+                          onUpdateText={updateTextProperties}
+                          availableFonts={availableFonts} // Passar fontes VERIFICADAS
+                        />
+                      </div>
+
+                      {/* Text Effects Panel */}
+                      <div className="border-t border-[#4a4a4a] p-4">
+                        <TextFXPanel
+                          selectedObject={selectedObject}
+                          onApplyEffect={applyTextEffect}
+                        />
+                      </div>
+                    </div>
+                  ) : selectedObject ? (
+                    <div className="p-4">
+                      {/* Layer Properties for Selected Object */}
+                      <div className="space-y-4 mb-6">
+                        <label className="text-sm font-medium text-gray-300 mb-2 block">
+                          Layer Properties
+                        </label>
+
+                        {/* Opacity */}
+                        <div>
+                          <label className="text-xs text-gray-400 block mb-1">Opacity</label>
+                          <div className="space-y-1">
+                            <input
+                              type="range"
+                              min="0"
+                              max="100"
+                              value={layerOpacity}
+                              onChange={(e) => handleOpacityChange(Number(e.target.value))}
+                              className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                            />
+                            <span className="text-xs text-gray-500">{layerOpacity}%</span>
+                          </div>
+                        </div>
+
+                        {/* Blend Mode */}
+                        <div>
+                          <label className="text-xs text-gray-400 block mb-1">Blend Mode</label>
+                          <select
+                            value={layerBlendMode}
+                            onChange={(e) => handleBlendModeChange(e.target.value)}
+                            className="w-full p-2 bg-[#2a2a2a] border border-gray-600 rounded text-xs text-gray-300"
+                          >
+                            <option value="normal">Normal</option>
+                            <option value="multiply">Multiply</option>
+                            <option value="screen">Screen</option>
+                            <option value="overlay">Overlay</option>
+                            <option value="soft-light">Soft Light</option>
+                            <option value="hard-light">Hard Light</option>
+                            <option value="color-dodge">Color Dodge</option>
+                            <option value="color-burn">Color Burn</option>
+                            <option value="darken">Darken</option>
+                            <option value="lighten">Lighten</option>
+                            <option value="difference">Difference</option>
+                            <option value="exclusion">Exclusion</option>
+                          </select>
+                        </div>
+
+                        {/* Shape Properties for non-text objects */}
+                        {selectedObject.type !== 'i-text' && (
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-xs text-gray-400 block mb-1">Fill Color</label>
+                              <input
+                                type="color"
+                                value={
+                                  typeof selectedObject.fill === 'string'
+                                    ? selectedObject.fill
+                                    : '#000000'
+                                }
+                                onChange={(e) => {
+                                  selectedObject.set('fill', e.target.value);
+                                  fabricCanvasRef.current?.renderAll();
+                                  saveState();
+                                }}
+                                className="w-full h-8 border border-gray-600 rounded"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-xs text-gray-400 block mb-1">
+                                Stroke Color
+                              </label>
+                              <input
+                                type="color"
+                                value={
+                                  typeof selectedObject.stroke === 'string'
+                                    ? selectedObject.stroke
+                                    : '#000000'
+                                }
+                                onChange={(e) => {
+                                  selectedObject.set('stroke', e.target.value);
+                                  fabricCanvasRef.current?.renderAll();
+                                  saveState();
+                                }}
+                                className="w-full h-8 border border-gray-600 rounded"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-xs text-gray-400 block mb-1">
+                                Stroke Width
+                              </label>
+                              <input
+                                type="range"
+                                min="0"
+                                max="20"
+                                value={selectedObject.strokeWidth || 0}
+                                onChange={(e) => {
+                                  selectedObject.set('strokeWidth', Number(e.target.value));
+                                  fabricCanvasRef.current?.renderAll();
+                                  saveState();
+                                }}
+                                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+                              />
+                              <span className="text-xs text-gray-500">
+                                {selectedObject.strokeWidth || 0}px
+                              </span>
                             </div>
                           </div>
-                          <div className="flex items-center space-x-1">
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-4 text-gray-400 text-center">
+                      Select an object to edit its properties
+                    </div>
+                  )}
+                </div>
+                           </div>
+            </TabsContent>
+
+            <TabsContent value="adjustments" className="flex-1 m-0">
+              <div className="p-4 space-y-4">
+                <ParameterInput
+                  label="Hue"
+                  value={hue}
+                  min={-180}
+                  max={180}
+                  step={1}
+                  unit="°"
+                  defaultValue={0}
+                  onChange={setHue}
+                  onReset={() => setHue(0)}
+                />
+
+                <ParameterInput
+                  label="Saturation"
+                  value={saturation}
+                  min={-100}
+                  max={100}
+                  step={1}
+                  unit="%"
+                  defaultValue={0}
+                  onChange={setSaturation}
+                  onReset={() => setSaturation(0)}
+                />
+
+                <ParameterInput
+                  label="Brightness"
+                  value={brightness}
+                  min={-100}
+                  max={100}
+                  step={1}
+                  unit="%"
+                  defaultValue={0}
+                  onChange={setBrightness}
+                  onReset={() => setBrightness(0)}
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="libraries" className="flex-1 m-0">
+              <div className="flex flex-col h-full">
+                {/* Layers Panel - HTML5 Native Drag and Drop */}
+                <div className="p-4 border-b border-[#4a4a4a]">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-medium text-gray-300">Layers</h3>
+                    <Layers className="w-4 h-4 text-gray-400" />
+                  </div>
+
+                  {layers.length === 0 ? (
+                    <div className="text-gray-500 text-xs text-center py-8">No layers yet</div>
+                  ) : (
+                    <div className="flex-1 overflow-y-auto max-h-64 space-y-1">
+                      {layers.map((layer, index) => (
+                        <div
+                          key={layer.id}
+                          draggable
+                          className={`flex items-center justify-between p-2 rounded border transition-all duration-200 cursor-grab active:cursor-grabbing ${
+                            selectedLayer?.id === layer.id
+                              ? 'bg-[#0078d4] border-[#106ebe] text-white'
+                              : 'bg-[#383838] border-[#4a4a4a] text-gray-300 hover:bg-[#4a4a4a] hover:border-[#5a5a5a]'
+                          }`}
+                          onClick={() => selectLayer(layer.id)}
+                          onDragStart={(e) => {
+                            e.dataTransfer.setData('text/plain', index.toString());
+                            e.dataTransfer.effectAllowed = 'move';
+                            (e.target as HTMLElement).style.opacity = '0.5';
+                          }}
+                          onDragEnd={(e) => {
+                            (e.target as HTMLElement).style.opacity = '1';
+                          }}
+                          onDragOver={(e) => {
+                            e.preventDefault();
+                            e.dataTransfer.dropEffect = 'move';
+                          }}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                            const toIndex = index;
+                            if (fromIndex !== toIndex) {
+                              reorderLayers(fromIndex, toIndex);
+                            }
+                          }}
+                        >
+                          {/* Drag Handle */}
+                          <div className="flex items-center justify-center w-4 h-4 text-gray-400 hover:text-gray-200 transition-colors">
+                            <GripVertical className="h-3 w-3" />
+                          </div>
+
+                          <div className="flex items-center gap-2 flex-1 min-w-0 ml-2">
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="w-6 h-6 p-0"
+                              className="h-6 w-6 p-0 hover:bg-white/10 transition-colors"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleLayerVisibility(layer.id);
                               }}
                             >
                               {layer.visible ? (
-                                <Eye className="w-3 h-3" />
+                                <Eye className="h-3 w-3" />
                               ) : (
-                                <EyeOff className="w-3 h-3" />
+                                <EyeOff className="h-3 w-3 opacity-50" />
                               )}
                             </Button>
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="w-6 h-6 p-0"
+                              className="h-6 w-6 p-0 hover:bg-white/10 transition-colors"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleLayerLock(layer.id);
                               }}
                             >
                               {layer.locked ? (
-                                <Lock className="w-3 h-3" />
+                                <Lock className="h-3 w-3" />
                               ) : (
-                                <Unlock className="w-3 h-3" />
+                                <Unlock className="h-3 w-3 opacity-70" />
                               )}
+                            </Button>
+
+                            {/* Layer Type Icon */}
+                            <div className="w-4 h-4 flex items-center justify-center">
+                              {layer.fabricType === 'i-text' && (
+                                <Type className="h-3 w-3 opacity-70" />
+                              )}
+                              {layer.fabricType === 'rect' && (
+                                <Square className="h-3 w-3 opacity-70" />
+                              )}
+                              {layer.fabricType === 'circle' && (
+                                <Circle className="h-3 w-3 opacity-70" />
+                              )}
+                              {layer.fabricType === 'triangle' && (
+                                <Triangle className="h-3 w-3 opacity-70" />
+                              )}
+                              {layer.fabricType === 'image' && (
+                                <ImageIcon className="h-3 w-3 opacity-70" />
+                              )}
+                            </div>
+
+                            <div className="truncate text-xs font-medium flex-1 min-w-0 ml-2">
+                              {layer.name}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0 hover:bg-red-500/20 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                deleteLayer(layer.id);
+                              }}
+                            >
+                              <Trash2 className="h-3 w-3" />
                             </Button>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="effects" className="flex-1 p-4 overflow-y-auto">
-              <div className="space-y-4">
-                <h3 className="font-medium">Filtros e Efeitos</h3>
-                
-                <div className="space-y-3">
-                  <div>
-                    <label className="text-sm font-medium">Matiz</label>
-                    <Slider
-                      value={[hue]}
-                      onValueChange={(value) => setHue(value[0])}
-                      min={-180}
-                      max={180}
-                      step={1}
-                      className="mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium">Saturação</label>
-                    <Slider
-                      value={[saturation]}
-                      onValueChange={(value) => setSaturation(value[0])}
-                      min={-100}
-                      max={100}
-                      step={1}
-                      className="mt-1"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium">Brilho</label>
-                    <Slider
-                      value={[brightness]}
-                      onValueChange={(value) => setBrightness(value[0])}
-                      min={-100}
-                      max={100}
-                      step={1}
-                      className="mt-1"
-                    />
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setFiltersModalOpen(true)}
-                >
-                  <Filter className="w-4 h-4 mr-2" />
-                  Mais Filtros
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setTextEffectsModalOpen(true)}
-                >
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Efeitos de Texto
-                </Button>
+                {/* ... outros conteúdos do painel, se houver ... */}
               </div>
             </TabsContent>
           </Tabs>
         </div>
       </div>
-
-      {/* Hidden file input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="hidden"
-      />
-
-      {/* Modals */}
-      <TemplatesModal
-        isOpen={templatesModalOpen}
-        onClose={() => setTemplatesModalOpen(false)}
-        onSelectTemplate={(template) => {
-          console.log('Template selecionado:', template);
-          setTemplatesModalOpen(false);
-        }}
-      />
-
-      <SVGLayoutModal
-        isOpen={svgLayoutModalOpen}
-        onClose={() => setSvgLayoutModalOpen(false)}
-        onSelectLayout={(layout) => {
-          console.log('Layout selecionado:', layout);
-          setSvgLayoutModalOpen(false);
-        }}
-      />
-
-      <FormatsModal
-        isOpen={formatsModalOpen}
-        onClose={() => setFormatsModalOpen(false)}
-        selectedFormat={selectedFormat}
-        onSelectFormat={(format) => {
-          setSelectedFormat(format);
-          setFormatsModalOpen(false);
-        }}
-      />
-
-      <FiltersModal
-        isOpen={filtersModalOpen}
-        onClose={() => setFiltersModalOpen(false)}
-        onApplyFilter={(filter) => {
-          console.log('Filtro aplicado:', filter);
-          setFiltersModalOpen(false);
-        }}
-      />
-
-      <TextEffectsModal
-        isOpen={textEffectsModalOpen}
-        onClose={() => setTextEffectsModalOpen(false)}
-        onApplyEffect={applyTextEffect}
-      />
     </div>
   );
 };
 
-export default PhotoEditorFixedOptimized;
-
+export default PhotoEditorFixed;

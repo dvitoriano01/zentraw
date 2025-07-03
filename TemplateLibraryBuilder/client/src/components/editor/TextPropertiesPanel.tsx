@@ -20,8 +20,8 @@ import {
   Type,
   Palette,
 } from 'lucide-react';
-import { FreepikFontManager } from '@/utils/FreepikFontManager';
-import { FreepikFont } from '@/constants/freepikFontsFixed';
+import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
+import { freepikFonts } from '@/constants/freepikFontsFixed';
 
 interface TextPropertiesProps {
   selectedObject: any;
@@ -56,7 +56,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
   const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
-  const fontManager = FreepikFontManager.getInstance();
+  const fontManager = FreepikFontManagerOptimized.getInstance();
 
   // Use fonts passed as prop (robustly verified) or fallback
   const allFonts = propAvailableFonts || localAvailableFonts;
@@ -84,20 +84,18 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
   useEffect(() => {
     if (!propAvailableFonts) {
       const loadAvailableFonts = () => {
-        const freepikFonts = fontManager.getAvailableFonts();
+        const loadedFontNames = fontManager.getLoadedFonts();
+        const freepikFontsAvailable = freepikFonts.filter(f => loadedFontNames.includes(f.value));
         const systemFonts = SYSTEM_FONTS;
-
-        // Combine Freepik + system fonts, removing duplicates
+        // Combine Freepik + system fonts, removendo duplicatas
         const allFonts = [
-          ...freepikFonts,
+          ...freepikFontsAvailable,
           ...systemFonts.filter(
-            (sysFont) => !freepikFonts.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
+            (sysFont) => !freepikFontsAvailable.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
           ),
         ];
-
         setLocalAvailableFonts(allFonts);
       };
-
       loadAvailableFonts();
     }
   }, [propAvailableFonts, fontManager]);
@@ -295,7 +293,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                   <SelectContent className="max-h-48 overflow-y-auto overflow-x-hidden min-w-[110px] max-w-[160px] w-full">
                     {familyVariants.map((font: FreepikFont) => (
                       <SelectItem
-                        key={`${font.value}-${font.weight}-${font.style}`}
+                        key={`${font.label}-${font.value}-${font.weight}-${font.style}`}
                         value={font.value}
                         style={{
                           fontFamily: font.value,
@@ -307,6 +305,11 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                           whiteSpace: 'nowrap',
                         }}
                         className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] truncate"
+                        onClick={() => onUpdateText({
+                          fontFamily: font.originalValue || font.value,
+                          fontWeight: font.weight || 400,
+                          fontStyle: font.style || 'normal',
+                        })}
                       >
                         <div className="flex items-center justify-between w-full truncate">
                           <span className="truncate">{font.label}</span>

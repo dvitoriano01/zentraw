@@ -48,9 +48,9 @@ export class FreepikFontCacheManager {
       // Verificar tamanho do cache
       if (serialized.length > this.MAX_CACHE_SIZE) {
         console.warn('🚨 Cache muito grande, reduzindo dados...');
-        // Manter apenas fontes essenciais se cache ficar muito grande
+        // Manter apenas fontes essenciais se cache ficar muito grande (v1.3.0.d.3 otimizadas)
         const essentialFonts = fonts.filter(font => 
-          ['Akuina', 'Different Beginning', 'Freedom Standing'].includes(font.value)
+          ['Akuina', 'Different Beginning', 'Freedom Standing', 'Arial', 'Helvetica'].includes(font.value)
         );
         cacheData.fonts = essentialFonts;
       }

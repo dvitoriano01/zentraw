@@ -561,8 +561,8 @@ const PhotoEditorFixed: React.FC = () => {
     }
   }, [currentZoom]);
 
-  // Font Manager original - que funcionava
-  const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
+  // COMPATIBILIDADE: Manter referência ao font manager (não usado mais)
+  // const fontManager = useMemo(() => FreepikFontManagerOptimized.getInstance(), []);
 
   // ORGANIZAÇÃO INTELIGENTE DE FONTES - Versão ESTÁVEL v1.3.0.c.3
   const organizeFreepikFontsByFamily = useCallback((fonts: FreepikFont[]) => {
@@ -631,7 +631,7 @@ const PhotoEditorFixed: React.FC = () => {
         label: font.label,
         value: font.value,
         weight: font.weight || 400,
-        style: font.style || 'normal',
+        style: (font.style === 'italic' ? 'italic' : 'normal') as 'normal' | 'italic',
         family: font.value.split(',')[0].trim().replace(/['"]/g, '')
       }));
 

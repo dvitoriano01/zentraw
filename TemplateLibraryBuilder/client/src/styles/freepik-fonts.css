@@ -1,132 +1,209 @@
-/* ZENTRAW FONTS - OTIMIZADO E RENOMEADO (2025-07-03) */
-/* Caminho: /fonts/freepik/ */
+/* FREEPIK FONTS - Sistema otimizado com nomes limpos (v1.3.0.c.2) */
 
 @font-face {
-  font-family: 'ZtAerohate';
-  src: url('/fonts/freepik/aerohate-aerohate-caps.ttf') format('truetype');
+  font-family: 'Aerohate Caps';
+  src: url('/fonts/freepik/aerohate-aerohate-caps-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtAkuina';
-  src: url('/fonts/freepik/akuina-black.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtAkuina';
-  src: url('/fonts/freepik/akuina-black-slanted.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtAkuina';
-  src: url('/fonts/freepik/akuina-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtAkuina';
-  src: url('/fonts/freepik/akuina-regular-slanted.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtBestters';
-  src: url('/fonts/freepik/bestters-supply-regular.ttf') format('truetype');
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtBigBang';
-  src: url('/fonts/freepik/big-bang-slant.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtBigBangSwash';
-  src: url('/fonts/freepik/big-bang-swashes.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-light-200.ttf') format('truetype');
+  font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtBilground';
-  src: url('/fonts/freepik/bilground-regular.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-medium-500.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtBirthday';
-  src: url('/fonts/freepik/birthday-dream-regular.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-semibold-600.ttf') format('truetype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtBonitalia';
-  src: url('/fonts/freepik/bonitalia-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtCrownFord';
-  src: url('/fonts/freepik/crown-ford-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtCustody';
-  src: url('/fonts/freepik/custody-regular-script.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtDhaniel';
-  src: url('/fonts/freepik/dhaniel-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtDiffBegin';
-  src: url('/fonts/freepik/different-beginning-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtDiffBegin';
-  src: url('/fonts/freepik/different-beginning-bold.ttf') format('truetype');
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-bold-700.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtFacon';
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-black-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-regular-slanted-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-light-slanted-200.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-medium-slanted-500.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-semibold-slanted-600.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-bold-slanted-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akuina';
+  src: url('/fonts/freepik/akuina-akuina-black-slanted-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bestters Supply';
+  src: url('/fonts/freepik/bestters-supply-bestters-supply-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Big Bang';
+  src: url('/fonts/freepik/big-bang-big-bang-slant-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Big Bang Swashes';
+  src: url('/fonts/freepik/big-bang-big-bang-swashes-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bilground';
+  src: url('/fonts/freepik/bilground-bilground-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Birthday Dream';
+  src: url('/fonts/freepik/birthday-dream-birthday-dream-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bonitalia';
+  src: url('/fonts/freepik/bonitalia-bonitalia-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Crown Ford';
+  src: url('/fonts/freepik/crown-ford-crown-ford-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Custody Script';
+  src: url('/fonts/freepik/custody-custody-regular-script-400.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dhaniel';
+  src: url('/fonts/freepik/dhaniel-dhaniel-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Different Beginning';
+  src: url('/fonts/freepik/different-beginning-different-beginning-regular-400.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Different Beginning';
+  src: url('/fonts/freepik/different-beginning-different-beginning-light-200.ttf')
+    format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Different Beginning';
+  src: url('/fonts/freepik/different-beginning-different-beginning-bold-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Facon';
   src: url('/fonts/freepik/Facon_FREE.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
@@ -134,22 +211,59 @@
 }
 
 @font-face {
-  font-family: 'ZtFreedom';
-  src: url('/fonts/freepik/freedom-standing-extra-light.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtFreedom';
-  src: url('/fonts/freepik/freedom-standing-regular.ttf') format('truetype');
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtGlitch';
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-100.ttf')
+    format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-200.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-regular-italic-400.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-extra-light-italic-100.ttf')
+    format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Freedom Standing';
+  src: url('/fonts/freepik/freedom-standing-freedom-standing-light-italic-200.ttf')
+    format('truetype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glitch Goblin';
   src: url('/fonts/freepik/GlitchGoblin_FREE.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
@@ -157,188 +271,226 @@
 }
 
 @font-face {
-  font-family: 'ZtGuthenbergSwash';
-  src: url('/fonts/freepik/guthenberg-regular-swashes.otf') format('opentype');
+  font-family: 'Guthenberg Swashes';
+  src: url('/fonts/freepik/guthenberg-guthenberg-regular-swashes-400.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtHericake';
-  src: url('/fonts/freepik/hericake-regular.ttf') format('truetype');
+  font-family: 'Hericake';
+  src: url('/fonts/freepik/hericake-hericake-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtHolian';
-  src: url('/fonts/freepik/holian-regular.ttf') format('truetype');
+  font-family: 'Holian';
+  src: url('/fonts/freepik/holian-holian-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtHumble';
-  src: url('/fonts/freepik/keep-humble-regular.ttf') format('truetype');
+  font-family: 'Keep Humble';
+  src: url('/fonts/freepik/keep-humble-keep-humble-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtMagical';
-  src: url('/fonts/freepik/magical-sparkle-regular.ttf') format('truetype');
+  font-family: 'Magical Sparkle';
+  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtMedium';
-  src: url('/fonts/freepik/medium-unique-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtMedium';
-  src: url('/fonts/freepik/medium-unique-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtMercy';
-  src: url('/fonts/freepik/mercy-christole-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtMilksea';
-  src: url('/fonts/freepik/milksea-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtMockatea';
-  src: url('/fonts/freepik/mockatea-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'ZtMofita';
-  src: url('/fonts/freepik/mofita.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtMofita';
-  src: url('/fonts/freepik/mofita-italic.ttf') format('truetype');
+  font-family: 'Magical Sparkle';
+  src: url('/fonts/freepik/magical-sparkle-magical-sparkle-regular-italic-400.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtMongkrain';
-  src: url('/fonts/freepik/mongkrain-regular.otf') format('opentype');
+  font-family: 'Medium Unique';
+  src: url('/fonts/freepik/medium-unique-medium-unique-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtMorthwicks';
-  src: url('/fonts/freepik/morthwicks-regular.ttf') format('truetype');
+  font-family: 'Medium Unique';
+  src: url('/fonts/freepik/medium-unique-medium-unique-bold-700.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mercy Christole';
+  src: url('/fonts/freepik/mercy-christole-mercy-christole-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtPlayride';
-  src: url('/fonts/freepik/playride-regular.ttf') format('truetype');
+  font-family: 'Milksea';
+  src: url('/fonts/freepik/milksea-milksea-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtRetroking';
-  src: url('/fonts/freepik/retroking-regular.ttf') format('truetype');
+  font-family: 'Mockatea';
+  src: url('/fonts/freepik/mockatea-mockatea-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtBeauty';
-  src: url('/fonts/freepik/the-beautyline-regular.ttf') format('truetype');
+  font-family: 'Mofita';
+  src: url('/fonts/freepik/mofita-mofita-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtTratags';
-  src: url('/fonts/freepik/tratags-regular.ttf') format('truetype');
+  font-family: 'Mofita';
+  src: url('/fonts/freepik/mofita-mofita-italic-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mofita Pro';
+  src: url('/fonts/freepik/mofita-mofita-pro-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtTurbo';
-  src: url('/fonts/freepik/turbo-type-regular.ttf') format('truetype');
+  font-family: 'Mofita Pro';
+  src: url('/fonts/freepik/mofita-mofita-pro-italic-400.ttf') format('truetype');
   font-weight: 400;
-  font-style: normal;
+  font-style: italic;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'ZtTurbo2';
-  src: url('/fonts/freepik/turbo-type-two-regular.ttf') format('truetype');
+  font-family: 'Mongkrain';
+  src: url('/fonts/freepik/mongkrain-mongkrain-regular-400.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtUrbanGraff';
-  src: url('/fonts/freepik/urban-starblues-graffiti-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'ZtUrbanSans';
-  src: url('/fonts/freepik/urban-starblues-sans-regular.ttf') format('truetype');
+  font-family: 'Morthwicks';
+  src: url('/fonts/freepik/morthwicks-morthwicks-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtVibes';
-  src: url('/fonts/freepik/vibes-arcade-svg.otf') format('opentype');
+  font-family: 'Playride';
+  src: url('/fonts/freepik/playride-playride-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'ZtWatten';
-  src: url('/fonts/freepik/watten-regular.ttf') format('truetype');
+  font-family: 'Retroking';
+  src: url('/fonts/freepik/retroking-retroking-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Retroking Rough';
+  src: url('/fonts/freepik/retroking-retroking-regular-rough-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'The Beautyline';
+  src: url('/fonts/freepik/the-beautyline-the-beautyline-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Tratags';
+  src: url('/fonts/freepik/tratags-tratags-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Turbo Type';
+  src: url('/fonts/freepik/turbo-type-regular-turbo-type-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Turbo Type Two';
+  src: url('/fonts/freepik/turbo-type-regular-turbo-type-two-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urban Starblues Graffiti';
+  src: url('/fonts/freepik/urban-starblues-urban-starblues-graffiti-regular-400.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Urban Starblues Sans';
+  src: url('/fonts/freepik/urban-starblues-urban-starblues-sans-regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vibes Arcade';
+  src: url('/fonts/freepik/vibes-arcade-vibes-arcade-svg-400.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Watten';
+  src: url('/fonts/freepik/watten-watten-regular-400.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

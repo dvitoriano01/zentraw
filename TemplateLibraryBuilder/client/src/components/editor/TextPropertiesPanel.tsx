@@ -20,8 +20,8 @@ import {
   Type,
   Palette,
 } from 'lucide-react';
-import { FreepikFontManagerOptimized } from '@/utils/FreepikFontManager';
-import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
+import { freepikFonts } from '@/constants/freepikFontsFixed';
+import type { FreepikFont } from '@/constants/freepikFontsFixed';
 
 interface TextPropertiesProps {
   selectedObject: any;
@@ -52,10 +52,20 @@ const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72,
 ];
 
+// Helper to build unique font value
+function getFontUniqueValue(font: FreepikFont) {
+  return `${font.value}-${font.weight}-${font.style || 'normal'}`;
+}
+
+// Helper to parse unique font value
+function parseFontUniqueValue(val: string) {
+  const [value, weight, style] = val.split('-');
+  return { value, weight: Number(weight), style };
+}
+
 export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
-  const fontManager = FreepikFontManagerOptimized.getInstance();
 
   // Use fonts passed as prop (robustly verified) or fallback
   const allFonts = propAvailableFonts || localAvailableFonts;
@@ -83,21 +93,24 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
   useEffect(() => {
     if (!propAvailableFonts) {
       const loadAvailableFonts = () => {
-        const loadedFontNames = fontManager.getLoadedFonts();
-        const freepikFontsAvailable = freepikFonts.filter(f => loadedFontNames.includes(f.value));
+        // Usar diretamente o array de fontes
+        const freepikFontsList = freepikFonts;
         const systemFonts = SYSTEM_FONTS;
+
         // Combine Freepik + system fonts, removendo duplicatas
         const allFonts = [
-          ...freepikFontsAvailable,
+          ...freepikFontsList,
           ...systemFonts.filter(
-            (sysFont) => !freepikFontsAvailable.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
+            (sysFont) => !freepikFontsList.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
           ),
         ];
+
         setLocalAvailableFonts(allFonts);
       };
+
       loadAvailableFonts();
     }
-  }, [propAvailableFonts, fontManager]);
+  }, [propAvailableFonts]);
 
   // Update text properties when selected object changes
   useEffect(() => {
@@ -123,34 +136,33 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
     }
   }, [selectedObject]);
 
-  // Direct font selection handler - no family grouping needed
-  const handleFontSelect = (fontValue: string) => {
-    updateProperty('fontFamily', fontValue);
-  };
+  // Find the unique value for the current font selection
+  function getCurrentFontUniqueValue() {
+    const font = allFonts.find(f =>
+      f.value === textProperties.fontFamily &&
+      (f.weight?.toString() === textProperties.fontWeight?.toString() || (!f.weight && textProperties.fontWeight === 'normal')) &&
+      (f.style || 'normal') === (textProperties.fontStyle || 'normal')
+    );
+    return font ? getFontUniqueValue(font) : textProperties.fontFamily;
+  }
 
-  // Update text property
   const updateProperty = (property: string, value: any) => {
     const newProperties = { ...textProperties, [property]: value };
     setTextProperties(newProperties);
 
     // CRITICAL FIX: For fontFamily, handle new font structure with weight and style
     if (property === 'fontFamily') {
-      console.log(`🎨 [TextPropertiesPanel] Applying Freepik font: ${value}`);
-      
-      // Find the selected font to get weight and style
-      const selectedFont = allFonts.find(font => 
-        font.value === value || font.label === value
+      // Parse the unique value
+      const { value: fontValue, weight, style } = parseFontUniqueValue(value);
+      const selectedFont = allFonts.find(font =>
+        font.value === fontValue &&
+        font.weight === weight &&
+        (font.style || 'normal') === (style || 'normal')
       ) as FreepikFont;
-      
       if (selectedFont) {
-        // Use originalValue for CSS application, or fallback to value
         const finalFontFamily = selectedFont.originalValue || selectedFont.value;
         const fontWeight = selectedFont.weight || 400;
         const fontStyle = selectedFont.style || 'normal';
-        
-        console.log(`🎯 Applying font: ${finalFontFamily} (weight: ${fontWeight}, style: ${fontStyle})`);
-        
-        // Apply all font properties together
         onUpdateText({ 
           fontFamily: finalFontFamily,
           fontWeight: fontWeight,
@@ -158,7 +170,6 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
         });
       } else {
         // Fallback for system fonts or missing fonts
-        console.warn(`⚠️ Font not found in organized list: ${value}, using as-is`);
         onUpdateText({ fontFamily: value });
       }
     } else {
@@ -217,46 +228,74 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
 
         {/* Character Tab */}
         <TabsContent value="character" className="m-0 p-4 space-y-4">
-          {/* Single Font Dropdown - Simplified UX */}
-          <div className="flex gap-2 items-end">
-            <div className="flex-1 min-w-[200px]">
-              <label className="text-xs text-gray-400 mb-1 block">Font</label>
-              <Select
-                value={textProperties.fontFamily}
-                onValueChange={handleFontSelect}
-              >
-                <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a] truncate">
-                  <SelectValue placeholder="Select Font" className="truncate" />
-                </SelectTrigger>
-                <SelectContent className="max-h-48 overflow-y-auto overflow-x-hidden min-w-[200px] w-full">
-                  {allFonts.map((font: FreepikFont) => (
-                    <SelectItem
-                      key={`${font.label}-${font.value}-${font.weight}-${font.style || 'normal'}`}
-                      value={font.value}
-                      style={{
-                        fontFamily: font.value,
-                        fontWeight: font.weight || 400,
-                        fontStyle: font.style || 'normal',
-                        maxWidth: '280px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                      className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a] truncate"
-                    >
-                      <div className="flex items-center justify-between w-full truncate">
-                        <span className="truncate">{font.label}</span>
-                        {(font.weight && font.weight !== 400) || font.style === 'italic' ? (
-                          <span className="text-[10px] text-gray-500 ml-2">
-                            {font.weight !== 400 ? font.weight : ''}{font.style === 'italic' ? 'i' : ''}
-                          </span>
-                        ) : null}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          {/* Font Family */}
+          <div>
+            <label className="text-xs text-gray-400 mb-1 block">Font Family</label>
+            <Select
+              value={getCurrentFontUniqueValue()}
+              onValueChange={(value) => updateProperty('fontFamily', value)}
+            >
+              <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-64 overflow-y-auto">
+                {/* Freepik Fonts Section - ORGANIZADAS por família */}
+                {allFonts.length > 0 && (
+                  <>
+                    <div className="px-2 py-1 text-xs font-semibold text-blue-400 bg-[#1a1a1a]">
+                      🎨 Freepik Fonts Organized (
+                      {allFonts.filter((f: FreepikFont) => !SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === f.value)).length})
+                    </div>
+                    {(() => {
+                      const freepikFonts = allFonts.filter((font: FreepikFont) => !SYSTEM_FONTS.some((sf: FreepikFont) => sf.value === font.value));
+                      let currentFamily = '';
+                      return freepikFonts.map((font: FreepikFont, index: number) => {
+                        const familyName = font.family || font.label.split(' ')[0];
+                        const isNewFamily = familyName !== currentFamily;
+                        currentFamily = familyName;
+                        const uniqueValue = getFontUniqueValue(font);
+                        return (
+                          <div key={uniqueValue}>
+                            {/* Family separator */}
+                            {isNewFamily && index > 0 && (
+                              <div className="border-t border-[#2a2a2a] my-1" />
+                            )}
+                            <SelectItem 
+                              value={uniqueValue}
+                              className="text-xs hover:bg-[#3a3a3a] focus:bg-[#3a3a3a]"
+                              style={{
+                                fontFamily: font.value,
+                                fontWeight: font.weight || 400,
+                                fontStyle: font.style || 'normal',
+                              }}
+                            >
+                              <div className="flex items-center justify-between w-full">
+                                <span>{font.label}</span>
+                                {font.weight && font.weight !== 400 && (
+                                  <span className="text-[10px] text-gray-500 ml-2">
+                                    {font.weight}{font.style === 'italic' ? 'i' : ''}
+                                  </span>
+                                )}
+                              </div>
+                            </SelectItem>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </>
+                )}
+
+                {/* System Fonts Section */}
+                <div className="px-2 py-1 text-xs font-semibold text-gray-400 bg-[#1a1a1a]">
+                  🔧 System Fonts ({SYSTEM_FONTS.length})
+                </div>
+                {SYSTEM_FONTS.map((font) => (
+                  <SelectItem key={font.value} value={font.value} className="text-xs">
+                    {font.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Font Size & Style Controls */}

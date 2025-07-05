@@ -7,7 +7,7 @@
  * BUGS MANTIDOS CORRIGIDOS:
  * ✅ Histórico Ctrl+Z/Redo: Preserva zoom e background
  * ✅ Borda de texto: Removida por padrão (strokeWidth: 0)
-*/
+ */
 
 import FontFaceObserver from 'fontfaceobserver';
 import { freepikFonts } from '@/constants/freepikFonts';
@@ -434,11 +434,7 @@ export default function PhotoEditor() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
-      if (
-        target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
-        target.isContentEditable
-      ) {
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
         return;
       }
       if (e.ctrlKey || e.metaKey) {

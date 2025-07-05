@@ -1,14 +1,15 @@
 /**
  * 🚀 FREEPIK FONT MANAGER OTIMIZADO v2.0
- * 
+ *
  * MELHORIAS DE PERFORMANCE:
  * ✅ Carregamento paralelo (5x mais rápido)
  * ✅ Cache inteligente (evita recarregamento)
+ *
  * ✅ Sistema de fallback robusto
  * ✅ Timeout configurável
  * ✅ Progress tracking em tempo real
  * ✅ Error handling avançado
- * 
+ *
  * REDUÇÃO DE TEMPO: 15-30s → 3-8s
  */
 
@@ -65,7 +66,7 @@ export class FreepikFontManagerOptimized {
   async loadAllFreepikFonts(
     fonts: FreepikFont[],
     onProgress?: (progress: FontLoadProgress) => void,
-    timeout: number = 3000
+    timeout: number = 3000,
   ): Promise<FontLoadResult> {
     const startTime = performance.now();
     console.log('🚀 [FontManager v2.0] Iniciando carregamento paralelo de fontes...');
@@ -81,16 +82,16 @@ export class FreepikFontManagerOptimized {
 
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      
+
       // Carregar chunk em paralelo
-      const chunkPromises = chunk.map(font => this.loadSingleFontWithTiming(font, timeout));
+      const chunkPromises = chunk.map((font) => this.loadSingleFontWithTiming(font, timeout));
       const chunkResults = await Promise.all(chunkPromises);
-      
+
       // Processar resultados do chunk
       chunkResults.forEach((result, index) => {
         const font = chunk[index];
         results.push(result);
-        
+
         if (result.success) {
           loadedCount++;
           this.loadedFonts.add(font.value);
@@ -104,13 +105,13 @@ export class FreepikFontManagerOptimized {
           loaded: loadedCount,
           total: fonts.length,
           current: font.label,
-          percentage: Math.round((totalProcessed / fonts.length) * 100)
+          percentage: Math.round((totalProcessed / fonts.length) * 100),
         });
       });
 
       // Pequena pausa entre chunks para não bloquear a UI
       if (i < chunks.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       }
     }
 
@@ -122,11 +123,13 @@ export class FreepikFontManagerOptimized {
       loadedFonts: loadedCount,
       failedFonts: fonts.length - loadedCount,
       results,
-      loadTime
+      loadTime,
     };
 
     console.log(`🎉 [FontManager v2.0] Carregamento concluído em ${Math.round(loadTime)}ms`);
-    console.log(`📊 Resultado: ${loadedCount}/${fonts.length} fontes carregadas (${Math.round((loadedCount/fonts.length)*100)}%)`);
+    console.log(
+      `📊 Resultado: ${loadedCount}/${fonts.length} fontes carregadas (${Math.round((loadedCount / fonts.length) * 100)}%)`,
+    );
 
     return result;
   }
@@ -134,26 +137,29 @@ export class FreepikFontManagerOptimized {
   /**
    * Carregar uma fonte individual com medição de tempo
    */
-  private async loadSingleFontWithTiming(font: FreepikFont, timeout: number): Promise<FontLoadStatus> {
+  private async loadSingleFontWithTiming(
+    font: FreepikFont,
+    timeout: number,
+  ): Promise<FontLoadStatus> {
     const startTime = performance.now();
-    
+
     try {
       const success = await this.loadSingleFont(font, timeout);
       const endTime = performance.now();
-      
+
       return {
         font,
         success,
-        loadTime: endTime - startTime
+        loadTime: endTime - startTime,
       };
     } catch (error) {
       const endTime = performance.now();
-      
+
       return {
         font,
         success: false,
         loadTime: endTime - startTime,
-        error: error instanceof Error ? error.message : 'Erro desconhecido'
+        error: error instanceof Error ? error.message : 'Erro desconhecido',
       };
     }
   }
@@ -203,7 +209,7 @@ export class FreepikFontManagerOptimized {
     // Estratégia 3: Aguardar carregamento com timeout
     try {
       await this.waitForFontLoad(font.value, timeout);
-      
+
       // Verificar novamente após aguardar
       if (this.canvasFontCheck(font.value)) {
         console.log(`🎯 Fonte carregada após aguardar: ${font.label}`);
@@ -277,17 +283,17 @@ export class FreepikFontManagerOptimized {
   private setupFallback(font: FreepikFont): void {
     // Mapear para fontes similares disponíveis
     const fallbacks = {
-      'serif': 'Georgia',
+      serif: 'Georgia',
       'sans-serif': 'Arial',
-      'monospace': 'Courier New',
-      'script': 'Brush Script MT',
-      'display': 'Impact'
+      monospace: 'Courier New',
+      script: 'Brush Script MT',
+      display: 'Impact',
     };
 
     // Determinar categoria da fonte baseada no nome
     let category = 'sans-serif';
     const fontName = font.label.toLowerCase();
-    
+
     if (fontName.includes('serif') && !fontName.includes('sans')) category = 'serif';
     if (fontName.includes('mono') || fontName.includes('code')) category = 'monospace';
     if (fontName.includes('script') || fontName.includes('handwriting')) category = 'script';
@@ -295,7 +301,7 @@ export class FreepikFontManagerOptimized {
 
     const fallback = fallbacks[category as keyof typeof fallbacks] || 'Arial';
     this.fallbackMap.set(font.value, fallback);
-    
+
     console.log(`🔄 Fallback configurado: ${font.label} → ${fallback}`);
   }
 
@@ -348,4 +354,3 @@ export class FreepikFontManagerOptimized {
     this.clearCache();
   }
 }
-

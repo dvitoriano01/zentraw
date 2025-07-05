@@ -10,7 +10,8 @@
  */
 
 import FontFaceObserver from 'fontfaceobserver';
-import { freepikFonts } from '@/constants/freepikFonts';
+import { freepikFonts } from '@/constants/freepikFontsFixed';
+import { FreepikFontManager } from '@/utils/FreepikFontManagerFixed';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -119,6 +120,14 @@ export default function PhotoEditor() {
   const [layers, setLayers] = useState<Layer[]>([]);
   const [selectedObject, setSelectedObject] = useState<any>(null);
   const [selectedLayer, setSelectedLayer] = useState<Layer | null>(null);
+  
+  // Font loading state
+  const [fontLoadingState, setFontLoadingState] = useState({
+    isLoading: false,
+    loaded: 0,
+    total: 0,
+    current: ''
+  });
   const [layerOpacity, setLayerOpacity] = useState(100);
   const [layerBlendMode, setLayerBlendMode] = useState('normal');
   const [selectedFormat, setSelectedFormat] = useState('instagram-post');
@@ -236,6 +245,30 @@ export default function PhotoEditor() {
 
       // Initial layer update
       updateLayersList();
+
+      // Initialize Freepik fonts
+      const initFreepikFonts = async () => {
+        try {
+          setFontLoadingState({ isLoading: true, loaded: 0, total: freepikFonts.length, current: '' });
+          
+          const fontManager = FreepikFontManager.getInstance();
+          const result = await fontManager.loadAllFreepikFonts(
+            freepikFonts,
+            (loaded, total, current) => {
+              setFontLoadingState({ isLoading: true, loaded, total, current });
+            }
+          );
+          
+          setFontLoadingState({ isLoading: false, loaded: result.loadedFonts, total: result.totalFonts, current: '' });
+          console.log(`🎉 Fontes Freepik carregadas: ${result.loadedFonts}/${result.totalFonts}`);
+        } catch (error) {
+          console.error('❌ Erro ao carregar fontes Freepik:', error);
+          setFontLoadingState({ isLoading: false, loaded: 0, total: freepikFonts.length, current: '' });
+        }
+      };
+
+      // Inicializar fontes após canvas estar pronto
+      setTimeout(initFreepikFonts, 100);
 
       return () => {
         canvas.dispose();
@@ -620,12 +653,22 @@ export default function PhotoEditor() {
     saveState();
   };
 
-  // Função de texto com carregamento de fonte customizada
+  // Função de texto com carregamento de fonte Freepik
   const addText = async () => {
     if (!fabricCanvasRef.current) return;
 
-    const fontToUse = fontFamily || 'Arial';
-    await ensureFontLoaded(fontToUse);
+    // Usar uma fonte Freepik aleatória carregada
+    const fontManager = FreepikFontManager.getInstance();
+    const loadedFonts = fontManager.getLoadedFonts();
+    
+    let fontToUse = 'Arial';
+    if (loadedFonts.length > 0) {
+      // Pegar uma fonte Freepik aleatória carregada
+      const randomFont = freepikFonts[Math.floor(Math.random() * freepikFonts.length)];
+      if (fontManager.isFontAvailable(randomFont.value)) {
+        fontToUse = randomFont.value;
+      }
+    }
 
     const canvas = fabricCanvasRef.current;
     const canvasCenter = {
@@ -633,12 +676,12 @@ export default function PhotoEditor() {
       y: canvas.height! / 2,
     };
 
-    const text = new IText('Double-click to edit', {
+    const text = new IText('Clique duas vezes para editar', {
       left: canvasCenter.x,
       top: canvasCenter.y,
       fontSize: 32,
       fontFamily: fontToUse,
-      fill: '#000000',
+      fill: '#ffffff',
       selectable: true,
       evented: true,
       editable: true,
@@ -657,12 +700,28 @@ export default function PhotoEditor() {
     saveState();
   };
 
-  // Atualização de propriedades de texto com carregamento de fonte
+  // Atualização de propriedades de texto com FreepikFontManager
   const updateTextProperties = async (properties: any) => {
     if (!fabricCanvasRef.current || !selectedObject || selectedObject.type !== 'i-text') return;
 
     if (properties.fontFamily) {
-      await ensureFontLoaded(properties.fontFamily);
+      const fontManager = FreepikFontManager.getInstance();
+      
+      // Verificar se a fonte está disponível
+      if (fontManager.isFontAvailable(properties.fontFamily)) {
+        // Encontrar a fonte Freepik correspondente para pegar weight e style
+        const freepikFont = freepikFonts.find(f => f.value === properties.fontFamily);
+        if (freepikFont) {
+          properties.fontWeight = freepikFont.weight || 400;
+          properties.fontStyle = freepikFont.style || 'normal';
+        }
+        
+        console.log(`✅ Aplicando fonte Freepik: ${properties.fontFamily}`);
+      } else {
+        console.warn(`❌ Fonte não disponível: ${properties.fontFamily}`);
+        // Fallback para Arial se a fonte não estiver disponível
+        properties.fontFamily = 'Arial';
+      }
     }
 
     selectedObject.set(properties);
@@ -917,6 +976,20 @@ export default function PhotoEditor() {
           >
             Text FX
           </Button>
+
+          {/* Font Loading Indicator */}
+          {fontLoadingState.isLoading && (
+            <div className="flex items-center gap-2 px-3 py-1 bg-blue-600 rounded text-xs">
+              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Carregando fontes: {fontLoadingState.loaded}/{fontLoadingState.total}</span>
+            </div>
+          )}
+
+          {!fontLoadingState.isLoading && fontLoadingState.loaded > 0 && (
+            <div className="flex items-center gap-2 px-3 py-1 bg-green-600 rounded text-xs">
+              <span>✅ {fontLoadingState.loaded} fontes Freepik carregadas</span>
+            </div>
+          )}
 
           {/* History Controls */}
           <Button

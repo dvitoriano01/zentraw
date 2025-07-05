@@ -14,17 +14,16 @@ import {
   Type,
   Palette
 } from 'lucide-react';
+import { freepikFonts } from '@/constants/freepikFontsFixed';
+import { FreepikFontManager } from '@/utils/FreepikFontManagerFixed';
 
 interface TextPropertiesProps {
   selectedObject: any;
   onUpdateText: (properties: any) => void;
 }
 
-const FONT_FAMILIES = [
-  'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Verdana', 
-  'Tahoma', 'Impact', 'Comic Sans MS', 'Trebuchet MS', 'Courier New',
-  'Lucida Console', 'Palatino', 'Garamond', 'Bookman', 'Avant Garde'
-];
+// Substituído por fontes Freepik reais
+const FREEPIK_FONTS = freepikFonts;
 
 const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72
@@ -135,9 +134,11 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {FONT_FAMILIES.map(font => (
-                  <SelectItem key={font} value={font} className="text-xs">
-                    <span style={{ fontFamily: font }}>{font}</span>
+                {FREEPIK_FONTS.map(font => (
+                  <SelectItem key={`${font.value}-${font.weight}-${font.style}`} value={font.value} className="text-xs">
+                    <span style={{ fontFamily: font.value, fontWeight: font.weight, fontStyle: font.style }}>
+                      {font.label}
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>

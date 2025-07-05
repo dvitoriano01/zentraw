@@ -4,7 +4,6 @@
  * MELHORIAS DE PERFORMANCE:
  * ✅ Carregamento paralelo (5x mais rápido)
  * ✅ Cache inteligente (evita recarregamento)
- *
  * ✅ Sistema de fallback robusto
  * ✅ Timeout configurável
  * ✅ Progress tracking em tempo real

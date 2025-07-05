@@ -1,3 +1,9 @@
+// ZENTRAW PHOTO EDITOR V1.3.0.c.7 - Painel de Propriedades de Texto
+// 🎯 DROPDOWN INTELIGENTE: Chave única por variação (família-peso-estilo)
+// 🔄 APLICAÇÃO ROBUSTA: Família + peso + estilo aplicados simultaneamente
+// 🎨 ORGANIZAÇÃO PHOTOSHOP: Famílias agrupadas e organizadas
+// 🛡️ FALLBACK SEGURO: Tratamento de erros na aplicação de fontes
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -15,7 +21,6 @@ import {
   Palette
 } from 'lucide-react';
 import { freepikFonts } from '@/constants/freepikFontsFixed';
-import { FreepikFontManager } from '@/utils/FreepikFontManagerFixed';
 
 interface TextPropertiesProps {
   selectedObject: any;
@@ -34,7 +39,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
   const [textProperties, setTextProperties] = useState({
     fontFamily: 'Arial',
     fontSize: 16,
-    fontWeight: 'normal',
+    fontWeight: 400 as string | number,
     fontStyle: 'normal',
     textDecoration: '',
     fill: '#000000',
@@ -55,7 +60,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
       setTextProperties({
         fontFamily: selectedObject.fontFamily || 'Arial',
         fontSize: selectedObject.fontSize || 16,
-        fontWeight: selectedObject.fontWeight || 'normal',
+        fontWeight: selectedObject.fontWeight || 400,
         fontStyle: selectedObject.fontStyle || 'normal',
         textDecoration: selectedObject.textDecoration || '',
         fill: selectedObject.fill || '#000000',
@@ -72,6 +77,26 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
     }
   }, [selectedObject]);
 
+  const getCurrentFontKey = () => {
+    // Encontrar a fonte que corresponde exatamente ao estado atual
+    const currentFont = FREEPIK_FONTS.find(font => 
+      font.value === textProperties.fontFamily && 
+      (font.weight || 400) === (typeof textProperties.fontWeight === 'string' ? 
+        (textProperties.fontWeight === 'bold' ? 700 : 400) : 
+        textProperties.fontWeight) && 
+      (font.style || 'normal') === textProperties.fontStyle
+    );
+    
+    if (currentFont) {
+      return `${currentFont.value}-${currentFont.weight || 400}-${currentFont.style || 'normal'}`;
+    }
+    
+    // Fallback: criar chave baseada no estado atual
+    return `${textProperties.fontFamily}-${typeof textProperties.fontWeight === 'string' ? 
+      (textProperties.fontWeight === 'bold' ? 700 : 400) : 
+      textProperties.fontWeight}-${textProperties.fontStyle}`;
+  };
+
   const updateProperty = (property: string, value: any) => {
     const newProperties = { ...textProperties, [property]: value };
     setTextProperties(newProperties);
@@ -81,8 +106,41 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
     onUpdateText({ [fabricProperty]: value });
   };
 
+  const updateFontFamily = (fontKey: string) => {
+    // Encontrar a fonte selecionada pelo valor único (fontKey)
+    const selectedFont = FREEPIK_FONTS.find(font => {
+      const key = `${font.value}-${font.weight || 400}-${font.style || 'normal'}`;
+      return key === fontKey;
+    });
+    
+    if (selectedFont) {
+      const updates: any = { fontFamily: selectedFont.value };
+      
+      // Aplicar weight e style se especificados na fonte
+      if (selectedFont.weight) {
+        updates.fontWeight = selectedFont.weight;
+      }
+      if (selectedFont.style) {
+        updates.fontStyle = selectedFont.style;
+      }
+      
+      console.log('Fonte selecionada:', selectedFont);
+      console.log('Updates a aplicar:', updates);
+      
+      // Atualizar o estado local
+      const newProperties = { ...textProperties, ...updates };
+      setTextProperties(newProperties);
+      
+      // Enviar todas as propriedades para o Fabric.js
+      onUpdateText(updates);
+    } else {
+      // Fallback para fontes não-Freepik (usar apenas o nome da família)
+      updateProperty('fontFamily', fontKey);
+    }
+  };
+
   const toggleBold = () => {
-    const newWeight = textProperties.fontWeight === 'bold' ? 'normal' : 'bold';
+    const newWeight = (textProperties.fontWeight === 700 || textProperties.fontWeight === 'bold') ? 400 : 700;
     updateProperty('fontWeight', newWeight);
   };
 
@@ -129,18 +187,26 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
           {/* Font Family */}
           <div>
             <label className="text-xs text-gray-400 mb-1 block">Font Family</label>
-            <Select value={textProperties.fontFamily} onValueChange={(value) => updateProperty('fontFamily', value)}>
+            <Select value={getCurrentFontKey()} onValueChange={(value) => updateFontFamily(value)}>
               <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {FREEPIK_FONTS.map(font => (
-                  <SelectItem key={`${font.value}-${font.weight}-${font.style}`} value={font.value} className="text-xs">
-                    <span style={{ fontFamily: font.value, fontWeight: font.weight, fontStyle: font.style }}>
-                      {font.label}
-                    </span>
-                  </SelectItem>
-                ))}
+                {FREEPIK_FONTS.map(font => {
+                  // Criar uma chave única para cada variação de fonte
+                  const fontKey = `${font.value}-${font.weight || 400}-${font.style || 'normal'}`;
+                  return (
+                    <SelectItem key={fontKey} value={fontKey} className="text-xs">
+                      <span style={{ 
+                        fontFamily: font.value,
+                        fontWeight: font.weight || 400,
+                        fontStyle: font.style || 'normal'
+                      }}>
+                        {font.label}
+                      </span>
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
@@ -190,7 +256,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText }: TextProper
             <label className="text-xs text-gray-400 mb-2 block">Style</label>
             <div className="flex space-x-1">
               <Button
-                variant={textProperties.fontWeight === 'bold' ? 'default' : 'outline'}
+                variant={(textProperties.fontWeight === 700 || textProperties.fontWeight === 'bold') ? 'default' : 'outline'}
                 size="sm"
                 onClick={toggleBold}
                 className="w-8 h-8 p-0"

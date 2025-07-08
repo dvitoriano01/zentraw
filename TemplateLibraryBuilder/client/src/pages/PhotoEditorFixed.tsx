@@ -627,35 +627,40 @@ const PhotoEditorFixed: React.FC = () => {
       const cachedFonts = FreepikFontCacheManager.loadFromCache();
       if (cachedFonts && cachedFonts.length > 0) {
         console.log(`✅ Fontes carregadas do CACHE: ${cachedFonts.length} fontes`);
-        
+
         // Converter para formato compatível
-        const compatibleFonts = cachedFonts.map(font => ({
+        const compatibleFonts = cachedFonts.map((font) => ({
           label: font.label,
           value: font.value,
           weight: font.weight || 400,
           style: (font.style === 'italic' ? 'italic' : 'normal') as 'normal' | 'italic',
-          family: font.value.split(',')[0].trim().replace(/['"]/g, '')
+          family: font.value.split(',')[0].trim().replace(/['"]/g, ''),
         }));
 
         const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
         const basicFonts: FreepikFont[] = [
           { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
           { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
-          { label: 'Times New Roman', value: 'Times New Roman', weight: 400, family: 'Times New Roman' },
+          {
+            label: 'Times New Roman',
+            value: 'Times New Roman',
+            weight: 400,
+            family: 'Times New Roman',
+          },
           { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
           { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
           { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
         ];
 
         setAvailableFonts([...groupedFonts, ...basicFonts]);
-        
+
         setFontLoadingState({
           isLoading: false,
           loaded: cachedFonts.length,
           total: freepikFonts.length,
           current: 'Carregado do cache!',
         });
-        
+
         return { loadedFonts: cachedFonts.length, totalFonts: freepikFonts.length };
       }
 
@@ -1499,7 +1504,9 @@ const PhotoEditorFixed: React.FC = () => {
   const handleFontStyleChange = (style: string) => {
     setSelectedFontStyle(style);
     // Encontrar a variação da família e estilo selecionados
-    const variation = availableFonts.find((f) => f.family === selectedFontFamily && f.style === style);
+    const variation = availableFonts.find(
+      (f) => f.family === selectedFontFamily && f.style === style,
+    );
     if (variation) {
       updateTextProperties({
         fontFamily: variation.value,
@@ -1513,7 +1520,7 @@ const PhotoEditorFixed: React.FC = () => {
 
   // JSX para dropdowns de fontes e estilos lado a lado
   return (
-    <div className="h-screen flex flex-col bg-[#2b2b2b] text-white">
+    <div className="h-screen flex flex-col text-white" style={{ backgroundColor: '#282828' }}>
       {/* Top Menu Bar */}
       <div className="h-12 bg-[#1e1e1e] border-b border-[#4a4a4a] flex items-center px-4">
         <div className="flex items-center space-x-2">
@@ -1741,7 +1748,7 @@ const PhotoEditorFixed: React.FC = () => {
             ref={containerRef}
             className="flex-1 relative min-h-[400px]"
             style={{
-              backgroundColor: '#282828', // Fundo Photoshop
+              background: '#282828',
               overflow: 'hidden',
               position: 'relative',
             }}
@@ -1766,19 +1773,34 @@ const PhotoEditorFixed: React.FC = () => {
                     top: '-4px',
                   }}
                 />
+                {/* Checkerboard Photoshop-like background */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    borderRadius: '4px',
+                    backgroundImage: `
+                      linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+                      linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+                      linear-gradient(-45deg, transparent 75%, #e0e0e0 75%)
+                    `,
+                    backgroundSize: '16px 16px',
+                    backgroundPosition: '0 0, 0 8px, 8px -8px, -8px 0px',
+                    backgroundColor: '#f8f8f8',
+                    opacity: canvasBackground === 'transparent' ? 1 : 0,
+                    transition: 'opacity 0.2s',
+                  }}
+                />
                 <canvas
                   ref={canvasRef}
-                  className="shadow-2xl max-w-full max-h-full block"
+                  className="shadow-2xl max-w-full max-h-full block relative"
                   style={{
-                    backgroundColor: '#ffffff', // Base branca
-                    backgroundImage: `
-                      linear-gradient(45deg, #dbdbdb 25%, transparent 25%),
-                      linear-gradient(-45deg, #dbdbdb 25%, transparent 25%),
-                      linear-gradient(45deg, transparent 75%, #dbdbdb 75%),
-                      linear-gradient(-45deg, transparent 75%, #dbdbdb 75%)
-                    `,
-                    backgroundSize: '20px 20px',
-                    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+                    backgroundColor: canvasBackground === 'transparent' ? 'transparent' : canvasBackground,
+                    zIndex: 1,
+                    borderRadius: '4px',
                   }}
                 />
               </div>
@@ -1902,7 +1924,7 @@ const PhotoEditorFixed: React.FC = () => {
                             />
                             <span className="text-xs text-gray-500">{layerOpacity}%</span>
                           </div>
-                        </div>
+                                                                     </div>
 
                         {/* Blend Mode */}
                         <div>
@@ -1998,7 +2020,7 @@ const PhotoEditorFixed: React.FC = () => {
                     </div>
                   )}
                 </div>
-                           </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="adjustments" className="flex-1 m-0">
@@ -2170,16 +2192,31 @@ const PhotoEditorFixed: React.FC = () => {
           </Tabs>
         </div>
       </div>
-      
+
       {/* HOTFIX V1.3.0.d.2: Indicador de loading simples */}
       {fontLoadingState.isLoading && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                <svg className="w-5 h-5 text-purple-600 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                  <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                <svg
+                  className="w-5 h-5 text-purple-600 animate-spin"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
                 </svg>
               </div>
               <div>
@@ -2187,15 +2224,19 @@ const PhotoEditorFixed: React.FC = () => {
                 <p className="text-sm text-gray-600">Sistema otimizado V1.3.0.d.2</p>
               </div>
             </div>
-            
+
             <div className="mb-4">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
-                <span>{fontLoadingState.loaded} de {fontLoadingState.total} fontes</span>
-                <span className="font-medium">{Math.round((fontLoadingState.loaded / fontLoadingState.total) * 100)}%</span>
+                <span>
+                  {fontLoadingState.loaded} de {fontLoadingState.total} fontes
+                </span>
+                <span className="font-medium">
+                  {Math.round((fontLoadingState.loaded / fontLoadingState.total) * 100)}%
+                </span>
               </div>
-              
+
               <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-300"
                   style={{ width: `${(fontLoadingState.loaded / fontLoadingState.total) * 100}%` }}
                 ></div>
@@ -2203,9 +2244,11 @@ const PhotoEditorFixed: React.FC = () => {
             </div>
 
             <p className="text-sm text-gray-700 truncate">{fontLoadingState.current}</p>
-            
+
             <div className="mt-4 text-center">
-              <p className="text-xs text-gray-500">Cache inteligente • Delay removido • Performance otimizada</p>
+              <p className="text-xs text-gray-500">
+                Cache inteligente • Delay removido • Performance otimizada
+              </p>
             </div>
           </div>
         </div>

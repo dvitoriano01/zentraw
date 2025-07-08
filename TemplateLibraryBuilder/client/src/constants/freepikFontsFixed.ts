@@ -14,9 +14,21 @@ export const freepikFonts: FreepikFont[] = [
   { label: 'Aerohate Caps', value: 'Aerohate Caps', weight: 400, family: 'Aerohate Caps' },
 
   // Akuina
-  { label: 'Akuina Black Slanted', value: 'Akuina', weight: 800, style: 'italic', family: 'Akuina' },
+  {
+    label: 'Akuina Black Slanted',
+    value: 'Akuina',
+    weight: 800,
+    style: 'italic',
+    family: 'Akuina',
+  },
   { label: 'Akuina Black', value: 'Akuina', weight: 800, style: 'normal', family: 'Akuina' },
-  { label: 'Akuina Regular Slanted', value: 'Akuina', weight: 400, style: 'italic', family: 'Akuina' },
+  {
+    label: 'Akuina Regular Slanted',
+    value: 'Akuina',
+    weight: 400,
+    style: 'italic',
+    family: 'Akuina',
+  },
   { label: 'Akuina Regular', value: 'Akuina', weight: 400, style: 'normal', family: 'Akuina' },
 
   { label: 'Bestters Supply', value: 'Bestters Supply', weight: 400, family: 'Bestters Supply' },
@@ -30,23 +42,70 @@ export const freepikFonts: FreepikFont[] = [
   { label: 'Dhaniel', value: 'Dhaniel', weight: 400, family: 'Dhaniel' },
 
   // Different Beginning
-  { label: 'Different Beginning Bold', value: 'Different Beginning', weight: 700, style: 'normal', family: 'Different Beginning' },
-  { label: 'Different Beginning Regular', value: 'Different Beginning', weight: 400, style: 'normal', family: 'Different Beginning' },
+  {
+    label: 'Different Beginning Bold',
+    value: 'Different Beginning',
+    weight: 700,
+    style: 'normal',
+    family: 'Different Beginning',
+  },
+  {
+    label: 'Different Beginning Regular',
+    value: 'Different Beginning',
+    weight: 400,
+    style: 'normal',
+    family: 'Different Beginning',
+  },
 
   { label: 'Facon', value: 'Facon', weight: 400, family: 'Facon' },
 
   // Freedom Standing
-  { label: 'Freedom Standing Extra Light', value: 'Freedom Standing', weight: 100, style: 'normal', family: 'Freedom Standing' },
-  { label: 'Freedom Standing Regular', value: 'Freedom Standing', weight: 400, style: 'normal', family: 'Freedom Standing' },
+  {
+    label: 'Freedom Standing Extra Light',
+    value: 'Freedom Standing',
+    weight: 100,
+    style: 'normal',
+    family: 'Freedom Standing',
+  },
+  {
+    label: 'Freedom Standing Regular',
+    value: 'Freedom Standing',
+    weight: 400,
+    style: 'normal',
+    family: 'Freedom Standing',
+  },
 
   { label: 'Glitch Goblin', value: 'Glitch Goblin', weight: 400, family: 'Glitch Goblin' },
-  { label: 'Guthenberg Swashes', value: 'Guthenberg Swashes', weight: 400, family: 'Guthenberg Swashes' },
+  {
+    label: 'Guthenberg Swashes',
+    value: 'Guthenberg Swashes',
+    weight: 400,
+    family: 'Guthenberg Swashes',
+  },
   { label: 'Hericake', value: 'Hericake', weight: 400, family: 'Hericake' },
   { label: 'Holian', value: 'Holian', weight: 400, family: 'Holian' },
   { label: 'Keep Humble', value: 'Keep Humble', weight: 400, family: 'Keep Humble' },
-  { label: 'Magical Sparkle', value: 'Magical Sparkle', weight: 400, style: 'normal', family: 'Magical Sparkle' },
-  { label: 'Medium Unique Bold', value: 'Medium Unique', weight: 700, style: 'normal', family: 'Medium Unique' },
-  { label: 'Medium Unique Regular', value: 'Medium Unique', weight: 400, style: 'normal', family: 'Medium Unique' },
+  {
+    label: 'Magical Sparkle',
+    value: 'Magical Sparkle',
+    weight: 400,
+    style: 'normal',
+    family: 'Magical Sparkle',
+  },
+  {
+    label: 'Medium Unique Bold',
+    value: 'Medium Unique',
+    weight: 700,
+    style: 'normal',
+    family: 'Medium Unique',
+  },
+  {
+    label: 'Medium Unique Regular',
+    value: 'Medium Unique',
+    weight: 400,
+    style: 'normal',
+    family: 'Medium Unique',
+  },
   { label: 'Mercy Christole', value: 'Mercy Christole', weight: 400, family: 'Mercy Christole' },
   { label: 'Milksea', value: 'Milksea', weight: 400, family: 'Milksea' },
   { label: 'Mockatea', value: 'Mockatea', weight: 400, family: 'Mockatea' },
@@ -60,8 +119,18 @@ export const freepikFonts: FreepikFont[] = [
   { label: 'Tratags', value: 'Tratags', weight: 400, family: 'Tratags' },
   { label: 'Turbo Type', value: 'Turbo Type', weight: 400, family: 'Turbo Type' },
   { label: 'Turbo Type Two', value: 'Turbo Type Two', weight: 400, family: 'Turbo Type Two' },
-  { label: 'Urban Starblues Graffiti', value: 'Urban Starblues Graffiti', weight: 400, family: 'Urban Starblues Graffiti' },
-  { label: 'Urban Starblues Sans', value: 'Urban Starblues Sans', weight: 400, family: 'Urban Starblues Sans' },
+  {
+    label: 'Urban Starblues Graffiti',
+    value: 'Urban Starblues Graffiti',
+    weight: 400,
+    family: 'Urban Starblues Graffiti',
+  },
+  {
+    label: 'Urban Starblues Sans',
+    value: 'Urban Starblues Sans',
+    weight: 400,
+    family: 'Urban Starblues Sans',
+  },
   { label: 'Vibes Arcade', value: 'Vibes Arcade', weight: 400, family: 'Vibes Arcade' },
   { label: 'Watten', value: 'Watten', weight: 400, family: 'Watten' },
 ];

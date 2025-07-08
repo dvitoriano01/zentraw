@@ -52,7 +52,11 @@ const FONT_SIZES = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72,
 ];
 
-export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFonts: propAvailableFonts }: TextPropertiesProps) {
+export function TextPropertiesPanel({
+  selectedObject,
+  onUpdateText,
+  availableFonts: propAvailableFonts,
+}: TextPropertiesProps) {
   const [activeTab, setActiveTab] = useState('character');
   const [localAvailableFonts, setLocalAvailableFonts] = useState<FreepikFont[]>([]);
   const fontManager = FreepikFontManagerOptimized.getInstance();
@@ -84,13 +88,14 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
     if (!propAvailableFonts) {
       const loadAvailableFonts = () => {
         const loadedFontNames = fontManager.getLoadedFonts();
-        const freepikFontsAvailable = freepikFonts.filter(f => loadedFontNames.includes(f.value));
+        const freepikFontsAvailable = freepikFonts.filter((f) => loadedFontNames.includes(f.value));
         const systemFonts = SYSTEM_FONTS;
         // Combine Freepik + system fonts, removendo duplicatas
         const allFonts = [
           ...freepikFontsAvailable,
           ...systemFonts.filter(
-            (sysFont) => !freepikFontsAvailable.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
+            (sysFont) =>
+              !freepikFontsAvailable.some((fpFont: FreepikFont) => fpFont.value === sysFont.value),
           ),
         ];
         setLocalAvailableFonts(allFonts);
@@ -136,25 +141,27 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
     // CRITICAL FIX: For fontFamily, handle new font structure with weight and style
     if (property === 'fontFamily') {
       console.log(`🎨 [TextPropertiesPanel] Applying Freepik font: ${value}`);
-      
+
       // Find the selected font to get weight and style
-      const selectedFont = allFonts.find(font => 
-        font.value === value || font.label === value
+      const selectedFont = allFonts.find(
+        (font) => font.value === value || font.label === value,
       ) as FreepikFont;
-      
+
       if (selectedFont) {
         // Use originalValue for CSS application, or fallback to value
         const finalFontFamily = selectedFont.originalValue || selectedFont.value;
         const fontWeight = selectedFont.weight || 400;
         const fontStyle = selectedFont.style || 'normal';
-        
-        console.log(`🎯 Applying font: ${finalFontFamily} (weight: ${fontWeight}, style: ${fontStyle})`);
-        
+
+        console.log(
+          `🎯 Applying font: ${finalFontFamily} (weight: ${fontWeight}, style: ${fontStyle})`,
+        );
+
         // Apply all font properties together
-        onUpdateText({ 
+        onUpdateText({
           fontFamily: finalFontFamily,
           fontWeight: fontWeight,
-          fontStyle: fontStyle
+          fontStyle: fontStyle,
         });
       } else {
         // Fallback for system fonts or missing fonts
@@ -221,10 +228,7 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
           <div className="flex gap-2 items-end">
             <div className="flex-1 min-w-[200px]">
               <label className="text-xs text-gray-400 mb-1 block">Font</label>
-              <Select
-                value={textProperties.fontFamily}
-                onValueChange={handleFontSelect}
-              >
+              <Select value={textProperties.fontFamily} onValueChange={handleFontSelect}>
                 <SelectTrigger className="w-full h-7 text-xs bg-[#2d2d2d] border-[#4a4a4a] truncate">
                   <SelectValue placeholder="Select Font" className="truncate" />
                 </SelectTrigger>
@@ -248,7 +252,8 @@ export function TextPropertiesPanel({ selectedObject, onUpdateText, availableFon
                         <span className="truncate">{font.label}</span>
                         {(font.weight && font.weight !== 400) || font.style === 'italic' ? (
                           <span className="text-[10px] text-gray-500 ml-2">
-                            {font.weight !== 400 ? font.weight : ''}{font.style === 'italic' ? 'i' : ''}
+                            {font.weight !== 400 ? font.weight : ''}
+                            {font.style === 'italic' ? 'i' : ''}
                           </span>
                         ) : null}
                       </div>

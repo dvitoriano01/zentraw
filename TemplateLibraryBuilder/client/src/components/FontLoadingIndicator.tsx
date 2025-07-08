@@ -1,6 +1,6 @@
 /**
  * 🎨 FONT LOADING INDICATOR OTIMIZADO v2.0
- * 
+ *
  * MELHORIAS:
  * ✅ Progress bar animada
  * ✅ Estatísticas em tempo real
@@ -21,7 +21,7 @@ interface FontLoadingIndicatorOptimizedProps {
 const FontLoadingIndicatorOptimized: React.FC<FontLoadingIndicatorOptimizedProps> = ({
   progress,
   onCancel,
-  showDetails = true
+  showDetails = true,
 }) => {
   const { loaded, total, current, percentage } = progress;
 
@@ -31,47 +31,35 @@ const FontLoadingIndicatorOptimized: React.FC<FontLoadingIndicatorOptimizedProps
         {/* Header */}
         <div className="text-center mb-6">
           <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-            <svg 
-              className="w-8 h-8 text-white animate-spin" 
-              fill="none" 
-              viewBox="0 0 24 24"
-            >
-              <circle 
-                className="opacity-25" 
-                cx="12" 
-                cy="12" 
-                r="10" 
-                stroke="currentColor" 
+            <svg className="w-8 h-8 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
                 strokeWidth="4"
               />
-              <path 
-                className="opacity-75" 
-                fill="currentColor" 
+              <path
+                className="opacity-75"
+                fill="currentColor"
                 d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
-            Carregando Fontes Freepik
-          </h3>
-          <p className="text-gray-600 text-sm">
-            Preparando suas fontes exclusivas...
-          </p>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Carregando Fontes Freepik</h3>
+          <p className="text-gray-600 text-sm">Preparando suas fontes exclusivas...</p>
         </div>
 
         {/* Progress Bar */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-700">
-              Progresso
-            </span>
-            <span className="text-sm font-bold text-purple-600">
-              {percentage}%
-            </span>
+            <span className="text-sm font-medium text-gray-700">Progresso</span>
+            <span className="text-sm font-bold text-purple-600">{percentage}%</span>
           </div>
-          
+
           <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 ease-out"
               style={{ width: `${percentage}%` }}
             >
@@ -105,24 +93,16 @@ const FontLoadingIndicatorOptimized: React.FC<FontLoadingIndicatorOptimizedProps
         {/* Status Messages */}
         <div className="text-center mb-4">
           {percentage < 25 && (
-            <p className="text-sm text-gray-600">
-              🚀 Iniciando carregamento paralelo...
-            </p>
+            <p className="text-sm text-gray-600">🚀 Iniciando carregamento paralelo...</p>
           )}
           {percentage >= 25 && percentage < 75 && (
-            <p className="text-sm text-gray-600">
-              ⚡ Processando fontes em lote...
-            </p>
+            <p className="text-sm text-gray-600">⚡ Processando fontes em lote...</p>
           )}
           {percentage >= 75 && percentage < 100 && (
-            <p className="text-sm text-gray-600">
-              🎯 Finalizando carregamento...
-            </p>
+            <p className="text-sm text-gray-600">🎯 Finalizando carregamento...</p>
           )}
           {percentage === 100 && (
-            <p className="text-sm text-green-600 font-medium">
-              ✅ Carregamento concluído!
-            </p>
+            <p className="text-sm text-green-600 font-medium">✅ Carregamento concluído!</p>
           )}
         </div>
 
@@ -146,7 +126,7 @@ const FontLoadingIndicatorOptimized: React.FC<FontLoadingIndicatorOptimizedProps
               className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
               style={{
                 animationDelay: `${i * 0.1}s`,
-                animationDuration: '0.6s'
+                animationDuration: '0.6s',
               }}
             />
           ))}
@@ -157,4 +137,3 @@ const FontLoadingIndicatorOptimized: React.FC<FontLoadingIndicatorOptimizedProps
 };
 
 export default FontLoadingIndicatorOptimized;
-

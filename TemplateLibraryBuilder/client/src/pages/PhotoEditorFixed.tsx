@@ -40,7 +40,7 @@
 // Sistema original restaurado - funcionava corretamente
 // HOTFIX V1.3.0.d.2: Sistema de cache SEM LOOPS (integração direta)
 import { FreepikFontCacheManager } from '@/utils/FreepikFontCacheManager';
-import { freepikFonts, FreepikFont } from '@/constants/freepikFontsFixed';
+import { freepikFontsSynced, FreepikFont } from '@/constants/freepikFontsSynced';
 import FontLoadingIndicatorV2 from '@/components/FontLoadingIndicatorV2';
 // Importar CSS das fontes Freepik reais
 import '@/styles/freepik-fonts.css';
@@ -304,7 +304,7 @@ const PhotoEditorFixed: React.FC = () => {
           (font) => font.value === properties.fontFamily || font.label === properties.fontFamily,
         );
         if (selectedFont) {
-          selectedObject.set('fontFamily', selectedFont.originalValue || selectedFont.value);
+          selectedObject.set('fontFamily', selectedFont.value);
           selectedObject.set('fontWeight', selectedFont.weight || 400);
           selectedObject.set('fontStyle', selectedFont.style || 'normal');
         } else {
@@ -639,17 +639,30 @@ const PhotoEditorFixed: React.FC = () => {
 
         const groupedFonts = organizeFreepikFontsByFamily(compatibleFonts);
         const basicFonts: FreepikFont[] = [
-          { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
-          { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+          { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial', style: 'normal' },
+          {
+            label: 'Helvetica',
+            value: 'Helvetica',
+            weight: 400,
+            family: 'Helvetica',
+            style: 'normal',
+          },
           {
             label: 'Times New Roman',
             value: 'Times New Roman',
             weight: 400,
             family: 'Times New Roman',
+            style: 'normal',
           },
-          { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
-          { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
-          { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+          { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia', style: 'normal' },
+          { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana', style: 'normal' },
+          {
+            label: 'Trebuchet MS',
+            value: 'Trebuchet MS',
+            weight: 400,
+            family: 'Trebuchet MS',
+            style: 'normal',
+          },
         ];
 
         setAvailableFonts([...groupedFonts, ...basicFonts]);
@@ -657,11 +670,11 @@ const PhotoEditorFixed: React.FC = () => {
         setFontLoadingState({
           isLoading: false,
           loaded: cachedFonts.length,
-          total: freepikFonts.length,
+          total: freepikFontsSynced.length,
           current: 'Carregado do cache!',
         });
 
-        return { loadedFonts: cachedFonts.length, totalFonts: freepikFonts.length };
+        return { loadedFonts: cachedFonts.length, totalFonts: freepikFontsSynced.length };
       }
 
       // OTIMIZAÇÃO 2: Cache não encontrado, carregar normalmente
@@ -715,7 +728,7 @@ const PhotoEditorFixed: React.FC = () => {
 
       console.log('🔍 Verificando disponibilidade ROBUSTA das fontes Freepik...');
 
-      for (const font of freepikFonts) {
+      for (const font of freepikFontsSynced) {
         const isReallyAvailable = testFontAvailability(font.value);
 
         if (isReallyAvailable) {
@@ -738,7 +751,7 @@ const PhotoEditorFixed: React.FC = () => {
         setFontLoadingState({
           isLoading: true,
           loaded: loadedCount,
-          total: freepikFonts.length,
+          total: freepikFontsSynced.length,
           current: `Testando: ${font.label}`,
         });
 
@@ -755,17 +768,30 @@ const PhotoEditorFixed: React.FC = () => {
 
       // Adicionar fontes básicas como fallback
       const basicFonts: FreepikFont[] = [
-        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial', style: 'normal' },
+        {
+          label: 'Helvetica',
+          value: 'Helvetica',
+          weight: 400,
+          family: 'Helvetica',
+          style: 'normal',
+        },
         {
           label: 'Times New Roman',
           value: 'Times New Roman',
           weight: 400,
           family: 'Times New Roman',
+          style: 'normal',
         },
-        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia', style: 'normal' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana', style: 'normal' },
+        {
+          label: 'Trebuchet MS',
+          value: 'Trebuchet MS',
+          weight: 400,
+          family: 'Trebuchet MS',
+          style: 'normal',
+        },
       ];
 
       const allAvailableFonts = [...groupedFonts, ...basicFonts];
@@ -781,12 +807,12 @@ const PhotoEditorFixed: React.FC = () => {
       setFontLoadingState({
         isLoading: false,
         loaded: loadedCount,
-        total: freepikFonts.length,
+        total: freepikFontsSynced.length,
         current: 'Verificação completa!',
       });
 
       console.log(
-        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFonts.length} fontes Freepik REALMENTE carregadas!`,
+        `🎉 [FREEPIK FONTS ORGANIZADAS] ${loadedCount}/${freepikFontsSynced.length} fontes Freepik REALMENTE carregadas!`,
       );
       console.log(`📋 Total de fontes disponíveis: ${allAvailableFonts.length}`);
       console.log('🎨 Fontes Freepik VERIFICADAS:', verifiedFonts);
@@ -797,23 +823,36 @@ const PhotoEditorFixed: React.FC = () => {
         console.warn('⚠️ NENHUMA fonte Freepik foi carregada! Verificar CSS e arquivos de fonte.');
       }
 
-      return { loadedFonts: loadedCount, totalFonts: freepikFonts.length };
+      return { loadedFonts: loadedCount, totalFonts: freepikFontsSynced.length };
     } catch (error) {
       console.error('❌ Erro no carregamento FREEPIK FONTS:', error);
 
       // Fallback: usar apenas fontes básicas
       const fallbackFonts: FreepikFont[] = [
-        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial', style: 'normal' },
+        {
+          label: 'Helvetica',
+          value: 'Helvetica',
+          weight: 400,
+          family: 'Helvetica',
+          style: 'normal',
+        },
         {
           label: 'Times New Roman',
           value: 'Times New Roman',
           weight: 400,
           family: 'Times New Roman',
+          style: 'normal',
         },
-        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia', style: 'normal' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana', style: 'normal' },
+        {
+          label: 'Trebuchet MS',
+          value: 'Trebuchet MS',
+          weight: 400,
+          family: 'Trebuchet MS',
+          style: 'normal',
+        },
       ];
 
       setAvailableFonts(fallbackFonts);
@@ -821,11 +860,11 @@ const PhotoEditorFixed: React.FC = () => {
       setFontLoadingState({
         isLoading: false,
         loaded: 6,
-        total: freepikFonts.length,
+        total: freepikFontsSynced.length,
         current: 'Fallback ativo',
       });
 
-      return { loadedFonts: 6, totalFonts: freepikFonts.length };
+      return { loadedFonts: 6, totalFonts: freepikFontsSynced.length };
     }
   }, []);
 
@@ -844,17 +883,30 @@ const PhotoEditorFixed: React.FC = () => {
 
       // Garantir fontes de fallback sempre
       setAvailableFonts([
-        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial' },
-        { label: 'Helvetica', value: 'Helvetica', weight: 400, family: 'Helvetica' },
+        { label: 'Arial', value: 'Arial', weight: 400, family: 'Arial', style: 'normal' },
+        {
+          label: 'Helvetica',
+          value: 'Helvetica',
+          weight: 400,
+          family: 'Helvetica',
+          style: 'normal',
+        },
         {
           label: 'Times New Roman',
           value: 'Times New Roman',
           weight: 400,
           family: 'Times New Roman',
+          style: 'normal',
         },
-        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia' },
-        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana' },
-        { label: 'Trebuchet MS', value: 'Trebuchet MS', weight: 400, family: 'Trebuchet MS' },
+        { label: 'Georgia', value: 'Georgia', weight: 400, family: 'Georgia', style: 'normal' },
+        { label: 'Verdana', value: 'Verdana', weight: 400, family: 'Verdana', style: 'normal' },
+        {
+          label: 'Trebuchet MS',
+          value: 'Trebuchet MS',
+          weight: 400,
+          family: 'Trebuchet MS',
+          style: 'normal',
+        },
       ]);
     });
   }, [loadFreepikFonts]);
@@ -1490,7 +1542,7 @@ const PhotoEditorFixed: React.FC = () => {
     if (firstVariation) {
       setSelectedFontStyle(firstVariation.style || 'normal');
       updateTextProperties({
-        fontFamily: firstVariation.originalValue || firstVariation.value,
+        fontFamily: firstVariation.value,
         fontWeight: firstVariation.weight || 400,
         fontStyle: firstVariation.style || 'normal',
       });
@@ -1798,7 +1850,8 @@ const PhotoEditorFixed: React.FC = () => {
                   ref={canvasRef}
                   className="shadow-2xl max-w-full max-h-full block relative"
                   style={{
-                    backgroundColor: canvasBackground === 'transparent' ? 'transparent' : canvasBackground,
+                    backgroundColor:
+                      canvasBackground === 'transparent' ? 'transparent' : canvasBackground,
                     zIndex: 1,
                     borderRadius: '4px',
                   }}
@@ -1924,7 +1977,7 @@ const PhotoEditorFixed: React.FC = () => {
                             />
                             <span className="text-xs text-gray-500">{layerOpacity}%</span>
                           </div>
-                                                                     </div>
+                        </div>
 
                         {/* Blend Mode */}
                         <div>

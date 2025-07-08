@@ -1,317 +1,360 @@
-/* FREEPIK FONTS - CSS GERADO AUTOMATICAMENTE (2025-07-03)
-   Apenas fontes realmente presentes em /public/fonts/freepik 
-   
-   CORREÇÃO: Fontes OTF problemáticas usam font-display: optional
-   Para evitar erros "OTS parsing error: invalid sfntVersion"
-   
-   Estratégia: Fallback gracioso para fontes corrompidas
+/* FREEPIK FONTS V1.3.0.c.7 - CSS SINCRONIZADO COM VALORES ÚNICOS
+   🎯 CRÍTICO: font-family deve corresponder exatamente aos valores únicos no array
+   🔄 SINCRONIZADO: Cada variação tem seu próprio font-family único
+   📁 LOCALIZAÇÃO: /public/fonts/freepik/ (servido pelo Vite)
 */
 
+/* Aerohate - Família única */
 @font-face {
-  font-family: 'Aerohate Caps';
+  font-family: 'Aerohate-Caps';
   src: url('/fonts/freepik/aerohate-aerohate-caps.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
+/* Akuina - 4 variações com font-family únicos */
 @font-face {
-  font-family: 'Akuina';
-  src: url('/fonts/freepik/akuina-black-slanted.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
+  font-family: 'Akuina-Regular';
+  src: url('/fonts/freepik/akuina-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Akuina';
+  font-family: 'Akuina-Black';
   src: url('/fonts/freepik/akuina-black.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Akuina';
+  font-family: 'Akuina-Regular-Italic';
   src: url('/fonts/freepik/akuina-regular-slanted.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Akuina';
-  src: url('/fonts/freepik/akuina-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
+  font-family: 'Akuina-Black-Italic';
+  src: url('/fonts/freepik/akuina-black-slanted.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
   font-display: swap;
 }
 
+/* Bestters Supply - Família única */
 @font-face {
-  font-family: 'Bestters Supply';
+  font-family: 'Bestters-Supply';
   src: url('/fonts/freepik/bestters-supply-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Big Bang - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Big Bang';
+  font-family: 'Big-Bang-Italic';
   src: url('/fonts/freepik/big-bang-slant.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Big Bang Swashes';
+  font-family: 'Big-Bang-Swashes';
   src: url('/fonts/freepik/big-bang-swashes.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Fontes únicas - Cada uma com seu font-family único */
 @font-face {
-  font-family: 'Bilground';
+  font-family: 'Bilground-Regular';
   src: url('/fonts/freepik/bilground-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Birthday Dream';
+  font-family: 'Birthday-Dream';
   src: url('/fonts/freepik/birthday-dream-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Bonitalia';
+  font-family: 'Bonitalia-Regular';
   src: url('/fonts/freepik/bonitalia-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Crown Ford';
+  font-family: 'Crown-Ford';
   src: url('/fonts/freepik/crown-ford-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Custody Script';
-  src: url('/fonts/freepik/custody-regular-script.otf') format('opentype');
+  font-family: 'Custody-Script';
+  src: url('/fonts/freepik/custody-regular-script.otf') format('opentype'),
+       url('/fonts/freepik/custody-regular-script.otf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: optional; /* Use optional para evitar flash de texto */
 }
+
 @font-face {
-  font-family: 'Dhaniel';
+  font-family: 'Dhaniel-Regular';
   src: url('/fonts/freepik/dhaniel-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Different Beginning - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Different Beginning';
-  src: url('/fonts/freepik/different-beginning-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Different Beginning';
+  font-family: 'Different-Beginning-Regular';
   src: url('/fonts/freepik/different-beginning-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Facon';
+  font-family: 'Different-Beginning-Bold';
+  src: url('/fonts/freepik/different-beginning-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Facon-Regular';
   src: url('/fonts/freepik/Facon_FREE.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Freedom Standing - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Freedom Standing';
+  font-family: 'Freedom-Standing-ExtraLight';
   src: url('/fonts/freepik/freedom-standing-extra-light.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Freedom Standing';
+  font-family: 'Freedom-Standing-Regular';
   src: url('/fonts/freepik/freedom-standing-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Glitch Goblin';
+  font-family: 'Glitch-Goblin';
   src: url('/fonts/freepik/GlitchGoblin_FREE.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Guthenberg Swashes';
-  src: url('/fonts/freepik/guthenberg-regular-swashes.otf') format('opentype');
+  font-family: 'Guthenberg-Swashes';
+  src: url('/fonts/freepik/guthenberg-regular-swashes.otf') format('opentype'),
+       url('/fonts/freepik/guthenberg-regular-swashes.otf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
 }
+
 @font-face {
-  font-family: 'Hericake';
+  font-family: 'Hericake-Regular';
   src: url('/fonts/freepik/hericake-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Holian';
+  font-family: 'Holian-Regular';
   src: url('/fonts/freepik/holian-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Keep Humble';
+  font-family: 'Keep-Humble';
   src: url('/fonts/freepik/keep-humble-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Magical Sparkle';
+  font-family: 'Magical-Sparkle-Regular';
   src: url('/fonts/freepik/magical-sparkle-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Medium Unique - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Medium Unique';
-  src: url('/fonts/freepik/medium-unique-bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Medium Unique';
+  font-family: 'Medium-Unique-Regular';
   src: url('/fonts/freepik/medium-unique-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Mercy Christole';
+  font-family: 'Medium-Unique-Bold';
+  src: url('/fonts/freepik/medium-unique-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mercy-Christole';
   src: url('/fonts/freepik/mercy-christole-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Milksea';
+  font-family: 'Milksea-Regular';
   src: url('/fonts/freepik/milksea-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Mockatea';
+  font-family: 'Mockatea-Regular';
   src: url('/fonts/freepik/mockatea-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Mofita - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Mofita';
+  font-family: 'Mofita-Regular';
+  src: url('/fonts/freepik/mofita-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mofita-Italic';
   src: url('/fonts/freepik/mofita-italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Mofita';
-  src: url('/fonts/freepik/mofita.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Mongkrain';
-  src: url('/fonts/freepik/mongkrain-regular.otf') format('opentype');
+  font-family: 'Mongkrain-Regular';
+  src: url('/fonts/freepik/mongkrain-regular.otf') format('opentype'),
+       url('/fonts/freepik/mongkrain-regular.otf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
 }
+
 @font-face {
-  font-family: 'Morthwicks';
+  font-family: 'Morthwicks-Regular';
   src: url('/fonts/freepik/morthwicks-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Playride';
+  font-family: 'Playride-Regular';
   src: url('/fonts/freepik/playride-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Retroking';
+  font-family: 'Retroking-Regular';
   src: url('/fonts/freepik/retroking-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'The Beautyline';
+  font-family: 'The-Beautyline';
   src: url('/fonts/freepik/the-beautyline-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Tratags';
+  font-family: 'Tratags-Regular';
   src: url('/fonts/freepik/tratags-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Turbo Type - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Turbo Type';
+  font-family: 'Turbo-Type-Regular';
   src: url('/fonts/freepik/turbo-type-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Turbo Type Two';
+  font-family: 'Turbo-Type-Two';
   src: url('/fonts/freepik/turbo-type-two-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
+/* Urban Starblues - 2 variações com font-family únicos */
 @font-face {
-  font-family: 'Urban Starblues Graffiti';
+  font-family: 'Urban-Starblues-Graffiti';
   src: url('/fonts/freepik/urban-starblues-graffiti-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Urban Starblues Sans';
+  font-family: 'Urban-Starblues-Sans';
   src: url('/fonts/freepik/urban-starblues-sans-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Vibes Arcade';
-  src: url('/fonts/freepik/vibes-arcade-svg.otf') format('opentype');
+  font-family: 'Vibes-Arcade';
+  src: url('/fonts/freepik/vibes-arcade-svg.otf') format('opentype'),
+       url('/fonts/freepik/vibes-arcade-svg.otf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: optional;
 }
+
 @font-face {
-  font-family: 'Watten';
+  font-family: 'Watten-Regular';
   src: url('/fonts/freepik/watten-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;

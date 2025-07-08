@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Fontes Freepik - Valores Únicos</title>
+    <link rel="stylesheet" href="./client/src/styles/freepik-fonts.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
+        }
+        .font-test {
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+        }
+        .font-name {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .font-sample {
+            font-size: 24px;
+            font-weight: inherit;
+            font-style: inherit;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Teste de Fontes Freepik - Valores Únicos V1.3.0.c.7</h1>
+    <p>Verificando se as fontes Freepik estão sendo aplicadas corretamente...</p>
+    
+    <!-- Aerohate -->
+    <div class="font-test">
+        <div class="font-name">Aerohate-Caps</div>
+        <div class="font-sample" style="font-family: 'Aerohate-Caps';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <!-- Akuina Variações -->
+    <div class="font-test">
+        <div class="font-name">Akuina-Regular</div>
+        <div class="font-sample" style="font-family: 'Akuina-Regular';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <div class="font-test">
+        <div class="font-name">Akuina-Black</div>
+        <div class="font-sample" style="font-family: 'Akuina-Black';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <div class="font-test">
+        <div class="font-name">Akuina-Regular-Italic</div>
+        <div class="font-sample" style="font-family: 'Akuina-Regular-Italic';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <div class="font-test">
+        <div class="font-name">Akuina-Black-Italic</div>
+        <div class="font-sample" style="font-family: 'Akuina-Black-Italic';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <!-- Bestters Supply -->
+    <div class="font-test">
+        <div class="font-name">Bestters-Supply</div>
+        <div class="font-sample" style="font-family: 'Bestters-Supply';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <!-- Freedom Standing Variações -->
+    <div class="font-test">
+        <div class="font-name">Freedom-Standing-ExtraLight</div>
+        <div class="font-sample" style="font-family: 'Freedom-Standing-ExtraLight';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <div class="font-test">
+        <div class="font-name">Freedom-Standing-Regular</div>
+        <div class="font-sample" style="font-family: 'Freedom-Standing-Regular';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <!-- Retroking -->
+    <div class="font-test">
+        <div class="font-name">Retroking-Regular</div>
+        <div class="font-sample" style="font-family: 'Retroking-Regular';">The Quick Brown Fox Jumps Over The Lazy Dog</div>
+    </div>
+    
+    <script>
+        console.log('🎯 Teste de fontes Freepik carregado!');
+        
+        // Verificar se as fontes estão disponíveis
+        const fonts = [
+            'Aerohate-Caps',
+            'Akuina-Regular', 
+            'Akuina-Black',
+            'Akuina-Regular-Italic',
+            'Akuina-Black-Italic',
+            'Bestters-Supply',
+            'Freedom-Standing-ExtraLight',
+            'Freedom-Standing-Regular',
+            'Retroking-Regular'
+        ];
+        
+        fonts.forEach(font => {
+            if (document.fonts.check(`16px "${font}"`)) {
+                console.log(`✅ ${font}: Disponível`);
+            } else {
+                console.log(`❌ ${font}: Não disponível`);
+            }
+        });
+    </script>
+</body>
+</html>

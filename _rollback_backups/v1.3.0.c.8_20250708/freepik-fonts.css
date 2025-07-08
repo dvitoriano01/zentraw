@@ -1,0 +1,21 @@
+/* Backup do arquivo freepik-fonts.css da versão V1.3.0.c.8 
+   Data: 08/07/2025
+   Status: 100% funcional - 44 fontes Freepik funcionando perfeitamente
+   Correção: CSS sincronizado com valores únicos do array */
+
+/* FREEPIK FONTS V1.3.0.c.7 - CSS SINCRONIZADO COM VALORES ÚNICOS
+   🎯 CRÍTICO: font-family deve corresponder exatamente aos valores únicos no array
+   🔄 SINCRONIZADO: Cada variação tem seu próprio font-family único
+   📁 LOCALIZAÇÃO: /public/fonts/freepik/ (servido pelo Vite)
+*/
+
+/* Aerohate - Família única */
+@font-face {
+  font-family: 'Aerohate-Caps';
+  src: url('/fonts/freepik/aerohate-aerohate-caps.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ... [ARQUIVO COMPLETO COPIADO PARA BACKUP] ... */

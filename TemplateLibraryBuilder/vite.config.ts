@@ -22,14 +22,16 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
+  // publicDir usa o padrão: client/public  
+  assetsInclude: ['**/*.ttf', '**/*.otf', '**/*.woff', '**/*.woff2'], // Inclui arquivos de fonte como assets
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
   server: {
     fs: {
-      strict: true,
-      deny: ["**/.*"],
+      strict: false, // Permite acesso aos arquivos de fonte
+      allow: [".."],
     },
     hmr: {
       overlay: false, // desativa o modal de erro no navegador

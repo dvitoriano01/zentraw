@@ -23,21 +23,36 @@ Durante o desenvolvimento da V1.3.0.c.9 (melhorias de zoom), o agente reverteu a
 ## ✅ METODOLOGIA OBRIGATÓRIA
 
 ### 1. VERSÃO BASE ATUAL: V1.3.0.c.8
+- **Regra**: Sempre trabalhar sobre a **última versão salva e commitada**
+- **Critério**: Observar primeiro o versionamento, depois última data
+- **Exceção**: Somente com autorização expressa do DEV
 - **Status**: Estável e totalmente funcional
-- **Recursos**: 44 fontes Freepik + otimizações + CSS sincronizado
-- **Qualidade**: Production-ready
-- **Diretriz**: SEMPRE usar como base para novas funcionalidades
+- **Recursos**: 44 fontes Freepik + CSS sincronizado + otimizações
 
-### 2. DESENVOLVIMENTO INCREMENTAL
+### 2. METODOLOGIA CLARA DE VERSIONAMENTO
 ```
-V1.3.0.c.8 (BASE ESTÁVEL)
-    ↓
-V1.3.0.c.9 (+ Zoom Avançado)
-    ↓
-V1.3.0.c.10 (+ Outras melhorias)
+V1.3.0.c.8 (BASE ESTÁVEL) → V1.3.0.c.9 (+ Zoom) → V1.3.0.c.10 (+ Outras melhorias) 
+→ V1.3.0.d.x → V1.3.0.e.x → V1.3.0.f.x → V1.4.0.x.x → V1.5.x.x.x → V2.x.x.x.x
 ```
 
-### 3. APLICAÇÃO DE MELHORIAS
+**Lógica Alfanumérica**: Cada melhoria acrescenta um número ao final do versionamento, que só avança sua "casa" ou progride numericamente após um grupo de implementações estáveis, autorizadas ou sugeridas pelo DEV.
+
+**⚠️ SEMPRE PERGUNTAR ANTES DE MUDAR A VERSÃO!**
+
+### 3. DESENVOLVIMENTO INCREMENTAL
+- **Aplicar melhorias SOMENTE em blocos específicos**
+- **NUNCA sobre o código inteiro**
+- **Exceção**: Rollback solicitado ou EXPRESSAMENTE autorizado pelo DEV em casos críticos
+
+### 4. METODOLOGIA OPERACIONAL
+- ✅ **Trabalhar sobre a última versão salva e commitada** (exceto rollback total)
+- ✅ **Aplicar melhorias incrementalmente** em funções/componentes específicos
+- ✅ **Recuperação específica**: Aplicar UMA melhoria específica sobre a última versão alfanumérica ou verificar com o DEV
+- ✅ **Manter compatibilidade** com recursos existentes
+- ✅ **Documentar cada mudança** sem afetar o código base
+- ❌ **NÃO REVERTER** para versões anteriores por "segurança"
+
+### 5. APLICAÇÃO DE MELHORIAS
 - ✅ **Blocos específicos**: Modificar apenas as funções/componentes necessários
 - ✅ **Preservação**: Manter funcionalidades existentes intactas
 - ✅ **Incrementalidade**: Adicionar, não substituir

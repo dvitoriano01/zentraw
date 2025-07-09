@@ -118,18 +118,29 @@
 - Sempre trabalhar sobre a **versão atual mais avançada**
 
 ### ✅ REGRAS OBRIGATÓRIAS:
-1. **Evolução Incremental**: Aplicar melhorias em blocos específicos
-2. **Preservação de Código**: Não desfazer funcionalidades existentes  
-3. **Versão Base**: Sempre usar a última versão estável commitada
-4. **Rollback Crítico**: Apenas para bugs graves e com autorização
-5. **Documentação**: Cada mudança deve ser documentada sem afetar o código principal
+1. **Versão Base**: Sempre trabalhar sobre a **última versão salva e commitada** (observar primeiro o versionamento, depois última data), salvo exceção expressa com autorização do DEV
+2. **Desenvolvimento Incremental**: Aplicar melhorias **SOMENTE em blocos específicos**. NUNCA sobre o código inteiro, exceto em caso de rollback solicitado ou EXPRESSAMENTE autorizado pelo DEV em casos críticos
+3. **Preservação**: Manter 44 fontes Freepik + otimizações + funcionalidades existentes
+4. **Autorização**: Qualquer rollback deve ser expressamente autorizado pelo DEV
+5. **Documentação**: Cada mudança deve ser documentada com versionamento correto
 
-### 🎯 METODOLOGIA CORRETA:
-- ✅ **Base Atual**: V1.3.0.c.8 (44 fontes Freepik + otimizações)
-- ✅ **Melhorias**: Aplicadas sobre funcionalidades existentes
-- ✅ **Compatibilidade**: Manter recursos já implementados
-- ✅ **Evolução**: Sempre para frente, nunca para trás
-- ❌ **Não Reverter**: Por precaução ou "segurança"
+### 📋 METODOLOGIA CLARA DE VERSIONAMENTO:
+```
+V1.3.0.c.8 (BASE ESTÁVEL) → V1.3.0.c.9 (+ Zoom) → V1.3.0.c.10 (+ Outras melhorias) 
+→ V1.3.0.d.x → V1.3.0.e.x → V1.3.0.f.x → V1.4.0.x.x → V1.5.x.x.x → V2.x.x.x.x
+```
+
+**Lógica Alfanumérica**: Cada melhoria acrescenta um número ao final do versionamento, que só avança sua "casa" ou progride numericamente após um grupo de implementações estáveis, autorizadas ou sugeridas pelo DEV.
+
+**⚠️ SEMPRE PERGUNTAR ANTES DE MUDAR A VERSÃO!**
+
+### 🎯 METODOLOGIA OPERACIONAL:
+- ✅ **Trabalhar sobre a última versão salva e commitada** (exceto rollback total)
+- ✅ **Aplicar melhorias incrementalmente** em funções/componentes específicos
+- ✅ **Recuperação específica**: Aplicar UMA melhoria específica sobre a última versão alfanumérica ou verificar com o DEV
+- ✅ **Manter compatibilidade** com recursos existentes
+- ✅ **Documentar cada mudança** sem afetar o código base
+- ❌ **NÃO REVERTER** para versões anteriores por "segurança"
 
 ### 📋 LIÇÃO APRENDIDA:
 **O rollback não autorizado para V1.3.0.c.3 causou:**

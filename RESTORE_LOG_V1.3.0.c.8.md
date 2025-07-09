@@ -96,17 +96,28 @@ git checkout docs/organize-documentation-structure
 **NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA DO USUÁRIO**
 
 ### ✅ REGRAS OBRIGATÓRIAS:
-1. **Sempre trabalhar com a versão atual** - não reverter por precaução
-2. **Melhorias incrementais** - aplicar em blocos específicos sobre a última versão
-3. **Preservar código principal** - não desfazer funcionalidades existentes
-4. **Rollback apenas em bugs críticos** - e somente para a última versão funcional conhecida
-5. **Autorização obrigatória** - qualquer reversão deve ser expressamente autorizada
+1. **Versão Base**: Sempre trabalhar sobre a **última versão salva e commitada** (observar primeiro o versionamento, depois última data), salvo exceção expressa com autorização do DEV
+2. **Desenvolvimento Incremental**: Aplicar melhorias **SOMENTE em blocos específicos**. NUNCA sobre o código inteiro, exceto em caso de rollback solicitado ou EXPRESSAMENTE autorizado pelo DEV em casos críticos
+3. **Preservação**: Manter 44 fontes Freepik + otimizações + funcionalidades existentes
+4. **Autorização**: Qualquer rollback deve ser expressamente autorizado pelo DEV
+5. **Documentação**: Cada mudança deve ser documentada com versionamento correto
 
-### 🎯 METODOLOGIA CORRETA:
-- ✅ Trabalhar sobre **V1.3.0.c.8** (versão estável atual)
-- ✅ Aplicar melhorias **incrementalmente** em funções/componentes específicos
-- ✅ Manter **compatibilidade** com recursos existentes
-- ✅ Documentar **cada mudança** sem afetar o código base
+### 📋 METODOLOGIA CLARA DE VERSIONAMENTO:
+```
+V1.3.0.c.8 (BASE ESTÁVEL) → V1.3.0.c.9 (+ Zoom) → V1.3.0.c.10 (+ Outras melhorias) 
+→ V1.3.0.d.x → V1.3.0.e.x → V1.3.0.f.x → V1.4.0.x.x → V1.5.x.x.x → V2.x.x.x.x
+```
+
+**Lógica Alfanumérica**: Cada melhoria acrescenta um número ao final do versionamento, que só avança sua "casa" ou progride numericamente após um grupo de implementações estáveis, autorizadas ou sugeridas pelo DEV.
+
+**⚠️ IMPORTANTE**: Sempre perguntar antes de mudar a versão!
+
+### 🎯 METODOLOGIA OPERACIONAL:
+- ✅ **Trabalhar sobre a última versão salva e commitada** (exceto rollback total)
+- ✅ **Aplicar melhorias incrementalmente** em funções/componentes específicos
+- ✅ **Recuperação específica**: Aplicar UMA melhoria específica sobre a última versão alfanumérica ou verificar com o DEV
+- ✅ **Manter compatibilidade** com recursos existentes
+- ✅ **Documentar cada mudança** sem afetar o código base
 - ❌ **NÃO REVERTER** para versões anteriores por "segurança"
 
 ### 🔧 LIÇÃO APRENDIDA:

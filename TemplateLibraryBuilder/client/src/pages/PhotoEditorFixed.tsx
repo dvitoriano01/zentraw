@@ -1,6 +1,14 @@
 /**
  * 🎨 ZENTRAW PHOTO EDITOR V1.3.0.c.8 - FONTES FREEPIK 100% FUNCIONAIS!
  *
+ * 🚨 ALERTA CRÍTICO: NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA
+ * 
+ * ❌ PROIBIÇÃO ABSOLUTA: Rollback não autorizado para V1.3.0.c.3 ou versões anteriores
+ * ✅ REGRA OBRIGATÓRIA: Sempre trabalhar sobre V1.3.0.c.8 (versão atual estável)
+ * 🔄 DESENVOLVIMENTO: Aplicar melhorias incrementalmente em blocos específicos
+ * 🛡️ PRESERVAÇÃO: Manter 44 fontes Freepik funcionais e otimizações existentes
+ * 📋 AUTORIZAÇÃO: Qualquer rollback deve ser expressamente autorizado
+ *
  * 🎉 CORREÇÃO CRÍTICA V1.3.0.c.8 - CSS SINCRONIZADO
  * Data: 08 de julho de 2025
  * Autor: Zentraw Team

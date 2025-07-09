@@ -90,6 +90,36 @@ git checkout docs/organize-documentation-structure
 
 ---
 
+## 🚨 DIRETRIZ CRÍTICA: POLÍTICA DE REVERSÃO
+
+### ❌ PROIBIÇÃO DE REVERSÃO AUTOMÁTICA
+**NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA DO USUÁRIO**
+
+### ✅ REGRAS OBRIGATÓRIAS:
+1. **Sempre trabalhar com a versão atual** - não reverter por precaução
+2. **Melhorias incrementais** - aplicar em blocos específicos sobre a última versão
+3. **Preservar código principal** - não desfazer funcionalidades existentes
+4. **Rollback apenas em bugs críticos** - e somente para a última versão funcional conhecida
+5. **Autorização obrigatória** - qualquer reversão deve ser expressamente autorizada
+
+### 🎯 METODOLOGIA CORRETA:
+- ✅ Trabalhar sobre **V1.3.0.c.8** (versão estável atual)
+- ✅ Aplicar melhorias **incrementalmente** em funções/componentes específicos
+- ✅ Manter **compatibilidade** com recursos existentes
+- ✅ Documentar **cada mudança** sem afetar o código base
+- ❌ **NÃO REVERTER** para versões anteriores por "segurança"
+
+### 🔧 LIÇÃO APRENDIDA:
+**O rollback para V1.3.0.c.3 foi um ERRO que causou perda de funcionalidades:**
+- Perdemos 44 fontes Freepik funcionais
+- Perdemos otimizações de performance
+- Perdemos sincronização CSS aprimorada
+- Criamos retrabalho desnecessário
+
+**SOLUÇÃO**: Sempre evoluir sobre a versão mais avançada estável!
+
+---
+
 ## ✅ STATUS FINAL
 
 **✅ REVERSÃO COMPLETA PARA V1.3.0.c.8**

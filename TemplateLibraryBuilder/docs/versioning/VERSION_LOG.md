@@ -110,10 +110,41 @@
 
 ## 🔄 POLÍTICA DE ROLLBACK
 
+### 🚨 DIRETRIZ CRÍTICA: NUNCA REVERTER SEM AUTORIZAÇÃO
+
+**❌ PROIBIÇÃO ABSOLUTA DE REVERSÃO AUTOMÁTICA**
+- Qualquer reversão deve ser **EXPRESSAMENTE AUTORIZADA** pelo usuário
+- Agentes/desenvolvedores **NÃO PODEM** reverter por conta própria
+- Sempre trabalhar sobre a **versão atual mais avançada**
+
+### ✅ REGRAS OBRIGATÓRIAS:
+1. **Evolução Incremental**: Aplicar melhorias em blocos específicos
+2. **Preservação de Código**: Não desfazer funcionalidades existentes  
+3. **Versão Base**: Sempre usar a última versão estável commitada
+4. **Rollback Crítico**: Apenas para bugs graves e com autorização
+5. **Documentação**: Cada mudança deve ser documentada sem afetar o código principal
+
+### 🎯 METODOLOGIA CORRETA:
+- ✅ **Base Atual**: V1.3.0.c.8 (44 fontes Freepik + otimizações)
+- ✅ **Melhorias**: Aplicadas sobre funcionalidades existentes
+- ✅ **Compatibilidade**: Manter recursos já implementados
+- ✅ **Evolução**: Sempre para frente, nunca para trás
+- ❌ **Não Reverter**: Por precaução ou "segurança"
+
+### 📋 LIÇÃO APRENDIDA:
+**O rollback não autorizado para V1.3.0.c.3 causou:**
+- Perda de 44 fontes Freepik funcionais
+- Perda de otimizações de performance  
+- Perda de sincronização CSS
+- Retrabalho desnecessário
+
+**SOLUÇÃO**: Sempre evoluir incrementalmente sobre a versão mais avançada!
+
 1. **Cópias de Segurança**: Mantidas em `/docs/rollback-copies/`
 2. **Git Tags**: Cada versão é taggeada no Git
 3. **Documentação**: Logs detalhados de cada alteração
 4. **Testes**: Validação antes de cada incremento de versão
+5. **Autorização**: Rollback apenas com permissão expressa
 
 ---
 

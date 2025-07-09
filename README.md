@@ -60,3 +60,31 @@ npm install
 
 # 3. Rode o projeto
 npm run dev
+```
+
+---
+
+## 🚨 DIRETRIZES CRÍTICAS DE DESENVOLVIMENTO
+
+### ❌ PROIBIÇÃO ABSOLUTA: REVERSÃO NÃO AUTORIZADA
+**NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA**
+
+### ✅ REGRAS OBRIGATÓRIAS:
+1. **Versão Base**: Sempre trabalhar sobre V1.3.0.c.8 (versão atual estável)
+2. **Desenvolvimento Incremental**: Aplicar melhorias em blocos específicos
+3. **Preservação**: Manter funcionalidades existentes (44 fontes Freepik, otimizações, etc.)
+4. **Autorização**: Qualquer rollback deve ser expressamente autorizado
+5. **Documentação**: Cada mudança deve ser documentada
+
+### 📋 METODOLOGIA:
+- ✅ Trabalhar sobre a versão mais avançada estável
+- ✅ Aplicar melhorias incrementalmente
+- ✅ Manter compatibilidade com código existente
+- ❌ NÃO reverter por "precaução" ou "segurança"
+
+### 📄 Documentação Completa:
+- `DEVELOPMENT_GUIDELINES.md` - Diretrizes detalhadas
+- `RESTORE_LOG_V1.3.0.c.8.md` - Log de restauração
+- `VERSION_LOG.md` - Histórico de versões
+
+---

@@ -377,6 +377,85 @@ Se algum destes sintomas aparecer novamente:
 
 ---
 
-**📊 Status Final**: Todos os bugs resolvidos via rollback  
-**🎯 Resultado**: Sistema estável v1.3.0.c.1  
-**📝 Documentação**: Completa e organizada
+**📊 Status Final**: Todos os bugs resolvidos  
+**🎯 Versão Atual**: V1.3.0.c.8 (44 fontes Freepik 100% funcionais)  
+**📝 Documentação**: Completa e consolidada em [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md)
+
+---
+
+## 📋 **ATUALIZAÇÃO - PROBLEMAS ADICIONAIS RESOLVIDOS**
+
+### 🔄 **DRAG & DROP LAYERS** (V1.3.0.b.2)
+
+**Problema**: Erro "Unable to find draggable with id" no react-beautiful-dnd
+
+**Solução Final**:
+```typescript
+// ✅ IDs estáveis para objetos
+if (!obj.layerId) {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 10);
+  obj.layerId = `${obj.type}-${timestamp}-${random}`;
+}
+
+// ✅ Busca por objeto via ID real
+const objectToMove = objects.find(obj => obj.layerId === draggableId);
+```
+
+**Resultado**: 100% funcional, sem erros de sincronização
+
+### 🔤 **EVOLUÇÃO DAS FONTES FREEPIK**
+
+**V1.3.0.c.1 → c.3**: 7 → 20 fontes  
+**V1.3.0.c.3 → c.7**: 20 → 44 fontes  
+**V1.3.0.c.7 → c.8**: 44 fontes genéricas → 44 fontes Freepik reais  
+
+**Solução V1.3.0.c.8**: CSS sincronizado com valores únicos
+```css
+@font-face {
+  font-family: 'Akuina-Regular';
+  src: url('/fonts/freepik/akuina-regular.ttf') format('truetype');
+}
+```
+
+### 🎨 **BACKGROUND TRANSPARENTE** (V1.3.0.c.3)
+
+**Problema**: Background branco forçado, sem suporte a transparência
+
+**Solução**: Checkerboard pattern + background transparente
+```typescript
+const checkerboardStyle = {
+  backgroundImage: `linear-gradient(45deg, #f0f0f0 25%, transparent 25%)...`,
+  backgroundSize: '20px 20px'
+};
+```
+
+### 📝 **PROPRIEDADES DE TEXTO** (V1.3.0.c.8)
+
+**Problema**: Propriedades não aplicavam consistentemente
+
+**Solução**: Aplicação direta + sincronização
+```typescript
+const applyTextProperty = (property: string, value: any) => {
+  selectedObject.set(property, value);
+  selectedObject.setCoords();
+  fabricCanvasRef.current.renderAll();
+  saveState();
+};
+```
+
+---
+
+## 🏆 **REFERÊNCIA PRINCIPAL**
+
+Para **TODAS as soluções definitivas**, consulte:  
+📋 [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md)
+
+Este documento contém:
+- ✅ Código exato de todas as correções
+- 📊 Evolução completa de cada problema
+- 🎯 Checklist de validação
+- 🚨 Diretrizes anti-rollback
+- 📁 Arquivos críticos e localizações
+
+---

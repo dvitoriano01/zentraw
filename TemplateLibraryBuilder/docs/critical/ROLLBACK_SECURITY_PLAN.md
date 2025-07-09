@@ -1,6 +1,6 @@
 # 🛡️ ZENTRAW SaaS - PLANO DE ROLLBACK E SEGURANÇA
 
-## Versão: V1.3.0.d.1 | Data: 03/07/2025
+## Versão: V1.3.0.c.8 | Data: 09/07/2025
 
 ---
 

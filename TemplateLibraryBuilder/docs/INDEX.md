@@ -1,53 +1,80 @@
 # 📖 Zentraw Documentation Index
 
-**Navegação rápida por todos os documentos da base de conhecimento**
+**Navegação rápida por todos os documentos da base de conhecimento**  
+**Versão**: V1.3.0.c.8 | **Data**: 09/07/2025 | **Status**: Organizado e Consolidado
+
+---
+
+## � **DOCUMENTOS CRÍTICOS** (Raiz - Acesso Rápido)
+
+### 📋 **Leitura Obrigatória**
+| Arquivo | Descrição | Prioridade |
+|---------|-----------|------------|
+| [`README.md`](README.md) | Visão geral e diretrizes críticas | ⭐⭐⭐ |
+| [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) | Resumo executivo das soluções | ⭐⭐⭐ |
+| [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) | Log cronológico completo | ⭐⭐⭐ |
+| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de mudanças | ⭐⭐ |
+
+---
+
+## 📁 **ESTRUTURA ORGANIZADA POR CATEGORIA**
+
+### � [`critical/`](critical/) - Questões Críticas
+- `CORRECAO_CRITICA_V1.3.0.c.6-FIXED.md` - Correção crítica implementada
+- `CRITICAL_ISSUES_REPORT.md` - Relatório de problemas críticos
+- `ROLLBACK_SECURITY_PLAN.md` - Plano de segurança para rollbacks
+
+### 🔤 [`fonts/`](fonts/) - Sistema de Fontes
+- `FONT_DROPDOWN_OPTIMIZATION_v1.3.0.d.3.md` - Otimização do dropdown
+- `FONT_FIX_SUMMARY_v1.3.0.d.3-hotfix.md` - Resumo das correções
+- `FONT_OPTIMIZATION_REPORT_v1.3.0.d.3.md` - Relatório de otimização
+- `FREEPIK_FONTS_ANALYSIS.md` - Análise das fontes Freepik
+- `MULTI_FAMILY_FONT_FIX_v1.3.0.d.3.md` - Correção multi-família
+
+### 🛠️ [`implementations/`](implementations/) - Implementações Técnicas
+- `font-system-rollback.md` - Rollback do sistema de fontes
+- `undo-redo-stabilization.md` - Estabilização do Ctrl+Z
+- `selection-fixes.md` - Correções do sistema de seleção
+- `IMPLEMENTATION_PLAN_V1.3.0.d.2.md` - Plano de implementação
+- `IMPLEMENTATION_REPORT_V1.3.0.d.2.md` - Relatório de implementação
+
+### 🔧 [`maintenance/`](maintenance/) - Manutenção e Status
+- `CLEANUP_REPORT.md` - Relatório de limpeza do ambiente
+- `STATUS_ATUAL_2025-07-05.md` - Status atual do projeto
+
+### 📊 [`versioning/`](versioning/) - Controle de Versão
+- `VERSION_LOG.md` - Log detalhado de versionamento
+- Histórico completo de versões e mudanças
+
+### 🔍 [`troubleshooting/`](troubleshooting/) - Diagnóstico
+- `regression-analysis.md` - Análise de regressões
+- `font-loading-issues.md` - Problemas de carregamento de fontes
+- `canvas-interaction-bugs.md` - Bugs de interação do canvas
+
+### 📈 [`reports/`](reports/) - Relatórios
+- Relatórios de performance e análises técnicas
+
+### 🏗️ [`architecture/`](architecture/) - Arquitetura
+- Documentação da arquitetura do sistema
+
+### 📦 [`archive/`](archive/) - Arquivos Arquivados
+- Documentos históricos e versões antigas
+
+---
 
 ## 🚀 **INÍCIO RÁPIDO**
 
 ### Para Desenvolvedores Novos
-
-1. 📋 [`README.md`](README.md) - Visão geral da documentação
-2. ⭐ [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Resumo das soluções (OBRIGATÓRIO)
-3. 🚨 [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Histórico completo dos problemas
+1. 📋 [`README.md`](README.md) - **Diretrizes críticas e visão geral**
+2. ⭐ [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - **Resumo das soluções (OBRIGATÓRIO)**
+3. 🚨 [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - **Histórico completo dos problemas**
+4. 🔤 [`fonts/`](fonts/) - **Sistema de fontes Freepik**
 
 ### Para AIs/Assistentes
-
-1. 📋 [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Contexto principal
-2. 🔍 [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - Análise detalhada
-3. 🛠️ [`implementations/`](implementations/) - Soluções técnicas específicas
-
----
-
-## 📁 **DOCUMENTOS POR CATEGORIA**
-
-### 📋 **Documentos Principais** (Leitura Obrigatória)
-
-| Arquivo                                            | Descrição                                   | Prioridade |
-| -------------------------------------------------- | ------------------------------------------- | ---------- |
-| [`README.md`](README.md)                           | Visão geral e estrutura da documentação     | ⭐⭐⭐     |
-| [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md)       | Resumo executivo das soluções implementadas | ⭐⭐⭐     |
-| [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) | Log cronológico completo dos problemas      | ⭐⭐⭐     |
-| [`CLEANUP_REPORT.md`](CLEANUP_REPORT.md)           | Relatório de limpeza do ambiente            | ⭐⭐       |
-
-### 🛠️ **Implementações Técnicas**
-
-| Arquivo                                                                                    | Descrição                                 | Status          |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------- | --------------- |
-| [`implementations/font-system-rollback.md`](implementations/font-system-rollback.md)       | Rollback do sistema de fontes (20 fontes) | ✅ Implementado |
-| [`implementations/undo-redo-stabilization.md`](implementations/undo-redo-stabilization.md) | Estabilização do Ctrl+Z                   | ✅ Implementado |
-| [`implementations/selection-fixes.md`](implementations/selection-fixes.md)                 | Correções do sistema de seleção           | ✅ Implementado |
-
-### 🔧 **Troubleshooting e Diagnóstico**
-
-| Arquivo                                                                                    | Descrição                       | Tipo        |
-| ------------------------------------------------------------------------------------------ | ------------------------------- | ----------- |
-| [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md)         | Análise completa das regressões | Análise     |
-| [`troubleshooting/font-loading-issues.md`](troubleshooting/font-loading-issues.md)         | Problemas específicos de fontes | Debug Guide |
-| [`troubleshooting/canvas-interaction-bugs.md`](troubleshooting/canvas-interaction-bugs.md) | Bugs de interação do canvas     | Debug Guide |
-
-### 📈 **Versionamento e Histórico**
-
-| Arquivo                                                              | Descrição                      | Versão     |
+1. 📋 [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - **Contexto principal**
+2. 🔍 [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - **Análise detalhada**
+3. 🛠️ [`implementations/`](implementations/) - **Soluções técnicas específicas**
+4. 🚨 [`critical/`](critical/) - **Questões críticas**
 | -------------------------------------------------------------------- | ------------------------------ | ---------- |
 | [`versions/v1.3.0.c.1-rollback.md`](versions/v1.3.0.c.1-rollback.md) | Documentação do rollback atual | v1.3.0.c.1 |
 | [`versions/version-history.md`](versions/version-history.md)         | Histórico completo de versões  | Todas      |

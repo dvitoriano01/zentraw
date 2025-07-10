@@ -331,7 +331,6 @@ const reorderLayers = (fromIndex: number, toIndex: number) => {
   {/* Conteúdo do layer */}
 </div>
 ```
-```
 
 ### 📈 **RESULTADOS**
 - **Antes**: Erro constante "Unable to find draggable with id"
@@ -652,3 +651,181 @@ Se algo quebrar, seguir EXATAMENTE esta ordem:
 **📋 Versão Base**: V1.3.0.c.8 (44 fontes 100% funcionais)
 
 **🔥 LEMBRE-SE**: Este é o documento DEFINITIVO. Se há dúvida sobre uma solução, a resposta está aqui!
+
+---
+
+## 🛠️ **STACK TECNOLÓGICO COMPLETO**
+
+### 🎯 **LINGUAGENS & FRAMEWORKS PRINCIPAIS**
+
+#### **Frontend Core**
+- **TypeScript** `5.6.3` - Linguagem principal (tipagem estática)
+- **React** `^18.3.1` - Framework de interface 
+- **Vite** `^5.4.14` - Build tool e dev server
+- **HTML5** - Estrutura base
+- **CSS3** - Estilos nativos
+
+#### **Canvas & Gráficos**
+- **Fabric.js** `^6.6.7` - Motor de canvas (CRÍTICO - toda funcionalidade do editor)
+- **HTML5 Canvas API** - Renderização nativa
+- **WebGL** - Aceleração gráfica (via Fabric.js)
+
+#### **Backend & Infraestrutura**
+- **Node.js** - Runtime JavaScript
+- **Express.js** `^4.21.2` - Servidor web
+- **TypeScript** - Tipagem para backend
+- **Drizzle ORM** `^0.39.1` - ORM para banco de dados
+- **PostgreSQL** - Banco de dados (via @neondatabase/serverless)
+
+### 📦 **DEPENDÊNCIAS CRÍTICAS**
+
+#### **🎨 UI & Componentes**
+```json
+{
+  "@radix-ui/*": "^1.1.x-2.1.x", // Sistema de componentes base
+  "tailwindcss": "^3.4.17", // Framework CSS utilitário
+  "lucide-react": "^0.453.0", // Ícones
+  "class-variance-authority": "^0.7.1", // Variantes CSS
+  "clsx": "^2.1.1", // Conditional CSS classes
+  "tailwind-merge": "^2.6.0" // Merge de classes Tailwind
+}
+```
+
+#### **🔤 Tipografia & Fontes**
+```json
+{
+  "fontfaceobserver": "^2.3.0", // Carregamento inteligente de fontes
+  "@types/fontfaceobserver": "^2.1.3" // Tipagem TypeScript
+}
+```
+
+#### **🎮 Interatividade**
+```json
+{
+  "react-beautiful-dnd": "^13.1.1", // Drag & Drop (ABANDONADO na V1.3.0.b.2)
+  "framer-motion": "^11.13.1", // Animações
+  "embla-carousel-react": "^8.6.0" // Carrosséis
+}
+```
+
+#### **🔧 Estado & Dados**
+```json
+{
+  "zustand": "^5.0.5", // Gerenciamento de estado global
+  "@tanstack/react-query": "^5.60.5", // Cache e fetch de dados
+  "react-hook-form": "^7.55.0", // Formulários
+  "zod": "^3.24.2" // Validação de esquemas
+}
+```
+
+#### **🌐 Roteamento & Navegação**
+```json
+{
+  "wouter": "^3.3.5" // Roteamento client-side leve
+}
+```
+
+#### **🔒 Autenticação & Sessões**
+```json
+{
+  "passport": "^0.7.0", // Sistema de autenticação
+  "passport-local": "^1.0.0", // Estratégia local
+  "express-session": "^1.18.1", // Gerenciamento de sessões
+  "connect-pg-simple": "^10.0.0" // Armazenamento de sessão PostgreSQL
+}
+```
+
+### 🏗️ **ARQUITETURA DE PROJETO**
+
+#### **Estrutura Principal**
+```
+TemplateLibraryBuilder/
+├── client/               # Frontend React + Vite
+│   ├── src/
+│   │   ├── pages/        # PhotoEditorFixed.tsx (ARQUIVO PRINCIPAL)
+│   │   ├── components/   # Componentes reutilizáveis
+│   │   ├── styles/       # freepik-fonts.css (CRÍTICO)
+│   │   ├── constants/    # freepikFontsFixed.ts (CRÍTICO)
+│   │   ├── hooks/        # Custom hooks React
+│   │   ├── store/        # Zustand stores
+│   │   └── types/        # Definições TypeScript
+│   └── public/           # Assets estáticos + fontes TTF
+├── server/               # Backend Express + TypeScript
+├── shared/               # Código compartilhado
+└── docs/                 # Documentação técnica
+```
+
+#### **Build System**
+- **Vite** - Dev server + bundling
+- **ESBuild** - Transpilação TypeScript rápida
+- **PostCSS** + **Autoprefixer** - Processamento CSS
+- **TypeScript Compiler** - Checagem de tipos
+
+### 🎛️ **FERRAMENTAS DE DESENVOLVIMENTO**
+
+#### **Linting & Formatação**
+```json
+{
+  "eslint": "^9.29.0", // Análise estática de código
+  "@typescript-eslint/*": "^8.35.0", // Regras TypeScript
+  "prettier": "^3.6.0" // Formatação automática
+}
+```
+
+#### **Tipagem & IntelliSense**
+```json
+{
+  "@types/fabric": "^5.3.10", // Tipagem para Fabric.js
+  "@types/react": "^18.3.11", // Tipagem React
+  "@types/node": "20.16.11" // Tipagem Node.js
+}
+```
+
+### 🌟 **INTEGRAÇÃO DE FUNCIONALIDADES**
+
+#### **Sistema de Canvas (CORE)**
+- **Fabric.js 6.6.7** - Motor principal de renderização
+- **Custom hooks** (`useCanvasZoomPan`) - Zoom e pan
+- **Event system** - Seleção, drag & drop, undo/redo
+- **Layer management** - Controle de camadas
+
+#### **Sistema de Fontes**
+- **CSS @font-face** - Declarações de fontes Freepik
+- **FontFaceObserver** - Verificação de carregamento
+- **Cache inteligente** - Evita recarregamentos desnecessários
+
+#### **Armazenamento & Persistência**
+- **Session Storage** - Cache temporário
+- **PostgreSQL** - Dados persistentes
+- **JSON Canvas State** - Serialização do estado do canvas
+
+### 🚨 **DEPENDÊNCIAS CRÍTICAS - NÃO REMOVER**
+
+#### **NUNCA REMOVER:**
+- `fabric` - Motor do editor
+- `fontfaceobserver` - Sistema de fontes
+- `@radix-ui/*` - Componentes base da UI
+- `tailwindcss` - Todo o sistema de estilos
+- `zustand` - Estado global
+- `react` / `react-dom` - Framework core
+
+#### **CUIDADO AO ATUALIZAR:**
+- `fabric` - Mudanças de versão podem quebrar canvas
+- `@types/fabric` - Deve ser compatível com versão do fabric
+- `vite` - Pode afetar imports e bundling
+
+### 📋 **COMANDOS ESSENCIAIS**
+
+#### **Desenvolvimento**
+```bash
+npm run dev:front    # Inicia frontend (Vite)
+npm run dev         # Inicia backend (Express)
+npm run build       # Build completo
+npm run check       # Verificação TypeScript
+```
+
+#### **Gerenciamento**
+```bash
+npm install         # Instala dependências
+npm run db:push     # Migração do banco
+```

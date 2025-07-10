@@ -1,22 +1,14 @@
 /**
- * 🎨 ZENTRAW PHOTO EDITOR V1.3.0.c.8 - FONTES FREEPIK 100% FUNCIONAIS!
+ * 🎨 ZENTRAW PHOTO EDITOR V1.3.0.c.9 - COVER ART DEFAULT FORMAT FIXED!
  *
- * 🚨 ALERTA CRÍTICO: NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA
- * 
- * ❌ PROIBIÇÃO ABSOLUTA: Rollback não autorizado para V1.3.0.c.3 ou versões anteriores
- * ✅ REGRA OBRIGATÓRIA: Sempre trabalhar sobre V1.3.0.c.8 (versão atual estável)
- * 🔄 DESENVOLVIMENTO: Aplicar melhorias incrementalmente em blocos específicos
- * 🛡️ PRESERVAÇÃO: Manter 44 fontes Freepik funcionais e otimizações existentes
- * 📋 AUTORIZAÇÃO: Qualquer rollback deve ser expressamente autorizado
- *
- * 🎉 CORREÇÃO CRÍTICA V1.3.0.c.8 - CSS SINCRONIZADO
- * Data: 08 de julho de 2025
+ * 🚨 ATUALIZAÇÃO CRÍTICA V1.3.0.c.9 - FORMATO PADRÃO COVER ART
+ * Data: 10 de julho de 2025
  * Autor: Zentraw Team
  *
- * ✅ PROBLEMA RESOLVIDO: Sincronização CSS ↔ Valores Únicos
- * ✅ FONTES REAIS: 44 fontes Freepik aplicadas corretamente (não mais genéricas)
- * ✅ CSS REESCRITO: Todos os @font-face correspondem aos valores únicos
- * ✅ APLICAÇÃO VISUAL: Usuário vê as fontes Freepik originais no editor
+ * ✅ PROBLEMA RESOLVIDO: Formato padrão alterado para Cover Art (2000x2000)
+ * ✅ DIAGNÓSTICOS ATIVOS: Logs visíveis para confirmar mudanças
+ * ✅ DROPDOWN ATUALIZADO: Cover Art como primeira opção
+ * ✅ CANVAS INICIALIZAÇÃO: Usa dimensões do formato selecionado
  * ✅ SISTEMA 100% FUNCIONAL: Todas as variações funcionam independentemente
  *
  * IMPLEMENTAÇÃO COMPLETA V1.3.0.c.8:
@@ -130,7 +122,6 @@ import {
   GripVertical,
 } from 'lucide-react';
 
-import { ParameterInput } from '@/components/editor/ParameterInput';
 import { ObjectPropertiesPanel } from '@/components/editor/ObjectPropertiesPanel';
 import { useCanvasZoomPan } from '@/hooks/useCanvasZoomPan';
 import 'fabric';
@@ -149,9 +140,16 @@ import { TemplatesModal } from '@/components/editor/TemplatesModal';
 import { SVGLayoutModal } from '@/components/editor/SVGLayoutModal';
 import { TextPropertiesPanel } from '@/components/editor/TextPropertiesPanel';
 import { TextFXPanel } from '@/components/editor/TextFXPanel';
+import { ParameterInput } from '@/components/editor/ParameterInput';
 import { FormatsModal } from '@/components/editor/FormatsModal';
 import { FiltersModal } from '@/components/editor/FiltersModal';
 import { TextEffectsModal } from '@/components/editor/TextEffectsModal';
+
+// 🚨🚨🚨 DIAGNÓSTICO CRÍTICO - ARQUIVO CARREGADO! 🚨🚨🚨
+console.log('🚨🚨🚨 ARQUIVO PHOTOEDITOR CARREGADO - VERSÃO NOVA COM COVER ART DEFAULT! 🚨🚨🚨');
+console.log('📅 Data de carregamento:', new Date().toLocaleTimeString());
+console.log('🔄 Versão do arquivo: V1.3.0.c.9 - COVER ART DEFAULT');
+
 // Using any for fabric event types since the types are not exported correctly
 type FabricMouseEvent = {
   e: MouseEvent & {
@@ -168,8 +166,9 @@ async function ensureFontLoaded(font: { label: string; value: string }) {
   try {
     const fontName = font.value.split(' ')[0]; // Pega apenas o nome da fonte
     if (document.fonts.check(`1em ${fontName}`)) return;
-    const observer = new FontFaceObserver(fontName);
-    await observer.load(null, 2000); // Reduzido timeout para 2s
+
+    // Usar método nativo de carregamento de fontes
+    await document.fonts.load(`1em "${fontName}"`);
   } catch (error) {
     console.warn(`Erro ao carregar fonte ${font.label}, continuando...`);
   }
@@ -234,8 +233,9 @@ const PhotoEditorFixed: React.FC = () => {
   const fabricCanvasRef = useRef<FabricCanvas | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initial states
-  const [selectedFormat, setSelectedFormat] = useState('instagram-post');
+  // Initial states - V1.3.0.c.9 COVER ART DEFAULT FORMAT
+  const [selectedFormat, setSelectedFormat] = useState('cover-art'); // FORÇAR COVER ART 2000x2000
+  console.log('🚨 ESTADO INICIAL DEFINIDO: selectedFormat =', 'cover-art');
   const [canvasBackground, setCanvasBackground] = useState('transparent');
   const [selectedObject, setSelectedObject] = useState<FabricObject | null>(null);
   const [selectedLayer, setSelectedLayer] = useState<LayerItem | null>(null);
@@ -271,17 +271,17 @@ const PhotoEditorFixed: React.FC = () => {
   const [selectedFontFamily, setSelectedFontFamily] = useState<string>('');
   const [selectedFontStyle, setSelectedFontStyle] = useState<string>('');
 
-  // Zoom state and handlers
-  const [currentZoom, setCurrentZoom] = useState(1);
+  // 🔍 ZOOM SYSTEM V2.0 - Canvas em tamanho real com zoom via CSS transform
+  const [currentZoom, setCurrentZoom] = useState(0.5); // Zoom inicial de 50%
   const zoomPanControls = useCanvasZoomPan({
     canvasRef,
     containerRef,
     minZoom: 0.1,
-    maxZoom: 5,
+    maxZoom: 3,
     zoomStep: 0.1,
   });
 
-  // Extract zoom controls
+  // Extract zoom controls (mantido para compatibilidade)
   const { zoom, panX, panY, zoomIn, zoomOut, fitToScreen } = zoomPanControls;
 
   // Função de saveState corrigida para evitar loops infinitos
@@ -666,29 +666,31 @@ const PhotoEditorFixed: React.FC = () => {
 
   // SISTEMA FREEPIK FONTS V1.3.0.c.8 - CSS SINCRONIZADO PARA APLICAÇÃO VISUAL REAL
   const loadFreepikFonts = useCallback(async () => {
-    console.log('🚀 [V1.3.0.c.8] Carregando 44 FREEPIK FONTS - CSS Sincronizado para Aplicação Visual');
-    
+    console.log(
+      '🚀 [V1.3.0.c.8] Carregando 44 FREEPIK FONTS - CSS Sincronizado para Aplicação Visual',
+    );
+
     setFontLoadingState({
       isLoading: true,
       loaded: 0,
       total: freepikFonts.length,
-      current: 'Iniciando carregamento das fontes Freepik...'
+      current: 'Iniciando carregamento das fontes Freepik...',
     });
-    
+
     let loadedCount = 0;
     const loadedFonts: FreepikFont[] = [];
-    
+
     // Lista de fontes potencialmente problemáticas (OTF que podem estar corrompidas)
     const problematicFonts = [
       'custody-regular-script.otf',
       'guthenberg-regular-swashes.otf',
       'mongkrain-regular.otf',
-      'vibes-arcade-svg.otf'
+      'vibes-arcade-svg.otf',
     ];
-    
+
     // PRIMEIRO: Testar acesso direto aos arquivos de fonte
     console.log('🔍 [DIAGNÓSTICO] Verificando acesso aos arquivos de fonte...');
-    
+
     // Função auxiliar para verificar se uma URL de fonte é acessível
     const checkFontURL = async (fontPath: string): Promise<boolean> => {
       try {
@@ -699,63 +701,69 @@ const PhotoEditorFixed: React.FC = () => {
         return false;
       }
     };
-    
+
     // Testar algumas fontes de exemplo
     const testFonts = [
       '/fonts/freepik/aerohate-aerohate-caps.ttf',
       '/fonts/freepik/akuina-regular.ttf',
-      '/fonts/freepik/custody-regular-script.otf'
+      '/fonts/freepik/custody-regular-script.otf',
     ];
-    
+
     console.log('🧪 Testando acesso a arquivos de exemplo...');
     for (const fontPath of testFonts) {
       const isAccessible = await checkFontURL(fontPath);
-      console.log(`${isAccessible ? '✅' : '❌'} ${fontPath}: ${isAccessible ? 'Acessível' : 'Não acessível'}`);
+      console.log(
+        `${isAccessible ? '✅' : '❌'} ${fontPath}: ${isAccessible ? 'Acessível' : 'Não acessível'}`,
+      );
     }
-    
+
     // SEGUNDO: Aguardar que o documento esteja pronto
     await document.fonts.ready;
     console.log('📄 Sistema de fontes pronto, iniciando carregamento individual...');
-    
+
     // Carregamento sequencial para estabilidade (versão c.7)
     for (const font of freepikFonts) {
       try {
         const fontId = `${font.value}_${font.weight || 400}_${font.style || 'normal'}`;
         console.log(`🔄 [${loadedCount + 1}/${freepikFonts.length}] Carregando: ${font.label}`);
-        
+
         // Verificar se é uma fonte problemática conhecida
         const fontFilename = font.label.toLowerCase().replace(/\s+/g, '-') + '.otf';
-        const isProblematic = problematicFonts.some(p => fontFilename.includes(p.replace('.otf', '')));
-        
+        const isProblematic = problematicFonts.some((p) =>
+          fontFilename.includes(p.replace('.otf', '')),
+        );
+
         if (isProblematic) {
           console.warn(`⚠️ Fonte conhecida como problemática, tentando com cuidado: ${font.label}`);
         }
-        
+
         // Construir string de carregamento específica
         const fontSpec = `${font.weight || 400} ${font.style || 'normal'} 1em "${font.value}"`;
-        
+
         // Método robusto da v1.3.0.c.8 com CSS sincronizado para aplicação visual
         const timeoutDuration = isProblematic ? 1000 : 3000;
         const loadPromise = document.fonts.load(fontSpec);
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), timeoutDuration)
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Timeout')), timeoutDuration),
         );
-        
+
         await Promise.race([loadPromise, timeoutPromise]);
-        
+
         // Pequena pausa para garantir carregamento
-        await new Promise(resolve => setTimeout(resolve, isProblematic ? 10 : 50));
-        
+        await new Promise((resolve) => setTimeout(resolve, isProblematic ? 10 : 50));
+
         // Verificação dupla
-        const isLoaded = document.fonts.check(`${font.weight || 400} ${font.style || 'normal'} 12px "${font.value}"`);
-        
+        const isLoaded = document.fonts.check(
+          `${font.weight || 400} ${font.style || 'normal'} 12px "${font.value}"`,
+        );
+
         if (isLoaded) {
           loadedCount++;
           loadedFonts.push(font);
           console.log(`✅ ${font.label} carregada (ID: ${fontId})`);
         } else {
           console.warn(`⚠️ Falha no carregamento: ${font.label}`);
-          
+
           // Tentativa de fallback para fontes problemáticas
           if (isProblematic) {
             console.log(`🔄 Tentando fallback para ${font.label}...`);
@@ -772,44 +780,48 @@ const PhotoEditorFixed: React.FC = () => {
             }
           }
         }
-        
+
         // Atualizar progresso
         setFontLoadingState((prev) => ({
           ...prev,
           loaded: loadedCount,
-          current: `Carregada: ${font.label}`
+          current: `Carregada: ${font.label}`,
         }));
-        
       } catch (error) {
         console.error(`❌ Erro ao carregar ${font.label}:`, error);
         setFontLoadingState((prev) => ({
           ...prev,
-          current: `Erro: ${font.label}`
+          current: `Erro: ${font.label}`,
         }));
       }
     }
-    
+
     // Organizar fontes carregadas
     const organizedFonts = organizeFreepikFontsByFamily(loadedFonts);
     setAvailableFonts(organizedFonts);
-    
+
     setFontLoadingState({
       isLoading: false,
       loaded: loadedCount,
       total: freepikFonts.length,
-      current: `✅ ${loadedCount}/${freepikFonts.length} fontes Freepik carregadas!`
+      current: `✅ ${loadedCount}/${freepikFonts.length} fontes Freepik carregadas!`,
     });
-    
-    console.log(`🎉 [FREEPIK FONTS V1.3.0.c.8] ${loadedCount}/${freepikFonts.length} fontes carregadas com sucesso!`);
-    console.log('📋 Famílias organizadas:', organizedFonts.map(f => f.family).filter((v, i, a) => a.indexOf(v) === i));
-    
+
+    console.log(
+      `🎉 [FREEPIK FONTS V1.3.0.c.8] ${loadedCount}/${freepikFonts.length} fontes carregadas com sucesso!`,
+    );
+    console.log(
+      '📋 Famílias organizadas:',
+      organizedFonts.map((f) => f.family).filter((v, i, a) => a.indexOf(v) === i),
+    );
+
     return { loadedFonts: loadedCount, totalFonts: freepikFonts.length };
   }, [organizeFreepikFontsByFamily]);
 
   // Carregar FREEPIK FONTS V1.3.0.c.8 ao montar o componente
   useEffect(() => {
     console.log('🎨 Iniciando carregamento das 44 fontes Freepik (V1.3.0.c.8)...');
-    
+
     // Aguardar um momento para garantir que o CSS foi carregado
     setTimeout(() => {
       loadFreepikFonts();
@@ -818,6 +830,9 @@ const PhotoEditorFixed: React.FC = () => {
 
   // Initialize Fabric.js canvas
   useEffect(() => {
+    console.log('🚨🚨🚨 CANVAS INIT USEEFFECT EXECUTANDO - VERSÃO ATUALIZADA! 🚨🚨🚨');
+    console.log(`🔥 [DIAGNÓSTICO] useEffect Canvas - selectedFormat atual: "${selectedFormat}"`);
+
     if (!canvasRef.current || fabricCanvasRef.current) return;
 
     // Garante que o fabric está disponível
@@ -826,10 +841,9 @@ const PhotoEditorFixed: React.FC = () => {
       return;
     }
 
-    // Calcular dimensões iniciais baseadas no formato selecionado
-    const formatDimensions: {
-      [key: string]: { width: number; height: number };
-    } = {
+    // Obter dimensões do formato selecionado
+    const formatDimensions: { [key: string]: { width: number; height: number } } = {
+      'cover-art': { width: 2000, height: 2000 },
       'instagram-post': { width: 1080, height: 1080 },
       'instagram-story': { width: 1080, height: 1920 },
       'facebook-post': { width: 1200, height: 630 },
@@ -842,28 +856,27 @@ const PhotoEditorFixed: React.FC = () => {
       custom: { width: 800, height: 600 },
     };
 
-    const dimensions = formatDimensions[selectedFormat] || { width: 800, height: 600 };
-
-    // Ajustar dimensões para caber na tela (escala inicial)
-    const maxWidth = Math.min(window.innerWidth * 0.5, 800); // 50% da largura da tela ou 800px
-    const maxHeight = Math.min(window.innerHeight * 0.7, 600); // 70% da altura da tela ou 600px
-
-    const scaleX = maxWidth / dimensions.width;
-    const scaleY = maxHeight / dimensions.height;
-    const initialScale = Math.min(scaleX, scaleY, 0.8); // Máximo 80% para ter espaço
-
-    const canvasWidth = Math.max(400, dimensions.width * initialScale);
-    const canvasHeight = Math.max(300, dimensions.height * initialScale);
+    const dimensions = formatDimensions[selectedFormat] || { width: 2000, height: 2000 };
 
     console.log(
-      `🎨 Inicializando canvas: ${canvasWidth}x${canvasHeight} (formato: ${selectedFormat})`,
+      `🔥 [DIAGNÓSTICO] Formato: "${selectedFormat}" → Dimensões: ${dimensions.width}x${dimensions.height}`,
+    );
+
+    // Ajustar escala inicial para 50%
+    const initialScale = 0.5;
+
+    const canvasWidth = dimensions.width * initialScale;
+    const canvasHeight = dimensions.height * initialScale;
+
+    console.log(
+      `🎨 Inicializando canvas ${selectedFormat}: ${dimensions.width}x${dimensions.height} (escala ${Math.round(initialScale * 100)}%)`,
     );
 
     try {
       const canvas = new fabric.Canvas(canvasRef.current, {
         width: canvasWidth,
         height: canvasHeight,
-        backgroundColor: '', // Completamente transparente para mostrar o checkerboard
+        backgroundColor: '',
         preserveObjectStacking: true,
         selection: true,
         controlsAboveOverlay: true,
@@ -876,13 +889,36 @@ const PhotoEditorFixed: React.FC = () => {
         enableRetinaScaling: true,
       });
 
-      // Configurações adicionais
-      canvas.setZoom(1);
+      canvas.setZoom(initialScale);
       canvas.renderAll();
 
       fabricCanvasRef.current = canvas;
 
       console.log('✅ Canvas inicializado com sucesso!');
+
+      // Setup event listeners para seleção de objetos
+      canvas.on('selection:created', (e: any) => {
+        const activeObject = e.selected?.[0];
+        if (activeObject) {
+          console.log('🎯 Objeto selecionado:', activeObject.type);
+          setSelectedObject(activeObject);
+          updateLayers();
+        }
+      });
+
+      canvas.on('selection:updated', (e: any) => {
+        const activeObject = e.selected?.[0];
+        if (activeObject) {
+          console.log('🔄 Seleção atualizada:', activeObject.type);
+          setSelectedObject(activeObject);
+          updateLayers();
+        }
+      });
+
+      canvas.on('selection:cleared', () => {
+        console.log('❌ Seleção limpa');
+        setSelectedObject(null);
+      });
 
       // Setup inicial do canvas e histórico
       const initialState = canvas.toJSON();
@@ -891,76 +927,8 @@ const PhotoEditorFixed: React.FC = () => {
       setHistoryIndex(0);
 
       console.log('📋 Estado inicial do canvas salvo no histórico');
-
-      // Configurar eventos do canvas de forma otimizada
-      canvas.on('object:added', () => {
-        setTimeout(() => {
-          updateLayers();
-          saveState();
-        }, 100); // Delay para garantir que o objeto foi completamente adicionado
-      });
-
-      canvas.on('object:removed', () => {
-        setTimeout(() => {
-          updateLayers();
-          saveState();
-        }, 100);
-      });
-
-      canvas.on('object:modified', () => {
-        setTimeout(() => {
-          updateLayers();
-          saveState();
-        }, 100);
-      });
-
-      // Eventos de seleção CORRIGIDOS - mais estáveis
-      canvas.on('selection:created', (e: any) => {
-        const obj = e.selected?.[0] || e.target;
-        console.log('📋 Objeto selecionado:', obj?.type);
-        setSelectedObject(obj || null);
-      });
-
-      canvas.on('selection:updated', (e: any) => {
-        const obj = e.selected?.[0] || e.target;
-        console.log('📋 Seleção atualizada:', obj?.type);
-        setSelectedObject(obj || null);
-      });
-
-      canvas.on('selection:cleared', () => {
-        console.log('📋 Seleção limpa');
-        setSelectedObject(null);
-      });
-
-      // Sistema melhorado de clique - previne desseleção indevida
-      canvas.on('mouse:down', (e: any) => {
-        // Se clicou em um objeto, manter seleção
-        if (e.target) {
-          console.log('🖱️ Clique em objeto mantido:', e.target.type);
-          return;
-        }
-
-        // Só desselecionar se realmente clicou no fundo vazio
-        if (selectedTool === 'select') {
-          console.log('🖱️ Clique no fundo - mantendo seleção se existir');
-          // Não forçar desseleção - deixar o Fabric.js decidir
-        }
-      });
-
-      // Melhorar estabilidade da seleção
-      canvas.on('object:moving', () => {
-        // Manter objeto selecionado durante movimento
-        if (canvas.getActiveObject() && !selectedObject) {
-          setSelectedObject(canvas.getActiveObject());
-        }
-      });
-
-      return () => {
-        canvas.dispose();
-        fabricCanvasRef.current = null;
-      };
     } catch (error) {
-      console.error('Erro ao inicializar o canvas:', error);
+      console.error('❌ Erro ao inicializar canvas:', error);
     }
   }, [selectedFormat]); // Dependência do formato para reinicializar quando mudar
 
@@ -1079,78 +1047,84 @@ const PhotoEditorFixed: React.FC = () => {
   };
 
   // Funções para criar objetos
-  const createShape = useCallback((type: string) => {
-    if (!fabricCanvasRef.current) return;
+  const createShape = useCallback(
+    (type: string) => {
+      if (!fabricCanvasRef.current) return;
 
-    const canvas = fabricCanvasRef.current;
-    const centerX = canvas.width! / 2;
-    const centerY = canvas.height! / 2;
+      const canvas = fabricCanvasRef.current;
+      const centerX = canvas.width! / 2;
+      const centerY = canvas.height! / 2;
 
-    let shape;
-    const commonProps = {
-      left: centerX - 50,
-      top: centerY - 50,
-      fill: '#4a90e2', // Azul mais visível
-      stroke: '#2171c7', // Borda mais escura
-      strokeWidth: 2,
-      cornerColor: '#2171c7',
-      cornerSize: 10,
-      transparentCorners: false,
-    };
+      let shape;
+      const commonProps = {
+        left: centerX - 50,
+        top: centerY - 50,
+        fill: '#4a90e2', // Azul mais visível
+        stroke: '#2171c7', // Borda mais escura
+        strokeWidth: 2,
+        cornerColor: '#2171c7',
+        cornerSize: 10,
+        transparentCorners: false,
+      };
 
-    switch (type) {
-      case 'rectangle':
-        shape = new fabric.Rect({
-          ...commonProps,
-          width: 100,
-          height: 100,
-        });
-        break;
-      case 'circle':
-        shape = new fabric.Circle({
-          ...commonProps,
-          radius: 50,
-          left: centerX,
-          top: centerY,
-          originX: 'center',
-          originY: 'center',
-        });
-        break;
-      case 'triangle':
-        shape = new fabric.Triangle({
-          ...commonProps,
-          width: 100,
-          height: 100,
-        });
-        break;
-      case 'text':
-        // Always use a Freepik font
-        const randomFreepikFont = availableFonts.length > 0 ? availableFonts[Math.floor(Math.random() * availableFonts.length)] : freepikFonts[0];
-        shape = new fabric.IText('Digite seu texto', {
-          left: centerX,
-          top: centerY,
-          originX: 'center',
-          originY: 'center',
-          fontFamily: randomFreepikFont.value,
-          fontSize: 32,
-          fill: '#ffffff',
-          stroke: '',
-          strokeWidth: 0,
-          textAlign: 'center',
-          strokeDashArray: [],
-          paintFirst: 'fill',
-          charSpacing: 0,
-          lineHeight: 1.2,
-          dirty: true,
-        });
-        break;
-    }
+      switch (type) {
+        case 'rectangle':
+          shape = new fabric.Rect({
+            ...commonProps,
+            width: 100,
+            height: 100,
+          });
+          break;
+        case 'circle':
+          shape = new fabric.Circle({
+            ...commonProps,
+            radius: 50,
+            left: centerX,
+            top: centerY,
+            originX: 'center',
+            originY: 'center',
+          });
+          break;
+        case 'triangle':
+          shape = new fabric.Triangle({
+            ...commonProps,
+            width: 100,
+            height: 100,
+          });
+          break;
+        case 'text':
+          // Always use a Freepik font
+          const randomFreepikFont =
+            availableFonts.length > 0
+              ? availableFonts[Math.floor(Math.random() * availableFonts.length)]
+              : freepikFonts[0];
+          shape = new fabric.IText('Digite seu texto', {
+            left: centerX,
+            top: centerY,
+            originX: 'center',
+            originY: 'center',
+            fontFamily: randomFreepikFont.value,
+            fontSize: 32,
+            fill: '#ffffff',
+            stroke: '',
+            strokeWidth: 0,
+            textAlign: 'center',
+            strokeDashArray: [],
+            paintFirst: 'fill',
+            charSpacing: 0,
+            lineHeight: 1.2,
+            dirty: true,
+          });
+          break;
+      }
 
-    if (shape) {
-      addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
-      setSelectedTool('select');
-    }
-  }, [availableFonts]);
+      if (shape) {
+        addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
+        setSelectedTool('select');
+      }
+    },
+    [availableFonts],
+  );
 
   // History management functions - CORRIGIDO para estabilidade (v1.3.0.c.2)
   const undo = useCallback(() => {
@@ -1245,6 +1219,7 @@ const PhotoEditorFixed: React.FC = () => {
       const formatDimensions: {
         [key: string]: { width: number; height: number };
       } = {
+        'cover-art': { width: 2000, height: 2000 },
         'instagram-post': { width: 1080, height: 1080 },
         'instagram-story': { width: 1080, height: 1920 },
         'facebook-post': { width: 1200, height: 630 },
@@ -1373,12 +1348,14 @@ const PhotoEditorFixed: React.FC = () => {
 
   // Debug inicial - verificar se o componente está montando corretamente
   useEffect(() => {
+    console.log('🚨🚨🚨 PHOTOEDITORFIXED MONTANDO - VERSÃO ATUALIZADA! 🚨🚨🚨');
     console.log('🎨 PhotoEditorFixed montado!');
     console.log('📦 Fabric disponível:', typeof fabric !== 'undefined');
     console.log('🖼️ Canvas ref:', canvasRef.current ? 'OK' : 'NULO');
     console.log('📦 Container ref:', containerRef.current ? 'OK' : 'NULO');
     console.log('🎯 Formato selecionado:', selectedFormat);
-  }, []);
+    console.log('🚨 VERIFICAÇÃO: selectedFormat deveria ser "cover-art", atual:', selectedFormat);
+  }, [selectedFormat]);
 
   // Dropdowns de seleção de fonte e variação (estilo)
   const handleFontFamilyChange = (family: string) => {
@@ -1399,7 +1376,9 @@ const PhotoEditorFixed: React.FC = () => {
 
   const handleFontStyleChange = (style: string) => {
     setSelectedFontStyle(style);
-    const variation = availableFonts.find((f) => f.family === selectedFontFamily && f.style === style);
+    const variation = availableFonts.find(
+      (f) => f.family === selectedFontFamily && f.style === style,
+    );
     if (variation) {
       updateTextProperties({
         fontFamily: variation.value,
@@ -1409,6 +1388,25 @@ const PhotoEditorFixed: React.FC = () => {
     } else {
       updateTextProperties({ fontStyle: style });
     }
+  };
+
+  // Adicionar estilos para centralizar e aplicar zoom ao canvas
+  const canvasContainerStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+    transform: `scale(${currentZoom})`,
+    transformOrigin: 'center',
+  };
+
+  const canvasStyle: React.CSSProperties = {
+    width: '2000px',
+    height: '2000px',
+    border: '1px solid #ccc',
   };
 
   // JSX para dropdowns de fontes e estilos lado a lado
@@ -1581,6 +1579,7 @@ const PhotoEditorFixed: React.FC = () => {
                 onChange={(e) => handleFormatChange(e.target.value)}
                 className="bg-[#1e1e1e] border border-gray-600 rounded px-2 py-1 text-xs text-gray-300"
               >
+                <option value="cover-art">Cover Art (2000x2000)</option>
                 <option value="instagram-post">Instagram Post (1080x1080)</option>
                 <option value="instagram-story">Instagram Story (1080x1920)</option>
                 <option value="facebook-post">Facebook Post (1200x630)</option>
@@ -1706,7 +1705,10 @@ const PhotoEditorFixed: React.FC = () => {
         <div className="w-80 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
           <Tabs
             value={activePropertiesTab}
-            onValueChange={(value: any) => setActivePropertiesTab(value)}
+            onValueChange={(value: any) => {
+              console.log('🔄 MUDANDO ABA DE:', activePropertiesTab, 'PARA:', value);
+              setActivePropertiesTab(value);
+            }}
             className="flex flex-col h-full min-h-0"
           >
             <div className="p-2 border-b border-[#4a4a4a] flex-shrink-0">

@@ -1,77 +1,53 @@
 # 📖 Zentraw Documentation Index
 
-**Navegação rápida por todos os documentos da base de conhecimento**  
-**Versão**: V1.3.0.c.8 | **Data**: 09/07/2025 | **Status**: Organizado e Consolidado
-
----
-
-## � **DOCUMENTOS CRÍTICOS** (Raiz - Acesso Rápido)
-
-### 📋 **Leitura Obrigatória**
-| Arquivo | Descrição | Prioridade |
-|---------|-----------|------------|
-| [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) | **🏆 SOLUÇÕES DEFINITIVAS** - Documento principal | ⭐⭐⭐⭐ |
-| [`README.md`](README.md) | Visão geral e diretrizes críticas | ⭐⭐⭐ |
-| [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) | Resumo executivo das soluções | ⭐⭐⭐ |
-| [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) | Log cronológico completo | ⭐⭐⭐ |
-| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de mudanças | ⭐⭐ |
-
----
-
-## 📁 **ESTRUTURA ORGANIZADA POR CATEGORIA**
-
-### � [`critical/`](critical/) - Questões Críticas
-- `CORRECAO_CRITICA_V1.3.0.c.6-FIXED.md` - Correção crítica implementada
-- `CRITICAL_ISSUES_REPORT.md` - Relatório de problemas críticos
-- `ROLLBACK_SECURITY_PLAN.md` - Plano de segurança para rollbacks
-
-### 🔤 [`fonts/`](fonts/) - Sistema de Fontes
-- `FREEPIK_FONTS_ANALYSIS.md` - Análise das fontes Freepik
-
-### 🛠️ [`implementations/`](implementations/) - Implementações Técnicas
-- `font-system-rollback.md` - Rollback do sistema de fontes
-- `undo-redo-stabilization.md` - Estabilização do Ctrl+Z
-- `selection-fixes.md` - Correções do sistema de seleção
-
-### 🔧 [`maintenance/`](maintenance/) - Manutenção e Status
-- `CLEANUP_REPORT.md` - Relatório de limpeza do ambiente
-- `STATUS_ATUAL_2025-07-05.md` - Status atual do projeto
-
-### 📊 [`versioning/`](versioning/) - Controle de Versão
-- `VERSION_LOG.md` - Log detalhado de versionamento
-- Histórico completo de versões e mudanças
-
-### 🔍 [`troubleshooting/`](troubleshooting/) - Diagnóstico
-- `regression-analysis.md` - Análise de regressões
-- `font-loading-issues.md` - Problemas de carregamento de fontes
-- `canvas-interaction-bugs.md` - Bugs de interação do canvas
-
-### 📈 [`reports/`](reports/) - Relatórios
-- Relatórios de performance e análises técnicas
-
-### 🏗️ [`architecture/`](architecture/) - Arquitetura
-- Documentação da arquitetura do sistema
-
-### 📦 [`archive/`](archive/) - Arquivos Arquivados
-- Documentos históricos e versões antigas
-
----
+**Navegação rápida por todos os documentos da base de conhecimento**
 
 ## 🚀 **INÍCIO RÁPIDO**
 
 ### Para Desenvolvedores Novos
-1. 🏆 [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **SOLUÇÕES DEFINITIVAS (PRIORIDADE #1)**
-2. 📋 [`README.md`](README.md) - **Diretrizes críticas e visão geral**
-3. ⭐ [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - **Resumo das soluções**
-4. 🚨 [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - **Histórico completo dos problemas**
-5. 🔤 [`fonts/`](fonts/) - **Sistema de fontes Freepik**
+
+1. 📋 [`README.md`](README.md) - Visão geral da documentação
+2. ⭐ [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Resumo das soluções (OBRIGATÓRIO)
+3. 🚨 [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Histórico completo dos problemas
 
 ### Para AIs/Assistentes
-1. 🏆 [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **TODAS AS SOLUÇÕES (LEITURA OBRIGATÓRIA)**
-2. 📋 [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - **Contexto atual**
-3. 🔍 [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - **Análise detalhada**
-4. 🛠️ [`implementations/`](implementations/) - **Soluções técnicas específicas**
-5. 🚨 [`critical/`](critical/) - **Questões críticas**
+
+1. 📋 [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Contexto principal
+2. 🔍 [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - Análise detalhada
+3. 🛠️ [`implementations/`](implementations/) - Soluções técnicas específicas
+
+---
+
+## 📁 **DOCUMENTOS POR CATEGORIA**
+
+### 📋 **Documentos Principais** (Leitura Obrigatória)
+
+| Arquivo                                            | Descrição                                   | Prioridade |
+| -------------------------------------------------- | ------------------------------------------- | ---------- |
+| [`README.md`](README.md)                           | Visão geral e estrutura da documentação     | ⭐⭐⭐     |
+| [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md)       | Resumo executivo das soluções implementadas | ⭐⭐⭐     |
+| [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) | Log cronológico completo dos problemas      | ⭐⭐⭐     |
+| [`CLEANUP_REPORT.md`](CLEANUP_REPORT.md)           | Relatório de limpeza do ambiente            | ⭐⭐       |
+
+### 🛠️ **Implementações Técnicas**
+
+| Arquivo                                                                                    | Descrição                                 | Status          |
+| ------------------------------------------------------------------------------------------ | ----------------------------------------- | --------------- |
+| [`implementations/font-system-rollback.md`](implementations/font-system-rollback.md)       | Rollback do sistema de fontes (20 fontes) | ✅ Implementado |
+| [`implementations/undo-redo-stabilization.md`](implementations/undo-redo-stabilization.md) | Estabilização do Ctrl+Z                   | ✅ Implementado |
+| [`implementations/selection-fixes.md`](implementations/selection-fixes.md)                 | Correções do sistema de seleção           | ✅ Implementado |
+
+### 🔧 **Troubleshooting e Diagnóstico**
+
+| Arquivo                                                                                    | Descrição                       | Tipo        |
+| ------------------------------------------------------------------------------------------ | ------------------------------- | ----------- |
+| [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md)         | Análise completa das regressões | Análise     |
+| [`troubleshooting/font-loading-issues.md`](troubleshooting/font-loading-issues.md)         | Problemas específicos de fontes | Debug Guide |
+| [`troubleshooting/canvas-interaction-bugs.md`](troubleshooting/canvas-interaction-bugs.md) | Bugs de interação do canvas     | Debug Guide |
+
+### 📈 **Versionamento e Histórico**
+
+| Arquivo                                                              | Descrição                      | Versão     |
 | -------------------------------------------------------------------- | ------------------------------ | ---------- |
 | [`versions/v1.3.0.c.1-rollback.md`](versions/v1.3.0.c.1-rollback.md) | Documentação do rollback atual | v1.3.0.c.1 |
 | [`versions/version-history.md`](versions/version-history.md)         | Histórico completo de versões  | Todas      |
@@ -82,31 +58,27 @@
 
 ### 🆘 **"Socorro, o sistema está quebrado!"**
 
-1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **SOLUÇÕES DEFINITIVAS (PRIORIDADE #1)**
-2. [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Identificar problema similar
-3. [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - Entender causa raiz
-4. [`implementations/`](implementations/) - Aplicar solução específica
+1. [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Identificar problema similar
+2. [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - Entender causa raiz
+3. [`implementations/`](implementations/) - Aplicar solução específica
 
 ### 🔍 **"Como foi implementada a solução X?"**
 
-1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **SOLUÇÕES CONSOLIDADAS**
-2. [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Visão geral
-3. [`implementations/[feature]-[type].md`](implementations/) - Detalhes técnicos
-4. Código fonte com comentários
+1. [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Visão geral
+2. [`implementations/[feature]-[type].md`](implementations/) - Detalhes técnicos
+3. Código fonte com comentários
 
 ### 🧠 **"Preciso entender o contexto histórico"**
 
-1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **EVOLUÇÃO DOS PROBLEMAS**
-2. [`README.md`](README.md) - Situação atual
-3. [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Timeline completa
-4. [`versions/version-history.md`](versions/version-history.md) - Evolução do sistema
+1. [`README.md`](README.md) - Situação atual
+2. [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Timeline completa
+3. [`versions/version-history.md`](versions/version-history.md) - Evolução do sistema
 
 ### 🚀 **"Quero otimizar/melhorar o sistema"**
 
-1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **CHECKLIST DE VALIDAÇÃO**
-2. [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - O que NÃO fazer
-3. [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Estado atual estável
-4. Planejar mudanças incrementais
+1. [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - O que NÃO fazer
+2. [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Estado atual estável
+3. Planejar mudanças incrementais
 
 ---
 

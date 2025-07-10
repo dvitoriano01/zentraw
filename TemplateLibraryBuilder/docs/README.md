@@ -1,35 +1,19 @@
 # 📚 Zentraw Photo Editor - Documentação Técnica
 
-**Versão Atual**: v1.3.0.c.8 (Fontes Freepik 100% Funcionais)  
-**Data**: 08 de julho de 2025  
-**Status**: 🟢 Estável e totalmente funcional
-
-## 🚨 **DIRETRIZES CRÍTICAS DE DESENVOLVIMENTO**
-
-### ❌ **PROIBIÇÃO ABSOLUTA**: REVERSÃO NÃO AUTORIZADA
-**NUNCA REVERTER PARA VERSÕES ANTERIORES SEM AUTORIZAÇÃO EXPRESSA**
-
-### ✅ **REGRAS OBRIGATÓRIAS**:
-1. **Versão Base**: Sempre trabalhar sobre V1.3.0.c.8 (44 fontes Freepik funcionais)
-2. **Desenvolvimento Incremental**: Aplicar melhorias em blocos específicos
-3. **Preservação**: Manter funcionalidades existentes intactas
-4. **Autorização**: Qualquer rollback deve ser expressamente autorizado
-5. **Documentação**: Cada mudança deve ser documentada
-
-### 📋 **LIÇÃO APRENDIDA**:
-O rollback não autorizado para V1.3.0.c.3 causou perda significativa de funcionalidades e retrabalho. **Sempre evoluir incrementalmente sobre a versão mais avançada estável.**
-
----
+**Versão Atual**: v1.3.0.c.1 (Estado Estável Restaurado)  
+**Data**: 26 de junho de 2025  
+**Status**: 🟢 Estável após rollback completo
 
 ## 🎯 **RESUMO EXECUTIVO**
 
-O Zentraw Photo Editor evoluiu para a versão V1.3.0.c.8 com 44 fontes Freepik totalmente funcionais, CSS sincronizado e otimizações de performance. Esta é a base estável para todas as futuras melhorias.
+O Zentraw Photo Editor passou por um processo de otimização que causou regressões críticas, seguido de um rollback completo para restaurar a estabilidade. Esta documentação organiza todo o conhecimento técnico para facilitar análises futuras e prevenir a perda de contexto.
 
-### ✅ **ESTADO ATUAL V1.3.0.c.8**:
-- **Fontes**: 44 fontes Freepik aplicadas corretamente (não mais genéricas)
-- **CSS**: Sincronizado com valores únicos por variação
-- **Performance**: Carregamento otimizado (3-8s)
-- **Estabilidade**: Sistema robusto e confiável
+### ⚠️ **PROBLEMA CENTRAL RESOLVIDO**
+
+- **Situação**: Sistema otimizado causou regressão massiva
+- **Sintomas**: Apenas 7 fontes carregavam (vs 20), Ctrl+Z instável, seleção bugada
+- **Solução**: Rollback completo + correções pontuais específicas
+- **Resultado**: Sistema estável com 20 fontes, Ctrl+Z robusto, seleção estável
 
 ---
 

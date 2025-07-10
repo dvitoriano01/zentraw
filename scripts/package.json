@@ -1,0 +1,14 @@
+{
+  "name": "zentraw-version-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scripts para atualização automática de versão do Zentraw",
+  "main": "update-version.js",
+  "scripts": {
+    "update": "node update-version.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["zentraw", "version", "automation"],
+  "author": "Zentraw Development Team",
+  "license": "MIT"
+}

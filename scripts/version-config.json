@@ -1,0 +1,40 @@
+{
+  "project": {
+    "name": "Zentraw Photo Editor",
+    "currentVersion": "v1.3.0.c.9",
+    "versionFormat": "v1.3.0.c.{increment}",
+    "autoIncrement": true
+  },
+  "tasks": {
+    "build": {
+      "labelTemplate": "Build Zentraw FREEPIK FONTS ROBUSTAS {version}",
+      "enabled": true
+    },
+    "dev": {
+      "labelTemplate": "Start Zentraw Frontend with FREEPIK FONTS {version}",
+      "enabled": true
+    }
+  },
+  "sources": {
+    "versionFiles": [
+      "docs/v1.3.0.c.9/DEVELOPMENT_PLAN.md",
+      "docs/v1.3.0.c.9/ZOOM_SYSTEM_PHOTOSHOP.md",
+      "client/src/pages/PhotoEditorFixed.tsx",
+      "docs/versioning/VERSION_LOG.md"
+    ],
+    "versionPatterns": [
+      "v1\\.3\\.0\\.c\\.(\\d+)",
+      "version\\s*:\\s*\"?1\\.3\\.0\\.c\\.(\\d+)\"?",
+      "Zentraw.*v1\\.3\\.0\\.c\\.(\\d+)"
+    ]
+  },
+  "hooks": {
+    "preCommit": true,
+    "postBuild": true,
+    "onVersionChange": true
+  },
+  "output": {
+    "verbose": true,
+    "logFile": "scripts/version-update.log"
+  }
+}

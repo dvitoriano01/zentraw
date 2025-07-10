@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build Zentraw FREEPIK FONTS ROBUSTAS v1.3.0.c.3",
+      "label": "Build Zentraw FREEPIK FONTS ROBUSTAS v1.3.0.c.9",
       "type": "shell",
       "command": "npm run build",
       "group": "build",
@@ -10,9 +10,25 @@
       "problemMatcher": ["$tsc"]
     },
     {
-      "label": "Start Zentraw Frontend with FREEPIK FONTS v1.3.0.c.4",
+      "label": "Start Zentraw Frontend with FREEPIK FONTS v1.3.0.c.9",
       "type": "shell",
       "command": "cd TemplateLibraryBuilder && npm run dev:front",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Update Version Labels",
+      "type": "shell",
+      "command": "node scripts/update-version.js",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch Version Changes",
+      "type": "shell",
+      "command": "node scripts/watch-version.js",
       "group": "build",
       "isBackground": true,
       "problemMatcher": []

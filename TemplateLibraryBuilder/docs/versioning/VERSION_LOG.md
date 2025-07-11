@@ -1,8 +1,33 @@
 # 📋 ZENTRAW SaaS - LOG DE VERSIONAMENTO
 
-## Versão Atual: V1.3.0.c.8
-**Data**: 08/07/2025  
-**Status**: Produção (Fontes Freepik 100% Funcionais)
+## 🚨 **CRITICAL ALERT - METODOLOGIA CLARA DE VERSIONAMENTO**
+
+### 📋 **PROGRESSÃO ALFA-NUMÉRICA OFICIAL**
+```
+V1.3.0.c.8 (BASE ESTÁVEL) → V1.3.0.c.9 (+ Zoom) → V1.3.0.c.10 (+ Outras melhorias) 
+→ V1.3.0.d.x → V1.3.0.e.x → V1.3.0.f.x → V1.4.0.x.x → V1.5.x.x.x → V2.x.x.x.x
+```
+
+### ⚠️ **REGRAS OBRIGATÓRIAS**
+- **Versão Base**: Sempre trabalhar sobre a última versão salva e commitada
+- **Desenvolvimento Incremental**: Melhorias SOMENTE em blocos específicos
+- **Preservação**: Manter 44 fontes Freepik + otimizações
+- **Autorização**: Qualquer rollback deve ser expressamente autorizado
+- **Documentação**: Cada mudança deve ser documentada
+- **SEMPRE perguntar antes de mudar versão!**
+
+### 🚨 **REGRAS CRÍTICAS ENCONTRADAS NO CHAT**
+- **"Trabalhar SEMPRE em cima da última versão salva e commitada"**
+- **"Uma melhoria específica pode ser aplicada na última versão alfa-numérica"**
+- **"SEMPRE perguntar antes de mudar versão"**
+- **"Mudanças de versão dependem de autorização/sugestão do DEV"**
+- **"Manter 44 fontes Freepik + otimizações existentes"**
+
+---
+
+## Versão Atual: V1.3.0.c.9
+**Data**: 10/07/2025  
+**Status**: Desenvolvimento (Workspace Optimization + Investigação Bounding Box)
 
 ---
 
@@ -53,67 +78,9 @@
 - ✅ Rollback seguro para V1.3.0.c.7 disponível
 - ✅ Pronto para produção imediata
 
-### V1.3.0.d.2 - OTIMIZAÇÃO DE FONTES IMPLEMENTADA ✅
-**Data**: 03/07/2025  
-**Commit**: `b7a22b7`  
-**Branch**: `feature/font-optimization-v1.3.0.d.2`  
-
-**Otimizações Implementadas**:
-- ✅ **FreepikFontCacheManager**: Cache inteligente com TTL de 24h
-- ✅ **useFontLoader Hook**: Carregamento paralelo com Promise.allSettled
-- ✅ **Timeout System**: 3s por fonte (elimina travamentos)
-- ✅ **FontLoadingIndicatorV2**: Interface otimizada com estatísticas
-- ✅ **Error Handling**: Robusto sem quebrar UX
-- ✅ **Eliminação de Delays**: Remoção dos 20ms × 50 fontes artificiais
-
-**Performance Alcançada**:
-- ⚡ **Tempo**: 15-30s → 3-8s (redução de 50-75%)
-- 💾 **Cache Hit Rate**: 0% → 80%+ (carregamento instantâneo)
-- 🎯 **Taxa de Sucesso**: 50-70% → 90%+
-- 🧠 **Uso de Memória**: Redução significativa
-- 🔄 **Compatibilidade**: 100% com código existente
-
-**Status**: 
-- ✅ Implementação completa sem erros
-- ✅ Modelo Photoshop preservado integralmente
-- ✅ Rollback seguro disponível
-- ⏳ Aguardando validação em produção
-
-### V1.3.0.d.1 - CHECKPOINT INICIAL
-**Data**: 03/07/2025  
-**Commit**: `4577736`  
-**Descrição**: Estado estável antes das otimizações do sistema de fontes
-
-**Arquivos Principais**:
-- ✅ `PhotoEditorFixed.tsx` - Editor principal (estilo Photoshop)
-- ✅ `TextPropertiesPanel.tsx` - Painel de propriedades de texto
-- ✅ Sistema de fontes Freepik funcional (com problemas de performance)
-
-**Status**: 
-- ✅ Funcionalidade base estável
-- ⚠️ Problemas de performance identificados
-- 📋 Plano de otimização documentado
-
 ---
 
-## 🎯 PRÓXIMAS VERSÕES PLANEJADAS
-
-### V1.3.0.d.3 - OTIMIZAÇÕES ESTRUTURAIS (PRÓXIMA)
-**Previsão**: 04/07/2025  
-**Foco**: Lazy loading, virtual scrolling e debouncing
-
-### V1.3.1.r.1 - RELEASE ESTÁVEL
-**Previsão**: 06/07/2025  
-**Foco**: Versão de produção com todas as otimizações testadas
-
----
-
-## 🔄 POLÍTICA DE ROLLBACK
-
-1. **Cópias de Segurança**: Mantidas em `/docs/rollback-copies/`
-2. **Git Tags**: Cada versão é taggeada no Git
-3. **Documentação**: Logs detalhados de cada alteração
-4. **Testes**: Validação antes de cada incremento de versão
+<!-- As versões v1.3.0.d.1, v1.3.0.d.2 e v1.3.0.d.3 foram arquivadas devido a problemas e não fazem parte do fluxo principal. Todo o histórico dessas versões está disponível apenas em docs/archive/manus-versions-dx/ para consulta técnica. -->
 
 ---
 
@@ -270,3 +237,31 @@ JS:    fontFamily: 'Akuina-Regular'  // ← CSS não reconhece
 **🚨 TODAS AS SOLUÇÕES IMPLEMENTADAS, TESTADAS, VALIDADAS E DOCUMENTADAS PARA PREVENÇÃO TOTAL DE RECORRÊNCIA!**
 
 ---
+
+## 🔄 **REGRAS DE TRABALHO COM VERSÕES**
+
+### 📍 **Base de Trabalho**
+1. **Sempre trabalhar** em cima da última versão salva e commitada
+2. **Exceção**: Apenas em caso de rollback total autorizado pelo DEV
+3. **Verificar primeiro**: Versionamento + data de commit antes de iniciar
+
+### 🔧 **Recuperação de Melhorias Específicas**
+1. **Uma melhoria específica**: Aplicar na última versão alfa-numérica
+2. **Consulta obrigatória**: Verificar com MAIN DEV qual melhor opção
+3. **Documentar origem**: De qual versão foi recuperada a melhoria
+
+### 📝 **Melhorias em Versões Antigas**
+1. **Refatoração de bloco específico**: Salvar com progressão numérica após a letra
+2. **Exemplo**: V1.3.0.c.8.1, V1.3.0.c.8.2 (melhorias pontuais na c.8)
+3. **Sempre documentar** o motivo da melhoria retroativa
+
+### ⚠️ **Validações Obrigatórias**
+- [ ] Verificou última versão commitada?
+- [ ] Mudança é em bloco específico apenas?
+- [ ] Tem autorização para mudança de versão?
+- [ ] Documentação será criada?
+- [ ] 44 fontes Freepik preservadas?
+
+---
+
+<!-- As versões v1.3.0.d.x foram arquivadas devido a problemas e não devem constar como melhorias ou sucesso neste log. Todo o histórico dessas versões está disponível apenas em docs/archive/manus-versions-dx/ para consulta técnica. -->

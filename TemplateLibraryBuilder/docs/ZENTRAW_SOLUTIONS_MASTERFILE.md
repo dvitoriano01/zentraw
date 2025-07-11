@@ -1,7 +1,7 @@
 # 🏆 ZENTRAW SOLUTIONS MASTERFILE - SOLUÇÕES DEFINITIVAS
 
 **Documento Vital**: Todas as soluções consolidadas para problemas críticos  
-**Versão**: V1.3.0.c.8 | **Data**: 09/07/2025 | **Status**: Documentação Definitiva
+**Versão**: V1.3.0.c.9 | **Data**: 10/07/2025 | **Status**: Documentação Definitiva
 
 ---
 
@@ -567,6 +567,141 @@ Se algo quebrar, seguir EXATAMENTE esta ordem:
 
 ---
 
+## 🔗 **PROTOCOLO DE INTERAÇÃO ZENTRAW - ANÁLISE ANTES DA AÇÃO**
+
+### 📋 **FLUXO OBRIGATÓRIO DE TRABALHO**
+
+**1. 🔍 ANÁLISE INICIAL (SEMPRE PRIMEIRO)**
+- Verificar estrutura atual do workspace
+- Identificar arquivos principais envolvidos
+- Consultar histórico de mudanças recentes
+- Entender o contexto completo do problema
+
+**2. 🧩 DECOMPOSIÇÃO DO PROBLEMA**
+- Quebrar request em tarefas menores
+- Identificar dependências entre componentes
+- Mapear arquivos que serão alterados
+- Definir sequência lógica de implementação
+
+**3. 🎯 IMPLEMENTAÇÃO CONTROLADA**
+- Fazer uma mudança por vez
+- Testar cada mudança antes da próxima
+- Documentar cada passo realizado
+- Manter logs claros de progresso
+
+**4. ✅ VALIDAÇÃO E DOCUMENTAÇÃO**
+- Testar funcionalidade após cada mudança
+- Confirmar que o problema foi resolvido
+- Documentar solução aplicada
+- Atualizar logs de versão
+
+**5. 📚 ORGANIZAÇÃO DOCUMENTAL**
+- Salvar documentação na pasta docs/ correta
+- Manter raiz apenas para docs estruturais críticas
+- Seguir hierarquia: implementation/ technical/ bug-fixes/ versioning/
+
+---
+
+## 🚨 **REGRAS IMPORTANTES ENCONTRADAS NO CHAT**
+
+### ⚠️ **CRITICAL DEVELOPMENT RULES - METODOLOGIA DEFINIDA**
+
+#### 📋 **REGRA #1: TRABALHO SOBRE ÚLTIMA VERSÃO**
+```
+"Trabalhar SEMPRE em cima da última versão salva e commitada"
+EXCEÇÃO: Rollback total autorizado pelo DEV
+```
+
+#### 📋 **REGRA #2: APLICAÇÃO DE MELHORIAS ESPECÍFICAS**
+```
+"Uma melhoria específica pode ser aplicada na última versão alfa-numérica"
+CONSULTA OBRIGATÓRIA: Verificar com MAIN DEV qual melhor opção
+```
+
+#### 📋 **REGRA #3: METODOLOGIA CLARA DE VERSIONAMENTO**
+```
+"Progressão alfa-numérica clara:
+V1.3.0.c.8 → V1.3.0.c.9 → V1.3.0.c.10 → V1.5.x.x.x → V2.x.x.x.x"
+<!-- As versões v1.3.0.d.x foram arquivadas devido a problemas e não fazem parte do fluxo principal. Consulte docs/archive/manus-versions-dx para histórico técnico. -->
+```
+
+#### 📋 **REGRA #4: AUTORIZAÇÃO OBRIGATÓRIA**
+```
+"SEMPRE perguntar antes de mudar versão"
+"Mudanças de versão dependem de autorização/sugestão do DEV"
+```
+
+#### 📋 **REGRA #5: PRESERVAÇÃO DE FUNCIONALIDADES**
+```
+"Manter 44 fontes Freepik + otimizações existentes"
+"Não quebrar compatibilidade sem autorização"
+```
+
+---
+
+## 🎯 **METODOLOGIA CONSOLIDADA DE TRABALHO**
+
+### 📍 **PROTOCOLO DE DESENVOLVIMENTO**
+1. **VERIFICAR**: Última versão commitada
+2. **IDENTIFICAR**: Bloco específico a melhorar
+3. **CONSULTAR**: DEV sobre abordagem (se necessário)
+4. **IMPLEMENTAR**: Mudanças pontuais e controladas
+5. **TESTAR**: Funcionalidade e compatibilidade
+6. **DOCUMENTAR**: Mudanças realizadas
+7. **VERSIONAR**: Apenas com autorização
+
+### 🔧 **DESENVOLVIMENTO INCREMENTAL**
+- **Aplicar melhorias SOMENTE em blocos específicos**
+- **NUNCA sobre o código inteiro** (exceto rollback autorizado)
+- **Preservar funcionalidades estáveis já implementadas**
+- **Testar sistema de fontes após qualquer mudança**
+
+### 📋 **CHECKLIST OBRIGATÓRIO PRE-IMPLEMENTAÇÃO**
+- [ ] Versão atual identificada e confirmada
+- [ ] Bloco específico a modificar definido
+- [ ] Autorização obtida (se mudança de versão)
+- [ ] Backup de segurança realizado
+- [ ] Plano de rollback definido
+
+---
+
+## 📁 **REGRAS DE ORGANIZAÇÃO DOCUMENTAL**
+
+### 🎯 **ESTRUTURA OBRIGATÓRIA**
+
+**RAIZ DO REPOSITÓRIO** (`/zentraw/`)
+- Apenas documentação ESTRUTURAL e CRÍTICA da plataforma
+- Guias gerais, roadmaps, protocolos principais
+- README.md principal da plataforma
+
+**PASTA DO PROJETO** (`/TemplateLibraryBuilder/docs/`)
+- Toda documentação específica do editor de imagens
+- Subdivisão por categorias organizacionais
+- Histórico completo de mudanças e implementações
+
+### 📂 **CATEGORIAS DOCUMENTAIS**
+
+```
+docs/
+├── implementation/     # Implementações e testes
+├── technical/         # Análises técnicas detalhadas  
+├── bug-fixes/         # Correções de bugs específicos
+├── versioning/        # Changelogs e histórico de versões
+├── architecture/      # Arquitetura e design patterns
+├── troubleshooting/   # Logs de problemas e soluções
+├── rollback/          # Backups e restore logs
+└── critical/          # Documentos de alta prioridade
+```
+
+### ⚠️ **REGRAS CRÍTICAS**
+
+1. **NUNCA** salvar docs temporárias na raiz
+2. **SEMPRE** categorizar por tipo de documento
+3. **SEMPRE** incluir data e versão nos nomes
+4. **SEMPRE** seguir o protocolo de interação
+
+---
+
 ## 📊 **CHECKLIST DE VALIDAÇÃO COMPLETO**
 
 ### ✅ **Fontes (Crítico)**
@@ -619,38 +754,6 @@ Se algo quebrar, seguir EXATAMENTE esta ordem:
 - `docs/rollback-history/ROLLBACK_MASTER_DOCUMENTATION.md`
 - `docs/bug-fixes/BUG_FIXES_MASTER_DOCUMENTATION.md`
 - **Este arquivo**: `docs/ZENTRAW_SOLUTIONS_MASTERFILE.md`
-
----
-
-## 🎯 **PARA DESENVOLVEDORES E AIs**
-
-### 🧠 **LEITURA OBRIGATÓRIA**
-1. **Este arquivo primeiro** - Visão completa das soluções
-2. `docs/SOLUTION_SUMMARY.md` - Contexto atual
-3. `docs/TROUBLESHOOTING_LOG.md` - Histórico detalhado
-4. Implementações específicas conforme necessário
-
-### 🚨 **RED FLAGS - PARAR IMEDIATAMENTE SE:**
-- Console mostra menos de 40 fontes carregadas
-- Aparecem Arial/Times em vez de fontes Freepik reais
-- Ctrl+Z faz tela "sumir" ou apagar objetos
-- Erro "Unable to find draggable with id"
-- Seleção não responde ou desseleciona sozinha
-
-### ✅ **DESENVOLVIMENTO SEGURO**
-- **Sempre**: Testar funcionalidades básicas antes de novas features
-- **Sempre**: Fazer backup antes de mudanças estruturais
-- **Sempre**: Validar contra este checklist após mudanças
-- **Nunca**: Fazer rollback sem consultar este documento
-
----
-
-**📅 Última Atualização**: 09/07/2025  
-**🏆 Status**: Masterfile Completo - Todas as Soluções Consolidadas  
-**🎯 Objetivo**: Zero ambiguidade, máxima eficiência na resolução de problemas  
-**📋 Versão Base**: V1.3.0.c.8 (44 fontes 100% funcionais)
-
-**🔥 LEMBRE-SE**: Este é o documento DEFINITIVO. Se há dúvida sobre uma solução, a resposta está aqui!
 
 ---
 

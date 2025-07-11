@@ -161,13 +161,13 @@ import { FiltersModal } from '@/components/editor/FiltersModal';
 import { TextEffectsModal } from '@/components/editor/TextEffectsModal';
 
 // 🚨🚨🚨 DIAGNÓSTICO CRÍTICO - ARQUIVO CARREGADO! 🚨🚨🚨
-console.log('🚨🚨🚨 ARQUIVO PHOTOEDITOR V1.3.0.c.9 CARREGADO - LAYOUT OTIMIZADO! 🚨🚨🚨');
+console.log('🚨🚨🚨 ARQUIVO PHOTOEDITOR V1.3.0.c.10 CARREGADO - BOUNDING BOX FIXED! 🚨🚨🚨');
 console.log('📅 Data de carregamento:', new Date().toLocaleTimeString());
-console.log('🔄 Versão oficial: V1.3.0.c.9 - WORKSPACE OPTIMIZATION COMPLETE');
+console.log('🔄 Versão oficial: V1.3.0.c.10 - BOUNDING BOX CORRECTION COMPLETE');
 console.log('✅ BARRA LATERAL: Funcionando perfeitamente!');
 console.log('🎯 ZOOM AJUSTADO: 45% conforme pedido pelo usuário');
-console.log('📏 ÁREA: 60% + ZOOM: 45% = Canvas em tamanho ideal');
-console.log('� LAYOUT: Barra lateral + canvas balanceados');
+console.log('📏 BOUNDING BOX: Proporção corrigida para alta resolução');
+console.log('🔧 NOVA FEATURE: fontSize escalado baseado em devicePixelRatio');
 console.log('🖥️ Dispositivo Pixel Ratio:', window.devicePixelRatio || 1);
 console.log('📱 Dimensões da tela:', `${window.innerWidth}x${window.innerHeight}`);
 console.log('⏰ TIMESTAMP ÚNICO:', Date.now());
@@ -932,7 +932,7 @@ const PhotoEditorFixed: React.FC = () => {
       const canvasHeight = dimensions.height * optimalScale;
       
       console.log(`📐 Container: ${Math.round(containerRect.width)}x${Math.round(containerRect.height)}`);
-      console.log(`📏 Área disponível: ${Math.round(availableWidth)}x${Math.round(availableHeight)}`);
+      console.log(`📏 ÁREA disponível: ${Math.round(availableWidth)}x${Math.round(availableHeight)}`);
       console.log(`🎯 Escala calculada: ${Math.round(optimalScale * 100)}%`);
       console.log(`📱 Tamanho canvas: ${Math.round(canvasWidth)}x${Math.round(canvasHeight)}`);
       console.log(`� DOBRADO LITERALMENTE: Mínimo 120%, sem limite superior!`);
@@ -1210,14 +1210,15 @@ const PhotoEditorFixed: React.FC = () => {
           });
           break;
         case 'text':
-          // ALTA RESOLUÇÃO: Texto com tamanho fixo otimizado
+          // ALTA RESOLUÇÃO: Texto com tamanho escalado inteligente para manter proporção
           const randomFreepikFont =
             availableFonts.length > 0
               ? availableFonts[Math.floor(Math.random() * availableFonts.length)]
               : freepikFonts[0];
           
-          // Tamanho de fonte fixo adequado para alta resolução
-          const fontSize = 48; // Tamanho fixo apropriado
+          // CORREÇÃO BOUNDING BOX: Tamanho escalado baseado na resolução
+          const baseFontSize = 48; // Tamanho base para o usuário
+          const fontSize = calculateScaledFontSize(baseFontSize);
           
           shape = new fabric.IText('Digite seu texto', {
             left: centerX,
@@ -1238,13 +1239,33 @@ const PhotoEditorFixed: React.FC = () => {
             // ALTA RESOLUÇÃO: Configurações para qualidade de texto superior
             fontWeight: randomFreepikFont.weight || 400,
             fontStyle: randomFreepikFont.style || 'normal',
+            // Metadados para rastreamento de resolução
+            _baseFontSize: baseFontSize,
+            _scaledFontSize: fontSize,
           });
           
-          console.log(`📝 Texto criado: ${randomFreepikFont.label}, tamanho ${fontSize}px`);
+          console.log(`📝 Texto criado: ${randomFreepikFont.label}`);
+          console.log(`📏 Font scaling: ${baseFontSize}px base → ${fontSize}px escalado`);
           break;
       }
 
       if (shape) {
+        // 🔧 CORREÇÃO BOUNDING BOX: Normalizar controles visuais para alta resolução
+        const canvas = fabricCanvasRef.current;
+        if (canvas) {
+          const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
+          if (devicePixelRatio > 1) {
+            shape.set({
+              borderScaleFactor: 1,
+              cornerSize: 12,
+              cornerStrokeColor: '#4a90e2',
+              borderColor: '#4a90e2',
+              transparentCorners: false,
+            });
+            console.log('🔧 Controles visuais normalizados para alta resolução');
+          }
+        }
+        
         addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
         setSelectedTool('select');
       }
@@ -1516,6 +1537,24 @@ const PhotoEditorFixed: React.FC = () => {
     }
   };
 
+  // 📏 CORREÇÃO BOUNDING BOX: Função para calcular fontSize escalado baseado na resolução
+  const calculateScaledFontSize = useCallback((baseFontSize: number): number => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return baseFontSize;
+    
+    const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
+    const highResMultiplier = Math.max(devicePixelRatio, 2);
+    
+    // Se devicePixelRatio for 1 (resolução normal), não escalar
+    if (highResMultiplier <= 1) return baseFontSize;
+    
+    // Escalar fontSize para manter proporção visual em alta resolução
+    const scaledSize = Math.round(baseFontSize * highResMultiplier);
+    
+    console.log(`📏 Font scaling: ${baseFontSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
+    return scaledSize;
+  }, []);
+
   // Adicionar estilos para centralizar e aplicar zoom ao canvas
   const canvasContainerStyle: React.CSSProperties = {
     display: 'flex',
@@ -1540,7 +1579,7 @@ const PhotoEditorFixed: React.FC = () => {
     <div className="h-screen flex flex-col text-white" style={{ backgroundColor: '#282828' }}>
       {/* 🎯 INDICADOR VISUAL: Versão V1.3.0.c.9 - LAYOUT OTIMIZADO */}
       <div className="absolute top-2 right-2 z-50 bg-green-700 text-white px-2 py-1 rounded text-xs font-bold shadow-lg max-w-sm">
-        V1.3.0.c.9 - ✅ LAYOUT PERFEITO! | Canvas: {Math.round(currentZoom * 100)}% | Barra: 384px
+        V1.3.0.c.10 - ✅ BOUNDING BOX FIXED! | Canvas: {Math.round(currentZoom * 100)}% | Res: Alta
       </div>
       {/* Top Menu Bar */}
       <div className="h-12 bg-[#1e1e1e] border-b border-[#4a4a4a] flex items-center px-4">

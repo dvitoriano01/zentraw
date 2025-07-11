@@ -1,20 +1,21 @@
-# 📖 Zentraw Documentation Index
+# 📖 Zentraw TemplateLibraryBuilder - Documentation Index
 
-**Navegação rápida por todos os documentos da base de conhecimento**
+**Navegação rápida por todos os documentos do editor de imagens**  
+**Versão**: V1.3.0.c.10 | **Data**: 10/07/2025 | **Status**: Organizado
 
-## 🚀 **INÍCIO RÁPIDO**
+---
 
-### Para Desenvolvedores Novos
+## 🎯 **DOCUMENTOS CRÍTICOS** (Leitura Obrigatória)
 
-1. 📋 [`README.md`](README.md) - Visão geral da documentação
-2. ⭐ [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Resumo das soluções (OBRIGATÓRIO)
-3. 🚨 [`TROUBLESHOOTING_LOG.md`](TROUBLESHOOTING_LOG.md) - Histórico completo dos problemas
+### 🔗 **Protocolo e Regras**
+1. 📋 [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **PRINCIPAL** - Soluções definitivas + Protocolo
+2. 🚨 [`critical/ZENTRAW_ORGANIZATIONAL_RULES.md`](critical/ZENTRAW_ORGANIZATIONAL_RULES.md) - Regras organizacionais
+3. � [`README.md`](README.md) - Visão geral da documentação
 
-### Para AIs/Assistentes
-
-1. 📋 [`SOLUTION_SUMMARY.md`](SOLUTION_SUMMARY.md) - Contexto principal
-2. 🔍 [`troubleshooting/regression-analysis.md`](troubleshooting/regression-analysis.md) - Análise detalhada
-3. 🛠️ [`implementations/`](implementations/) - Soluções técnicas específicas
+### 🔧 **Para Desenvolvimento Ativo**
+1. 🎯 [`implementation/`](implementation/) - Implementações e testes recentes
+2. 🔍 [`technical/`](technical/) - Análises técnicas detalhadas  
+3. � [`bug-fixes/`](bug-fixes/) - Correções de problemas específicos
 
 ---
 
@@ -175,6 +176,83 @@
 
 ---
 
-**📅 Última Atualização**: 26/06/2025  
-**📋 Status**: Documentação completa para v1.3.0.c.1  
-**🎯 Objetivo**: Knowledge base completa para manutenção e evolução do sistema
+## 📁 **ESTRUTURA DOCUMENTAL ATUALIZADA**
+
+### 📂 **Categorias Principais**
+
+```
+docs/
+├── 🎯 ZENTRAW_SOLUTIONS_MASTERFILE.md     # DOCUMENTO PRINCIPAL
+├── 📋 INDEX.md                             # Este índice
+├── 📚 README.md                            # Visão geral
+│
+├── 🚨 critical/                            # Documentos críticos
+│   └── ZENTRAW_ORGANIZATIONAL_RULES.md    # Regras organizacionais
+│
+├── 🎯 implementation/                      # Implementações e testes
+│   ├── ZENTRAW_V1.3.0.c.9_COMMIT_SUCCESS.md
+│   ├── ZENTRAW_V1.3.0.c.13_AJUSTES_FINOS_PERFEITOS.md
+│   └── ZENTRAW_V1.3.0.c.12.2_CANVAS_BALANCEADO_TESTE.md
+│
+├── 🔍 technical/                           # Análises técnicas
+│   ├── ZENTRAW_BLEND_MODES_GUIDE.md
+│   ├── ZENTRAW_V1.3.0.c.10_TECHNICAL_GUIDE.md
+│   └── ZENTRAW_V1.3.0.c.9_TECHNICAL_BACKUP.md
+│
+├── 🐛 bug-fixes/                           # Correções específicas
+│   ├── ZENTRAW_V1.3.0.c.10_CANVAS_SIZE_FIX.md
+│   ├── ZENTRAW_V1.3.0.c.10_HOTFIX_CHANGELOG.md
+│   └── ZENTRAW_V1.3.0.c.12.1_CENTRALIZACAO_CORRIGIDA.md
+│
+├── 📊 versioning/                          # Changelogs e histórico
+│   ├── ZENTRAW_V1.3.0.c.10_HIGH_RESOLUTION_CHANGELOG.md
+│   ├── ZENTRAW_V1.3.0.c.12_CANVAS_DOBRADO_CHANGELOG.md
+│   └── ZENTRAW_V1.3.0.c.9_CHANGELOG.md
+│
+├── 🏗️ architecture/                        # Arquitetura e design
+│   ├── ZENTRAW_EDITOR_UNIFICATION_GUIDE.md
+│   └── ZENTRAW_DEVELOPMENT_MASTER_GUIDE.md
+│
+├── 🔧 troubleshooting/                     # Logs de problemas
+│   └── CANVAS_ZOOM_REFACTOR_LOG.md
+│
+└── 🔄 rollback/                           # Backups e restore
+    └── RESTORE_LOG_V1.3.0.c.8.md
+```
+
+### 🎯 **Fluxo de Consulta Recomendado**
+
+**Para Entender o Estado Atual:**
+1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - Soluções definitivas
+2. [`implementation/`](implementation/) - Últimas implementações
+3. [`technical/`](technical/) - Análises técnicas específicas
+
+**Para Resolver Problemas:**
+1. [`critical/ZENTRAW_ORGANIZATIONAL_RULES.md`](critical/ZENTRAW_ORGANIZATIONAL_RULES.md) - Protocolo obrigatório
+2. [`troubleshooting/`](troubleshooting/) - Logs de problemas similares
+3. [`bug-fixes/`](bug-fixes/) - Correções já aplicadas
+
+**Para Desenvolvimento:**
+1. [`architecture/`](architecture/) - Design patterns e estrutura
+2. [`versioning/`](versioning/) - Histórico de mudanças
+3. [`rollback/`](rollback/) - Pontos de restore seguros
+
+---
+
+## ⚠️ **REGRAS DE USO**
+
+### ✅ **SEMPRE**
+- Consultar [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) primeiro
+- Seguir protocolo de análise→implementação→validação  
+- Salvar nova documentação na categoria correta
+- Incluir versão e data nos nomes dos arquivos
+
+### ❌ **NUNCA**
+- Salvar documentação temporária na raiz `/zentraw/`
+- Misturar tipos de documentação nas pastas
+- Implementar sem analisar o contexto completo
+- Pular validação após mudanças
+
+---
+
+*Última atualização: 10/07/2025 - V1.3.0.c.10*

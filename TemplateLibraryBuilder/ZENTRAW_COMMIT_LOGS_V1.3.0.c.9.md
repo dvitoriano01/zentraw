@@ -1,14 +1,18 @@
 # ZENTRAW V1.3.0.c.9 - LOGS E CAMINHOS PARA COMMIT
+
 📅 **Data:** 10/07/2025  
 🎯 **Preparação para commit e branch**
 
 ## 📁 **ARQUIVOS MODIFICADOS**
 
 ### Arquivo Principal:
+
 ```
 TemplateLibraryBuilder/client/src/pages/PhotoEditorFixed.tsx
 ```
+
 **Principais mudanças:**
+
 - Layout container otimizado: `max-w-[calc(100%-448px)]`
 - Barra lateral forçada: `w-96 min-w-[384px]` com largura absoluta
 - Zoom máximo limitado: `maxAllowedZoom = 0.45`
@@ -16,6 +20,7 @@ TemplateLibraryBuilder/client/src/pages/PhotoEditorFixed.tsx
 - High resolution mantido: `devicePixelRatio: highResMultiplier`
 
 ### Arquivos de Documentação Criados:
+
 ```
 TemplateLibraryBuilder/ZENTRAW_V1.3.0.c.9_WORKSPACE_OPTIMIZATION_COMPLETE.md
 TemplateLibraryBuilder/ZENTRAW_V1.3.0.c.15_DEBUG_BARRA_LATERAL.md
@@ -27,6 +32,7 @@ TemplateLibraryBuilder/ZENTRAW_V1.3.0.c.18_LAYOUT_PERFEITO.md
 ## 🔍 **LOGS ATUALIZADOS PARA V1.3.0.c.9**
 
 ### Console Logs:
+
 ```javascript
 console.log('🚨🚨🚨 ARQUIVO PHOTOEDITOR V1.3.0.c.9 CARREGADO - LAYOUT OTIMIZADO! 🚨🚨🚨');
 console.log('🔄 Versão oficial: V1.3.0.c.9 - WORKSPACE OPTIMIZATION COMPLETE');
@@ -36,16 +42,20 @@ console.log('🏆 STATUS: Pronto para produção com ajustes finos pendentes');
 ```
 
 ### Indicador Visual:
+
 ```jsx
-{/* 🎯 INDICADOR VISUAL: Versão V1.3.0.c.9 - LAYOUT OTIMIZADO */}
+{
+  /* 🎯 INDICADOR VISUAL: Versão V1.3.0.c.9 - LAYOUT OTIMIZADO */
+}
 <div className="absolute top-2 right-2 z-50 bg-green-700 text-white...">
   V1.3.0.c.9 - ✅ LAYOUT PERFEITO! | Canvas: {Math.round(currentZoom * 100)}% | Barra: 384px
-</div>
+</div>;
 ```
 
 ## 📊 **ALTERAÇÕES ESPECÍFICAS**
 
 ### 1. Layout Container:
+
 ```tsx
 // ANTES:
 <div className="flex-1 flex flex-col min-h-0">
@@ -55,6 +65,7 @@ console.log('🏆 STATUS: Pronto para produção com ajustes finos pendentes');
 ```
 
 ### 2. Barra Lateral:
+
 ```tsx
 // ANTES:
 <div className="w-96 bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0">
@@ -65,6 +76,7 @@ console.log('🏆 STATUS: Pronto para produção com ajustes finos pendentes');
 ```
 
 ### 3. Canvas Zoom:
+
 ```tsx
 // ANTES:
 setCurrentZoom(initialScale);
@@ -76,12 +88,13 @@ setCurrentZoom(finalZoom);
 ```
 
 ### 4. Canvas Área:
+
 ```tsx
 // ANTES:
 const availableWidth = containerRect.width * 0.85;
 
 // DEPOIS:
-const availableWidth = containerRect.width * 0.60;
+const availableWidth = containerRect.width * 0.6;
 ```
 
 ## 🎯 **COMANDO DE COMMIT SUGERIDO**
@@ -92,7 +105,7 @@ git add TemplateLibraryBuilder/ZENTRAW_V1.3.0.c.9_WORKSPACE_OPTIMIZATION_COMPLET
 git commit -m "feat(photo-editor): Complete workspace optimization V1.3.0.c.9
 
 ✅ Professional layout with sidebar always visible (384px fixed width)
-✅ Canvas balanced at 45% max zoom for optimal workspace usage  
+✅ Canvas balanced at 45% max zoom for optimal workspace usage
 ✅ High resolution canvas with devicePixelRatio optimization maintained
 ✅ Stable zoom system using CSS transforms only (no Fabric.js conflicts)
 ✅ Layout constraints: max-w-[calc(100%-448px)] for canvas container

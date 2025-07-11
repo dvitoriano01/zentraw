@@ -1163,6 +1163,69 @@ const PhotoEditorFixed: React.FC = () => {
     }
   };
 
+  // 📏 CORREÇÃO BOUNDING BOX: Função para calcular fontSize escalado baseado na resolução
+  const calculateScaledFontSize = useCallback((baseFontSize: number): number => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return baseFontSize;
+    
+    const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
+    const highResMultiplier = Math.max(devicePixelRatio, 2);
+    
+    // Se devicePixelRatio for 1 (resolução normal), não escalar
+    if (highResMultiplier <= 1) return baseFontSize;
+    
+    // Escalar fontSize para manter proporção visual em alta resolução
+    const scaledSize = Math.round(baseFontSize * highResMultiplier);
+    
+    console.log(`📏 Font scaling: ${baseFontSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
+    return scaledSize;
+  }, []);
+
+  // 📐 CORREÇÃO BOUNDING BOX: Função para calcular tamanhos de shapes escalados baseado na resolução
+  const calculateScaledShapeSize = useCallback((baseSize: number): number => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return baseSize;
+    
+    const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
+    const highResMultiplier = Math.max(devicePixelRatio, 2);
+    
+    // Se devicePixelRatio for 1 (resolução normal), não escalar
+    if (highResMultiplier <= 1) return baseSize;
+    
+    // Escalar tamanho do shape para manter proporção visual em alta resolução
+    const scaledSize = Math.round(baseSize * highResMultiplier);
+    
+    console.log(`📐 Shape scaling: ${baseSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
+    return scaledSize;
+  }, []);
+
+  // 🔧 CORREÇÃO BOUNDING BOX: Função para melhorar controles de imagens e todos os elementos
+  const enhanceElementControls = useCallback((element: any): void => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+
+    const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
+    const highResMultiplier = Math.max(devicePixelRatio, 2);
+
+    // Controles mais visíveis e proporcionais
+    const scaledCornerSize = Math.max(14, 14 * highResMultiplier);
+    const scaledBorderWidth = Math.max(3, 3 * highResMultiplier);
+
+    element.set({
+      borderScaleFactor: 1,
+      cornerSize: scaledCornerSize,
+      cornerStrokeColor: '#4a90e2',
+      borderColor: '#4a90e2',
+      transparentCorners: false,
+      borderOpacityWhenMoving: 0.9,
+      cornerStyle: 'rect',
+      borderDashArray: [8, 4], // Linha tracejada mais visível
+      selectionBackgroundColor: 'rgba(74, 144, 226, 0.1)', // Fundo de seleção sutil
+    });
+
+    console.log(`🔧 Controles aprimorados para ${element.type}: cornerSize=${scaledCornerSize}px`);
+  }, []);
+
   // Funções para criar objetos
   const createShape = useCallback(
     (type: string) => {
@@ -1173,9 +1236,16 @@ const PhotoEditorFixed: React.FC = () => {
       const centerY = canvas.height! / 2;
 
       let shape;
+      
+      // 📐 CORREÇÃO BOUNDING BOX: Calcular tamanhos escalados para shapes
+      const baseShapeSize = 100; // Tamanho base para width/height
+      const baseRadius = 50; // Raio base para círculos
+      const scaledShapeSize = calculateScaledShapeSize(baseShapeSize);
+      const scaledRadius = calculateScaledShapeSize(baseRadius);
+      
       const commonProps = {
-        left: centerX - 50,
-        top: centerY - 50,
+        left: centerX - scaledShapeSize / 2,
+        top: centerY - scaledShapeSize / 2,
         fill: '#4a90e2', // Azul mais visível
         stroke: '#2171c7', // Borda mais escura
         strokeWidth: 2,
@@ -1188,26 +1258,29 @@ const PhotoEditorFixed: React.FC = () => {
         case 'rectangle':
           shape = new fabric.Rect({
             ...commonProps,
-            width: 100,
-            height: 100,
+            width: scaledShapeSize,
+            height: scaledShapeSize,
           });
+          console.log(`📐 Rectangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`);
           break;
         case 'circle':
           shape = new fabric.Circle({
             ...commonProps,
-            radius: 50,
+            radius: scaledRadius,
             left: centerX,
             top: centerY,
             originX: 'center',
             originY: 'center',
           });
+          console.log(`📐 Circle criado: ${baseRadius}px base → ${scaledRadius}px escalado`);
           break;
         case 'triangle':
           shape = new fabric.Triangle({
             ...commonProps,
-            width: 100,
-            height: 100,
+            width: scaledShapeSize,
+            height: scaledShapeSize,
           });
+          console.log(`📐 Triangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`);
           break;
         case 'text':
           // ALTA RESOLUÇÃO: Texto com tamanho escalado inteligente para manter proporção
@@ -1250,27 +1323,14 @@ const PhotoEditorFixed: React.FC = () => {
       }
 
       if (shape) {
-        // 🔧 CORREÇÃO BOUNDING BOX: Normalizar controles visuais para alta resolução
-        const canvas = fabricCanvasRef.current;
-        if (canvas) {
-          const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
-          if (devicePixelRatio > 1) {
-            shape.set({
-              borderScaleFactor: 1,
-              cornerSize: 12,
-              cornerStrokeColor: '#4a90e2',
-              borderColor: '#4a90e2',
-              transparentCorners: false,
-            });
-            console.log('🔧 Controles visuais normalizados para alta resolução');
-          }
-        }
+        // 🔧 CORREÇÃO BOUNDING BOX: Aplicar controles aprimorados para todos os elementos
+        enhanceElementControls(shape);
         
         addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
         setSelectedTool('select');
       }
     },
-    [availableFonts],
+    [availableFonts, calculateScaledFontSize, calculateScaledShapeSize, enhanceElementControls],
   );
 
   // History management functions - CORRIGIDO para estabilidade (v1.3.0.c.2)
@@ -1537,24 +1597,6 @@ const PhotoEditorFixed: React.FC = () => {
     }
   };
 
-  // 📏 CORREÇÃO BOUNDING BOX: Função para calcular fontSize escalado baseado na resolução
-  const calculateScaledFontSize = useCallback((baseFontSize: number): number => {
-    const canvas = fabricCanvasRef.current;
-    if (!canvas) return baseFontSize;
-    
-    const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
-    const highResMultiplier = Math.max(devicePixelRatio, 2);
-    
-    // Se devicePixelRatio for 1 (resolução normal), não escalar
-    if (highResMultiplier <= 1) return baseFontSize;
-    
-    // Escalar fontSize para manter proporção visual em alta resolução
-    const scaledSize = Math.round(baseFontSize * highResMultiplier);
-    
-    console.log(`📏 Font scaling: ${baseFontSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
-    return scaledSize;
-  }, []);
-
   // Adicionar estilos para centralizar e aplicar zoom ao canvas
   const canvasContainerStyle: React.CSSProperties = {
     display: 'flex',
@@ -1713,12 +1755,33 @@ const PhotoEditorFixed: React.FC = () => {
                     }
                     const htmlImg = new window.Image();
                     htmlImg.onload = function () {
+                      // 📐 CORREÇÃO BOUNDING BOX: Calcular tamanho e posição da imagem escalados
+                      const canvas = fabricCanvasRef.current;
+                      if (!canvas) return;
+                      
+                      const centerX = canvas.width! / 2;
+                      const centerY = canvas.height! / 2;
+                      
+                      // Calcular escala baseada na resolução para manter proporção visual
+                      const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
+                      const highResMultiplier = Math.max(devicePixelRatio, 2);
+                      const baseScale = 0.5;
+                      const scaledScale = highResMultiplier > 1 ? baseScale * highResMultiplier : baseScale;
+                      
                       const imgInstance = new fabric.Image(htmlImg, {
-                        left: 350,
-                        top: 250,
-                        scaleX: 0.5,
-                        scaleY: 0.5,
+                        left: centerX,
+                        top: centerY,
+                        originX: 'center',
+                        originY: 'center',
+                        scaleX: scaledScale,
+                        scaleY: scaledScale,
                       });
+                      
+                      // 🔧 Aplicar controles aprimorados para imagem
+                      enhanceElementControls(imgInstance);
+                      
+                      console.log(`🖼️ Imagem carregada com scaling: ${baseScale} → ${scaledScale} (ratio: ${highResMultiplier})`);
+                      
                       addLayerToCanvas(imgInstance, 'Image', 'image');
                     };
                     htmlImg.onerror = function () {

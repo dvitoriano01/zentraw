@@ -858,6 +858,19 @@ const PhotoEditorFixed: React.FC = () => {
     setTimeout(() => {
       loadFreepikFonts();
     }, 100);
+
+    // 🔧 CORREÇÃO CONTAINER BRANCO: Timeout de segurança para forçar fechamento do modal
+    const forceCloseLoadingModal = setTimeout(() => {
+      if (fontLoadingState.isLoading) {
+        console.log('⚠️ Forçando fechamento do modal de carregamento após 10 segundos');
+        setFontLoadingState(prev => ({
+          ...prev,
+          isLoading: false
+        }));
+      }
+    }, 10000); // 10 segundos timeout
+
+    return () => clearTimeout(forceCloseLoadingModal);
   }, [loadFreepikFonts]);
 
   // Initialize Fabric.js canvas
@@ -1030,6 +1043,92 @@ const PhotoEditorFixed: React.FC = () => {
       canvas.on('selection:cleared', () => {
         console.log('❌ Seleção limpa');
         setSelectedObject(null);
+      });
+
+      // 📝 CORREÇÃO EDIÇÃO DE TEXTO: Event listeners para duplo clique e edição
+      canvas.on('mouse:dblclick', (e: any) => {
+        console.log('📝 Duplo clique detectado no canvas');
+        const target = e.target;
+        console.log('📝 Target do duplo clique:', target ? target.type : 'nenhum');
+        
+        if (target && target.type === 'i-text') {
+          console.log('📝 Duplo clique em texto - entrando em modo de edição');
+          console.log('📝 Propriedades do texto:', {
+            selectable: target.selectable,
+            evented: target.evented,
+            editable: target.editable
+          });
+          
+          // Garantir que o texto é editável
+          target.set({
+            selectable: true,
+            evented: true,
+            editable: true
+          });
+          
+          target.enterEditing();
+          target.selectAll();
+          canvas.renderAll();
+        }
+      });
+
+      // Event listener alternativo para clique simples em texto (caso duplo clique não funcione)
+      canvas.on('mouse:down', (e: any) => {
+        const target = e.target;
+        if (target && target.type === 'i-text' && selectedTool === 'text') {
+          console.log('📝 Clique em texto com ferramenta texto ativa - entrando em edição');
+          setTimeout(() => {
+            target.enterEditing();
+            target.selectAll();
+            canvas.renderAll();
+          }, 100);
+        }
+      });
+
+      // Event listeners para entrada e saída do modo de edição
+      canvas.on('text:editing:entered', (e: any) => {
+        console.log('📝 Modo de edição ativado');
+        const target = e.target;
+        if (target) {
+          // � CORREÇÃO TELA BRANCA: Forçar limpeza de estados problemáticos
+          console.log('🔧 Limpando estados problemáticos antes da edição');
+          
+          // Forçar fechamento do modal de carregamento se estiver ativo
+          setFontLoadingState(prev => ({ ...prev, isLoading: false }));
+          
+          // Garantir que o body não tem overflow hidden
+          document.body.style.overflow = 'auto';
+          
+          // �📝 CORREÇÃO EDIÇÃO: Garantir foco adequado e evitar interferências
+          setTimeout(() => {
+            target.selectAll();
+            canvas.renderAll();
+            // Forçar foco no elemento canvas para capturar eventos de teclado
+            const canvasElement = canvas.getElement();
+            if (canvasElement) {
+              canvasElement.focus();
+            }
+            console.log('📝 Focus aplicado ao canvas para edição');
+          }, 50);
+        }
+      });
+
+      canvas.on('text:editing:exited', (e: any) => {
+        console.log('📝 Modo de edição finalizado');
+        const target = e.target;
+        if (target) {
+          // Salvar estado após edição
+          setTimeout(() => {
+            saveState();
+            updateLayers();
+          }, 100);
+        }
+      });
+
+      // Event listener para mudanças no texto
+      canvas.on('text:changed', (e: any) => {
+        console.log('📝 Texto alterado');
+        updateLayers();
       });
 
       // Setup inicial do canvas e histórico
@@ -1211,19 +1310,38 @@ const PhotoEditorFixed: React.FC = () => {
     const scaledCornerSize = Math.max(14, 14 * highResMultiplier);
     const scaledBorderWidth = Math.max(3, 3 * highResMultiplier);
 
-    element.set({
-      borderScaleFactor: 1,
-      cornerSize: scaledCornerSize,
-      cornerStrokeColor: '#4a90e2',
-      borderColor: '#4a90e2',
-      transparentCorners: false,
-      borderOpacityWhenMoving: 0.9,
-      cornerStyle: 'rect',
-      borderDashArray: [8, 4], // Linha tracejada mais visível
-      selectionBackgroundColor: 'rgba(74, 144, 226, 0.1)', // Fundo de seleção sutil
-    });
-
-    console.log(`🔧 Controles aprimorados para ${element.type}: cornerSize=${scaledCornerSize}px`);
+    // 📝 CORREÇÃO EDIÇÃO DE TEXTO: Configurações específicas para textos
+    if (element.type === 'i-text') {
+      element.set({
+        borderScaleFactor: 1,
+        cornerSize: scaledCornerSize,
+        cornerStrokeColor: '#4a90e2',
+        borderColor: '#4a90e2',
+        transparentCorners: false,
+        cornerStyle: 'rect',
+        // IMPORTANTE: Manter selecionável e editável para textos
+        selectable: true,
+        evented: true,
+        editable: true,
+        // Não aplicar borderDashArray nem selectionBackgroundColor em textos
+        // para não interferir com a edição
+      });
+      console.log(`📝 Controles de texto aprimorados: cornerSize=${scaledCornerSize}px`);
+    } else {
+      // Para outros elementos (shapes, imagens), aplicar configurações completas
+      element.set({
+        borderScaleFactor: 1,
+        cornerSize: scaledCornerSize,
+        cornerStrokeColor: '#4a90e2',
+        borderColor: '#4a90e2',
+        transparentCorners: false,
+        borderOpacityWhenMoving: 0.9,
+        cornerStyle: 'rect',
+        borderDashArray: [8, 4], // Linha tracejada mais visível
+        selectionBackgroundColor: 'rgba(74, 144, 226, 0.1)', // Fundo de seleção sutil
+      });
+      console.log(`🔧 Controles aprimorados para ${element.type}: cornerSize=${scaledCornerSize}px`);
+    }
   }, []);
 
   // Funções para criar objetos
@@ -1507,13 +1625,45 @@ const PhotoEditorFixed: React.FC = () => {
   // Keyboard shortcuts corrigidos e estabilizados
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Evitar ações se estivermos editando texto
+      // 📝 CORREÇÃO EDIÇÃO DE TEXTO: Evitar ações se estivermos editando texto
       const target = e.target as HTMLElement;
       if (
         target.tagName === 'INPUT' ||
         target.tagName === 'TEXTAREA' ||
         target.contentEditable === 'true'
       ) {
+        return;
+      }
+
+      // 📝 CORREÇÃO: Verificar se algum texto está em modo de edição no canvas
+      if (fabricCanvasRef.current) {
+        const activeObject = fabricCanvasRef.current.getActiveObject();
+        if (activeObject && activeObject.type === 'i-text' && (activeObject as any).isEditing) {
+          console.log('📝 Texto em edição - bloqueando atalhos de teclado');
+          // 🔧 CORREÇÃO TELA BRANCA: Permitir ESC para sair do modo de edição
+          if (e.key === 'Escape') {
+            console.log('📝 ESC pressionado - forçando saída do modo de edição');
+            activeObject.exitEditing();
+            fabricCanvasRef.current.renderAll();
+            // Forçar limpeza de qualquer overlay problemático
+            document.body.style.overflow = 'auto';
+            return;
+          }
+          return; // Bloquear outros atalhos se texto está sendo editado
+        }
+      }
+
+      // 🔧 CORREÇÃO TELA BRANCA: ESC global para limpeza de estados problemáticos
+      if (e.key === 'Escape') {
+        console.log('📝 ESC global - limpando estados problemáticos');
+        // Forçar fechamento de qualquer modal persistente
+        setFontLoadingState(prev => ({ ...prev, isLoading: false }));
+        // Limpar seleções e focos problemáticos
+        if (fabricCanvasRef.current) {
+          fabricCanvasRef.current.discardActiveObject();
+          fabricCanvasRef.current.renderAll();
+        }
+        document.body.style.overflow = 'auto';
         return;
       }
 
@@ -1621,7 +1771,7 @@ const PhotoEditorFixed: React.FC = () => {
     <div className="h-screen flex flex-col text-white" style={{ backgroundColor: '#282828' }}>
       {/* 🎯 INDICADOR VISUAL: Versão V1.3.0.c.9 - LAYOUT OTIMIZADO */}
       <div className="absolute top-2 right-2 z-50 bg-green-700 text-white px-2 py-1 rounded text-xs font-bold shadow-lg max-w-sm">
-        V1.3.0.c.10 - ✅ BOUNDING BOX FIXED! | Canvas: {Math.round(currentZoom * 100)}% | Res: Alta
+        V1.3.0.c.9 - ✅ BOUNDING BOX FIXED! | Canvas: {Math.round(currentZoom * 100)}% | Res: Alta
       </div>
       {/* Top Menu Bar */}
       <div className="h-12 bg-[#1e1e1e] border-b border-[#4a4a4a] flex items-center px-4">
@@ -2330,8 +2480,15 @@ const PhotoEditorFixed: React.FC = () => {
 
       {/* FREEPIK FONTS V1.3.0.c.8: Indicador de carregamento das 44 fontes com CSS sincronizado */}
       {fontLoadingState.isLoading && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl">
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
+          onClick={() => {
+            console.log('🔧 Clique no overlay do modal - forçando fechamento');
+            setFontLoadingState(prev => ({ ...prev, isLoading: false }));
+          }}
+        >
+          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl"
+               onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
                 <svg

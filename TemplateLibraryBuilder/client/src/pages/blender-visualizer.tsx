@@ -22,7 +22,10 @@ export default function BlenderVisualizerPage() {
   const [renderResult, setRenderResult] = useState<BlenderRenderResult | null>(null);
   const [blenderStatus, setBlenderStatus] = useState<boolean | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, type: 'audio' | 'image') => {
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: 'audio' | 'image',
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
       if (type === 'audio') {
@@ -50,19 +53,19 @@ export default function BlenderVisualizerPage() {
   const testRenderSample = async () => {
     setIsRendering(true);
     setRenderResult(null);
-    
+
     try {
       const response = await fetch('/api/blender/test-render', {
         method: 'POST',
       });
-      
+
       const result = await response.json();
       setRenderResult(result);
     } catch (error) {
       console.error('Error testing render:', error);
       setRenderResult({
         success: false,
-        error: 'Failed to test render'
+        error: 'Failed to test render',
       });
     } finally {
       setIsRendering(false);
@@ -73,7 +76,7 @@ export default function BlenderVisualizerPage() {
     if (!audioFile || !imageFile) {
       setRenderResult({
         success: false,
-        error: 'Please select both audio and image files'
+        error: 'Please select both audio and image files',
       });
       return;
     }
@@ -97,7 +100,7 @@ export default function BlenderVisualizerPage() {
       console.error('Error rendering:', error);
       setRenderResult({
         success: false,
-        error: 'Failed to render audio visualizer'
+        error: 'Failed to render audio visualizer',
       });
     } finally {
       setIsRendering(false);
@@ -143,19 +146,21 @@ export default function BlenderVisualizerPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-4">
-              <Button 
-                onClick={testBlender} 
+              <Button
+                onClick={testBlender}
                 disabled={isTestingBlender}
                 variant="outline"
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
               >
                 {isTestingBlender ? 'Testing...' : 'Test Blender'}
               </Button>
-              
+
               {blenderStatus !== null && (
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  blenderStatus ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                }`}>
+                <div
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    blenderStatus ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
+                  }`}
+                >
                   {blenderStatus ? '✅ Blender Available' : '❌ Blender Not Available'}
                 </div>
               )}
@@ -163,8 +168,8 @@ export default function BlenderVisualizerPage() {
 
             {blenderStatus && (
               <div className="space-y-2">
-                <Button 
-                  onClick={testRenderSample} 
+                <Button
+                  onClick={testRenderSample}
                   disabled={isRendering}
                   className="bg-blue-600 hover:bg-blue-700"
                 >
@@ -198,9 +203,7 @@ export default function BlenderVisualizerPage() {
                   onChange={(e) => handleFileChange(e, 'audio')}
                   className="flex-1 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
                 />
-                {audioFile && (
-                  <span className="text-green-400 text-sm">✓ {audioFile.name}</span>
-                )}
+                {audioFile && <span className="text-green-400 text-sm">✓ {audioFile.name}</span>}
               </div>
             </div>
 
@@ -214,14 +217,12 @@ export default function BlenderVisualizerPage() {
                   onChange={(e) => handleFileChange(e, 'image')}
                   className="flex-1 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
                 />
-                {imageFile && (
-                  <span className="text-green-400 text-sm">✓ {imageFile.name}</span>
-                )}
+                {imageFile && <span className="text-green-400 text-sm">✓ {imageFile.name}</span>}
               </div>
             </div>
 
             {/* Render Button */}
-            <Button 
+            <Button
               onClick={handleRender}
               disabled={!audioFile || !imageFile || isRendering}
               className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
@@ -261,9 +262,11 @@ export default function BlenderVisualizerPage() {
         {renderResult && (
           <Card className="bg-black/20 border-white/10 text-white">
             <CardHeader>
-              <CardTitle className={`flex items-center gap-2 ${
-                renderResult.success ? 'text-green-400' : 'text-red-400'
-              }`}>
+              <CardTitle
+                className={`flex items-center gap-2 ${
+                  renderResult.success ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
                 {renderResult.success ? '✅ Render Successful' : '❌ Render Failed'}
               </CardTitle>
             </CardHeader>
@@ -280,12 +283,9 @@ export default function BlenderVisualizerPage() {
                       )}
                     </AlertDescription>
                   </Alert>
-                  
+
                   {renderResult.downloadUrl && (
-                    <Button 
-                      onClick={handleDownload}
-                      className="bg-green-600 hover:bg-green-700"
-                    >
+                    <Button onClick={handleDownload} className="bg-green-600 hover:bg-green-700">
                       <Download className="w-4 h-4 mr-2" />
                       Download MP4
                     </Button>
@@ -293,9 +293,7 @@ export default function BlenderVisualizerPage() {
                 </div>
               ) : (
                 <Alert className="bg-red-500/10 border-red-500/20">
-                  <AlertDescription className="text-red-200">
-                    {renderResult.error}
-                  </AlertDescription>
+                  <AlertDescription className="text-red-200">{renderResult.error}</AlertDescription>
                 </Alert>
               )}
             </CardContent>

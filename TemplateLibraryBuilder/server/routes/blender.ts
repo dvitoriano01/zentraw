@@ -191,9 +191,9 @@ router.get('/test', async (req: Request, res: Response) => {
  */
 router.post('/test-render', async (req: Request, res: Response) => {
   try {
-    const audioPath = path.join(process.cwd(), 'Blender_Test', 'sample_audio.wav');
-    const imagePath = path.join(process.cwd(), 'Blender_Test', 'sample_cover.jpg.JPG');
-    const outputPath = path.join(process.cwd(), 'Blender_Test', 'test_output.mp4');
+    const audioPath = path.join(process.cwd(), 'Blender', 'sample_audio.wav');
+    const imagePath = path.join(process.cwd(), 'Blender', 'sample_cover.jpg.JPG');
+    const outputPath = path.join(process.cwd(), 'Blender', 'test_output.mp4');
 
     console.log('🧪 Starting test render with sample files...');
 

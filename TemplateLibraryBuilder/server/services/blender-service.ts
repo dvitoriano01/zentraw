@@ -17,16 +17,16 @@ export interface BlenderRenderResult {
 }
 
 export class BlenderService {
-  private static readonly BLENDER_PATH = 'C:\\Program Files\\Blender Foundation\\Blender 4.3\\blender.exe';
-  private static readonly SCRIPT_PATH = path.join(process.cwd(), 'Blender_Test', 'render_audio_visualizer.py');
-  private static readonly DEFAULT_TEMPLATE = path.join(process.cwd(), 'Blender_Test', 'template.blend.blend');
+  private static readonly BLENDER_PATH = 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe';
+  private static readonly SCRIPT_PATH = path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py');
+  private static readonly DEFAULT_TEMPLATE = path.join(process.cwd(), 'Blender', 'template.blend.blend');
 
   /**
    * Renderiza um audio visualizer usando Blender
    */
   static async renderAudioVisualizer(options: BlenderRenderOptions): Promise<BlenderRenderResult> {
     const startTime = Date.now();
-    const outputPath = options.outputPath || path.join(process.cwd(), 'Blender_Test', 'output.mp4');
+    const outputPath = options.outputPath || path.join(process.cwd(), 'Blender', 'output.mp4');
     const templatePath = options.templatePath || this.DEFAULT_TEMPLATE;
 
     try {

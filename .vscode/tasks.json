@@ -16,6 +16,14 @@
       "group": "build",
       "isBackground": true,
       "problemMatcher": []
+    },
+    {
+      "label": "Start Zentraw Backend Server",
+      "type": "shell",
+      "command": "cd TemplateLibraryBuilder && set NODE_ENV=development && npx tsx server/index.ts",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": []
     }
   ]
 }

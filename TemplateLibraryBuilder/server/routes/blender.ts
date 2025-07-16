@@ -145,9 +145,20 @@ router.get('/download/:filename', (req: Request, res: Response) => {
     }
 
     const stat = fs.statSync(filePath);
+    const ext = path.extname(filename).toLowerCase();
+    
+    // Determinar Content-Type baseado na extensão
+    let contentType = 'application/octet-stream';
+    if (ext === '.mp4') {
+      contentType = 'video/mp4';
+    } else if (ext === '.png') {
+      contentType = 'image/png';
+    } else if (ext === '.jpg' || ext === '.jpeg') {
+      contentType = 'image/jpeg';
+    }
     
     res.writeHead(200, {
-      'Content-Type': 'video/mp4',
+      'Content-Type': contentType,
       'Content-Length': stat.size,
       'Content-Disposition': `attachment; filename="${filename}"`
     });
@@ -222,6 +233,105 @@ router.post('/test-render', async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Test render failed'
+    });
+  }
+});
+
+/**
+ * POST /api/blender/preview
+ * Generates a single frame preview with complete template (audio + image + camera settings)
+ */
+router.post('/preview', upload.fields([
+  { name: 'audio', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+]), async (req: Request, res: Response) => {
+  try {
+    console.log('🎬 Preview generation request received');
+    
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    
+    if (!files.audio || !files.audio[0]) {
+      return res.status(400).json({
+        success: false,
+        error: 'Audio file is required'
+      });
+    }
+
+    if (!files.image || !files.image[0]) {
+      return res.status(400).json({
+        success: false,
+        error: 'Image file is required'
+      });
+    }
+
+    const audioFile = files.audio[0];
+    const imageFile = files.image[0];
+
+    const {
+      renderEngine = 'eevee',
+      cameraDistance = '50',
+      cameraHeight = '50', 
+      cameraAngle = '50',
+      animationStyle = 'cube',
+      sensitivity = '50',
+      smoothing = '30'
+    } = req.body;
+
+    console.log('📷 Preview settings:', {
+      renderEngine,
+      cameraDistance,
+      cameraHeight,
+      cameraAngle,
+      animationStyle,
+      sensitivity,
+      smoothing,
+      audioFile: audioFile.filename,
+      imageFile: imageFile.filename
+    });
+
+    const blenderService = new BlenderService();
+    
+    // Gerar preview completo (um frame do template final)
+    const result = await blenderService.generatePreview({
+      audioFile: audioFile.path,
+      imageFile: imageFile.path,
+      renderEngine: renderEngine as 'eevee' | 'cycles',
+      cameraSettings: {
+        distance: parseInt(cameraDistance),
+        height: parseInt(cameraHeight),
+        angle: parseInt(cameraAngle)
+      },
+      animationStyle: animationStyle as 'cube' | 'sphere' | 'bars',
+      sensitivity: parseInt(sensitivity),
+      smoothing: parseInt(smoothing)
+    });
+
+    if (result.success && result.previewPath) {
+      // Gerar URL para download da imagem
+      const previewUrl = `/api/blender/download/${path.basename(result.previewPath)}`;
+      
+      console.log('✅ Preview generated successfully:', previewUrl);
+      
+      res.json({
+        success: true,
+        previewUrl,
+        previewPath: result.previewPath,
+        renderTime: result.renderTime,
+        message: `Preview generated with ${renderEngine.toUpperCase()} in ${result.renderTime}ms`
+      });
+    } else {
+      console.error('❌ Preview generation failed:', result.error);
+      res.status(500).json({
+        success: false,
+        error: result.error || 'Preview generation failed'
+      });
+    }
+
+  } catch (error) {
+    console.error('❌ Preview generation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Preview generation failed'
     });
   }
 });

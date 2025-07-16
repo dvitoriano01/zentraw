@@ -7,6 +7,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import OpenAI from "openai";
+import blenderRoutes from "./routes/blender.js";
 
 // Configure multer for file uploads
 const uploadDir = path.join(process.cwd(), 'uploads');
@@ -47,6 +48,10 @@ const openai = new OpenAI({
 export async function registerRoutes(app: Express): Promise<Server> {
   // Current user ID (in real app, this would come from authentication)
   const currentUserId = 1;
+
+  // 🎬 BLENDER INTEGRATION ROUTES - ZentrawMediaControl
+  app.use("/api/blender", blenderRoutes);
+  console.log("✅ [ZentrawMediaControl] Blender routes registered at /api/blender");
 
   // Debug API key availability
   const apiKey = getOpenAIKey();

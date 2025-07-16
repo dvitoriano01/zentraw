@@ -8,13 +8,15 @@
 ## 🎯 **DOCUMENTOS CRÍTICOS** (Leitura Obrigatória)
 
 ### 🔗 **Protocolo e Regras**
+
 1. 📋 [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - **PRINCIPAL** - Soluções definitivas + Protocolo
 2. 🚨 [`critical/ZENTRAW_ORGANIZATIONAL_RULES.md`](critical/ZENTRAW_ORGANIZATIONAL_RULES.md) - Regras organizacionais
 3. � [`README.md`](README.md) - Visão geral da documentação
 
 ### 🔧 **Para Desenvolvimento Ativo**
+
 1. 🎯 [`implementation/`](implementation/) - Implementações e testes recentes
-2. 🔍 [`technical/`](technical/) - Análises técnicas detalhadas  
+2. 🔍 [`technical/`](technical/) - Análises técnicas detalhadas
 3. � [`bug-fixes/`](bug-fixes/) - Correções de problemas específicos
 
 ---
@@ -223,16 +225,19 @@ docs/
 ### 🎯 **Fluxo de Consulta Recomendado**
 
 **Para Entender o Estado Atual:**
+
 1. [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) - Soluções definitivas
 2. [`implementation/`](implementation/) - Últimas implementações
 3. [`technical/`](technical/) - Análises técnicas específicas
 
 **Para Resolver Problemas:**
+
 1. [`critical/ZENTRAW_ORGANIZATIONAL_RULES.md`](critical/ZENTRAW_ORGANIZATIONAL_RULES.md) - Protocolo obrigatório
 2. [`troubleshooting/`](troubleshooting/) - Logs de problemas similares
 3. [`bug-fixes/`](bug-fixes/) - Correções já aplicadas
 
 **Para Desenvolvimento:**
+
 1. [`architecture/`](architecture/) - Design patterns e estrutura
 2. [`versioning/`](versioning/) - Histórico de mudanças
 3. [`rollback/`](rollback/) - Pontos de restore seguros
@@ -242,12 +247,14 @@ docs/
 ## ⚠️ **REGRAS DE USO**
 
 ### ✅ **SEMPRE**
+
 - Consultar [`ZENTRAW_SOLUTIONS_MASTERFILE.md`](ZENTRAW_SOLUTIONS_MASTERFILE.md) primeiro
-- Seguir protocolo de análise→implementação→validação  
+- Seguir protocolo de análise→implementação→validação
 - Salvar nova documentação na categoria correta
 - Incluir versão e data nos nomes dos arquivos
 
 ### ❌ **NUNCA**
+
 - Salvar documentação temporária na raiz `/zentraw/`
 - Misturar tipos de documentação nas pastas
 - Implementar sem analisar o contexto completo
@@ -255,4 +262,4 @@ docs/
 
 ---
 
-*Última atualização: 10/07/2025 - V1.3.0.c.10*
+_Última atualização: 10/07/2025 - V1.3.0.c.10_

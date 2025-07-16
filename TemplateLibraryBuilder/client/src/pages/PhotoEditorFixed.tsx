@@ -347,26 +347,26 @@ const PhotoEditorFixed: React.FC = () => {
   // ALTA RESOLUÇÃO V1.3.0.c.10: Exportação em qualidade máxima
   const exportCanvas = useCallback((type: string) => {
     if (!fabricCanvasRef.current) return;
-    
+
     // Usar multiplier alto para exportação em alta resolução
     const exportMultiplier = 3; // 3x da resolução atual para qualidade premium
-    
+
     console.log(`📤 Exportando em ${type.toUpperCase()} com multiplier ${exportMultiplier}x`);
-    
+
     const dataURL = fabricCanvasRef.current.toDataURL({
       format: type as any,
       quality: 1, // Qualidade máxima
       multiplier: exportMultiplier, // ALTA RESOLUÇÃO: 3x para exportação
       enableRetinaScaling: true,
     });
-    
+
     const link = document.createElement('a');
     link.download = `zentraw-export-hq.${type}`;
     link.href = dataURL;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     console.log('✅ Exportação em alta qualidade concluída');
   }, []);
 
@@ -863,9 +863,9 @@ const PhotoEditorFixed: React.FC = () => {
     const forceCloseLoadingModal = setTimeout(() => {
       if (fontLoadingState.isLoading) {
         console.log('⚠️ Forçando fechamento do modal de carregamento após 10 segundos');
-        setFontLoadingState(prev => ({
+        setFontLoadingState((prev) => ({
           ...prev,
-          isLoading: false
+          isLoading: false,
         }));
       }
     }, 10000); // 10 segundos timeout
@@ -911,54 +911,62 @@ const PhotoEditorFixed: React.FC = () => {
     const calculateInitialCanvasSize = (): { width: number; height: number; scale: number } => {
       // Se não temos container ainda, usar tamanho DOBRADO (150% do original)
       if (!containerRef.current) {
-        return { 
-          width: dimensions.width * 1.5, 
-          height: dimensions.height * 1.5, 
-          scale: 1.5 
+        return {
+          width: dimensions.width * 1.5,
+          height: dimensions.height * 1.5,
+          scale: 1.5,
         };
       }
-      
+
       const containerRect = containerRef.current.getBoundingClientRect();
       // DEBUG: Log das dimensões do container para verificar se está correto
       console.log('🔍 [DEBUG] Container dimensions:', {
         width: containerRect.width,
         height: containerRect.height,
         fullScreenWidth: window.innerWidth,
-        expectedCanvasArea: containerRect.width * 0.85
+        expectedCanvasArea: containerRect.width * 0.85,
       });
-      
+
       // CRÍTICO: usar apenas 60% da área disponível (reduzido drasticamente para forçar barra)
-      const availableWidth = containerRect.width * 0.60;
+      const availableWidth = containerRect.width * 0.6;
       const availableHeight = containerRect.height * 0.85;
-      
+
       // Calcular escala para ocupar TODO o espaço disponível
       const scaleByWidth = availableWidth / dimensions.width;
       const scaleByHeight = availableHeight / dimensions.height;
-      
+
       // SEM LIMITES SUPERIORES! Permitir que o canvas seja muito maior se necessário
       let optimalScale = Math.min(scaleByWidth, scaleByHeight);
-      
+
       // MÍNIMO AJUSTADO: Canvas deve ser pelo menos 90% do tamanho original (balanceado)
       optimalScale = Math.max(optimalScale, 0.9);
-      
+
       const canvasWidth = dimensions.width * optimalScale;
       const canvasHeight = dimensions.height * optimalScale;
-      
-      console.log(`📐 Container: ${Math.round(containerRect.width)}x${Math.round(containerRect.height)}`);
-      console.log(`📏 ÁREA disponível: ${Math.round(availableWidth)}x${Math.round(availableHeight)}`);
+
+      console.log(
+        `📐 Container: ${Math.round(containerRect.width)}x${Math.round(containerRect.height)}`,
+      );
+      console.log(
+        `📏 ÁREA disponível: ${Math.round(availableWidth)}x${Math.round(availableHeight)}`,
+      );
       console.log(`🎯 Escala calculada: ${Math.round(optimalScale * 100)}%`);
       console.log(`📱 Tamanho canvas: ${Math.round(canvasWidth)}x${Math.round(canvasHeight)}`);
       console.log(`� DOBRADO LITERALMENTE: Mínimo 120%, sem limite superior!`);
       console.log(`🚀 GARANTIDO: Canvas vai ser MUITO MAIOR que qualquer versão anterior!`);
-      
-      return { 
-        width: canvasWidth, 
-        height: canvasHeight, 
-        scale: optimalScale 
+
+      return {
+        width: canvasWidth,
+        height: canvasHeight,
+        scale: optimalScale,
       };
     };
 
-    const { width: canvasWidth, height: canvasHeight, scale: initialScale } = calculateInitialCanvasSize();
+    const {
+      width: canvasWidth,
+      height: canvasHeight,
+      scale: initialScale,
+    } = calculateInitialCanvasSize();
 
     // ALTA RESOLUÇÃO: Usar devicePixelRatio para qualidade superior
     const devicePixelRatio = window.devicePixelRatio || 1;
@@ -970,9 +978,7 @@ const PhotoEditorFixed: React.FC = () => {
     console.log(
       `📱 Escala inicial: ${Math.round(initialScale * 100)}% (área: ${Math.round(canvasWidth)}x${Math.round(canvasHeight)})`,
     );
-    console.log(
-      `🔥 Alta resolução: ${highResMultiplier}x (devicePixelRatio: ${devicePixelRatio})`,
-    );
+    console.log(`🔥 Alta resolução: ${highResMultiplier}x (devicePixelRatio: ${devicePixelRatio})`);
 
     try {
       const canvas = new fabric.Canvas(canvasRef.current, {
@@ -994,7 +1000,7 @@ const PhotoEditorFixed: React.FC = () => {
 
       // NÃO aplicar setZoom no Fabric.js - usar apenas CSS transform
       // canvas.setZoom(initialScale); // REMOVIDO para evitar zoom duplo
-      
+
       // ALTA RESOLUÇÃO: Configurar qualidade de renderização
       const canvasElement = canvas.getElement();
       const ctx = canvasElement.getContext('2d');
@@ -1003,11 +1009,11 @@ const PhotoEditorFixed: React.FC = () => {
         ctx.imageSmoothingQuality = 'high';
         console.log('🎨 Configurações de alta qualidade aplicadas ao contexto 2D');
       }
-      
+
       canvas.renderAll();
 
       fabricCanvasRef.current = canvas;
-      
+
       // ZOOM AJUSTADO: reduzindo para 45% conforme solicitado pelo usuário
       const maxAllowedZoom = 0.45;
       const finalZoom = Math.min(initialScale, maxAllowedZoom);
@@ -1017,9 +1023,10 @@ const PhotoEditorFixed: React.FC = () => {
       console.log(`📊 Canvas físico: ${Math.round(canvasWidth)}x${Math.round(canvasHeight)}`);
       console.log(`📊 Zoom CSS inicial: ${Math.round(finalZoom * 100)}% (limitado a 45%)`);
       console.log(`🔥 Alta resolução: ${highResMultiplier}x devicePixelRatio`);
-      console.log(`🎯 ZOOM AJUSTADO: ${Math.round(initialScale * 100)}% → ${Math.round(finalZoom * 100)}% (usuário pediu 45%)`);
+      console.log(
+        `🎯 ZOOM AJUSTADO: ${Math.round(initialScale * 100)}% → ${Math.round(finalZoom * 100)}% (usuário pediu 45%)`,
+      );
       console.log(`🎯 SE MENOR: Verifique dimensões do container no console acima`);
-      
 
       // Setup event listeners para seleção de objetos
       canvas.on('selection:created', (e: any) => {
@@ -1050,22 +1057,22 @@ const PhotoEditorFixed: React.FC = () => {
         console.log('📝 Duplo clique detectado no canvas');
         const target = e.target;
         console.log('📝 Target do duplo clique:', target ? target.type : 'nenhum');
-        
+
         if (target && target.type === 'i-text') {
           console.log('📝 Duplo clique em texto - entrando em modo de edição');
           console.log('📝 Propriedades do texto:', {
             selectable: target.selectable,
             evented: target.evented,
-            editable: target.editable
+            editable: target.editable,
           });
-          
+
           // Garantir que o texto é editável
           target.set({
             selectable: true,
             evented: true,
-            editable: true
+            editable: true,
           });
-          
+
           target.enterEditing();
           target.selectAll();
           canvas.renderAll();
@@ -1092,13 +1099,13 @@ const PhotoEditorFixed: React.FC = () => {
         if (target) {
           // � CORREÇÃO TELA BRANCA: Forçar limpeza de estados problemáticos
           console.log('🔧 Limpando estados problemáticos antes da edição');
-          
+
           // Forçar fechamento do modal de carregamento se estiver ativo
-          setFontLoadingState(prev => ({ ...prev, isLoading: false }));
-          
+          setFontLoadingState((prev) => ({ ...prev, isLoading: false }));
+
           // Garantir que o body não tem overflow hidden
           document.body.style.overflow = 'auto';
-          
+
           // �📝 CORREÇÃO EDIÇÃO: Garantir foco adequado e evitar interferências
           setTimeout(() => {
             target.selectAll();
@@ -1266,17 +1273,19 @@ const PhotoEditorFixed: React.FC = () => {
   const calculateScaledFontSize = useCallback((baseFontSize: number): number => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return baseFontSize;
-    
+
     const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
     const highResMultiplier = Math.max(devicePixelRatio, 2);
-    
+
     // Se devicePixelRatio for 1 (resolução normal), não escalar
     if (highResMultiplier <= 1) return baseFontSize;
-    
+
     // Escalar fontSize para manter proporção visual em alta resolução
     const scaledSize = Math.round(baseFontSize * highResMultiplier);
-    
-    console.log(`📏 Font scaling: ${baseFontSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
+
+    console.log(
+      `📏 Font scaling: ${baseFontSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`,
+    );
     return scaledSize;
   }, []);
 
@@ -1284,16 +1293,16 @@ const PhotoEditorFixed: React.FC = () => {
   const calculateScaledShapeSize = useCallback((baseSize: number): number => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return baseSize;
-    
+
     const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
     const highResMultiplier = Math.max(devicePixelRatio, 2);
-    
+
     // Se devicePixelRatio for 1 (resolução normal), não escalar
     if (highResMultiplier <= 1) return baseSize;
-    
+
     // Escalar tamanho do shape para manter proporção visual em alta resolução
     const scaledSize = Math.round(baseSize * highResMultiplier);
-    
+
     console.log(`📐 Shape scaling: ${baseSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
     return scaledSize;
   }, []);
@@ -1340,7 +1349,9 @@ const PhotoEditorFixed: React.FC = () => {
         borderDashArray: [8, 4], // Linha tracejada mais visível
         selectionBackgroundColor: 'rgba(74, 144, 226, 0.1)', // Fundo de seleção sutil
       });
-      console.log(`🔧 Controles aprimorados para ${element.type}: cornerSize=${scaledCornerSize}px`);
+      console.log(
+        `🔧 Controles aprimorados para ${element.type}: cornerSize=${scaledCornerSize}px`,
+      );
     }
   }, []);
 
@@ -1354,13 +1365,13 @@ const PhotoEditorFixed: React.FC = () => {
       const centerY = canvas.height! / 2;
 
       let shape;
-      
+
       // 📐 CORREÇÃO BOUNDING BOX: Calcular tamanhos escalados para shapes
       const baseShapeSize = 100; // Tamanho base para width/height
       const baseRadius = 50; // Raio base para círculos
       const scaledShapeSize = calculateScaledShapeSize(baseShapeSize);
       const scaledRadius = calculateScaledShapeSize(baseRadius);
-      
+
       const commonProps = {
         left: centerX - scaledShapeSize / 2,
         top: centerY - scaledShapeSize / 2,
@@ -1379,7 +1390,9 @@ const PhotoEditorFixed: React.FC = () => {
             width: scaledShapeSize,
             height: scaledShapeSize,
           });
-          console.log(`📐 Rectangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`);
+          console.log(
+            `📐 Rectangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`,
+          );
           break;
         case 'circle':
           shape = new fabric.Circle({
@@ -1398,7 +1411,9 @@ const PhotoEditorFixed: React.FC = () => {
             width: scaledShapeSize,
             height: scaledShapeSize,
           });
-          console.log(`📐 Triangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`);
+          console.log(
+            `📐 Triangle criado: ${baseShapeSize}px base → ${scaledShapeSize}px escalado`,
+          );
           break;
         case 'text':
           // ALTA RESOLUÇÃO: Texto com tamanho escalado inteligente para manter proporção
@@ -1406,11 +1421,11 @@ const PhotoEditorFixed: React.FC = () => {
             availableFonts.length > 0
               ? availableFonts[Math.floor(Math.random() * availableFonts.length)]
               : freepikFonts[0];
-          
+
           // CORREÇÃO BOUNDING BOX: Tamanho escalado baseado na resolução
           const baseFontSize = 48; // Tamanho base para o usuário
           const fontSize = calculateScaledFontSize(baseFontSize);
-          
+
           shape = new fabric.IText('Digite seu texto', {
             left: centerX,
             top: centerY,
@@ -1434,7 +1449,7 @@ const PhotoEditorFixed: React.FC = () => {
             _baseFontSize: baseFontSize,
             _scaledFontSize: fontSize,
           });
-          
+
           console.log(`📝 Texto criado: ${randomFreepikFont.label}`);
           console.log(`📏 Font scaling: ${baseFontSize}px base → ${fontSize}px escalado`);
           break;
@@ -1443,7 +1458,7 @@ const PhotoEditorFixed: React.FC = () => {
       if (shape) {
         // 🔧 CORREÇÃO BOUNDING BOX: Aplicar controles aprimorados para todos os elementos
         enhanceElementControls(shape);
-        
+
         addLayerToCanvas(shape, type.charAt(0).toUpperCase() + type.slice(1), type);
         setSelectedTool('select');
       }
@@ -1657,7 +1672,7 @@ const PhotoEditorFixed: React.FC = () => {
       if (e.key === 'Escape') {
         console.log('📝 ESC global - limpando estados problemáticos');
         // Forçar fechamento de qualquer modal persistente
-        setFontLoadingState(prev => ({ ...prev, isLoading: false }));
+        setFontLoadingState((prev) => ({ ...prev, isLoading: false }));
         // Limpar seleções e focos problemáticos
         if (fabricCanvasRef.current) {
           fabricCanvasRef.current.discardActiveObject();
@@ -1867,8 +1882,7 @@ const PhotoEditorFixed: React.FC = () => {
       </div>
 
       {/* Main Content - FORÇAR VISIBILIDADE DA BARRA LATERAL */}
-      <div className="flex flex-1 min-h-0 overflow-visible"
-           style={{ maxWidth: '100vw' }}>
+      <div className="flex flex-1 min-h-0 overflow-visible" style={{ maxWidth: '100vw' }}>
         {/* Left Toolbar */}
         <div className="w-16 bg-[#383838] border-r border-[#4a4a4a] p-2 flex flex-col items-center flex-shrink-0">
           <div className="space-y-2">
@@ -1908,16 +1922,17 @@ const PhotoEditorFixed: React.FC = () => {
                       // 📐 CORREÇÃO BOUNDING BOX: Calcular tamanho e posição da imagem escalados
                       const canvas = fabricCanvasRef.current;
                       if (!canvas) return;
-                      
+
                       const centerX = canvas.width! / 2;
                       const centerY = canvas.height! / 2;
-                      
+
                       // Calcular escala baseada na resolução para manter proporção visual
                       const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
                       const highResMultiplier = Math.max(devicePixelRatio, 2);
                       const baseScale = 0.5;
-                      const scaledScale = highResMultiplier > 1 ? baseScale * highResMultiplier : baseScale;
-                      
+                      const scaledScale =
+                        highResMultiplier > 1 ? baseScale * highResMultiplier : baseScale;
+
                       const imgInstance = new fabric.Image(htmlImg, {
                         left: centerX,
                         top: centerY,
@@ -1926,12 +1941,14 @@ const PhotoEditorFixed: React.FC = () => {
                         scaleX: scaledScale,
                         scaleY: scaledScale,
                       });
-                      
+
                       // 🔧 Aplicar controles aprimorados para imagem
                       enhanceElementControls(imgInstance);
-                      
-                      console.log(`🖼️ Imagem carregada com scaling: ${baseScale} → ${scaledScale} (ratio: ${highResMultiplier})`);
-                      
+
+                      console.log(
+                        `🖼️ Imagem carregada com scaling: ${baseScale} → ${scaledScale} (ratio: ${highResMultiplier})`,
+                      );
+
                       addLayerToCanvas(imgInstance, 'Image', 'image');
                     };
                     htmlImg.onerror = function () {
@@ -2088,8 +2105,10 @@ const PhotoEditorFixed: React.FC = () => {
         </div>
 
         {/* Right Panels - FORÇAR VISIBILIDADE ABSOLUTA DA BARRA LATERAL */}
-        <div className="w-96 min-w-[384px] bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0 flex-shrink-0 relative z-50"
-             style={{ width: '384px', minWidth: '384px', maxWidth: '384px' }}>
+        <div
+          className="w-96 min-w-[384px] bg-[#2a2a2a] border-l border-[#4a4a4a] flex flex-col min-h-0 flex-shrink-0 relative z-50"
+          style={{ width: '384px', minWidth: '384px', maxWidth: '384px' }}
+        >
           {/* DEBUG: Indicador de que a barra existe */}
           <div className="absolute top-0 left-0 w-2 h-full bg-red-500 z-50"></div>
           <Tabs
@@ -2480,15 +2499,17 @@ const PhotoEditorFixed: React.FC = () => {
 
       {/* FREEPIK FONTS V1.3.0.c.8: Indicador de carregamento das 44 fontes com CSS sincronizado */}
       {fontLoadingState.isLoading && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
           onClick={() => {
             console.log('🔧 Clique no overlay do modal - forçando fechamento');
-            setFontLoadingState(prev => ({ ...prev, isLoading: false }));
+            setFontLoadingState((prev) => ({ ...prev, isLoading: false }));
           }}
         >
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl"
-               onClick={(e) => e.stopPropagation()}>
+          <div
+            className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
                 <svg

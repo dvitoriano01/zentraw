@@ -2,8 +2,12 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertTemplateSchema } from "@shared/schema";
+import blenderRoutes from "./routes/blender.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Blender routes - NOVA INTEGRAÇÃO 🎬
+  app.use("/api/blender", blenderRoutes);
+
   // Template routes
   app.get("/api/templates", async (req, res) => {
     try {

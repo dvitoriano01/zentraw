@@ -11,17 +11,18 @@
 **Problema**: Shapes (rectangle, circle, triangle) usavam tamanhos fixos em pixels, resultando em elementos proporcionalmente menores em alta resolução.
 
 **Solução Implementada**:
+
 ```typescript
 // Nova função para escalar tamanhos de shapes
 const calculateScaledShapeSize = useCallback((baseSize: number): number => {
   const canvas = fabricCanvasRef.current;
   if (!canvas) return baseSize;
-  
+
   const devicePixelRatio = (canvas as any).devicePixelRatio || window.devicePixelRatio || 1;
   const highResMultiplier = Math.max(devicePixelRatio, 2);
-  
+
   if (highResMultiplier <= 1) return baseSize;
-  
+
   const scaledSize = Math.round(baseSize * highResMultiplier);
   console.log(`📐 Shape scaling: ${baseSize}px → ${scaledSize}px (ratio: ${highResMultiplier})`);
   return scaledSize;
@@ -29,8 +30,9 @@ const calculateScaledShapeSize = useCallback((baseSize: number): number => {
 ```
 
 **Aplicação nos Shapes**:
+
 - **Rectangle**: `100px` base → escalado por `devicePixelRatio`
-- **Circle**: `50px` radius base → escalado por `devicePixelRatio`  
+- **Circle**: `50px` radius base → escalado por `devicePixelRatio`
 - **Triangle**: `100px` base → escalado por `devicePixelRatio`
 
 ### ✅ **2. CONTROLES VISUAIS APRIMORADOS**
@@ -38,6 +40,7 @@ const calculateScaledShapeSize = useCallback((baseSize: number): number => {
 **Problema**: Bounding boxes e controles de seleção pouco visíveis em alta resolução.
 
 **Solução Implementada**:
+
 ```typescript
 // Função para melhorar controles de todos os elementos
 const enhanceElementControls = useCallback((element: fabric.Object): void => {
@@ -64,6 +67,7 @@ const enhanceElementControls = useCallback((element: fabric.Object): void => {
 ```
 
 **Melhorias Aplicadas**:
+
 - ✅ `cornerSize` escalado automaticamente
 - ✅ Bordas tracejadas mais visíveis
 - ✅ Fundo de seleção sutil
@@ -74,6 +78,7 @@ const enhanceElementControls = useCallback((element: fabric.Object): void => {
 **Problema**: Imagens carregadas não consideravam a resolução do canvas.
 
 **Solução Implementada**:
+
 ```typescript
 // Calcular escala baseada na resolução
 const devicePixelRatio = (canvas as any).devicePixelRatio || 1;
@@ -95,6 +100,7 @@ enhanceElementControls(imgInstance);
 ```
 
 **Resultado**:
+
 - ✅ Imagens posicionadas no centro do canvas
 - ✅ Escala proporcional à resolução
 - ✅ Controles visuais aprimorados aplicados automaticamente
@@ -102,6 +108,7 @@ enhanceElementControls(imgInstance);
 ## 📊 **RESULTADOS TÉCNICOS**
 
 ### **Canvas Resolução Normal (devicePixelRatio = 1)**:
+
 ```
 Shapes: 100px (sem alteração)
 Imagens: scale 0.5 (sem alteração)
@@ -110,9 +117,10 @@ Resultado: Comportamento idêntico ao anterior
 ```
 
 ### **Canvas Alta Resolução (devicePixelRatio = 2)**:
+
 ```
 Rectangle: 200x200px (100px * 2)
-Circle: 100px radius (50px * 2)  
+Circle: 100px radius (50px * 2)
 Triangle: 200x200px (100px * 2)
 Imagens: scale 1.0 (0.5 * 2)
 Controles: cornerSize 28px (14px * 2)
@@ -120,6 +128,7 @@ Resultado: Elementos proporcionalmente corretos
 ```
 
 ### **Canvas Ultra Resolução (devicePixelRatio = 3)**:
+
 ```
 Shapes: 300px (100px * 3)
 Imagens: scale 1.5 (0.5 * 3)
@@ -130,16 +139,20 @@ Resultado: Escala automática para qualquer resolução
 ## 🧪 **VALIDAÇÃO E TESTES**
 
 ### **Como Testar**:
+
 1. Criar shapes em resolução normal vs alta resolução
 2. Comparar proporções visuais dos elementos
 3. Verificar visibilidade dos controles de seleção
 4. Testar upload de imagens em diferentes resoluções
 
 ### **Comandos de Debug**:
+
 ```javascript
 // No console do browser:
 const canvas = fabricCanvasRef.current;
-const shapes = canvas.getObjects().filter(obj => ['rect', 'circle', 'triangle'].includes(obj.type));
+const shapes = canvas
+  .getObjects()
+  .filter((obj) => ['rect', 'circle', 'triangle'].includes(obj.type));
 
 shapes.forEach((shape, index) => {
   console.log(`Shape ${index} (${shape.type}):`);
@@ -152,8 +165,9 @@ shapes.forEach((shape, index) => {
 ```
 
 ### **Valores Esperados**:
+
 - **Proporção shape/canvas**: ~8-10% em todas as resoluções
-- **cornerSize**: 14px * devicePixelRatio
+- **cornerSize**: 14px \* devicePixelRatio
 - **devicePixelRatio**: ≥ 2 para alta resolução
 
 ## 🔧 **ARQUIVOS ALTERADOS**
@@ -168,17 +182,20 @@ shapes.forEach((shape, index) => {
 ## 🎯 **BENEFÍCIOS DA IMPLEMENTAÇÃO**
 
 ### ✅ **Problemas Resolvidos**:
+
 - Shapes proporcionalmente corretos em qualquer resolução
 - Bounding boxes mais visíveis e intuitivos
 - Imagens centralizadas com escala apropriada
 - Experiência consistente entre resoluções
 
 ### ✅ **Compatibilidade**:
+
 - Funciona em todas as resoluções (1x, 2x, 3x+)
 - Não quebra funcionamento existente de textos
 - Melhoria progressiva automática
 
 ### ✅ **Facilidade de Manutenção**:
+
 - Código limpo e bem documentado
 - Sistema automático de scaling
 - Debug logs para troubleshooting

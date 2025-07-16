@@ -9,6 +9,7 @@
 ### 1. 📁 **ORGANIZAÇÃO DOCUMENTAL**
 
 **✅ CORRETO:**
+
 - Documentação específica → `TemplateLibraryBuilder/docs/`
 - Logs de implementação → `docs/implementation/`
 - Análises técnicas → `docs/technical/`
@@ -16,6 +17,7 @@
 - Changelogs → `docs/versioning/`
 
 **❌ INCORRETO:**
+
 - Documentação temporária na raiz `/zentraw/`
 - Logs parciais na raiz
 - Documentação específica misturada com estrutural
@@ -23,8 +25,9 @@
 ### 2. 🔗 **PROTOCOLO DE INTERAÇÃO**
 
 **FLUXO OBRIGATÓRIO:**
+
 1. **🔍 ANÁLISE** → Entender contexto completo
-2. **🧩 DECOMPOSIÇÃO** → Quebrar em tarefas menores  
+2. **🧩 DECOMPOSIÇÃO** → Quebrar em tarefas menores
 3. **🎯 IMPLEMENTAÇÃO** → Uma mudança por vez
 4. **✅ VALIDAÇÃO** → Testar e documentar
 5. **📚 ORGANIZAÇÃO** → Salvar docs na pasta correta
@@ -50,12 +53,14 @@
 ### 4. 🏷️ **CONVENÇÕES DE NOMENCLATURA**
 
 **Formato obrigatório:**
+
 - `ZENTRAW_V[versão]_[TIPO]_[DESCRIÇÃO].md`
 - Exemplo: `ZENTRAW_V1.3.0.c.10_BUG_CANVAS_SIZE_FIX.md`
 
 **Tipos válidos:**
+
 - `IMPLEMENTATION` - Implementações
-- `TECHNICAL` - Análises técnicas  
+- `TECHNICAL` - Análises técnicas
 - `BUG` - Correções de bugs
 - `CHANGELOG` - Histórico de mudanças
 - `ARCHITECTURE` - Design e arquitetura
@@ -65,12 +70,14 @@
 ### 5. ⚠️ **VALIDAÇÕES OBRIGATÓRIAS**
 
 **Antes de qualquer mudança:**
+
 - [ ] Analisou o contexto completo?
 - [ ] Entendeu a estrutura atual?
 - [ ] Consultou documentação existente?
 - [ ] Definiu onde salvar a documentação?
 
 **Após qualquer mudança:**
+
 - [ ] Testou a implementação?
 - [ ] Documentou a solução?
 - [ ] Salvou na pasta correta?
@@ -88,4 +95,4 @@
 
 ---
 
-*Este documento deve ser consultado antes de qualquer trabalho no Zentraw.*
+_Este documento deve ser consultado antes de qualquer trabalho no Zentraw._

@@ -2,15 +2,37 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build Zentraw FREEPIK FONTS ROBUSTAS v1.3.0.c.3",
+      "label": "Start Zentraw Backend V1.4.0",
       "type": "shell",
-      "command": "npm run build",
+      "command": "cd TemplateLibraryBuilder && npm run dev:back",
       "group": "build",
-      "isBackground": false,
-      "problemMatcher": ["$tsc"]
+      "isBackground": true,
+      "problemMatcher": []
     },
     {
-      "label": "Start Zentraw Frontend with FREEPIK FONTS v1.3.0.c.4",
+      "label": "Stop All Node Processes",
+      "type": "shell",
+      "command": "taskkill /F /IM node.exe",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Restart Backend V1.4.0",
+      "type": "shell",
+      "command": "cd TemplateLibraryBuilder && taskkill /F /IM node.exe & timeout 2 & npm run dev:back",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Start Zentraw Frontend V1.4.0",
       "type": "shell",
       "command": "cd TemplateLibraryBuilder && npm run dev:front",
       "group": "build",
@@ -18,12 +40,12 @@
       "problemMatcher": []
     },
     {
-      "label": "Start Zentraw Backend Server",
+      "label": "Build Zentraw V1.4.0",
       "type": "shell",
-      "command": "cd TemplateLibraryBuilder && set NODE_ENV=development && npx tsx server/index.ts",
+      "command": "cd TemplateLibraryBuilder && npm run build",
       "group": "build",
-      "isBackground": true,
-      "problemMatcher": []
+      "isBackground": false,
+      "problemMatcher": ["$tsc"]
     }
   ]
 }

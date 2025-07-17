@@ -8,6 +8,7 @@ import Editor from '@/pages/Editor';
 import PhotoEditor from '@/pages/PhotoEditorFixed';
 import AdminDashboard from '@/pages/AdminDashboard';
 import BlenderVisualizerPage from '@/pages/blender-visualizer';
+import BlenderVisualizerOld from '@/pages/blender-visualizer-old';
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/editor" component={Editor} />
       <Route path="/photo-editor" component={PhotoEditor} />
       <Route path="/blender" component={BlenderVisualizerPage} />
+      <Route path="/blender-old" component={BlenderVisualizerOld} />
       <Route path="/admin" component={AdminDashboard} />
       <Route component={NotFound} />
     </Switch>

@@ -13,6 +13,38 @@ export default defineConfig({
           ),
         ]
       : []),
+    // Plugin mock desabilitado - usando backend real
+    /*
+    {
+      name: 'mock-api',
+      configureServer(server) {
+        server.middlewares.use('/api/blender/test', (req, res, next) => {
+          if (req.method === 'GET') {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({
+              success: true,
+              blenderAvailable: true,
+              message: 'Blender is available (mock response)'
+            }));
+          } else {
+            next();
+          }
+        });
+
+        server.middlewares.use('/api/blender/preview', (req, res, next) => {
+          if (req.method === 'POST') {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({
+              success: false,
+              error: 'Backend server not running. Please start with: npm run dev'
+            }));
+          } else {
+            next();
+          }
+        });
+      }
+    }
+    */
   ],
   resolve: {
     alias: {
@@ -36,5 +68,24 @@ export default defineConfig({
     hmr: {
       overlay: false, // desativa o modal de erro no navegador
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001', // Atualizado para nova porta
+        changeOrigin: true,
+        secure: false,
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('Proxy error:', err.message);
+            res.writeHead(503, {
+              'Content-Type': 'application/json',
+            });
+            res.end(JSON.stringify({
+              success: false,
+              error: 'Backend server not available. Please run: npm run dev (not dev:front)'
+            }));
+          });
+        }
+      }
+    }
   },
 });

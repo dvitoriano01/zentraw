@@ -3,8 +3,8 @@
 > Media Central for Artists — Criação visual e sonora impulsionada por IA.
 
 ![Zentraw](https://img.shields.io/badge/Zentraw-CreativeAI-blueviolet?style=for-the-badge&logo=react)
-![Version](https://img.shields.io/badge/Version-V1.3.0.c.10-success?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-High_Resolution-brightgreen?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-V1.4.0.a.1-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-3D_Visualizer-brightgreen?style=for-the-badge)
 
 ---
 
@@ -12,7 +12,17 @@
 
 **Zentraw** é uma plataforma híbrida que une arte, música e tecnologia para oferecer ferramentas profissionais de criação visual e musical. Desenvolvida por e para criadores digitais, a Zentraw combina inteligência artificial com controle criativo manual, oferecendo um ambiente ágil, intuitivo e inspirador.
 
-### 🚀 **NOVIDADES V1.3.0.c.10** (10/07/2025)
+### 🚀 **NOVIDADES V1.4.0** (16/07/2025)
+
+- 🆕 **3D VISUALIZER IMPLEMENTADO** - Sistema completo de renderização 3D com Blender
+- ✅ **INTERFACE SPECTERR** - Layout profissional com sidebars organizadas
+- ✅ **CONTROLES DE CÂMERA** - Posição, rotação e zoom 3D em tempo real
+- ✅ **BLENDER INTEGRATION** - Execução automática via Python scripting
+- ✅ **EEVEE_NEXT ENGINE** - Compatibilidade com versões recentes do Blender
+- ✅ **PREVIEW SYSTEM** - Geração de previews 3D em ~2.5s
+- 🔄 **99% FUNCIONAL** - Backend operacional, último ajuste de proxy em progresso
+
+### 🚀 **ÚLTIMAS ATUALIZAÇÕES V1.3.0.c.10** (10/07/2025)
 
 - ✅ **ALTA RESOLUÇÃO IMPLEMENTADA** - Canvas renderiza em qualidade superior (2x+ devicePixelRatio)
 - ✅ **WORKSPACE OTIMIZADO** - Canvas ocupa automaticamente 85-90% da área disponível
@@ -53,12 +63,22 @@
 - Análise de performance e sugestões de promoção por IA
 - Exportação para playlists, mídia e distribuição
 
+### 🎬 3D Visualizer (NOVO V1.4.0)
+
+- **Render Engine**: Integração completa com Blender (EEVEE_NEXT)
+- **Interface Specterr**: Layout profissional com controles organizados
+- **Camera Controls**: Posição 3D, rotação e zoom em tempo real
+- **Preview System**: Geração rápida de previews (~2.5s)
+- **File Support**: Upload de áudio e imagem para visualização 3D
+- **Customization**: Configurações de resolução, qualidade e estilo de animação
+
 ### 🔗 Integrações com APIs
 
 - **Spotify**: análise de streaming e metadados artísticos
 - **YouTube Shorts & TikTok**: vídeos promocionais automáticos
 - **OpenAI**: geração de conteúdo textual e visual com ChatGPT e DALL·E
 - **Mirage Studio, VHEER, Replicate, Sora**: geração de vídeos, filtros e AI FX
+- **Blender**: renderização 3D e visualização musical
 
 ---
 

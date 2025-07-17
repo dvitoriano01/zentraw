@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
+import { BLENDER_PATHS } from '../blender-paths.js';
 
 export interface BlenderRenderOptions {
   audioPath: string;
@@ -38,9 +39,14 @@ export interface PreviewResult {
 }
 
 export class BlenderService {
-  private static readonly BLENDER_PATH = 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe';
-  private static readonly SCRIPT_PATH = path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py');
-  private static readonly DEFAULT_TEMPLATE = path.join(process.cwd(), 'Blender', 'template.blend.blend');
+  private static readonly BLENDER_PATH = BLENDER_PATHS.BLENDER_EXE;
+  private static readonly SCRIPT_PATH = BLENDER_PATHS.SCRIPT_PATH;
+  private static readonly DEFAULT_TEMPLATE = BLENDER_PATHS.TEMPLATE_PATH;
+
+  // Log para debug - forçar reload
+  static {
+    console.log('🔄 BlenderService reloaded - Template path:', BlenderService.DEFAULT_TEMPLATE);
+  }
 
   /**
    * Renderiza um audio visualizer usando Blender
@@ -214,18 +220,22 @@ export class BlenderService {
   }
 
   /**
-   * Gera um preview de um único frame com o template completo (áudio + imagem + configurações)
+   * Gera um preview de um único frame do template.blend com imagem aplicada
    */
   async generatePreview(options: PreviewOptions): Promise<PreviewResult> {
     const startTime = Date.now();
     const timestamp = Date.now();
     const outputPath = path.join(process.cwd(), 'uploads', 'blender', `preview_${timestamp}.png`);
-    const templatePath = BlenderService.DEFAULT_TEMPLATE;
+    // HARDCODE TEMPORÁRIO - CORRIGIR CAMINHO
+    const templatePath = path.join(process.cwd(), 'Blender', 'template.blend');
+
+    console.log('🔄 DEBUG - Template path:', templatePath);
+    console.log('🔄 DEBUG - Template exists:', fs.existsSync(templatePath));
 
     try {
-      // Validar se os arquivos existem
-      if (!fs.existsSync(options.audioFile)) {
-        throw new Error(`Audio file not found: ${options.audioFile}`);
+      // Validar se os arquivos existem (áudio não é necessário para preview)
+      if (!fs.existsSync(options.imageFile)) {
+        throw new Error(`Image file not found: ${options.imageFile}`);
       }
 
       if (!fs.existsSync(options.imageFile)) {
@@ -265,8 +275,9 @@ if '${options.renderEngine}' == 'cycles':
     bpy.context.scene.cycles.device = 'GPU'
     print("🎯 Using Cycles GPU engine")
 else:
-    bpy.context.scene.render.engine = 'BLENDER_EEVEE'
-    print("⚡ Using Eevee engine")
+    # Fixed: Using EEVEE_NEXT for newer Blender versions
+    bpy.context.scene.render.engine = 'BLENDER_EEVEE_NEXT'
+    print("⚡ Using Eevee Next engine")
 
 # Configurar resolução para preview
 bpy.context.scene.render.resolution_x = 1920
@@ -315,7 +326,8 @@ try:
                         tex_node.image = img
                         print(f"🖼️ Background image applied to {obj.name}")
                     break
-    print(f"✅ Image loaded: ${options.imageFile}")
+    print(f"✅ Image loaded: ${options.imageFile.replace(/\\/g, '/')}")
+    print("🔄 Using corrected path format for Windows compatibility")
 except Exception as e:
     print(f"⚠️ Could not load image: {e}")
 
@@ -372,7 +384,7 @@ bpy.context.scene.frame_set(60)
 print(f"🎬 Rendering preview frame...")
 bpy.ops.render.render(write_still=True)
 
-print(f'✅ Complete template preview rendered to: ${outputPath}')
+print(f'✅ Complete template preview rendered to: ${outputPath.replace(/\\/g, '/')}')
           `
         ];
 

@@ -247,10 +247,13 @@ router.post('/preview', upload.fields([
 ]), async (req: Request, res: Response) => {
   try {
     console.log('🎬 Preview generation request received');
+    console.log('📝 Request files:', req.files);
+    console.log('📝 Request body:', req.body);
     
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     
-    if (!files.audio || !files.audio[0]) {
+    if (!files || !files.audio || !files.audio[0]) {
+      console.log('❌ Audio file missing:', { files, hasFiles: !!files, hasAudio: !!(files && files.audio) });
       return res.status(400).json({
         success: false,
         error: 'Audio file is required'
@@ -258,6 +261,7 @@ router.post('/preview', upload.fields([
     }
 
     if (!files.image || !files.image[0]) {
+      console.log('❌ Image file missing:', { hasImage: !!(files && files.image) });
       return res.status(400).json({
         success: false,
         error: 'Image file is required'

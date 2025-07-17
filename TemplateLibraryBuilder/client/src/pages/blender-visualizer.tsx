@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
-import { Upload, Play, Download, TestTube, Settings, Sliders } from 'lucide-react';
+import { 
+  Upload, Play, Download, TestTube, Settings, Sliders, 
+  ChevronDown, ChevronRight, Music, Image, Palette, 
+  Layers, Type, FileText, Aperture, Lightbulb, Monitor,
+  ArrowLeft, ArrowRight, RotateCcw
+} from 'lucide-react';
 
 interface BlenderRenderResult {
   success: boolean;
-  downloadUrl?: string;
   outputPath?: string;
-  duration?: number;
-  message?: string;
   error?: string;
+  duration?: number;
 }
 
 interface RenderSettings {
-  resolution: '720p' | '1080p' | '4K';
-  quality: 'fast' | 'balanced' | 'high';
+  resolution: string;
+  quality: string;
   animationStyle: 'cube' | 'sphere' | 'bars';
   sensitivity: number;
   smoothing: number;
@@ -26,32 +29,112 @@ interface RenderSettings {
   renderEngine: 'eevee' | 'cycles';
 }
 
+// Seções da sidebar esquerda
+type SidebarSection = 'general' | 'audio' | 'visualizer' | 'backdrop' | 'text' | 'lyrics' | 'elements';
+
+// Estados dos dropdowns da sidebar direita
+interface DropdownStates {
+  preset: boolean;
+  audio: boolean;
+  images: boolean;
+  text: boolean;
+  colors: boolean;
+  elements: boolean;
+  camera: boolean;
+  lighting: boolean;
+  render: boolean;
+  export: boolean;
+}
+
 export default function BlenderVisualizerPage() {
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isRendering, setIsRendering] = useState(false);
   const [isTestingBlender, setIsTestingBlender] = useState(false);
   const [renderResult, setRenderResult] = useState<BlenderRenderResult | null>(null);
-  const [blenderStatus, setBlenderStatus] = useState<boolean | null>(null);
-  const [showSettings, setShowSettings] = useState(false);
-  
-  // Estados do modal de preview
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [isGeneratingPreview, setIsGeneratingPreview] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  
-  // Configurações de render
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [cameraPosition, setCameraPosition] = useState({ x: 50, y: 50 });
+  const [isDraggingCamera, setIsDraggingCamera] = useState(false);
+  const [autoUpdatePreview, setAutoUpdatePreview] = useState(false);
+
+  // Estados da UI
+  const [activeSection, setActiveSection] = useState<SidebarSection>('general');
+  const [dropdownStates, setDropdownStates] = useState<DropdownStates>({
+    preset: true,
+    audio: false,
+    images: false,
+    text: false,
+    colors: false,
+    elements: false,
+    camera: false,
+    lighting: false,
+    render: false,
+    export: false
+  });
+
   const [renderSettings, setRenderSettings] = useState<RenderSettings>({
     resolution: '1080p',
     quality: 'balanced',
     animationStyle: 'cube',
     sensitivity: 50,
     smoothing: 30,
-    cameraDistance: 50, // 0-100: distância da câmera do objeto (50 = posição original)
-    cameraHeight: 50,   // 0-100: altura da câmera (50 = posição original)
-    cameraAngle: 50,    // 0-100: ângulo de rotação da câmera (50 = posição original)
-    renderEngine: 'eevee', // Eevee como padrão para preview (mais rápido)
+    cameraDistance: 50,
+    cameraHeight: 50,
+    cameraAngle: 50,
+    renderEngine: 'eevee',
   });
+
+  // Effect para regenerar preview automaticamente
+  React.useEffect(() => {
+    // Testar conectividade com backend na inicialização
+    const testBackendConnection = async () => {
+      try {
+        console.log('🔍 Testing backend connection...');
+        const response = await fetch('/api/blender/test');
+        const result = await response.json();
+        console.log('✅ Backend connection test result:', result);
+      } catch (error) {
+        console.error('❌ Backend connection test failed:', error);
+      }
+    };
+    
+    testBackendConnection();
+  }, []);
+
+  React.useEffect(() => {
+    if (autoUpdatePreview && previewImage && audioFile && imageFile && !isGeneratingPreview) {
+      const timer = setTimeout(() => {
+        generatePreview();
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [renderSettings.cameraDistance, renderSettings.cameraHeight, renderSettings.cameraAngle, autoUpdatePreview]);
+
+  // Cleanup blob URLs on unmount
+  React.useEffect(() => {
+    return () => {
+      if (previewImage && previewImage.startsWith('blob:')) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
+
+  const toggleDropdown = (dropdown: keyof DropdownStates) => {
+    setDropdownStates(prev => ({
+      ...prev,
+      [dropdown]: !prev[dropdown]
+    }));
+  };
+
+  const updateSetting = (key: keyof RenderSettings, value: any) => {
+    setRenderSettings(prev => ({
+      ...prev,
+      [key]: value
+    }));
+  };
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -72,34 +155,11 @@ export default function BlenderVisualizerPage() {
     try {
       const response = await fetch('/api/blender/test');
       const result = await response.json();
-      setBlenderStatus(result.blenderAvailable);
+      console.log('Blender test result:', result);
     } catch (error) {
-      console.error('Error testing Blender:', error);
-      setBlenderStatus(false);
+      console.error('Blender test error:', error);
     } finally {
       setIsTestingBlender(false);
-    }
-  };
-
-  const testRenderSample = async () => {
-    setIsRendering(true);
-    setRenderResult(null);
-
-    try {
-      const response = await fetch('/api/blender/test-render', {
-        method: 'POST',
-      });
-
-      const result = await response.json();
-      setRenderResult(result);
-    } catch (error) {
-      console.error('Error testing render:', error);
-      setRenderResult({
-        success: false,
-        error: 'Failed to test render',
-      });
-    } finally {
-      setIsRendering(false);
     }
   };
 
@@ -114,6 +174,7 @@ export default function BlenderVisualizerPage() {
       return;
     }
 
+    console.log('🎬 Starting preview generation...');
     setIsGeneratingPreview(true);
     setPreviewImage(null);
 
@@ -129,22 +190,49 @@ export default function BlenderVisualizerPage() {
       formData.append('sensitivity', renderSettings.sensitivity.toString());
       formData.append('smoothing', renderSettings.smoothing.toString());
 
+      console.log('📤 Sending preview request to /api/blender/preview');
+      console.log('📁 Files:', { audio: audioFile.name, image: imageFile.name });
+      console.log('⚙️ Settings:', renderSettings);
+
       const response = await fetch('/api/blender/preview', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('📥 Response status:', response.status);
+      console.log('📥 Response ok:', response.ok);
+
       const result = await response.json();
+      console.log('📄 Response data:', result);
 
       if (result.success && result.previewUrl) {
-        setPreviewImage(result.previewUrl);
+        // Download image via fetch to avoid proxy issues
+        try {
+          console.log('🖼️ Downloading preview image via fetch...', result.previewUrl);
+          const imageResponse = await fetch(result.previewUrl);
+          if (imageResponse.ok) {
+            const imageBlob = await imageResponse.blob();
+            const imageUrl = URL.createObjectURL(imageBlob);
+            setPreviewImage(imageUrl);
+            console.log('✅ Preview image loaded successfully via blob URL');
+          } else {
+            console.error('Failed to download image:', imageResponse.status);
+            // Fallback to direct URL
+            setPreviewImage(result.previewUrl);
+          }
+        } catch (fetchError) {
+          console.error('Error downloading image via fetch:', fetchError);
+          // Fallback to direct URL
+          setPreviewImage(result.previewUrl);
+        }
+        console.log('✅ Preview generated successfully:', result.previewUrl);
       } else {
         console.error('Preview generation failed:', result.error);
         alert('Failed to generate preview: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Preview generation error:', error);
-      alert('Error generating preview');
+      alert('Error generating preview: ' + (error instanceof Error ? error.message : 'Unknown error'));
     } finally {
       setIsGeneratingPreview(false);
     }
@@ -166,8 +254,6 @@ export default function BlenderVisualizerPage() {
       const formData = new FormData();
       formData.append('audio', audioFile);
       formData.append('image', imageFile);
-      
-      // Adicionar configurações de render
       formData.append('settings', JSON.stringify(renderSettings));
 
       const response = await fetch('/api/blender/render', {
@@ -178,678 +264,590 @@ export default function BlenderVisualizerPage() {
       const result = await response.json();
       setRenderResult(result);
     } catch (error) {
-      console.error('Error rendering:', error);
+      console.error('Render error:', error);
       setRenderResult({
         success: false,
-        error: 'Failed to render audio visualizer',
+        error: 'Failed to start render process',
       });
     } finally {
       setIsRendering(false);
     }
   };
 
-  const updateSetting = (key: keyof RenderSettings, value: any) => {
-    setRenderSettings(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
-  const handleDownload = () => {
-    if (renderResult?.downloadUrl) {
-      const link = document.createElement('a');
-      link.href = renderResult.downloadUrl;
-      link.download = 'audio_visualizer.mp4';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
-
-  const formatDuration = (ms?: number) => {
-    if (!ms) return '';
-    if (ms < 1000) return `${ms}ms`;
-    return `${(ms / 1000).toFixed(1)}s`;
-  };
+  // Sidebar esquerda - ícones das seções
+  const sidebarSections = [
+    { id: 'general' as const, icon: Settings, label: 'General' },
+    { id: 'audio' as const, icon: Music, label: 'Audio' },
+    { id: 'visualizer' as const, icon: Sliders, label: 'Visualizer' },
+    { id: 'backdrop' as const, icon: Image, label: 'Backdrop' },
+    { id: 'text' as const, icon: Type, label: 'Text' },
+    { id: 'lyrics' as const, icon: FileText, label: 'Lyrics' },
+    { id: 'elements' as const, icon: Layers, label: 'Elements' },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-      <div className="h-screen overflow-y-auto p-4">
-        <div className="max-w-6xl mx-auto space-y-6 pb-8">{/* Container with padding bottom */}
+    <div className="min-h-screen bg-gray-900 text-white flex">
+      {/* Sidebar Esquerda - Seções */}
+      <div className="w-20 bg-gray-800 border-r border-gray-700 flex flex-col">
         {/* Header */}
-        <div className="text-center text-white">
-          <h1 className="text-4xl font-bold mb-4">🎬 Zentraw Blender Integration</h1>
-          <p className="text-xl opacity-90">Generate 3D Audio Visualizers automatically</p>
-          <div className="mt-4 flex justify-center">
-            <div className="bg-green-500/20 border border-green-500/30 px-4 py-2 rounded-full">
-              <span className="text-green-300 font-medium">✅ V1.4.0.a.1 - Production Ready</span>
-            </div>
+        <div className="p-4 border-b border-gray-700">
+          <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
+            <span className="text-sm font-bold">Z</span>
           </div>
         </div>
 
-        {/* Features Overview Card - Always Visible */}
-        <Card className="bg-black/20 border-white/10 text-white">
-          <CardHeader>
-            <CardTitle>✨ Available Features</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="space-y-2">
-              <div className="text-green-400 font-medium">✅ Current (V1.4.0.a.1)</div>
-              <ul className="space-y-1 text-gray-300 text-xs">
-                <li>• WAV Audio Processing</li>
-                <li>• 3D Cube Animation</li>
-                <li>• Real-time Audio Sync</li>
-                <li>• MP4 H.264 Export</li>
-                <li>• 1920x1080 Quality</li>
-                <li>• 📷 Camera Position Control</li>
-                <li>• Quality/Sensitivity Settings</li>
-              </ul>
-            </div>
-            <div className="space-y-2">
-              <div className="text-yellow-400 font-medium">🔄 Coming Soon (V1.4.0.a.2)</div>
-              <ul className="space-y-1 text-gray-300 text-xs">
-                <li>• MP3/FLAC Support</li>
-                <li>• Custom Templates</li>
-                <li>• Animation Presets</li>
-                <li>• Quality Profiles</li>
-                <li>• Batch Processing</li>
-              </ul>
-            </div>
-            <div className="space-y-2">
-              <div className="text-blue-400 font-medium">🚀 Future (V1.4.0.a.3+)</div>
-              <ul className="space-y-1 text-gray-300 text-xs">
-                <li>• Real-time Preview</li>
-                <li>• Particle Systems</li>
-                <li>• Camera Animation</li>
-                <li>• Custom Shaders</li>
-                <li>• Cloud Rendering</li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Coluna Principal - Upload e Configurações */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Blender Status Card */}
-            <Card className="bg-black/20 border-white/10 text-white">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TestTube className="w-5 h-5" />
-                  Blender Status
-                </CardTitle>
-                <CardDescription className="text-gray-300">
-                  Check if Blender is properly installed and configured
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <Button
-                    onClick={testBlender}
-                    disabled={isTestingBlender}
-                    variant="outline"
-                    className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                  >
-                    {isTestingBlender ? 'Testing...' : 'Test Blender'}
-                  </Button>
-
-                  {blenderStatus !== null && (
-                    <div
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        blenderStatus ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'
-                      }`}
-                    >
-                      {blenderStatus ? '✅ Blender Available' : '❌ Blender Not Available'}
-                    </div>
-                  )}
-                </div>
-
-                {blenderStatus && (
-                  <div className="space-y-2">
-                    <Button
-                      onClick={testRenderSample}
-                      disabled={isRendering}
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      <Play className="w-4 h-4 mr-2" />
-                      Test Render (Sample Files)
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* File Upload Card */}
-            <Card className="bg-black/20 border-white/10 text-white">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Upload className="w-5 h-5" />
-                  Upload Files
-                </CardTitle>
-                <CardDescription className="text-gray-300">
-                  Select audio and image files for your visualizer
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Audio Upload */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Audio File</label>
-                  <p className="text-xs text-gray-400 mb-2">Supported: WAV (44.1kHz recommended), MP3, FLAC</p>
-                  <div className="flex items-center gap-4">
-                    <input
-                      type="file"
-                      accept="audio/wav,audio/mp3,audio/flac,audio/*"
-                      onChange={(e) => handleFileChange(e, 'audio')}
-                      className="flex-1 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-                    />
-                    {audioFile && <span className="text-green-400 text-sm">✓ {audioFile.name}</span>}
-                  </div>
-                </div>
-
-                {/* Image Upload */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Cover Image</label>
-                  <p className="text-xs text-gray-400 mb-2">Supported: JPG, PNG, BMP (1920x1080 recommended)</p>
-                  <div className="flex items-center gap-4">
-                    <input
-                      type="file"
-                      accept="image/jpeg,image/png,image/bmp,image/*"
-                      onChange={(e) => handleFileChange(e, 'image')}
-                      className="flex-1 text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-                    />
-                    {imageFile && <span className="text-green-400 text-sm">✓ {imageFile.name}</span>}
-                  </div>
-                </div>
-
-                {/* Render Button */}
-                <Button
-                  onClick={handleRender}
-                  disabled={!audioFile || !imageFile || isRendering}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-                  size="lg"
-                >
-                  {isRendering ? (
-                    <>
-                      <div className="animate-spin w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full" />
-                      Rendering...
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 mr-2" />
-                      Generate 3D Visualizer
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Progress */}
-            {isRendering && (
-              <Card className="bg-black/20 border-white/10 text-white">
-                <CardContent className="pt-6">
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Rendering in progress...</span>
-                      <span>This may take a few minutes</span>
-                    </div>
-                    <Progress value={undefined} className="w-full" />
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Results */}
-            {renderResult && (
-              <Card className="bg-black/20 border-white/10 text-white">
-                <CardHeader>
-                  <CardTitle
-                    className={`flex items-center gap-2 ${
-                      renderResult.success ? 'text-green-400' : 'text-red-400'
-                    }`}
-                  >
-                    {renderResult.success ? '✅ Render Successful' : '❌ Render Failed'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {renderResult.success ? (
-                    <div className="space-y-4">
-                      <Alert className="bg-green-500/10 border-green-500/20">
-                        <AlertDescription className="text-green-200">
-                          {renderResult.message}
-                          {renderResult.duration && (
-                            <span className="ml-2 text-green-300">
-                              (Completed in {formatDuration(renderResult.duration)})
-                            </span>
-                          )}
-                        </AlertDescription>
-                      </Alert>
-
-                      {renderResult.downloadUrl && (
-                        <Button onClick={handleDownload} className="bg-green-600 hover:bg-green-700">
-                          <Download className="w-4 h-4 mr-2" />
-                          Download MP4
-                        </Button>
-                      )}
-                    </div>
-                  ) : (
-                    <Alert className="bg-red-500/10 border-red-500/20">
-                      <AlertDescription className="text-red-200">{renderResult.error}</AlertDescription>
-                    </Alert>
-                  )}
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Coluna Lateral - Configurações */}
-          <div className="space-y-6">
-            {/* Settings Panel */}
-            <Card className="bg-black/20 border-white/10 text-white">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
-                  Render Settings
-                </CardTitle>
-                <CardDescription className="text-gray-300">
-                  Customize your visualization parameters
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Resolution */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Resolution</label>
-                  <select
-                    value={renderSettings.resolution}
-                    onChange={(e) => updateSetting('resolution', e.target.value)}
-                    className="w-full bg-black/30 border border-white/20 rounded px-3 py-2 text-white"
-                  >
-                    <option value="720p">720p (1280x720)</option>
-                    <option value="1080p">1080p (1920x1080) ✓</option>
-                    <option value="4K">4K (3840x2160)</option>
-                  </select>
-                </div>
-
-                {/* Quality */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Quality</label>
-                  <select
-                    value={renderSettings.quality}
-                    onChange={(e) => updateSetting('quality', e.target.value)}
-                    className="w-full bg-black/30 border border-white/20 rounded px-3 py-2 text-white"
-                  >
-                    <option value="fast">Fast (32 samples)</option>
-                    <option value="balanced">Balanced (64 samples) ✓</option>
-                    <option value="high">High (128 samples)</option>
-                  </select>
-                </div>
-
-                {/* Animation Style */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">Animation Style</label>
-                  <select
-                    value={renderSettings.animationStyle}
-                    onChange={(e) => updateSetting('animationStyle', e.target.value)}
-                    className="w-full bg-black/30 border border-white/20 rounded px-3 py-2 text-white"
-                  >
-                    <option value="cube">3D Cube ✓</option>
-                    <option value="sphere">3D Sphere</option>
-                    <option value="bars">Audio Bars</option>
-                  </select>
-                </div>
-
-                {/* Sensitivity */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">
-                    Audio Sensitivity: {renderSettings.sensitivity}%
-                  </label>
-                  <input
-                    type="range"
-                    min="10"
-                    max="100"
-                    value={renderSettings.sensitivity}
-                    onChange={(e) => updateSetting('sensitivity', parseInt(e.target.value))}
-                    className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer slider"
-                  />
-                  <div className="flex justify-between text-xs text-gray-400">
-                    <span>Subtle</span>
-                    <span>Reactive</span>
-                  </div>
-                </div>
-
-                {/* Smoothing */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-medium">
-                    Animation Smoothing: {renderSettings.smoothing}%
-                  </label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="80"
-                    value={renderSettings.smoothing}
-                    onChange={(e) => updateSetting('smoothing', parseInt(e.target.value))}
-                    className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer slider"
-                  />
-                  <div className="flex justify-between text-xs text-gray-400">
-                    <span>Sharp</span>
-                    <span>Smooth</span>
-                  </div>
-                </div>
-
-                {/* Camera Controls Section */}
-                <div className="border-t border-white/10 pt-4 space-y-4">
-                  <h4 className="text-sm font-semibold text-white/90 flex items-center gap-2">
-                    📷 Camera Position Controls
-                  </h4>
-                  
-                  {/* Camera Distance */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium">
-                      Camera Distance: {renderSettings.cameraDistance}%
-                    </label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={renderSettings.cameraDistance}
-                      onChange={(e) => updateSetting('cameraDistance', parseInt(e.target.value))}
-                      className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer slider"
-                    />
-                    <div className="flex justify-between text-xs text-gray-400">
-                      <span>Close</span>
-                      <span>Default</span>
-                      <span>Far</span>
-                    </div>
-                  </div>
-
-                  {/* Camera Height */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium">
-                      Camera Height: {renderSettings.cameraHeight}%
-                    </label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={renderSettings.cameraHeight}
-                      onChange={(e) => updateSetting('cameraHeight', parseInt(e.target.value))}
-                      className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer slider"
-                    />
-                    <div className="flex justify-between text-xs text-gray-400">
-                      <span>Low</span>
-                      <span>Default</span>
-                      <span>High</span>
-                    </div>
-                  </div>
-
-                  {/* Camera Angle */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium">
-                      Camera Angle: {renderSettings.cameraAngle}%
-                    </label>
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={renderSettings.cameraAngle}
-                      onChange={(e) => updateSetting('cameraAngle', parseInt(e.target.value))}
-                      className="w-full h-2 bg-black/30 rounded-lg appearance-none cursor-pointer slider"
-                    />
-                    <div className="flex justify-between text-xs text-gray-400">
-                      <span>Left</span>
-                      <span>Default</span>
-                      <span>Right</span>
-                    </div>
-                  </div>
-
-                  {/* Render Engine Selection */}
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium">
-                      Render Engine
-                    </label>
-                    <select
-                      value={renderSettings.renderEngine}
-                      onChange={(e) => updateSetting('renderEngine', e.target.value as 'eevee' | 'cycles')}
-                      className="w-full bg-black/30 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                      <option value="eevee">Eevee (Fast - Recommended for Preview)</option>
-                      <option value="cycles">Cycles GPU (High Quality - Slower)</option>
-                    </select>
-                    <div className="text-xs text-gray-400">
-                      {renderSettings.renderEngine === 'eevee' 
-                        ? '⚡ Real-time engine - Perfect for quick previews' 
-                        : '🎯 Path-tracing engine - Best quality for final renders'
-                      }
-                    </div>
-                  </div>
-
-                  {/* Template Preview Button */}
-                  <Button
-                    onClick={() => setShowPreviewModal(true)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                    disabled={!audioFile || !imageFile}
-                  >
-                    <span className="mr-2">🎬</span>
-                    Preview Complete Template
-                  </Button>
-                </div>
-
-                {/* Reset Button */}
-                <Button
-                  onClick={() => setRenderSettings({
-                    resolution: '1080p',
-                    quality: 'balanced',
-                    animationStyle: 'cube',
-                    sensitivity: 50,
-                    smoothing: 30,
-                    cameraDistance: 50,
-                    cameraHeight: 50,
-                    cameraAngle: 50,
-                    renderEngine: 'eevee',
-                  })}
-                  variant="outline"
-                  className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
-                  size="sm"
-                >
-                  Reset to Defaults
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Quick Stats Card */}
-            <Card className="bg-black/20 border-white/10 text-white">
-              <CardHeader>
-                <CardTitle>📊 Quick Stats</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-300">Engine:</span>
-                  <span className="text-green-400">Blender 4.5</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-300">Render:</span>
-                  <span className="text-blue-400">Cycles GPU</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-300">Quality:</span>
-                  <span className="text-purple-400">{renderSettings.quality}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-300">Resolution:</span>
-                  <span className="text-yellow-400">{renderSettings.resolution}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-300">Last Success:</span>
-                  <span className="text-green-400">97.21s</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* System Specifications */}
-        <Card className="bg-black/20 border-white/10 text-white">
-          <CardHeader>
-            <CardTitle>🚀 System Specifications - V1.4.0.a.1</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 text-gray-300 text-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <h4 className="text-white font-medium">🎬 Render Engine</h4>
-                <p>• Blender 4.5.0 with Vulkan Support</p>
-                <p>• Cycles Engine (GPU Accelerated)</p>
-                <p>• 64 Samples for High Quality</p>
-                <p>• Real-time Audio Analysis</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-white font-medium">📐 Output Quality</h4>
-                <p>• 1920x1080 Full HD Resolution</p>
-                <p>• H.264 Video + AAC Audio</p>
-                <p>• 30 FPS Smooth Animation</p>
-                <p>• Perfect Audio-Video Sync</p>
-              </div>
-            </div>
-            
-            <div className="border-t border-white/10 pt-4">
-              <h4 className="text-white font-medium mb-2">ℹ️ How it works</h4>
-              <div className="space-y-1">
-                <p>• Upload an audio file (WAV format) and a cover image</p>
-                <p>• Our system analyzes audio using RMS amplitude calculation</p>
-                <p>• Blender renders 3D objects that react to music frequencies</p>
-                <p>• Professional MP4 output ready for YouTube/social media</p>
-                <p>• Estimated render time: ~0.95 seconds per frame</p>
-              </div>
-            </div>
-            
-            <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
-              <p className="text-blue-300 font-medium">🎯 Latest Success: 97.21 seconds of audio rendered in 2916 frames</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Navigation Icons */}
+        <div className="flex-1 p-2 space-y-2">
+          {sidebarSections.map((section) => {
+            const Icon = section.icon;
+            return (
+              <button
+                key={section.id}
+                onClick={() => setActiveSection(section.id)}
+                className={`w-full p-3 rounded-lg flex flex-col items-center gap-1 transition-colors ${
+                  activeSection === section.id
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                }`}
+                title={section.label}
+              >
+                <Icon size={20} />
+                <span className="text-xs">{section.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* Modal de Preview da Câmera */}
-      {showPreviewModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-purple-900/95 via-blue-900/95 to-indigo-900/95 border border-white/20 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              {/* Header do Modal */}
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-2">🎬 Template Preview</h2>
-                  <p className="text-gray-300">Preview the complete visualizer with your audio, image, and camera settings</p>
-                </div>
-                <Button
-                  onClick={() => setShowPreviewModal(false)}
-                  variant="outline"
-                  size="sm"
-                  className="text-white border-white/20"
-                >
-                  ✕ Close
-                </Button>
-              </div>
+      {/* Área Central - Preview/Canvas */}
+      <div className="flex-1 flex flex-col">
+        {/* Header Central */}
+        <div className="h-16 bg-gray-800 border-b border-gray-700 flex items-center justify-between px-6">
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-semibold">Zentraw Blender Visualizer</h1>
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <span>Project: Audio Visualizer</span>
+            </div>
+          </div>
+          
+          {/* Controls do header */}
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={testBlender}
+              disabled={isTestingBlender}
+              variant="outline"
+              size="sm"
+              className="bg-gray-700 border-gray-600 hover:bg-gray-600"
+            >
+              <TestTube className="w-4 h-4 mr-2" />
+              {isTestingBlender ? 'Testing...' : 'Test Blender'}
+            </Button>
+            
+            <Button
+              onClick={generatePreview}
+              disabled={!audioFile || !imageFile || isGeneratingPreview}
+              className="bg-blue-600 hover:bg-blue-700"
+              size="sm"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              {isGeneratingPreview ? 'Generating...' : 'Preview'}
+              {autoUpdatePreview && (
+                <span className="ml-2 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              )}
+            </Button>
 
-              {/* Settings Summary */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-sm">
-                <div className="bg-black/20 p-3 rounded-lg">
-                  <div className="text-gray-400">Distance</div>
-                  <div className="text-white font-medium">{renderSettings.cameraDistance}%</div>
-                </div>
-                <div className="bg-black/20 p-3 rounded-lg">
-                  <div className="text-gray-400">Height</div>
-                  <div className="text-white font-medium">{renderSettings.cameraHeight}%</div>
-                </div>
-                <div className="bg-black/20 p-3 rounded-lg">
-                  <div className="text-gray-400">Angle</div>
-                  <div className="text-white font-medium">{renderSettings.cameraAngle}%</div>
-                </div>
-                <div className="bg-black/20 p-3 rounded-lg">
-                  <div className="text-gray-400">Engine</div>
-                  <div className="text-white font-medium capitalize">{renderSettings.renderEngine}</div>
-                </div>
-              </div>
+            <Button
+              onClick={handleRender}
+              disabled={!audioFile || !imageFile || isRendering}
+              className="bg-purple-600 hover:bg-purple-700"
+              size="sm"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              {isRendering ? 'Rendering...' : 'Render'}
+            </Button>
+          </div>
+        </div>
 
-              {/* Preview Area */}
-              <div className="bg-black/40 rounded-lg border border-white/10 mb-6">
-                {previewImage ? (
-                  <div className="p-4">
-                    <img 
-                      src={previewImage} 
-                      alt="Template Preview" 
-                      className="w-full rounded-lg shadow-lg"
-                    />
-                    <div className="mt-3 text-center text-green-300 text-sm">
-                      ✅ Complete template preview generated successfully
-                    </div>
+        {/* Canvas Principal */}
+        <div className="flex-1 bg-gray-900 p-6">
+          <div className="w-full h-full bg-gray-800 rounded-lg border border-gray-700 flex items-center justify-center relative overflow-hidden">
+            {previewImage ? (
+              <>
+                <img
+                  src={previewImage}
+                  alt="Blender Preview"
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+                
+                {/* Overlay com informações */}
+                <div className="absolute top-4 left-4 bg-black/70 rounded-lg p-3 backdrop-blur-sm">
+                  <div className="text-sm space-y-1">
+                    <div className="text-green-400">✅ Preview Ready</div>
+                    <div className="text-gray-300">Engine: {renderSettings.renderEngine.toUpperCase()}</div>
+                    <div className="text-gray-300">Camera: {renderSettings.cameraDistance}% distance</div>
                   </div>
-                ) : (
-                  <div className="p-8 text-center">
-                    <div className="text-6xl mb-4">🎬</div>
-                    <h3 className="text-xl font-medium text-white mb-2">Generate Complete Template Preview</h3>
-                    <p className="text-gray-400 mb-6">
-                      See how your complete visualizer will look with audio, image, camera, and animation settings applied
-                    </p>
-                    
-                    <Button
-                      onClick={generatePreview}
-                      disabled={isGeneratingPreview || !audioFile || !imageFile}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
-                    >
-                      {isGeneratingPreview ? (
-                        <>
-                          <span className="animate-spin mr-2">⏳</span>
-                          Generating Complete Preview...
-                        </>
-                      ) : (
-                        <>
-                          <span className="mr-2">🎬</span>
-                          Generate Template Preview ({renderSettings.renderEngine.toUpperCase()})
-                        </>
-                      )}
-                    </Button>
+                </div>
 
-                    {(!audioFile || !imageFile) && (
-                      <div className="mt-4 text-yellow-400 text-sm">
-                        ⚠️ Please select both audio and image files first
-                      </div>
-                    )}
+                {/* Controles de camera overlay */}
+                <div className="absolute bottom-4 right-4 bg-black/70 rounded-lg p-3 backdrop-blur-sm">
+                  <div className="text-xs text-gray-300 mb-2">Camera Position</div>
+                  <div className="flex gap-2">
+                    <button className="p-2 bg-gray-600 rounded hover:bg-gray-500">
+                      <RotateCcw size={16} />
+                    </button>
+                    <button className="p-2 bg-gray-600 rounded hover:bg-gray-500">
+                      <ArrowLeft size={16} />
+                    </button>
+                    <button className="p-2 bg-gray-600 rounded hover:bg-gray-500">
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="text-center text-gray-400">
+                <div className="w-24 h-24 mx-auto mb-4 bg-gray-700 rounded-lg flex items-center justify-center">
+                  <Image size={32} />
+                </div>
+                <h3 className="text-lg font-medium mb-2">No Preview Generated</h3>
+                <p className="text-sm mb-4">Upload audio and image files, then click Preview</p>
+                
+                {/* Quick upload area */}
+                <div className="flex gap-4 justify-center">
+                  <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-purple-500 transition-colors">
+                    <Music size={24} />
+                    <span className="text-sm">Audio File</span>
+                    <input
+                      type="file"
+                      accept="audio/*"
+                      onChange={(e) => handleFileChange(e, 'audio')}
+                      className="hidden"
+                    />
+                  </label>
+                  
+                  <label className="flex flex-col items-center gap-2 p-4 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:border-purple-500 transition-colors">
+                    <Image size={24} />
+                    <span className="text-sm">Image File</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleFileChange(e, 'image')}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
 
-                    <div className="mt-4 text-xs text-gray-500">
-                      Preview will render a complete frame with your audio visualization, background image, and camera settings
+                {/* Status dos arquivos */}
+                {(audioFile || imageFile) && (
+                  <div className="mt-4 text-sm">
+                    {audioFile && <div className="text-green-400">✅ Audio: {audioFile.name}</div>}
+                    {imageFile && <div className="text-green-400">✅ Image: {imageFile.name}</div>}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Progress overlay para operações */}
+            {(isRendering || isGeneratingPreview) && (
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm">
+                <div className="bg-gray-800 rounded-lg p-6 text-center">
+                  <div className="w-12 h-12 mx-auto mb-4 border-4 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="text-lg font-medium mb-2">
+                    {isRendering ? 'Rendering Video...' : 'Generating Preview...'}
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    {isRendering ? 'This may take several minutes' : 'Please wait...'}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Sidebar Direita - Parâmetros */}
+      <div className="w-80 bg-gray-800 border-l border-gray-700 flex flex-col">
+        {/* Header da sidebar direita */}
+        <div className="p-4 border-b border-gray-700">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold capitalize">{activeSection}</h2>
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="stepGuide"
+                className="rounded border-gray-600 bg-gray-700 text-purple-600"
+              />
+              <label htmlFor="stepGuide" className="text-sm text-gray-300">STEP GUIDE</label>
+            </div>
+          </div>
+          
+          {/* Navigation controls */}
+          <div className="flex gap-2 mt-3">
+            <Button variant="outline" size="sm" className="bg-gray-700 border-gray-600 hover:bg-gray-600">
+              BACK
+            </Button>
+            <Button variant="outline" size="sm" className="bg-gray-700 border-gray-600 hover:bg-gray-600">
+              NEXT
+            </Button>
+          </div>
+        </div>
+
+        {/* Conteúdo dos parâmetros */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {activeSection === 'general' && (
+            <>
+              {/* Preset */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => toggleDropdown('preset')}
+                  className="w-full flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold">1</span>
+                    </div>
+                    <span className="font-medium">Preset</span>
+                  </div>
+                  {dropdownStates.preset ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                </button>
+                
+                {dropdownStates.preset && (
+                  <div className="ml-11 space-y-3 bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Template Style</label>
+                      <select
+                        value={renderSettings.animationStyle}
+                        onChange={(e) => updateSetting('animationStyle', e.target.value)}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
+                      >
+                        <option value="cube">Cube Visualizer</option>
+                        <option value="sphere">Sphere Visualizer</option>
+                        <option value="bars">Bars Visualizer</option>
+                      </select>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-400">
-                  {renderSettings.renderEngine === 'eevee' 
-                    ? '⚡ Eevee: ~5-10 seconds for preview'
-                    : '🎯 Cycles: ~30-60 seconds for preview (higher quality)'
-                  }
-                </div>
-                <div className="space-x-3">
-                  {previewImage && (
+              {/* Audio */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => toggleDropdown('audio')}
+                  className="w-full flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold">2</span>
+                    </div>
+                    <span className="font-medium">Audio</span>
+                  </div>
+                  {dropdownStates.audio ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                </button>
+                
+                {dropdownStates.audio && (
+                  <div className="ml-11 space-y-3 bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Audio File</label>
+                      <input
+                        type="file"
+                        accept="audio/*"
+                        onChange={(e) => handleFileChange(e, 'audio')}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white file:bg-purple-600 file:border-0 file:text-white file:px-4 file:py-1 file:rounded file:mr-3"
+                      />
+                      {audioFile && (
+                        <div className="mt-2 text-sm text-green-400">
+                          ✅ {audioFile.name}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Sensitivity: {renderSettings.sensitivity}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={renderSettings.sensitivity}
+                        onChange={(e) => updateSetting('sensitivity', parseInt(e.target.value))}
+                        className="w-full"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Smoothing: {renderSettings.smoothing}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={renderSettings.smoothing}
+                        onChange={(e) => updateSetting('smoothing', parseInt(e.target.value))}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Images */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => toggleDropdown('images')}
+                  className="w-full flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-bold">3</span>
+                    </div>
+                    <span className="font-medium">Images</span>
+                  </div>
+                  {dropdownStates.images ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                </button>
+                
+                {dropdownStates.images && (
+                  <div className="ml-11 space-y-3 bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Background Image</label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e, 'image')}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white file:bg-purple-600 file:border-0 file:text-white file:px-4 file:py-1 file:rounded file:mr-3"
+                      />
+                      {imageFile && (
+                        <div className="mt-2 text-sm text-green-400">
+                          ✅ {imageFile.name}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Camera Controls */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => toggleDropdown('camera')}
+                  className="w-full flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                      <Aperture size={16} />
+                    </div>
+                    <span className="font-medium">Camera</span>
+                  </div>
+                  {dropdownStates.camera ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                </button>
+                
+                {dropdownStates.camera && (
+                  <div className="ml-11 space-y-3 bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Distance: {renderSettings.cameraDistance}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={renderSettings.cameraDistance}
+                        onChange={(e) => updateSetting('cameraDistance', parseInt(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-400">
+                        <span>Close</span>
+                        <span>Default</span>
+                        <span>Far</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Height: {renderSettings.cameraHeight}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={renderSettings.cameraHeight}
+                        onChange={(e) => updateSetting('cameraHeight', parseInt(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-400">
+                        <span>Low</span>
+                        <span>Default</span>
+                        <span>High</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Angle: {renderSettings.cameraAngle}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={renderSettings.cameraAngle}
+                        onChange={(e) => updateSetting('cameraAngle', parseInt(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-400">
+                        <span>Left</span>
+                        <span>Default</span>
+                        <span>Right</span>
+                      </div>
+                    </div>
+
+                    {/* Auto-update toggle */}
+                    <div className="flex items-center gap-2 pt-2 border-t border-gray-700">
+                      <input
+                        type="checkbox"
+                        id="autoUpdate"
+                        checked={autoUpdatePreview}
+                        onChange={(e) => setAutoUpdatePreview(e.target.checked)}
+                        className="rounded border-gray-600 bg-gray-700 text-purple-600"
+                      />
+                      <label htmlFor="autoUpdate" className="text-sm">Auto-update preview</label>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Render Settings */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => toggleDropdown('render')}
+                  className="w-full flex items-center justify-between p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                      <Monitor size={16} />
+                    </div>
+                    <span className="font-medium">Render</span>
+                  </div>
+                  {dropdownStates.render ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+                </button>
+                
+                {dropdownStates.render && (
+                  <div className="ml-11 space-y-3 bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Engine</label>
+                      <select
+                        value={renderSettings.renderEngine}
+                        onChange={(e) => updateSetting('renderEngine', e.target.value)}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
+                      >
+                        <option value="eevee">Eevee (Fast)</option>
+                        <option value="cycles">Cycles (High Quality)</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Resolution</label>
+                      <select
+                        value={renderSettings.resolution}
+                        onChange={(e) => updateSetting('resolution', e.target.value)}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
+                      >
+                        <option value="720p">720p (1280x720)</option>
+                        <option value="1080p">1080p (1920x1080)</option>
+                        <option value="4K">4K (3840x2160)</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Quality</label>
+                      <select
+                        value={renderSettings.quality}
+                        onChange={(e) => updateSetting('quality', e.target.value)}
+                        className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
+                      >
+                        <option value="fast">Fast</option>
+                        <option value="balanced">Balanced</option>
+                        <option value="high">High Quality</option>
+                      </select>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Outras seções podem ser implementadas aqui */}
+          {activeSection === 'audio' && (
+            <div className="text-center text-gray-400 py-8">
+              <Music size={48} className="mx-auto mb-4" />
+              <h3 className="text-lg font-medium mb-2">Audio Section</h3>
+              <p className="text-sm">Advanced audio settings will be available here</p>
+            </div>
+          )}
+
+          {activeSection === 'visualizer' && (
+            <div className="text-center text-gray-400 py-8">
+              <Sliders size={48} className="mx-auto mb-4" />
+              <h3 className="text-lg font-medium mb-2">Visualizer Section</h3>
+              <p className="text-sm">Visualizer-specific settings will be available here</p>
+            </div>
+          )}
+
+          {/* ... outras seções ... */}
+        </div>
+
+        {/* Footer da sidebar direita */}
+        <div className="p-4 border-t border-gray-700">
+          <Button
+            onClick={() => setRenderSettings({
+              resolution: '1080p',
+              quality: 'balanced',
+              animationStyle: 'cube',
+              sensitivity: 50,
+              smoothing: 30,
+              cameraDistance: 50,
+              cameraHeight: 50,
+              cameraAngle: 50,
+              renderEngine: 'eevee',
+            })}
+            variant="outline"
+            className="w-full bg-gray-700 border-gray-600 hover:bg-gray-600"
+            size="sm"
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Reset to Defaults
+          </Button>
+        </div>
+      </div>
+
+      {/* Alerts/Results */}
+      {renderResult && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <Alert className={renderResult.success ? 'border-green-500 bg-green-950' : 'border-red-500 bg-red-950'}>
+            <AlertDescription>
+              {renderResult.success ? (
+                <div className="space-y-2">
+                  <div className="text-green-400 font-medium">✅ Render completed!</div>
+                  {renderResult.duration && (
+                    <div className="text-sm text-green-300">Duration: {renderResult.duration}ms</div>
+                  )}
+                  {renderResult.outputPath && (
                     <Button
-                      onClick={generatePreview}
-                      disabled={isGeneratingPreview}
                       variant="outline"
-                      className="text-white border-white/20"
+                      size="sm"
+                      className="mt-2 bg-green-800 border-green-600 hover:bg-green-700"
+                      onClick={() => window.open(renderResult.outputPath, '_blank')}
                     >
-                      🔄 Regenerate
+                      <Download className="w-4 h-4 mr-2" />
+                      Download
                     </Button>
                   )}
-                  <Button
-                    onClick={() => setShowPreviewModal(false)}
-                    className="bg-purple-600 hover:bg-purple-700 text-white"
-                  >
-                    Continue to Render
-                  </Button>
                 </div>
-              </div>
-            </div>
-          </div>
+              ) : (
+                <div className="text-red-400">{renderResult.error}</div>
+              )}
+            </AlertDescription>
+          </Alert>
         </div>
       )}
     </div>

@@ -4,6 +4,7 @@ import bpy, wave, numpy as np, os, sys
 argv = sys.argv
 audio = argv[argv.index("--")+1]
 image = argv[argv.index("--")+2]
+output = argv[argv.index("--")+3] if len(argv) > argv.index("--")+3 else os.path.join(os.getcwd(), "output.mp4")
 
 # 2. Carrega áudio via wave + numpy
 wf = wave.open(audio, 'rb')
@@ -25,7 +26,7 @@ scene.render.resolution_x = 1080
 scene.render.resolution_y = 1920
 scene.render.image_settings.file_format = 'FFMPEG'
 scene.render.ffmpeg.codec = 'H264'
-scene.render.filepath = os.path.join(os.getcwd(), "output.mp4")
+scene.render.filepath = output
 
 # 5. Aplica capa como textura no "Plane"
 img = bpy.data.images.load(image)

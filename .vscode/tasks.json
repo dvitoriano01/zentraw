@@ -2,50 +2,137 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start Zentraw Backend V1.4.0",
+      "label": "🚀 Start Zentraw Backend V1.4.0.a.2",
       "type": "shell",
       "command": "cd TemplateLibraryBuilder && npm run dev:back",
       "group": "build",
       "isBackground": true,
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
     {
-      "label": "Stop All Node Processes",
+      "label": "🛑 Stop All Node Processes",
       "type": "shell",
-      "command": "taskkill /F /IM node.exe",
+      "command": "taskkill /F /IM node.exe /T",
       "group": "build",
       "isBackground": false,
       "problemMatcher": [],
       "presentation": {
-        "reveal": "always"
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     },
     {
-      "label": "Restart Backend V1.4.0",
+      "label": "🔄 Restart Backend V1.4.0.a.2 (Complete)",
       "type": "shell",
-      "command": "cd TemplateLibraryBuilder && taskkill /F /IM node.exe & timeout 2 & npm run dev:back",
+      "command": "taskkill /F /IM node.exe /T >nul 2>&1 && timeout /t 3 /nobreak >nul && cd TemplateLibraryBuilder && npm run dev:back",
       "group": "build",
       "isBackground": true,
       "problemMatcher": [],
       "presentation": {
-        "reveal": "always"
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
       }
     },
     {
-      "label": "Start Zentraw Frontend V1.4.0",
+      "label": "🎨 Start Zentraw Frontend V1.4.0.a.2",
       "type": "shell",
       "command": "cd TemplateLibraryBuilder && npm run dev:front",
       "group": "build",
       "isBackground": true,
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     },
     {
-      "label": "Build Zentraw V1.4.0",
+      "label": "🏗️ Build Zentraw V1.4.0.a.2",
       "type": "shell",
       "command": "cd TemplateLibraryBuilder && npm run build",
       "group": "build",
       "isBackground": false,
-      "problemMatcher": ["$tsc"]
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "🔍 Test Backend Connection",
+      "type": "shell",
+      "command": "curl http://localhost:5001/health && echo. && curl http://localhost:5001/api/blender/test",
+      "group": "test",
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "🧪 Debug Blender System",
+      "type": "shell",
+      "command": "curl http://localhost:5001/api/blender/debug",
+      "group": "test",
+      "isBackground": false,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     }
   ]
 }

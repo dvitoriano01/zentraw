@@ -70,7 +70,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:5001', // Atualizado para nova porta
+        target: 'http://localhost:5001', // Porta do backend-only
         changeOrigin: true,
         secure: false,
         configure: (proxy, options) => {
@@ -81,7 +81,7 @@ export default defineConfig({
             });
             res.end(JSON.stringify({
               success: false,
-              error: 'Backend server not available. Please run: npm run dev (not dev:front)'
+              error: 'Backend server not available. Please run: npm run dev:back'
             }));
           });
         }

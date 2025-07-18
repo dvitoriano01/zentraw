@@ -3,7 +3,7 @@
 > Media Central for Artists — Criação visual e sonora impulsionada por IA.
 
 ![Zentraw](https://img.shields.io/badge/Zentraw-CreativeAI-blueviolet?style=for-the-badge&logo=react)
-![Version](https://img.shields.io/badge/Version-V1.4.0.a.1-success?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-V1.4.0.a.2-success?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-3D_Visualizer-brightgreen?style=for-the-badge)
 
 ---
@@ -12,7 +12,7 @@
 
 **Zentraw** é uma plataforma híbrida que une arte, música e tecnologia para oferecer ferramentas profissionais de criação visual e musical. Desenvolvida por e para criadores digitais, a Zentraw combina inteligência artificial com controle criativo manual, oferecendo um ambiente ágil, intuitivo e inspirador.
 
-### 🚀 **NOVIDADES V1.4.0** (16/07/2025)
+### 🚀 **NOVIDADES V1.4.0.a.2** (17/07/2025)
 
 - 🆕 **3D VISUALIZER IMPLEMENTADO** - Sistema completo de renderização 3D com Blender
 - ✅ **INTERFACE SPECTERR** - Layout profissional com sidebars organizadas
@@ -20,7 +20,25 @@
 - ✅ **BLENDER INTEGRATION** - Execução automática via Python scripting
 - ✅ **EEVEE_NEXT ENGINE** - Compatibilidade com versões recentes do Blender
 - ✅ **PREVIEW SYSTEM** - Geração de previews 3D em ~2.5s
-- 🔄 **99% FUNCIONAL** - Backend operacional, último ajuste de proxy em progresso
+- � **TASKS ATUALIZADAS** - Sistema de tasks VS Code completamente revisado
+- 📋 **DOCUMENTAÇÃO COMPLETA** - Guia completo de tasks e desenvolvimento
+
+### 🎮 **COMO USAR - TASKS V1.4.0.a.2**
+
+#### **Desenvolvimento:**
+1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🚀 Start Zentraw Backend V1.4.0.a.2`
+2. `Ctrl+Shift+P` → `Tasks: Run Task` → `🎨 Start Zentraw Frontend V1.4.0.a.2`
+3. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔍 Test Backend Connection`
+
+#### **Quando há Problemas:**
+1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🛑 Stop All Node Processes`
+2. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔄 Restart Backend V1.4.0.a.2 (Complete)`
+3. `Ctrl+Shift+P` → `Tasks: Run Task` → `🧪 Debug Blender System`
+
+#### **Build:**
+1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🏗️ Build Zentraw V1.4.0.a.2`
+
+📖 **Documentação Completa**: [/docs/ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md](./docs/ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md)
 
 ### 🚀 **ÚLTIMAS ATUALIZAÇÕES V1.3.0.c.10** (10/07/2025)
 

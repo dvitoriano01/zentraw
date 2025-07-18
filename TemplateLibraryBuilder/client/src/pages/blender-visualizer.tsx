@@ -113,15 +113,8 @@ export default function BlenderVisualizerPage() {
     }
   }, [renderSettings.cameraDistance, renderSettings.cameraHeight, renderSettings.cameraAngle, autoUpdatePreview]);
 
-  // Cleanup blob URLs on unmount
-  React.useEffect(() => {
-    return () => {
-      if (previewImage && previewImage.startsWith('blob:')) {
-        URL.revokeObjectURL(previewImage);
-      }
-    };
-  }, [previewImage]);
-
+  // ✅ SOLUÇÃO: Cleanup removido - não usamos mais blob URLs
+  
   const toggleDropdown = (dropdown: keyof DropdownStates) => {
     setDropdownStates(prev => ({
       ...prev,
@@ -206,26 +199,11 @@ export default function BlenderVisualizerPage() {
       console.log('📄 Response data:', result);
 
       if (result.success && result.previewUrl) {
-        // Download image via fetch to avoid proxy issues
-        try {
-          console.log('🖼️ Downloading preview image via fetch...', result.previewUrl);
-          const imageResponse = await fetch(result.previewUrl);
-          if (imageResponse.ok) {
-            const imageBlob = await imageResponse.blob();
-            const imageUrl = URL.createObjectURL(imageBlob);
-            setPreviewImage(imageUrl);
-            console.log('✅ Preview image loaded successfully via blob URL');
-          } else {
-            console.error('Failed to download image:', imageResponse.status);
-            // Fallback to direct URL
-            setPreviewImage(result.previewUrl);
-          }
-        } catch (fetchError) {
-          console.error('Error downloading image via fetch:', fetchError);
-          // Fallback to direct URL
-          setPreviewImage(result.previewUrl);
-        }
-        console.log('✅ Preview generated successfully:', result.previewUrl);
+        // ✅ SOLUÇÃO: Usar URL completa para o backend
+        const fullImageUrl = `http://localhost:5001${result.previewUrl}`;
+        console.log('🖼️ Setting preview image URL directly:', fullImageUrl);
+        setPreviewImage(fullImageUrl);
+        console.log('✅ Preview generated successfully:', fullImageUrl);
       } else {
         console.error('Preview generation failed:', result.error);
         alert('Failed to generate preview: ' + (result.error || 'Unknown error'));

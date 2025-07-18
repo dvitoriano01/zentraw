@@ -3,6 +3,7 @@ import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { BlenderService } from '../services/blender-service.js';
+import { BlenderServiceComplete } from '../services/blender-service-complete.js';
 
 const router = express.Router();
 
@@ -176,12 +177,61 @@ router.get('/download/:filename', (req: Request, res: Response) => {
 });
 
 /**
+ * GET /api/blender/debug
+ * Debug detalhado do Blender
+ */
+router.get('/debug', async (req: Request, res: Response) => {
+  try {
+    console.log('🔍 Starting detailed Blender debug...');
+    
+    // Testar todos os métodos
+    const workingMethod = await BlenderServiceComplete.testAllMethods();
+    
+    // Verificar arquivos necessários
+    const templatePath = path.join(process.cwd(), 'Blender', 'template.blend');
+    const scriptPath = path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py');
+    
+    const files = {
+      template: {
+        path: templatePath,
+        exists: fs.existsSync(templatePath),
+        size: fs.existsSync(templatePath) ? fs.statSync(templatePath).size : 0
+      },
+      script: {
+        path: scriptPath,
+        exists: fs.existsSync(scriptPath),
+        size: fs.existsSync(scriptPath) ? fs.statSync(scriptPath).size : 0
+      }
+    };
+    
+    res.json({
+      success: true,
+      workingMethod,
+      files,
+      workingDirectory: process.cwd(),
+      nodeVersion: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      message: 'Debug information collected'
+    });
+    
+  } catch (error) {
+    console.error('❌ Debug endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Debug failed'
+    });
+  }
+});
+
+/**
  * GET /api/blender/test
  * Testa se o Blender está funcionando
  */
 router.get('/test', async (req: Request, res: Response) => {
   try {
-    const isWorking = await BlenderService.testBlenderInstallation();
+    // Usar o novo serviço completo
+    const isWorking = await BlenderServiceComplete.testBlenderInstallation();
     
     res.json({
       success: true,
@@ -293,7 +343,7 @@ router.post('/preview', upload.fields([
       imageFile: imageFile.filename
     });
 
-    const blenderService = new BlenderService();
+    const blenderService = new BlenderServiceComplete();
     
     // Gerar preview completo (um frame do template final)
     const result = await blenderService.generatePreview({
@@ -311,8 +361,9 @@ router.post('/preview', upload.fields([
     });
 
     if (result.success && result.previewPath) {
-      // Gerar URL para download da imagem
-      const previewUrl = `/api/blender/download/${path.basename(result.previewPath)}`;
+      // ✅ SOLUÇÃO: Gerar URL para static file serving
+      const relativePath = path.relative(process.cwd(), result.previewPath);
+      const previewUrl = `/${relativePath.replace(/\\/g, '/')}`;
       
       console.log('✅ Preview generated successfully:', previewUrl);
       

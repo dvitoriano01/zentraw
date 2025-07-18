@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, execFile } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { BLENDER_PATHS } from '../blender-paths.js';
@@ -92,7 +92,8 @@ export class BlenderService {
       // Executar Blender
       const result = await this.executeBlender(templatePath, [
         options.audioPath,
-        options.imagePath
+        options.imagePath,
+        outputPath  // Adicionar outputPath como terceiro argumento
       ]);
 
       if (!result.success) {
@@ -126,7 +127,7 @@ export class BlenderService {
   }
 
   /**
-   * Executa o Blender com o script Python
+   * Executa o Blender com o script Python usando PowerShell para resolver problemas com espaços
    */
   private static executeBlender(templatePath: string, scriptArgs: string[]): Promise<{ success: boolean; error?: string }> {
     return new Promise((resolve) => {
@@ -139,15 +140,25 @@ export class BlenderService {
         ...scriptArgs            // Argumentos para o script
       ];
 
-      console.log(`Executing: ${this.BLENDER_PATH} ${args.join(' ')}`);
+      // Construir comando PowerShell para lidar com espaços no caminho
+      const powershellCommand = `& "${this.BLENDER_PATH}" ${args.join(' ')}`;
+      console.log(`Executing via PowerShell: ${powershellCommand}`);
 
-      const blenderProcess = spawn(this.BLENDER_PATH, args, {
-        stdio: ['pipe', 'pipe', 'pipe'],
-        shell: true
+      // Usar PowerShell para executar o Blender
+      const blenderProcess = spawn('powershell', ['-Command', powershellCommand], {
+        stdio: ['pipe', 'pipe', 'pipe']
       });
 
       let stdout = '';
       let stderr = '';
+      let hasError = false;
+
+      // Timeout para evitar travamento
+      const timeout = setTimeout(() => {
+        console.log('⏰ Blender process timeout, killing...');
+        blenderProcess.kill('SIGTERM');
+        hasError = true;
+      }, 30000); // 30 segundos
 
       blenderProcess.stdout?.on('data', (data) => {
         const output = data.toString();
@@ -161,7 +172,20 @@ export class BlenderService {
         console.error('Blender Error:', output.trim());
       });
 
+      blenderProcess.on('error', (error) => {
+        console.error('❌ Blender spawn error:', error.message);
+        clearTimeout(timeout);
+        hasError = true;
+        resolve({ 
+          success: false, 
+          error: `Failed to start Blender: ${error.message}` 
+        });
+      });
+
       blenderProcess.on('close', (code) => {
+        clearTimeout(timeout);
+        if (hasError) return; // Já resolveu com erro
+        
         if (code === 0) {
           console.log('✅ Blender process completed successfully');
           resolve({ success: true });
@@ -169,7 +193,7 @@ export class BlenderService {
           console.error(`❌ Blender process exited with code ${code}`);
           resolve({ 
             success: false, 
-            error: `Blender process failed with exit code ${code}. Error: ${stderr}` 
+            error: `Blender process failed with exit code ${code}. Error: ${stderr || 'No error details'}` 
           });
         }
       });
@@ -181,15 +205,6 @@ export class BlenderService {
           error: `Failed to start Blender: ${error.message}` 
         });
       });
-
-      // Timeout de 5 minutos
-      setTimeout(() => {
-        blenderProcess.kill('SIGTERM');
-        resolve({ 
-          success: false, 
-          error: 'Blender process timed out (5 minutes)' 
-        });
-      }, 5 * 60 * 1000);
     });
   }
 
@@ -199,22 +214,52 @@ export class BlenderService {
   static async testBlenderInstallation(): Promise<boolean> {
     try {
       const result = await new Promise<boolean>((resolve) => {
-        const testProcess = spawn(this.BLENDER_PATH, ['--version'], { 
-          stdio: ['pipe', 'pipe', 'pipe'],
-          shell: true 
+        console.log(`🔄 Testing Blender at: ${this.BLENDER_PATH}`);
+        
+        // Usar PowerShell para executar o Blender com path que contém espaços
+        const powershellCommand = `& "${this.BLENDER_PATH}" --version`;
+        console.log(`Testing via PowerShell: ${powershellCommand}`);
+        
+        const testProcess = spawn('powershell', ['-Command', powershellCommand], {
+          stdio: ['pipe', 'pipe', 'pipe']
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        testProcess.stdout?.on('data', (data) => {
+          stdout += data.toString();
+        });
+
+        testProcess.stderr?.on('data', (data) => {
+          stderr += data.toString();
         });
 
         testProcess.on('close', (code) => {
+          console.log(`🔄 Blender test exit code: ${code}`);
+          console.log(`🔄 Blender test stdout: ${stdout.trim()}`);
+          if (stderr) {
+            console.log(`🔄 Blender test stderr: ${stderr.trim()}`);
+          }
           resolve(code === 0);
         });
 
-        testProcess.on('error', () => {
+        testProcess.on('error', (error) => {
+          console.error('❌ Blender test error:', error.message);
           resolve(false);
         });
+
+        // Timeout de 10 segundos
+        setTimeout(() => {
+          testProcess.kill();
+          console.log('⏰ Blender test timeout');
+          resolve(false);
+        }, 10000);
       });
 
       return result;
-    } catch {
+    } catch (error) {
+      console.error('❌ Blender test exception:', error);
       return false;
     }
   }
@@ -225,12 +270,21 @@ export class BlenderService {
   async generatePreview(options: PreviewOptions): Promise<PreviewResult> {
     const startTime = Date.now();
     const timestamp = Date.now();
-    const outputPath = path.join(process.cwd(), 'uploads', 'blender', `preview_${timestamp}.png`);
-    // HARDCODE TEMPORÁRIO - CORRIGIR CAMINHO
+    
+    // Garantir que o diretório existe
+    const uploadsDir = path.join(process.cwd(), 'uploads', 'blender');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+      console.log(`📁 Created uploads directory: ${uploadsDir}`);
+    }
+    
+    const outputPath = path.join(uploadsDir, `preview_${timestamp}.png`);
+    // Usar template original que funcionou ontem
     const templatePath = path.join(process.cwd(), 'Blender', 'template.blend');
 
     console.log('🔄 DEBUG - Template path:', templatePath);
     console.log('🔄 DEBUG - Template exists:', fs.existsSync(templatePath));
+    console.log('🔄 DEBUG - Output path:', outputPath);
 
     try {
       // Validar se os arquivos existem (áudio não é necessário para preview)
@@ -261,174 +315,89 @@ export class BlenderService {
         const args = [
           '--background',
           templatePath,
-          '--python-expr',
-          `
-import bpy
-import bmesh
-import sys
-import os
-import numpy as np
-
-# Configurar engine de render
-if '${options.renderEngine}' == 'cycles':
-    bpy.context.scene.render.engine = 'CYCLES'
-    bpy.context.scene.cycles.device = 'GPU'
-    print("🎯 Using Cycles GPU engine")
-else:
-    # Fixed: Using EEVEE_NEXT for newer Blender versions
-    bpy.context.scene.render.engine = 'BLENDER_EEVEE_NEXT'
-    print("⚡ Using Eevee Next engine")
-
-# Configurar resolução para preview
-bpy.context.scene.render.resolution_x = 1920
-bpy.context.scene.render.resolution_y = 1080
-bpy.context.scene.render.resolution_percentage = 75  # 75% para preview de boa qualidade
-
-# Configurar câmera baseado nos parâmetros (0-100%)
-camera = bpy.data.objects.get('Camera')
-if camera:
-    print(f"📷 Configuring camera position...")
-    # Distância: 0% = próximo, 50% = original, 100% = longe
-    distance_factor = ${options.cameraSettings.distance} / 50.0  # Normalizar para 0-2
-    original_location = camera.location.copy()
-    camera.location.z = original_location.z * distance_factor
-    
-    # Altura: 0% = baixo, 50% = original, 100% = alto  
-    height_factor = ${options.cameraSettings.height} / 50.0
-    camera.location.y = original_location.y * height_factor
-    
-    # Ângulo: 0% = esquerda, 50% = original, 100% = direita
-    angle_offset = (${options.cameraSettings.angle} - 50) * 0.02  # -1 a +1 radianos
-    camera.rotation_euler.z = angle_offset
-    print(f"📷 Camera positioned: distance={distance_factor:.2f}, height={height_factor:.2f}, angle={angle_offset:.2f}")
-
-# Carregar e aplicar imagem de background/material
-try:
-    # Procurar por material ou plano para aplicar a imagem
-    for obj in bpy.data.objects:
-        if obj.type == 'MESH' and 'background' in obj.name.lower():
-            # Aplicar imagem como material
-            if obj.data.materials:
-                mat = obj.data.materials[0]
-                if mat.use_nodes:
-                    # Carregar imagem
-                    img = bpy.data.images.load('${options.imageFile.replace(/\\/g, '/')}')
-                    
-                    # Configurar nós do material
-                    nodes = mat.node_tree.nodes
-                    tex_node = None
-                    for node in nodes:
-                        if node.type == 'TEX_IMAGE':
-                            tex_node = node
-                            break
-                    
-                    if tex_node:
-                        tex_node.image = img
-                        print(f"🖼️ Background image applied to {obj.name}")
-                    break
-    print(f"✅ Image loaded: ${options.imageFile.replace(/\\/g, '/')}")
-    print("🔄 Using corrected path format for Windows compatibility")
-except Exception as e:
-    print(f"⚠️ Could not load image: {e}")
-
-# Configurar animação baseada no estilo
-animation_style = '${options.animationStyle}'
-sensitivity = ${options.sensitivity} / 100.0  # Normalizar para 0-1
-smoothing = ${options.smoothing} / 100.0      # Normalizar para 0-1
-
-# Procurar objeto principal para animar (cubo, esfera, etc.)
-main_object = None
-for obj in bpy.data.objects:
-    if obj.type == 'MESH' and obj.name.lower() in ['cube', 'sphere', 'bars', 'visualizer']:
-        main_object = obj
-        break
-
-if main_object:
-    print(f"🎯 Found main object: {main_object.name}")
-    
-    # Simular animação baseada no áudio (para preview, usar valor médio)
-    # Em um preview, simulamos o efeito visual sem processar o áudio completo
-    if animation_style == 'cube':
-        # Simular escala do cubo baseado na "intensidade média" do áudio
-        scale_factor = 1.0 + (sensitivity * 0.5)  # Entre 1.0 e 1.5
-        main_object.scale = (scale_factor, scale_factor, scale_factor)
-        print(f"📦 Cube scaled to: {scale_factor:.2f}")
-        
-    elif animation_style == 'sphere':
-        # Simular deformação da esfera
-        scale_factor = 1.0 + (sensitivity * 0.3)
-        main_object.scale = (scale_factor, scale_factor, 1.0 + (sensitivity * 0.1))
-        print(f"🔮 Sphere scaled to: {scale_factor:.2f}")
-        
-    elif animation_style == 'bars':
-        # Para barras, simular diferentes alturas
-        if hasattr(main_object, 'modifiers'):
-            for mod in main_object.modifiers:
-                if mod.type == 'ARRAY':
-                    # Ajustar array de barras
-                    pass
-        print(f"📊 Bars animation style applied")
-
-# Configurar iluminação para melhor preview
-for light in bpy.data.objects:
-    if light.type == 'LIGHT':
-        light.data.energy *= (1.0 + sensitivity * 0.5)  # Aumentar intensidade baseado na sensibilidade
-
-# Configurar output
-bpy.context.scene.render.filepath = '${outputPath.replace(/\\/g, '/')}'
-bpy.context.scene.render.image_settings.file_format = 'PNG'
-bpy.context.scene.render.image_settings.quality = 90
-
-# Render frame médio para preview (frame 60 de 120, por exemplo)
-bpy.context.scene.frame_set(60)
-print(f"🎬 Rendering preview frame...")
-bpy.ops.render.render(write_still=True)
-
-print(f'✅ Complete template preview rendered to: ${outputPath.replace(/\\/g, '/')}')
-          `
+          '--python',
+          path.join(process.cwd(), 'Blender', 'preview_script.py'),
+          '--',
+          outputPath
         ];
 
-        const blenderProcess = spawn(BlenderService.BLENDER_PATH, args);
+        // Usar PowerShell para executar o Blender com paths que contêm espaços
+        const powershellCommand = `& "${BlenderService.BLENDER_PATH}" ${args.join(' ')}`;
+        console.log(`🔄 Executing via PowerShell: ${powershellCommand}`);
 
-        let output = '';
-        let errorOutput = '';
-
-        blenderProcess.stdout.on('data', (data) => {
-          output += data.toString();
-          console.log(`[Blender Preview] ${data.toString().trim()}`);
+        const blenderProcess = spawn('powershell', ['-Command', powershellCommand], {
+          stdio: ['pipe', 'pipe', 'pipe']
         });
 
-        blenderProcess.stderr.on('data', (data) => {
-          errorOutput += data.toString();
-          console.error(`[Blender Preview Error] ${data.toString().trim()}`);
+        let stdout = '';
+        let stderr = '';
+        let hasError = false;
+
+        // Timeout para evitar travamento
+        const timeout = setTimeout(() => {
+          console.log('⏰ Blender process timeout, killing...');
+          blenderProcess.kill('SIGTERM');
+          hasError = true;
+          resolve({
+            success: false,
+            error: 'Blender process timeout',
+            renderTime: Date.now() - startTime
+          });
+        }, 30000);
+
+        blenderProcess.stdout?.on('data', (data) => {
+          const output = data.toString();
+          stdout += output;
+          console.log('[Blender Preview]', output.trim());
         });
 
-        blenderProcess.on('close', (code) => {
-          const renderTime = Date.now() - startTime;
-          
-          if (code === 0 && fs.existsSync(outputPath)) {
-            console.log(`✅ Complete template preview generated successfully in ${renderTime}ms`);
-            resolve({
-              success: true,
-              previewPath: outputPath,
-              renderTime
-            });
-          } else {
-            console.error(`❌ Preview generation failed with code ${code}`);
-            resolve({
-              success: false,
-              error: `Blender process failed with code ${code}. Error: ${errorOutput}`,
-              renderTime
-            });
-          }
+        blenderProcess.stderr?.on('data', (data) => {
+          const output = data.toString();
+          stderr += output;
+          console.error('[Blender Preview Error]', output.trim());
         });
 
         blenderProcess.on('error', (error) => {
-          console.error('❌ Preview process error:', error);
+          console.error('❌ PowerShell process error:', error);
+          clearTimeout(timeout);
+          hasError = true;
           resolve({
             success: false,
-            error: `Failed to start Blender process: ${error.message}`
+            error: `Failed to start PowerShell process: ${error.message}`,
+            renderTime: Date.now() - startTime
           });
+        });
+
+        blenderProcess.on('close', (code) => {
+          clearTimeout(timeout);
+          if (hasError) return;
+          
+          const renderTime = Date.now() - startTime;
+          
+          if (code === 0) {
+            if (fs.existsSync(outputPath)) {
+              console.log(`✅ Preview generated successfully in ${renderTime}ms`);
+              resolve({
+                success: true,
+                previewPath: outputPath,
+                renderTime
+              });
+            } else {
+              console.error(`❌ Preview file not generated: ${outputPath}`);
+              resolve({
+                success: false,
+                error: `Preview file was not generated. Stderr: ${stderr}`,
+                renderTime
+              });
+            }
+          } else {
+            console.error(`❌ Blender process exited with code ${code}`);
+            resolve({
+              success: false,
+              error: `Blender process failed with exit code ${code}. Error: ${stderr}`,
+              renderTime
+            });
+          }
         });
       });
 

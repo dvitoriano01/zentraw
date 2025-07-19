@@ -1,0 +1,123 @@
+Excelente, Vitor. Analisando seu relatório ZENTRAW_V1.4.0.a.2, o problema está muito claro e pode ser resolvido com ações diretas. Aqui está o diagnóstico completo com base no seu ambiente Windows + VS Code + Node + Blender 4.5:
+
+✅ RESUMO CRÍTICO
+Item	Status	Solução
+Servidor (porta 5000)	✅ Ativo	Nenhum ajuste aqui
+Endpoint /test	✅ Funcional	OK
+Endpoint /render	❌ Quebrado	Falta reconhecer rota no server
+Arquivo routes.ts	❌ Import errado	.js → .ts
+Upload de arquivos	❌ Falha lógica	Enviando apenas audio, mas espera audio + image
+Backend com Multer	⚠️ Restringindo entrada	Ajustar para image opcional
+
+🛠️ AÇÕES PARA FAZER AGORA
+🧩 1. Corrigir a importação da rota Blender
+Erro atual:
+
+ts
+Copiar
+Editar
+import blenderRoutes from "./routes/blender.js"; // ❌
+Correto (e já aplicado):
+
+ts
+Copiar
+Editar
+import blenderRoutes from "./routes/blender.ts"; // ✅
+⚠️ Importante: Mesmo que o código tenha sido corrigido, você precisa reiniciar o servidor para aplicar.
+
+✅ Como reiniciar o servidor no Windows via VS Code:
+No terminal do VS Code:
+
+bash
+Copiar
+Editar
+taskkill /f /im node.exe
+npm run dev
+Alternativa:
+
+bash
+Copiar
+Editar
+Ctrl + C  # (encerra o servidor atual)
+npm run dev
+🛠️ 2. Ajustar o backend para aceitar somente audio, com image opcional
+Arquivo: server/routes/blender.ts
+
+Substitua:
+
+ts
+Copiar
+Editar
+upload.fields([
+  { name: 'audio', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+])
+Por:
+
+ts
+Copiar
+Editar
+upload.single('audio')
+Ou, se quiser aceitar ambos mas permitir que image seja opcional:
+
+ts
+Copiar
+Editar
+upload.fields([
+  { name: 'audio', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+])
+E dentro do handler:
+
+ts
+Copiar
+Editar
+const audioFile = req.files?.audio?.[0];
+const imageFile = req.files?.image?.[0] ?? getDefaultImage(); // função fallback
+🧪 3. Testar novamente os endpoints
+No terminal:
+
+bash
+Copiar
+Editar
+curl http://localhost:5000/api/blender/test
+bash
+Copiar
+Editar
+curl -X POST http://localhost:5000/api/blender/test-render
+Se ainda falhar:
+
+Verifique se routes.ts está chamando corretamente:
+
+ts
+Copiar
+Editar
+app.use('/api/blender', blenderRoutes);
+🧠 4. Dica: faça logs de debug para saber se as rotas estão ativas
+No final do seu routes.ts, adicione:
+
+ts
+Copiar
+Editar
+console.log("✅ Rota /api/blender carregada");
+✅ Checklist Final
+Etapa	Status Atual	Próxima Ação
+Import corrigido	⚠️ Corrigido, mas sem restart	Reiniciar servidor
+Rota /render funcionando	❌	Confirmar se foi registrada
+Upload audio	⚠️ Enviado, mas backend espera 2 arquivos	Tornar image opcional
+Script Python	✅ Pronto	Garantir caminhos corretos
+Executável Blender	✅ Instalado	Testado no CLI
+
+📣 Se tudo estiver certo, após o restart você deve ver no terminal:
+bash
+Copiar
+Editar
+✅ Rota /api/blender carregada
+serving on port 5000
+E o teste:
+
+bash
+Copiar
+Editar
+curl http://localhost:5000/api/blender/test
+# → {"success":true,"message":"Blender endpoint is working!"}

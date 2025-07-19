@@ -1,0 +1,31 @@
+# 🎬 ZENTRAW V1.4.0.a.2 - CONFIGURAÇÃO DE AUTOMAÇÃO
+# =================================================
+
+# Caminhos importantes
+BLENDER_PATH="C:\Program Files\Blender Foundation\Blender 4.5\blender.exe"
+TEMPLATE_PATH="Blender\template.blend"
+SCRIPT_PATH="Blender\render_audio_visualizer.py"
+SERVER_PORT=5000
+BACKUP_PORT=5001
+
+# Arquivos de teste
+TEST_AUDIO="Blender\sample_audio2.mp3"
+TEST_IMAGE="Blender\cover_spotify.png"
+
+# Timeouts (em segundos)
+SERVER_START_TIMEOUT=3
+PROCESS_KILL_TIMEOUT=2
+ENDPOINT_TEST_TIMEOUT=5
+
+# Processos para matar
+PROCESSES_TO_KILL="node.exe,tsx.exe"
+
+# Endpoints para testar
+ENDPOINTS_TO_TEST="/api/blender/test,/api/blender/preview,/api/blender/render,/api/blender/test-render"
+
+# Códigos de erro
+ERROR_PORT_BUSY=1
+ERROR_BLENDER_NOT_FOUND=2
+ERROR_TEMPLATE_NOT_FOUND=3
+ERROR_SERVER_NOT_RESPONDING=4
+ERROR_ENDPOINTS_FAILED=5

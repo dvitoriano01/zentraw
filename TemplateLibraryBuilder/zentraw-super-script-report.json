@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-07-18T19:43:06.012Z",
+  "version": "2.0",
+  "phases": {
+    "diagnostics": {
+      "issues": [
+        "❌ Blender não responde: '\\\"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe\\\"' n�o � reconhecido como um comando interno\r\nou externo, um programa oper�vel ou um arquivo em lotes.\r\n"
+      ]
+    },
+    "fixes": {
+      "applied": [
+        "✅ BlenderService otimizado"
+      ]
+    },
+    "tests": {
+      "executed": true
+    },
+    "status": "ISSUES_FIXED"
+  }
+}

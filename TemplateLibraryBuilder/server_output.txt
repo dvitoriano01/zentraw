@@ -1,0 +1,1916 @@
+
+> zentraw-photo-editor-v1-3-0-c-9@1.3.0.c.9 dev
+> set NODE_ENV=development && tsx server/index.ts
+
+⚠️  Using mock database for development/testing - Blender functionality will work but data persistence is disabled
+🔄 BLENDER_PATHS loaded - Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+🔄 BlenderService reloaded - Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+✅ Rota /api/blender carregada
+3:04:14 PM [express] serving on port 5000
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+3:04:16 PM [express] GET /api/blender/test 200 in 444ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: undefined
+📝 Request body: {}
+❌ Audio file missing: { files: undefined, hasFiles: false, hasAudio: false }
+3:04:17 PM [express] POST /api/blender/preview 400 in 2ms :: {"success":false,"error":"Audio file is…
+❌ Render endpoint error: TypeError: Cannot read properties of undefined (reading 'audio')
+    at <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:64:16)
+    at Layer.handle [as handle_request] (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\layer.js:95:5)
+    at next (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\route.js:149:13)
+    at multerMiddleware (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\multer\lib\make-middleware.js:19:41)
+    at Layer.handle [as handle_request] (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\layer.js:95:5)
+    at next (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\layer.js:95:5)
+    at c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\express\lib\router\index.js:346:12)
+3:04:17 PM [express] POST /api/blender/render 500 in 4ms :: {"success":false,"error":"Cannot read pr…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:04:18 PM [express] POST /api/blender/test-render 500 in 1200ms :: {"success":false,"error":"Blende…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:06:02 PM [express] POST /api/blender/test-render 500 in 1215ms :: {"success":false,"error":"Blende…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:06:11 PM [express] POST /api/blender/test-render 500 in 1216ms :: {"success":false,"error":"Blende…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+3:06:19 PM [express] GET /api/blender/test 200 in 415ms :: {"success":true,"blenderAvailable":true,"…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:08:19 PM [express] POST /api/blender/test-render 500 in 1198ms :: {"success":false,"error":"Blende…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:08:27 PM [express] POST /api/blender/test-render 500 in 1211ms :: {"success":false,"error":"Blende…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:08:40 PM [express] POST /api/blender/test-render 500 in 1210ms :: {"success":false,"error":"Blende…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+3:08:47 PM [express] GET /api/blender/test 304 in 429ms :: {"success":true,"blenderAvailable":true,"…
+🧪 Starting test render with sample files...
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_audio.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\sample_cover.jpg.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\test_output.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:270:20)
+3:10:37 PM [express] POST /api/blender/test-render 500 in 1205ms :: {"success":false,"error":"Blende…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:04:11 PM [express] GET /api/blender/test 304 in 430ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:04:11 PM [express] GET /api/blender/test 304 in 433ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:06:59 PM [express] GET /api/blender/test 200 in 433ms :: {"success":true,"blenderAvailable":true,"…
+✅ PowerShell success
+✅ PowerShell method works!
+5:06:59 PM [express] GET /api/blender/test 200 in 442ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: [Object: null prototype] {
+  audio: [
+    {
+      fieldname: 'audio',
+      originalname: 'sample_audio2.wav',
+      encoding: '7bit',
+      mimetype: 'audio/wav',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_audio2_1752869234793.wav',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752869234793.wav',
+      size: 1507034
+    }
+  ],
+  image: [
+    {
+      fieldname: 'image',
+      originalname: 'cover_spotify.png',
+      encoding: '7bit',
+      mimetype: 'image/png',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'cover_spotify_1752869234808.png',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752869234808.png',
+      size: 6594976
+    }
+  ]
+}
+📝 Request body: [Object: null prototype] {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30'
+}
+📷 Preview settings: {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30',
+  audioFile: 'sample_audio2_1752869234793.wav',
+  imageFile: 'cover_spotify_1752869234808.png'
+}
+🎬 Starting preview generation with options: {
+  audioFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752869234793.wav',
+  imageFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752869234808.png',
+  renderEngine: 'eevee',
+  cameraSettings: { distance: 50, height: 50, angle: 50 },
+  animationStyle: 'cube',
+  sensitivity: 50,
+  smoothing: 30
+}
+🔍 Validating files...
+📄 Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+📄 Audio file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752869234793.wav
+📄 Image file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752869234808.png
+📄 Output path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+📊 File sizes: {
+  template: '760096 bytes',
+  audio: '1507034 bytes',
+  image: '6594976 bytes'
+}
+🎬 Starting complete preview generation...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Executing Blender with args: --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752869234839.png'
+  ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752869234839.png'
+  ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+[PowerShell stdout] Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+[PowerShell stdout] Blender quit
+❌ PowerShell exit code: 1
+🔄 Trying exec: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+❌ exec error: Error: Command failed: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752869234839.png
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at ChildProcess.exithandler (node:child_process:414:12)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe" --background c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend --python c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py -- c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752869234839.png',
+  stdout: 'Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)\n' +
+    'Error: Cannot read file "c:\\Users\\Denys": No such file or directory\n' +
+    '\n' +
+    'Blender quit\n',
+  stderr: ''
+}
+❌ Blender execution failed: All methods failed
+❌ Preview generation failed: All methods failed
+5:07:17 PM [express] POST /api/blender/preview 500 in 2283ms :: {"success":false,"error":"All method…
+🎵 Received render request: {
+  audio: 'sample_audio2.wav',
+  image: 'cover_spotify.png',
+  audioSize: 1507034,
+  imageSize: 6594976
+}
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752869242649.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752869242657.png
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752869242690.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752869242649.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752869242657.png c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752869242690.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:107:20)
+5:07:23 PM [express] POST /api/blender/render 500 in 1285ms :: {"success":false,"error":"Blender pro…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:14:01 PM [express] GET /api/blender/test 304 in 434ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:14:01 PM [express] GET /api/blender/test 304 in 419ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:19:13 PM [express] GET /api/blender/test 200 in 433ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+5:19:13 PM [express] GET /api/blender/test 304 in 423ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: [Object: null prototype] {
+  audio: [
+    {
+      fieldname: 'audio',
+      originalname: 'sample_audio2.wav',
+      encoding: '7bit',
+      mimetype: 'audio/wav',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_audio2_1752870004026.wav',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752870004026.wav',
+      size: 1507034
+    }
+  ],
+  image: [
+    {
+      fieldname: 'image',
+      originalname: 'cover_spotify.png',
+      encoding: '7bit',
+      mimetype: 'image/png',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'cover_spotify_1752870004035.png',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752870004035.png',
+      size: 6594976
+    }
+  ]
+}
+📝 Request body: [Object: null prototype] {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30'
+}
+📷 Preview settings: {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30',
+  audioFile: 'sample_audio2_1752870004026.wav',
+  imageFile: 'cover_spotify_1752870004035.png'
+}
+🎬 Starting preview generation with options: {
+  audioFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752870004026.wav',
+  imageFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752870004035.png',
+  renderEngine: 'eevee',
+  cameraSettings: { distance: 50, height: 50, angle: 50 },
+  animationStyle: 'cube',
+  sensitivity: 50,
+  smoothing: 30
+}
+🔍 Validating files...
+📄 Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+📄 Audio file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752870004026.wav
+📄 Image file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752870004035.png
+📄 Output path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+📊 File sizes: {
+  template: '760096 bytes',
+  audio: '1507034 bytes',
+  image: '6594976 bytes'
+}
+🎬 Starting complete preview generation...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Executing Blender with args: --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752870004066.png'
+  ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752870004066.png'
+  ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+[PowerShell stdout] Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+[PowerShell stdout] Blender quit
+❌ PowerShell exit code: 1
+🔄 Trying exec: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+❌ exec error: Error: Command failed: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752870004066.png
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at ChildProcess.exithandler (node:child_process:414:12)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe" --background c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend --python c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py -- c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752870004066.png',
+  stdout: 'Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)\n' +
+    'Error: Cannot read file "c:\\Users\\Denys": No such file or directory\n' +
+    '\n' +
+    'Blender quit\n',
+  stderr: ''
+}
+❌ Blender execution failed: All methods failed
+❌ Preview generation failed: All methods failed
+5:20:06 PM [express] POST /api/blender/preview 500 in 2225ms :: {"success":false,"error":"All method…
+🎵 Received render request: {
+  audio: 'sample_audio2.wav',
+  image: 'cover_spotify.png',
+  audioSize: 1507034,
+  imageSize: 6594976
+}
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752870020688.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752870020694.png
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752870020727.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752870020688.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752870020694.png c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752870020727.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:107:20)
+5:20:21 PM [express] POST /api/blender/render 500 in 1266ms :: {"success":false,"error":"Blender pro…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:36 PM [express] GET /api/blender/test 304 in 442ms :: {"success":true,"blenderAvailable":true,"…
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:36 PM [express] GET /api/blender/test 200 in 411ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:42 PM [express] GET /api/blender/test 200 in 415ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:43 PM [express] GET /api/blender/test 304 in 414ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:44 PM [express] GET /api/blender/test 200 in 422ms :: {"success":true,"blenderAvailable":true,"…
+✅ PowerShell success
+✅ PowerShell method works!
+6:42:44 PM [express] GET /api/blender/test 200 in 427ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: [Object: null prototype] {
+  audio: [
+    {
+      fieldname: 'audio',
+      originalname: 'sample_audio2.wav',
+      encoding: '7bit',
+      mimetype: 'audio/wav',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_audio2_1752874972449.wav',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752874972449.wav',
+      size: 1507034
+    }
+  ],
+  image: [
+    {
+      fieldname: 'image',
+      originalname: 'cover_spotify.png',
+      encoding: '7bit',
+      mimetype: 'image/png',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'cover_spotify_1752874972455.png',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752874972455.png',
+      size: 6594976
+    }
+  ]
+}
+📝 Request body: [Object: null prototype] {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30'
+}
+📷 Preview settings: {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30',
+  audioFile: 'sample_audio2_1752874972449.wav',
+  imageFile: 'cover_spotify_1752874972455.png'
+}
+🎬 Starting preview generation with options: {
+  audioFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752874972449.wav',
+  imageFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752874972455.png',
+  renderEngine: 'eevee',
+  cameraSettings: { distance: 50, height: 50, angle: 50 },
+  animationStyle: 'cube',
+  sensitivity: 50,
+  smoothing: 30
+}
+🔍 Validating files...
+📄 Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+📄 Audio file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752874972449.wav
+📄 Image file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752874972455.png
+📄 Output path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+📊 File sizes: {
+  template: '760096 bytes',
+  audio: '1507034 bytes',
+  image: '6594976 bytes'
+}
+🎬 Starting complete preview generation...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Executing Blender with args: --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752874972481.png'
+  ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752874972481.png'
+  ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+[PowerShell stdout] Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+[PowerShell stdout] Blender quit
+❌ PowerShell exit code: 1
+🔄 Trying exec: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+❌ exec error: Error: Command failed: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752874972481.png
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at ChildProcess.exithandler (node:child_process:414:12)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe" --background c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend --python c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py -- c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752874972481.png',
+  stdout: 'Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)\n' +
+    'Error: Cannot read file "c:\\Users\\Denys": No such file or directory\n' +
+    '\n' +
+    'Blender quit\n',
+  stderr: ''
+}
+❌ Blender execution failed: All methods failed
+❌ Preview generation failed: All methods failed
+6:42:54 PM [express] POST /api/blender/preview 500 in 2316ms :: {"success":false,"error":"All method…
+🎵 Received render request: {
+  audio: 'sample_audio2.wav',
+  image: 'cover_spotify.png',
+  audioSize: 1507034,
+  imageSize: 6594976
+}
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752874992119.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752874992125.png
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752874992154.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752874992119.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752874992125.png c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752874992154.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:107:20)
+6:43:13 PM [express] POST /api/blender/render 500 in 1287ms :: {"success":false,"error":"Blender pro…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:55:20 PM [express] GET /api/blender/test 200 in 415ms :: {"success":true,"blenderAvailable":true,"…
+✅ PowerShell success
+✅ PowerShell method works!
+6:55:20 PM [express] GET /api/blender/test 200 in 421ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: [Object: null prototype] {
+  audio: [
+    {
+      fieldname: 'audio',
+      originalname: 'sample_audio2.wav',
+      encoding: '7bit',
+      mimetype: 'audio/wav',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_audio2_1752875737537.wav',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752875737537.wav',
+      size: 1507034
+    }
+  ],
+  image: [
+    {
+      fieldname: 'image',
+      originalname: 'cover_spotify.png',
+      encoding: '7bit',
+      mimetype: 'image/png',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'cover_spotify_1752875737543.png',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752875737543.png',
+      size: 6594976
+    }
+  ]
+}
+📝 Request body: [Object: null prototype] {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30'
+}
+📷 Preview settings: {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30',
+  audioFile: 'sample_audio2_1752875737537.wav',
+  imageFile: 'cover_spotify_1752875737543.png'
+}
+🎬 Starting preview generation with options: {
+  audioFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752875737537.wav',
+  imageFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\cover_spotify_1752875737543.png',
+  renderEngine: 'eevee',
+  cameraSettings: { distance: 50, height: 50, angle: 50 },
+  animationStyle: 'cube',
+  sensitivity: 50,
+  smoothing: 30
+}
+🔍 Validating files...
+📄 Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+📄 Audio file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875737537.wav
+📄 Image file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752875737543.png
+📄 Output path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+📊 File sizes: {
+  template: '760096 bytes',
+  audio: '1507034 bytes',
+  image: '6594976 bytes'
+}
+🎬 Starting complete preview generation...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Executing Blender with args: --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875737572.png'
+  ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875737572.png'
+  ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+[PowerShell stdout] Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+[PowerShell stdout] Blender quit
+❌ PowerShell exit code: 1
+🔄 Trying exec: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+❌ exec error: Error: Command failed: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875737572.png
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at ChildProcess.exithandler (node:child_process:414:12)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe" --background c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend --python c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py -- c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875737572.png',
+  stdout: 'Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)\n' +
+    'Error: Cannot read file "c:\\Users\\Denys": No such file or directory\n' +
+    '\n' +
+    'Blender quit\n',
+  stderr: ''
+}
+❌ Blender execution failed: All methods failed
+❌ Preview generation failed: All methods failed
+6:55:39 PM [express] POST /api/blender/preview 500 in 2264ms :: {"success":false,"error":"All method…
+🎵 Received render request: {
+  audio: 'sample_audio2.wav',
+  image: 'cover_spotify.png',
+  audioSize: 1507034,
+  imageSize: 6594976
+}
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875749465.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752875749471.png
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752875749507.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875749465.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\cover_spotify_1752875749471.png c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752875749507.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:107:20)
+6:55:50 PM [express] POST /api/blender/render 500 in 1295ms :: {"success":false,"error":"Blender pro…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:57:00 PM [express] GET /api/blender/test 304 in 429ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:57:01 PM [express] GET /api/blender/test 304 in 567ms :: {"success":true,"blenderAvailable":true,"…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+6:57:04 PM [express] GET /api/blender/test 200 in 433ms :: {"success":true,"blenderAvailable":true,"…
+✅ PowerShell success
+✅ PowerShell method works!
+6:57:04 PM [express] GET /api/blender/test 200 in 428ms :: {"success":true,"blenderAvailable":true,"…
+🎬 Preview generation request received
+📝 Request files: [Object: null prototype] {
+  audio: [
+    {
+      fieldname: 'audio',
+      originalname: 'sample_audio2.wav',
+      encoding: '7bit',
+      mimetype: 'audio/wav',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_audio2_1752875840971.wav',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752875840971.wav',
+      size: 1507034
+    }
+  ],
+  image: [
+    {
+      fieldname: 'image',
+      originalname: 'sample_cover.jpg.JPG',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      destination: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender',
+      filename: 'sample_cover.jpg_1752875840978.JPG',
+      path: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_cover.jpg_1752875840978.JPG',
+      size: 362360
+    }
+  ]
+}
+📝 Request body: [Object: null prototype] {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30'
+}
+📷 Preview settings: {
+  renderEngine: 'eevee',
+  cameraDistance: '50',
+  cameraHeight: '50',
+  cameraAngle: '50',
+  animationStyle: 'cube',
+  sensitivity: '50',
+  smoothing: '30',
+  audioFile: 'sample_audio2_1752875840971.wav',
+  imageFile: 'sample_cover.jpg_1752875840978.JPG'
+}
+🎬 Starting preview generation with options: {
+  audioFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_audio2_1752875840971.wav',
+  imageFile: 'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\sample_cover.jpg_1752875840978.JPG',
+  renderEngine: 'eevee',
+  cameraSettings: { distance: 50, height: 50, angle: 50 },
+  animationStyle: 'cube',
+  sensitivity: 50,
+  smoothing: 30
+}
+🔍 Validating files...
+📄 Template path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+📄 Audio file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875840971.wav
+📄 Image file: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_cover.jpg_1752875840978.JPG
+📄 Output path: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+📊 File sizes: {
+  template: '760096 bytes',
+  audio: '1507034 bytes',
+  image: '362360 bytes'
+}
+🎬 Starting complete preview generation...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Executing Blender with args: --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875840981.png'
+  ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [
+    '--background',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend',
+    '--python',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py',
+    '--',
+    'c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875840981.png'
+  ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+[PowerShell stdout] Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+[PowerShell stdout] Blender quit
+❌ PowerShell exit code: 1
+🔄 Trying exec: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+❌ exec error: Error: Command failed: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\preview_1752875840981.png
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at ChildProcess.exithandler (node:child_process:414:12)
+    at ChildProcess.emit (node:events:518:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: '"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe" --background c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend --python c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\render_audio_visualizer.py -- c:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\uploads\\blender\\preview_1752875840981.png',
+  stdout: 'Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)\n' +
+    'Error: Cannot read file "c:\\Users\\Denys": No such file or directory\n' +
+    '\n' +
+    'Blender quit\n',
+  stderr: ''
+}
+❌ Blender execution failed: All methods failed
+❌ Preview generation failed: All methods failed
+6:57:23 PM [express] POST /api/blender/preview 500 in 2236ms :: {"success":false,"error":"All method…
+🎵 Received render request: {
+  audio: 'sample_audio2.wav',
+  image: 'sample_cover.jpg.JPG',
+  audioSize: 1507034,
+  imageSize: 362360
+}
+🎬 Starting Blender render...
+Audio: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875849314.wav
+Image: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_cover.jpg_1752875849320.JPG
+Template: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend
+Output: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752875849322.mp4
+Executing via PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\template.blend --python c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\Blender\render_audio_visualizer.py -- c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_audio2_1752875849314.wav c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\sample_cover.jpg_1752875849320.JPG c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\uploads\blender\outputs\visualizer_1752875849322.mp4
+Blender: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Error: Cannot read file "c:\Users\Denys": No such file or directory
+Blender: Blender quit
+❌ Blender process exited with code 1
+❌ Blender render failed: Error: Blender process failed with exit code 1. Error: No error details
+    at Function.renderAudioVisualizer (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\services\blender-service.ts:100:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\server\routes\blender.ts:107:20)
+6:57:30 PM [express] POST /api/blender/render 500 in 1240ms :: {"success":false,"error":"Blender pro…
+🔍 Testing all Blender execution methods...
+✅ Found working Blender path: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+🔄 Trying cross-spawn: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe --version
+📁 Working directory: c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder
+✅ Blender executable has execute permissions
+[cross-spawn stderr] 'C:\Program' n�o � reconhecido como um comando interno
+ou externo, um programa oper�vel ou um arquivo em lotes.
+❌ cross-spawn error: Error: spawn C:\Program Files\Blender Foundation\Blender 4.5\blender.exe ENOENT
+    at notFoundError (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:6:26)
+    at verifyENOENT (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:40:16)
+    at cp.emit (c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\TemplateLibraryBuilder\node_modules\cross-spawn\lib\enoent.js:27:25)
+    at ChildProcess._handle.onexit (node:internal/child_process:293:12) {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+❌ Error details: {
+  code: 'ENOENT',
+  errno: 'ENOENT',
+  syscall: 'spawn C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  path: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  spawnargs: [ '--version' ]
+}
+🔄 Trying PowerShell: & "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+[PowerShell stdout] Blender 4.5.0
+	build date: 2025-07-15
+	build time: 01:36:24
+	build commit date: 2025-07-14
+	build commit time: 17:45
+	build hash: 8cb6b388974a
+	build branch: blender-v4.5-release
+	build platform: Windows
+	build type: Release
+	build c flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3 /nologo /J /Gd /MP /bigobj /Zc:inline  
+	build c++ flags: /W3 /w34062 /w34100 /w34115 /w34189 /w35038 /wd4018 /wd4146 /wd4065 /wd4127 /wd4181 /wd4200 /wd4244 /wd4267 /wd4305 /wd4800 /wd4828 /wd4996 /wd4661 /wd4848 /we4013 /we4133 /we4431 /we4033 /DWIN32 /D_WINDOWS /W3  /EHsc /nologo /J /Gd /MP /EHsc /bigobj /permissive- /Zc:__cplusplus /Zc:inline  
+	build link flags: /MACHINE:X64  /SUBSYSTEM:CONSOLE /STACK:2097152 /ignore:4049 /ignore:4217 /ignore:4221
+	build system: CMake
+✅ PowerShell success
+✅ PowerShell method works!
+8:19:16 PM [express] GET /api/blender/test 200 in 489ms :: {"success":true,"blenderAvailable":true,"…

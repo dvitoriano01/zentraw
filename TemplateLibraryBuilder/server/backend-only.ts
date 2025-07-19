@@ -76,10 +76,10 @@ app.use((err: any, _req: any, res: any, _next: any) => {
   console.error(err);
 });
 
-const port = 5001;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`🚀 Backend server running on http://localhost:${port}`);
-  console.log(`� Health check: http://localhost:${port}/health`);
-  console.log(`🎨 Blender test: http://localhost:${port}/api/blender/test`);
-  console.log(`🔗 CORS enabled for http://localhost:5173 and http://localhost:5175`);
+// Adicionando logs detalhados para inicialização
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Backend iniciado com sucesso na porta ${PORT}`);
+}).on('error', (err) => {
+  console.error('❌ Erro ao iniciar o backend:', err);
 });

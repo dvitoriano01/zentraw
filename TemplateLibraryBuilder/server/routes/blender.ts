@@ -3,7 +3,6 @@ import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { BlenderService } from '../services/blender-service.js';
-import { BlenderServiceComplete } from '../services/blender-service-complete.js';
 
 const router = express.Router();
 
@@ -68,21 +67,30 @@ router.post('/render', upload.fields([
       });
     }
 
-    if (!files.image || !files.image[0]) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Image file is required' 
-      });
-    }
-
     const audioFile = files.audio[0];
-    const imageFile = files.image[0];
+    
+    // Image é opcional - usar imagem padrão se não fornecida
+    let imageFile = files.image?.[0];
+    let imagePath: string;
+    
+    if (imageFile) {
+      imagePath = imageFile.path;
+    } else {
+      // Usar imagem padrão do diretório Blender
+      imagePath = path.join(process.cwd(), 'Blender', 'sample_cover.jpg.JPG');
+      if (!fs.existsSync(imagePath)) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Image file is required or default image not found' 
+        });
+      }
+    }
 
     console.log('🎵 Received render request:', {
       audio: audioFile.originalname,
-      image: imageFile.originalname,
+      image: imageFile ? imageFile.originalname : 'default-image',
       audioSize: audioFile.size,
-      imageSize: imageFile.size
+      imageSize: imageFile ? imageFile.size : 'default'
     });
 
     // Gerar nome único para o output
@@ -97,7 +105,7 @@ router.post('/render', upload.fields([
     // Executar render
     const result = await BlenderService.renderAudioVisualizer({
       audioPath: audioFile.path,
-      imagePath: imageFile.path,
+      imagePath: imagePath,
       outputPath
     });
 
@@ -184,8 +192,8 @@ router.get('/debug', async (req: Request, res: Response) => {
   try {
     console.log('🔍 Starting detailed Blender debug...');
     
-    // Testar todos os métodos
-    const workingMethod = await BlenderServiceComplete.testAllMethods();
+    // Testar todos os métodos usando sistema robusto
+    const workingMethod = await BlenderService.testBlenderInstallation();
     
     // Verificar arquivos necessários
     const templatePath = path.join(process.cwd(), 'Blender', 'template.blend');
@@ -230,8 +238,8 @@ router.get('/debug', async (req: Request, res: Response) => {
  */
 router.get('/test', async (req: Request, res: Response) => {
   try {
-    // Usar o novo serviço completo
-    const isWorking = await BlenderServiceComplete.testBlenderInstallation();
+    // Usar o novo serviço robusto
+    const isWorking = await BlenderService.testBlenderInstallation();
     
     res.json({
       success: true,
@@ -239,6 +247,29 @@ router.get('/test', async (req: Request, res: Response) => {
       message: isWorking ? 'Blender is available' : 'Blender is not available'
     });
   } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Test failed'
+    });
+  }
+});
+
+/**
+ * GET /api/blender/test-robust
+ * Testa se o sistema robusto está carregado
+ */
+router.get('/test-robust', async (req: Request, res: Response) => {
+  try {
+    console.log('🧪 Testando sistema robusto...');
+    console.log('🔥 SISTEMA ROBUSTO - ENDPOINT DE TESTE CHAMADO!');
+    
+    res.json({
+      success: true,
+      message: 'Sistema robusto está carregado e funcionando',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('❌ Erro no teste robusto:', error);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Test failed'
@@ -343,9 +374,9 @@ router.post('/preview', upload.fields([
       imageFile: imageFile.filename
     });
 
-    const blenderService = new BlenderServiceComplete();
+    const blenderService = new BlenderService();
     
-    // Gerar preview completo (um frame do template final)
+    // Gerar preview completo (um frame do template final) usando sistema robusto
     const result = await blenderService.generatePreview({
       audioFile: audioFile.path,
       imageFile: imageFile.path,

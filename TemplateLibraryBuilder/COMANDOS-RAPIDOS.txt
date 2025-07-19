@@ -1,0 +1,10 @@
+# ZENTRAW V1.4.0.a.2 - COMANDO DIRETO NO TERMINAL
+# Copie e cole este comando no terminal para executar tudo de uma vez:
+
+taskkill /F /IM "node.exe" /T >nul 2>&1 & taskkill /F /IM "tsx.exe" /T >nul 2>&1 & powershell -Command "Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }" >nul 2>&1 & timeout /t 2 /nobreak >nul & echo 🚀 Processos limpos, iniciando servidor... & start /min cmd /c "npm run dev > server_output.txt 2>&1" & timeout /t 5 /nobreak >nul & echo 🧪 Testando endpoints... & curl -s http://localhost:5000/api/blender/test | findstr "success" >nul & if %errorlevel% equ 0 (echo ✅ Sistema funcionando!) else (echo ❌ Sistema com problemas) & echo 🎉 TESTE COMPLETO! Servidor em http://localhost:5000
+
+# OU use este comando mais simples:
+run-auto-test.bat
+
+# OU este comando ultra-simples:
+one-command.bat

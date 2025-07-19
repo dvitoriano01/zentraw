@@ -1,0 +1,5 @@
+@echo off
+:: ZENTRAW V1.4.0.a.2 - COMANDO ÚNICO PARA TUDO
+:: Execute este comando e saia para fazer outras coisas!
+
+taskkill /F /IM "node.exe" /T >nul 2>&1 && taskkill /F /IM "tsx.exe" /T >nul 2>&1 && powershell -Command "Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }" >nul 2>&1 && timeout /t 2 /nobreak >nul && echo ✅ Processos limpos && start /min cmd /c "npm run dev > server_output.txt 2>&1" && echo 🚀 Servidor iniciado em background && timeout /t 5 /nobreak >nul && echo 🧪 Testando endpoints... && curl -s http://localhost:5000/api/blender/test | findstr "success" >nul && echo ✅ Endpoint /test OK || echo ❌ Endpoint /test FALHA && curl -s -X POST http://localhost:5000/api/blender/preview | findstr "error" >nul && echo ✅ Endpoint /preview OK || echo ❌ Endpoint /preview FALHA && curl -s -X POST http://localhost:5000/api/blender/render | findstr "error" >nul && echo ✅ Endpoint /render OK || echo ❌ Endpoint /render FALHA && echo. && echo 🎉 TESTE COMPLETO! && echo 🌐 Servidor: http://localhost:5000 && echo 📝 Log: server_output.txt && echo 🚀 VOCÊ ESTÁ LIVRE!

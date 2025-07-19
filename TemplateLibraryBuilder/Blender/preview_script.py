@@ -17,7 +17,7 @@ output_path = argv[argv.index("--")+1] if "--" in argv else "preview.png"
 print(f"📁 Output path: {output_path}")
 
 # Configurar render engine
-bpy.context.scene.render.engine = 'BLENDER_EEVEE_NEXT'
+bpy.context.scene.render.engine = 'BLENDER_EEVEE'  # Usar engine estável em vez de EEVEE_NEXT
 print("⚡ Using Eevee Next engine")
 
 # Configurar resolução para preview

@@ -70,19 +70,37 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:5001', // Porta do backend-only
+        target: 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
+        timeout: 30000, // 30 segundos de timeout
         configure: (proxy, options) => {
           proxy.on('error', (err, req, res) => {
-            console.log('Proxy error:', err.message);
-            res.writeHead(503, {
-              'Content-Type': 'application/json',
-            });
-            res.end(JSON.stringify({
-              success: false,
-              error: 'Backend server not available. Please run: npm run dev:back'
-            }));
+            console.error('🔴 Proxy error:', err.message);
+            console.error('🔴 Request URL:', req.url);
+            console.error('🔴 Target:', 'http://localhost:5000');
+            
+            if (!res.headersSent) {
+              res.writeHead(503, {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+              });
+              res.end(JSON.stringify({
+                success: false,
+                error: 'Backend server not available. Please run: npm run dev:back',
+                details: err.message
+              }));
+            }
+          });
+          
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log('🟡 Proxy request:', req.method, req.url);
+          });
+          
+          proxy.on('proxyRes', (proxyRes, req, res) => {
+            console.log('🟢 Proxy response:', proxyRes.statusCode, req.url);
           });
         }
       }

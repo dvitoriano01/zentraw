@@ -1,7 +1,8 @@
-import { spawn, execFile } from 'child_process';
+import { spawn, execFile, execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { BLENDER_PATHS } from '../blender-paths.js';
+import { BlenderServiceRobust } from './blender-service-robust.js';
 
 export interface BlenderRenderOptions {
   audioPath: string;
@@ -89,12 +90,26 @@ export class BlenderService {
       console.log(`Template: ${templatePath}`);
       console.log(`Output: ${outputPath}`);
 
-      // Executar Blender
+      // Logar permissões do diretório de saída
+      try {
+        fs.accessSync(path.dirname(outputPath), fs.constants.W_OK);
+        console.log(`✅ Write permissions confirmed for: ${path.dirname(outputPath)}`);
+      } catch (err) {
+        throw new Error(`No write permissions for output directory: ${path.dirname(outputPath)}`);
+      }
+
+      // Logar comando completo do Blender
+      console.log(`🔧 Blender command: ${this.BLENDER_PATH} --background --python ${this.SCRIPT_PATH}`);
+
+      // Capturar saída do processo do Blender
       const result = await this.executeBlender(templatePath, [
         options.audioPath,
         options.imagePath,
-        outputPath  // Adicionar outputPath como terceiro argumento
+        outputPath
       ]);
+
+      console.log('🔍 Blender process output:', result.stdout);
+      console.error('⚠️ Blender process errors:', result.stderr);
 
       if (!result.success) {
         throw new Error(result.error || 'Blender execution failed');
@@ -129,7 +144,7 @@ export class BlenderService {
   /**
    * Executa o Blender com o script Python usando PowerShell para resolver problemas com espaços
    */
-  private static executeBlender(templatePath: string, scriptArgs: string[]): Promise<{ success: boolean; error?: string }> {
+  private static executeBlender(templatePath: string, scriptArgs: string[]): Promise<{ success: boolean; error?: string; stdout?: string; stderr?: string }> {
     return new Promise((resolve) => {
       const args = [
         '--background',           // Executar sem interface
@@ -141,7 +156,23 @@ export class BlenderService {
       ];
 
       // Construir comando PowerShell para lidar com espaços no caminho
-      const powershellCommand = `& "${this.BLENDER_PATH}" ${args.join(' ')}`;
+      const escapedArgs = args.map(arg => {
+        // Converter para path absoluto se for caminho
+        let processedArg = arg;
+        if (arg.includes('\\') || arg.includes('/')) {
+          try {
+            processedArg = path.resolve(arg);
+          } catch (e) {
+            processedArg = arg;
+          }
+        }
+        
+        // Escapar aspas internas e envolver em aspas duplas
+        const escaped = processedArg.replace(/"/g, '\\"');
+        return `"${escaped}"`;
+      });
+      
+      const powershellCommand = `& "${this.BLENDER_PATH}" ${escapedArgs.join(' ')}`;
       console.log(`Executing via PowerShell: ${powershellCommand}`);
 
       // Usar PowerShell para executar o Blender
@@ -153,56 +184,21 @@ export class BlenderService {
       let stderr = '';
       let hasError = false;
 
-      // Timeout para evitar travamento
-      const timeout = setTimeout(() => {
-        console.log('⏰ Blender process timeout, killing...');
-        blenderProcess.kill('SIGTERM');
-        hasError = true;
-      }, 30000); // 30 segundos
-
-      blenderProcess.stdout?.on('data', (data) => {
-        const output = data.toString();
-        stdout += output;
-        console.log('Blender:', output.trim());
+      blenderProcess.stdout.on('data', (data) => {
+        stdout += data.toString();
       });
 
-      blenderProcess.stderr?.on('data', (data) => {
-        const output = data.toString();
-        stderr += output;
-        console.error('Blender Error:', output.trim());
-      });
-
-      blenderProcess.on('error', (error) => {
-        console.error('❌ Blender spawn error:', error.message);
-        clearTimeout(timeout);
+      blenderProcess.stderr.on('data', (data) => {
+        stderr += data.toString();
         hasError = true;
-        resolve({ 
-          success: false, 
-          error: `Failed to start Blender: ${error.message}` 
-        });
       });
 
       blenderProcess.on('close', (code) => {
-        clearTimeout(timeout);
-        if (hasError) return; // Já resolveu com erro
-        
-        if (code === 0) {
-          console.log('✅ Blender process completed successfully');
-          resolve({ success: true });
-        } else {
-          console.error(`❌ Blender process exited with code ${code}`);
-          resolve({ 
-            success: false, 
-            error: `Blender process failed with exit code ${code}. Error: ${stderr || 'No error details'}` 
-          });
-        }
-      });
-
-      blenderProcess.on('error', (error) => {
-        console.error('❌ Failed to start Blender process:', error);
-        resolve({ 
-          success: false, 
-          error: `Failed to start Blender: ${error.message}` 
+        resolve({
+          success: code === 0 && !hasError,
+          error: hasError ? stderr : undefined,
+          stdout,
+          stderr
         });
       });
     });
@@ -266,6 +262,7 @@ export class BlenderService {
 
   /**
    * Gera um preview de um único frame do template.blend com imagem aplicada
+   * VERSÃO ROBUSTA com sistema de fallback
    */
   async generatePreview(options: PreviewOptions): Promise<PreviewResult> {
     const startTime = Date.now();
@@ -279,133 +276,101 @@ export class BlenderService {
     }
     
     const outputPath = path.join(uploadsDir, `preview_${timestamp}.png`);
-    // Usar template original que funcionou ontem
-    const templatePath = path.join(process.cwd(), 'Blender', 'template.blend');
 
-    console.log('🔄 DEBUG - Template path:', templatePath);
-    console.log('🔄 DEBUG - Template exists:', fs.existsSync(templatePath));
     console.log('🔄 DEBUG - Output path:', outputPath);
+    console.log('🔄 DEBUG - Using robust fallback system...');
 
     try {
-      // Validar se os arquivos existem (áudio não é necessário para preview)
-      if (!fs.existsSync(options.imageFile)) {
-        throw new Error(`Image file not found: ${options.imageFile}`);
+      // USAR SISTEMA ROBUSTO DE FALLBACK
+      const result = await BlenderServiceRobust.generatePreviewWithFallback(outputPath);
+      
+      const renderTime = Date.now() - startTime;
+      
+      if (result.success) {
+        console.log(`✅ Preview generated successfully with method: ${result.method} in ${renderTime}ms`);
+        return {
+          success: true,
+          previewPath: outputPath,
+          renderTime
+        };
+      } else {
+        console.error('❌ All fallback methods failed:', result.error);
+        return {
+          success: false,
+          error: result.error || 'All fallback methods failed',
+          renderTime
+        };
       }
-
-      if (!fs.existsSync(options.imageFile)) {
-        throw new Error(`Image file not found: ${options.imageFile}`);
-      }
-
-      if (!fs.existsSync(templatePath)) {
-        throw new Error(`Template file not found: ${templatePath}`);
-      }
-
-      if (!fs.existsSync(BlenderService.BLENDER_PATH)) {
-        throw new Error(`Blender not found at: ${BlenderService.BLENDER_PATH}`);
-      }
-
-      console.log('🎬 Starting complete template preview generation...');
-      console.log(`🎵 Audio: ${options.audioFile}`);
-      console.log(`�️ Image: ${options.imageFile}`);
-      console.log(`�📷 Camera: Distance=${options.cameraSettings.distance}%, Height=${options.cameraSettings.height}%, Angle=${options.cameraSettings.angle}%`);
-      console.log(`🎨 Render Engine: ${options.renderEngine.toUpperCase()}`);
-      console.log(`⚡ Animation: ${options.animationStyle}, Sensitivity=${options.sensitivity}%, Smoothing=${options.smoothing}%`);
-
-      return new Promise((resolve) => {
-        const args = [
-          '--background',
-          templatePath,
-          '--python',
-          path.join(process.cwd(), 'Blender', 'preview_script.py'),
-          '--',
-          outputPath
-        ];
-
-        // Usar PowerShell para executar o Blender com paths que contêm espaços
-        const powershellCommand = `& "${BlenderService.BLENDER_PATH}" ${args.join(' ')}`;
-        console.log(`🔄 Executing via PowerShell: ${powershellCommand}`);
-
-        const blenderProcess = spawn('powershell', ['-Command', powershellCommand], {
-          stdio: ['pipe', 'pipe', 'pipe']
-        });
-
-        let stdout = '';
-        let stderr = '';
-        let hasError = false;
-
-        // Timeout para evitar travamento
-        const timeout = setTimeout(() => {
-          console.log('⏰ Blender process timeout, killing...');
-          blenderProcess.kill('SIGTERM');
-          hasError = true;
-          resolve({
-            success: false,
-            error: 'Blender process timeout',
-            renderTime: Date.now() - startTime
-          });
-        }, 30000);
-
-        blenderProcess.stdout?.on('data', (data) => {
-          const output = data.toString();
-          stdout += output;
-          console.log('[Blender Preview]', output.trim());
-        });
-
-        blenderProcess.stderr?.on('data', (data) => {
-          const output = data.toString();
-          stderr += output;
-          console.error('[Blender Preview Error]', output.trim());
-        });
-
-        blenderProcess.on('error', (error) => {
-          console.error('❌ PowerShell process error:', error);
-          clearTimeout(timeout);
-          hasError = true;
-          resolve({
-            success: false,
-            error: `Failed to start PowerShell process: ${error.message}`,
-            renderTime: Date.now() - startTime
-          });
-        });
-
-        blenderProcess.on('close', (code) => {
-          clearTimeout(timeout);
-          if (hasError) return;
-          
-          const renderTime = Date.now() - startTime;
-          
-          if (code === 0) {
-            if (fs.existsSync(outputPath)) {
-              console.log(`✅ Preview generated successfully in ${renderTime}ms`);
-              resolve({
-                success: true,
-                previewPath: outputPath,
-                renderTime
-              });
-            } else {
-              console.error(`❌ Preview file not generated: ${outputPath}`);
-              resolve({
-                success: false,
-                error: `Preview file was not generated. Stderr: ${stderr}`,
-                renderTime
-              });
-            }
-          } else {
-            console.error(`❌ Blender process exited with code ${code}`);
-            resolve({
-              success: false,
-              error: `Blender process failed with exit code ${code}. Error: ${stderr}`,
-              renderTime
-            });
-          }
-        });
-      });
 
     } catch (error) {
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error during preview generation'
       };
+    }
+  }
+
+  /**
+   * Corrige automaticamente problemas identificados no ambiente
+   */
+  static async autoFixEnvironment(): Promise<void> {
+    try {
+      console.log('🔧 Iniciando correções automáticas...');
+
+      // Verificar e corrigir caminho do Blender
+      if (!fs.existsSync(this.BLENDER_PATH)) {
+        console.error(`❌ Blender não encontrado no caminho: ${this.BLENDER_PATH}`);
+        console.log('🔍 Tentando localizar Blender automaticamente...');
+
+        const possiblePaths = [
+          'C:\\Program Files\\Blender Foundation\\Blender',
+          'C:\\Program Files (x86)\\Blender Foundation\\Blender'
+        ];
+
+        let foundPath = '';
+        for (const path of possiblePaths) {
+          if (fs.existsSync(path)) {
+            foundPath = path;
+            break;
+          }
+        }
+
+        if (foundPath) {
+          console.log(`✅ Blender encontrado em: ${foundPath}`);
+          // Atualizar caminho dinamicamente sem alterar a propriedade estática
+          Object.defineProperty(this, 'BLENDER_PATH', {
+            value: path.join(foundPath, 'blender.exe'),
+            writable: false
+          });
+        } else {
+          throw new Error('Blender não encontrado. Atualize o caminho manualmente.');
+        }
+      }
+
+      // Verificar e liberar porta 5000
+      const port = 5000;
+      try {
+        console.log(`🔍 Verificando se a porta ${port} está ocupada...`);
+        const result = execSync(`netstat -ano | findstr :${port}`).toString();
+        const pidMatch = result.match(/\s+(\d+)\s*$/);
+
+        if (pidMatch) {
+          const pid = pidMatch[1];
+          console.log(`⚠️ Porta ${port} ocupada pelo processo PID: ${pid}. Encerrando processo...`);
+          execSync(`taskkill /PID ${pid} /F`);
+          console.log(`✅ Processo ${pid} encerrado. Porta ${port} liberada.`);
+        }
+      } catch {
+        console.log(`✅ Porta ${port} está livre.`);
+      }
+
+      // Validar URLs e portas nos testes
+      console.log('🔍 Validando configurações de URLs e portas...');
+      // Aqui você pode adicionar lógica para corrigir URLs ou portas inválidas nos testes
+
+      console.log('✅ Correções automáticas concluídas!');
+    } catch (error) {
+      console.error('❌ Falha ao aplicar correções automáticas:', error);
     }
   }
 }

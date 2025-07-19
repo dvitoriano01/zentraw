@@ -1,0 +1,42 @@
+========================================
+ZENTRAW V1.4.0.a.2 - TESTE AUTOMATICO
+Data: 18/07/2025 15:04:06,83
+========================================
+
+[FASE 1] 🔥 Limpando processos antigos...
+✅ Processos limpos
+
+[FASE 2] 🔍 Verificando porta 5000...
+⚠️ Porta 5000 ocupada, forçando limpeza...
+
+[FASE 3] 🧪 Diagnostico rapido...
+✅ Blender encontrado
+✅ Template encontrado
+✅ Arquivo blender.ts encontrado
+
+[FASE 4] 🚀 Iniciando servidor...
+✅ Servidor iniciado
+
+[FASE 5] 🧪 Testando endpoints...
+✅ Endpoint /test - OK 
+✅ Endpoint /preview - OK (retorna erro esperado) 
+❌ Endpoint /preview - FALHA 
+✅ Endpoint /render - OK (retorna erro esperado) 
+❌ Endpoint /render - FALHA 
+✅ Endpoint /test-render - OK 
+
+[FASE 6] 📊 Resultados finais...
+========================================
+TESTE AUTOMATICO COMPLETO
+Data: 18/07/2025 15:04:18,81
+========================================
+
+🎯 Servidor está rodando na porta 5000
+📋 Verifique o log para detalhes completos
+🌐 Acesse: http://localhost:5000
+
+PRÓXIMOS PASSOS:
+1. Testar frontend no navegador
+2. Fazer upload de arquivos
+3. Verificar renderização
+

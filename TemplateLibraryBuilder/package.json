@@ -13,9 +13,9 @@
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "blender:super": "npx tsx scripts/zentraw-super-script.js",
-    "blender:test": "curl -X POST http://localhost:5000/api/blender/test-render",
-    "blender:check": "curl -X GET http://localhost:5000/api/blender/test",
-    "blender:preview": "curl -X POST http://localhost:5000/api/blender/preview",
+    "blender:test": "curl -X POST http://localhost:5001/api/blender/test-render",
+    "blender:check": "curl -X GET http://localhost:5001/api/blender/test",
+    "blender:preview": "curl -X POST http://localhost:5001/api/blender/preview",
     "autofix": "scripts\\run-super-script.bat"
   },
   "dependencies": {

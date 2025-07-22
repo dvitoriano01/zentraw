@@ -70,7 +70,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5002',
         changeOrigin: true,
         secure: false,
         timeout: 30000, // 30 segundos de timeout
@@ -78,7 +78,7 @@ export default defineConfig({
           proxy.on('error', (err, req, res) => {
             console.error('🔴 Proxy error:', err.message);
             console.error('🔴 Request URL:', req.url);
-            console.error('🔴 Target:', 'http://localhost:5000');
+            console.error('🔴 Target:', 'http://localhost:5002');
             
             if (!res.headersSent) {
               res.writeHead(503, {

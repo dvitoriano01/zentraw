@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Zentraw Test</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 20px; 
+            background: #1e1e1e; 
+            color: white; 
+        }
+        .box { 
+            background: #333; 
+            padding: 20px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+        }
+        button { 
+            background: #007acc; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            margin: 5px; 
+            cursor: pointer; 
+            border-radius: 3px;
+        }
+        button:hover { background: #005a9e; }
+        #log { 
+            background: #000; 
+            color: #0f0; 
+            padding: 10px; 
+            height: 300px; 
+            overflow-y: scroll; 
+            font-family: monospace; 
+            white-space: pre-wrap;
+            border: 1px solid #333;
+        }
+        input[type="file"] {
+            background: #333;
+            color: white;
+            padding: 5px;
+            border: 1px solid #555;
+            margin: 5px 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zentraw 3D Visualizer V1.4.0.a.2 - TEST</h1>
+    
+    <div class="box">
+        <h3>Backend Status</h3>
+        <p>URL: http://localhost:5003</p>
+        <button onclick="testBackend()">TEST CONNECTION</button>
+    </div>
+    
+    <div class="box">
+        <h3>Upload Test</h3>
+        <input type="file" id="audio" accept="audio/*">
+        <input type="file" id="image" accept="image/*">
+        <button onclick="testUpload()">TEST VISUALIZER</button>
+    </div>
+    
+    <div class="box">
+        <h3>System Log</h3>
+        <div id="log">Zentraw 3D Visualizer initialized...\nWaiting for commands...</div>
+    </div>
+
+    <script>
+        function addLog(msg) {
+            const log = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            log.textContent += '\n[' + time + '] ' + msg;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        async function testBackend() {
+            addLog('Testing backend connection...');
+            
+            try {
+                const response = await fetch('http://localhost:5003/api/test');
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog('SUCCESS: ' + data.message);
+                    addLog('Port: ' + data.port);
+                    addLog('Features: ' + data.features.length + ' implemented');
+                } else {
+                    addLog('ERROR: Backend responded but failed');
+                }
+            } catch (error) {
+                addLog('ERROR: ' + error.message);
+                addLog('Make sure backend is running on port 5003');
+            }
+        }
+
+        async function testUpload() {
+            const audioFile = document.getElementById('audio').files[0];
+            const imageFile = document.getElementById('image').files[0];
+            
+            if (!audioFile) {
+                addLog('ERROR: Select audio file');
+                return;
+            }
+            
+            if (!imageFile) {
+                addLog('ERROR: Select image file');
+                return;
+            }
+            
+            addLog('Starting visualizer test...');
+            addLog('Audio: ' + audioFile.name);
+            addLog('Image: ' + imageFile.name);
+            
+            try {
+                const formData = new FormData();
+                formData.append('audioFile', audioFile);
+                formData.append('imageFile', imageFile);
+                
+                addLog('Uploading to backend...');
+                
+                const response = await fetch('http://localhost:5003/api/blender/audio-visualizer', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    addLog('SUCCESS: Visualizer generated!');
+                    addLog('Method: ' + result.method);
+                    addLog('Strategy: ' + result.strategy);
+                    addLog('Output: ' + result.outputPath);
+                    
+                    if (result.detailedLogs) {
+                        addLog('--- Detailed Logs ---');
+                        result.detailedLogs.forEach(log => addLog(log));
+                    }
+                } else {
+                    addLog('ERROR: ' + result.error);
+                }
+                
+            } catch (error) {
+                addLog('NETWORK ERROR: ' + error.message);
+            }
+        }
+
+        // Auto test connection on load
+        window.onload = function() {
+            addLog('Interface loaded successfully');
+            addLog('Auto-testing backend connection...');
+            setTimeout(testBackend, 1000);
+        };
+    </script>
+</body>
+</html>

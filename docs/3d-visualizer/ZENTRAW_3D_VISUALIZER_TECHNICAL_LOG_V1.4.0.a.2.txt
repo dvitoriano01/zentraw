@@ -1,0 +1,652 @@
+# ZENTRAW 3D VISUALIZER - LOG TÉCNICO COMPLETO V1.4.0.a.2
+
+**Última Atualização:** 21 de Julho de 2025
+**Branch Atual:** fEAT_V1.4.0.a.2_BRIGA_COM_SERVIDOR_E_BACKEND
+**Status:** ANÁLISE COMPLETA - Problemas Críticos Identificados
+
+## 📋 RESUMO EXECUTIVO ATUALIZADO
+
+**Data**: 21 de Julho de 2025  
+**Objetivo**: Resolver problemas críticos de execução do Blender no Windows  
+**Status Atual**: Sistema em desenvolvimento - Backend configurado, Blender não executa  
+**Problema Principal**: Windows path handling + Process spawn failures  
+
+## 🎯 EVOLUÇÃO DO PROBLEMA (TIMELINE COMPLETA)
+
+### ✅ 16/07/2025 - SISTEMA FUNCIONOU PERFEITAMENTE
+- **Backend**: Express rodando na porta correta
+- **Blender Integration**: Execução via spawn bem-sucedida
+- **Image Proxy**: Static file serving operacional
+- **Frontend**: Interface Specterr renderizando previews
+- **Resultado**: Sistema 100% operacional
+
+### ❌ 17/07/2025 - REGRESSÃO IDENTIFICADA
+- **Backend**: Problemas de inicialização intermitentes
+- **Blender**: Spawn failures, exit code 1, timeouts
+- **Image Proxy**: Implementado mas não testável
+- **Frontend**: Interface funcional mas sem backend
+- **Resultado**: Sistema não funcional
+
+### 🔍 21/07/2025 - ANÁLISE TÉCNICA COMPLETA
+- **Diagnóstico**: Problemas de Windows path handling
+- **Root Cause**: Espaços em "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe"
+- **Impact**: Spawn/execFile falham consistentemente
+- **Solution Path**: Múltiplas abordagens identificadas
+
+## 🏗️ ARQUITETURA TÉCNICA ATUAL (ATUALIZADA)
+
+### 1. ESTRUTURA DE PASTAS REAL
+```
+zentraw/
+├── TemplateLibraryBuilder/
+│   ├── server/
+│   │   ├── backend-only.ts              # ✅ Express server - porta 5000
+│   │   ├── blender-paths.ts             # ⚠️  Path com espaços problemático
+│   │   ├── services/
+│   │   │   ├── blender-service.ts       # ✅ Serviço principal
+│   │   │   └── blender-service-robust.ts # ✅ Sistema 5 fallbacks
+│   │   └── routes/
+│   │       └── blender.ts               # ✅ API endpoints configurados
+│   ├── client/src/pages/
+│   │   └── blender-visualizer.tsx       # ✅ Interface 834 linhas
+│   ├── vite.config.ts                   # ✅ Proxy configurado
+│   ├── package.json                     # ✅ Scripts atualizados
+│   └── uploads/                         # ✅ Diretório de uploads
+├── docs/3d-visualizer/                  # ✅ Documentação completa
+└── .vscode/tasks.json                   # ✅ Tasks configuradas
+```
+
+### 2. CONFIGURAÇÕES ATUAIS
+
+#### Backend (backend-only.ts) - VERSÃO FINAL
+```typescript
+const PORT = process.env.PORT || 5000; // ✅ Porta corrigida
+app.use('/uploads', express.static(uploadsPath)); // ✅ Image proxy implementado
+app.use('/api/blender', blenderRouter); // ✅ Rotas configuradas
+
+// CORS multi-origem
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'];
+```
+
+#### Blender Paths (blender-paths.ts) - PROBLEMA CRÍTICO
+```typescript
+export const BLENDER_PATHS = {
+  // ⚠️ CRITICAL ISSUE: Espaços no path causam spawn failure
+  BLENDER_EXE: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  SCRIPT_PATH: path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py'),
+  TEMPLATE_PATH: path.join(process.cwd(), 'Blender', 'template.blend')
+};
+```
+
+#### Sistema Robusto (BlenderServiceRobust) - IMPLEMENTADO
+```typescript
+private static readonly FALLBACK_METHODS = [
+  'EEVEE_ORIGINAL',    // BLENDER_EEVEE engine
+  'CYCLES',            // CYCLES engine
+  'WORKBENCH',         // BLENDER_WORKBENCH engine
+  'FACTORY_RESET',     // --factory-startup flag
+  'MINIMAL_SCENE'      // Cena programática mínima
+];
+
+// Logs esperados:
+// 🔥 SISTEMA ROBUSTO INICIADO - Testando 5 métodos de fallback...
+// 🧪 ============ TESTANDO MÉTODO: EEVEE_ORIGINAL ============
+// ✅ ✅ ✅ SUCESSO! Método EEVEE_ORIGINAL funcionou!
+```
+
+## 🐛 PROBLEMAS CRÍTICOS DETALHADOS
+
+### 1. WINDOWS PATH HANDLING (CRÍTICO)
+**Root Cause**: Blender instalado em path com espaços
+```
+C:\Program Files\Blender Foundation\Blender 4.5\blender.exe
+     ^^^^^      ^^^^^        ^^^^^
+   espaços causam problemas em spawn()
+```
+
+**Manifestação**:
+```javascript
+// Falha em todas estas tentativas:
+spawn('C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe', args) // ❌
+spawn('"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe"', args) // ❌
+execFile('C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe', args) // ❌
+```
+
+**Sintomas Observados**:
+- Exit code 1 imediato
+- Process não inicia
+- Stderr vazio ou truncado
+- Timeout após 30 segundos
+
+### 2. PROCESS EXECUTION FAILURES
+**Configuração Atual (Problemática)**:
+```typescript
+const blenderProcess = spawn(blenderPath, args, {
+  stdio: ['pipe', 'pipe', 'pipe'],
+  shell: true, // Tentativa para resolver paths com espaços
+  env: process.env
+});
+```
+
+**Logs Típicos de Falha**:
+```
+🚀 Spawning Blender: "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background template.blend --python script.py
+❌ Blender process failed with exit code 1
+⏰ Blender process timeout (EEVEE_ORIGINAL), killing...
+🔚 Blender process finished with code 1 (EEVEE_ORIGINAL)
+```
+
+### 3. BACKEND CONNECTIVITY (INTERMITENTE)
+**Problema**: Backend às vezes não inicia
+
+**Comandos que Falham**:
+```bash
+❌ npm run dev:back                    # Sem resposta
+❌ tsx server/backend-only.ts          # Sem resposta  
+❌ curl http://localhost:5000/health   # Connection refused
+❌ netstat -an | findstr ":5000"       # Porta não encontrada
+```
+
+**Possíveis Causas**:
+- Conflitos de porta
+- Dependências em falta
+- TSX compilation issues
+- Process hanging
+
+## 🔧 TENTATIVAS DE CORREÇÃO REALIZADAS
+
+### 1. SPAWN CONFIGURATIONS (MÚLTIPLAS TENTATIVAS)
+```typescript
+// ❌ Tentativa 1: shell: false (padrão)
+spawn(BLENDER_PATH, args, { shell: false })
+
+// ❌ Tentativa 2: shell: true (para Windows)
+spawn(BLENDER_PATH, args, { shell: true })
+
+// ❌ Tentativa 3: execFile alternativo
+execFile(BLENDER_PATH, args, { timeout: 30000 })
+
+// ❌ Tentativa 4: Aspas manuais
+spawn(`"${BLENDER_PATH}"`, args)
+
+// ❌ Tentativa 5: Array de argumentos modificado
+spawn(BLENDER_PATH, ['"--background"', '"template.blend"'])
+```
+
+### 2. ERROR HANDLING MELHORADO
+```typescript
+// Captura detalhada implementada
+blenderProcess.on('error', (error) => {
+  console.error(`❌ Blender spawn error (${method}):`, error.message);
+  resolve({
+    success: false,
+    error: `Failed to start Blender (${method}): ${error.message}`,
+    method
+  });
+});
+
+blenderProcess.on('close', (code) => {
+  if (code === 0 && fs.existsSync(expectedOutputPath)) {
+    resolve({ success: true, method });
+  } else {
+    resolve({
+      success: false,
+      error: `Blender exit code ${code}. STDERR: ${stderr.slice(-500)}`,
+      method
+    });
+  }
+});
+```
+
+### 3. TIMEOUT E KILL LOGIC
+```typescript
+// Timeout de 30 segundos implementado
+const timeout = setTimeout(() => {
+  if (!hasError) {
+    console.log(`⏰ Blender process timeout (${method}), killing...`);
+    blenderProcess.kill('SIGTERM');
+    hasError = true;
+    resolve({
+      success: false,
+      error: `Process timeout after 30s (${method})`,
+      method
+    });
+  }
+}, 30000);
+```
+
+## 📊 STATUS DOS COMPONENTES (DETALHADO)
+
+### ✅ IMPLEMENTADO E FUNCIONANDO
+- **Frontend Interface**: Specterr-style completa (834 linhas React/TypeScript)
+- **Static File Serving**: `app.use('/uploads', express.static(uploadsPath))`
+- **CORS Multi-origem**: Suporta portas dinâmicas do Vite (5173-5176)
+- **Sistema de Fallback**: BlenderServiceRobust com 5 métodos
+- **Upload System**: Multer com validação de tipos (audio/image)
+- **API Endpoints**: `/test`, `/preview`, `/health` configurados
+- **TypeScript Compilation**: Zero erros de tipo
+- **Error Handling**: Logs detalhados implementados
+- **Timeout Management**: 30s timeout com kill logic
+
+### ❌ BLOQUEADORES CRÍTICOS
+- **Blender Execution**: Spawn/execFile falham devido a Windows paths
+- **Process Management**: Exit code 1 consistente
+- **Path Resolution**: Espaços em "Program Files" não resolvidos
+- **End-to-End Flow**: Não completável devido ao problema de execução
+
+### 🔄 PARCIALMENTE IMPLEMENTADO
+- **Backend Connectivity**: Funciona quando inicia corretamente
+- **Image Proxy**: Código pronto, não testável sem Blender functioning
+- **Logging System**: Implementado mas limitado por falhas de execução
+- **Fallback System**: Preparado mas não validável
+
+## 🎯 SOLUÇÕES PROPOSTAS (PRIORIDADE)
+
+### SOLUÇÃO 1: SHORT PATH NAME (MAIS PROVÁVEL)
+```typescript
+// Usar path curto do Windows (8.3 format)
+const BLENDER_PATHS = {
+  BLENDER_EXE: 'C:\\PROGRA~1\\BLENDE~1\\BLENDE~1\\blender.exe',
+  // Manter outros paths normais
+  SCRIPT_PATH: path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py'),
+  TEMPLATE_PATH: path.join(process.cwd(), 'Blender', 'template.blend')
+};
+```
+
+**Como obter path curto**:
+```bash
+# CMD command para obter path curto
+dir /x "C:\Program Files\Blender Foundation\Blender 4.5"
+# Resultado esperado: BLENDE~1 blender.exe
+```
+
+### SOLUÇÃO 2: COPY BLENDER (MAIS SIMPLES)
+```bash
+# Copiar Blender para pasta sem espaços
+mkdir C:\Blender
+xcopy "C:\Program Files\Blender Foundation\Blender 4.5\*" "C:\Blender\" /E /I
+
+# Atualizar path
+const BLENDER_PATHS = {
+  BLENDER_EXE: 'C:\\Blender\\blender.exe',
+  // ...
+};
+```
+
+### SOLUÇÃO 3: CROSS-SPAWN PACKAGE (MAIS ROBUSTA)
+```bash
+# Instalar cross-spawn
+npm install cross-spawn
+npm install @types/cross-spawn --save-dev
+```
+
+```typescript
+// Atualizar blender-service-robust.ts
+import spawn from 'cross-spawn';
+
+// Usar cross-spawn em vez de child_process.spawn
+const blenderProcess = spawn(blenderPath, args, {
+  stdio: ['pipe', 'pipe', 'pipe'],
+  env: process.env
+});
+```
+
+### SOLUÇÃO 4: POWERSHELL WRAPPER (ALTERNATIVA)
+```typescript
+// Usar PowerShell para contornar problemas de path
+const powershellCommand = `& "${BLENDER_PATH}" ${args.join(' ')}`;
+const psProcess = spawn('powershell.exe', ['-Command', powershellCommand], {
+  stdio: ['pipe', 'pipe', 'pipe']
+});
+```
+
+### SOLUÇÃO 5: UTIL.PROMISIFY + EXEC (BACKUP)
+```typescript
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
+
+// Usar exec em vez de spawn
+const command = `"${BLENDER_PATH}" ${args.join(' ')}`;
+const { stdout, stderr } = await execAsync(command, { timeout: 30000 });
+```
+
+## 📋 PLANO DE AÇÃO IMEDIATO
+
+### ETAPA 1: DIAGNÓSTICO PRELIMINAR
+```bash
+# 1. Verificar se Blender funciona diretamente
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --version
+
+# 2. Testar path curto
+dir /x "C:\Program Files\Blender Foundation\Blender 4.5"
+
+# 3. Verificar backend
+cd TemplateLibraryBuilder
+npm run dev:back
+curl http://localhost:5000/health
+```
+
+### ETAPA 2: IMPLEMENTAR SOLUÇÃO PRIORITÁRIA
+1. **Tentar Solução 1 (Short Path)** primeiro
+2. **Se falhar, implementar Solução 2 (Copy Blender)**
+3. **Como backup, usar Solução 3 (cross-spawn)**
+
+### ETAPA 3: VALIDAÇÃO COMPLETA
+1. **Teste de Blender**: `GET /api/blender/test`
+2. **Upload de arquivos**: Audio + Image
+3. **Geração de preview**: `POST /api/blender/preview`
+4. **Validação de imagem**: Verificar se image proxy funciona
+5. **Teste dos 5 fallbacks**: Confirmar que pelo menos 1 método funciona
+
+### ETAPA 4: DOCUMENTAÇÃO
+1. **Atualizar logs técnicos** com solução implementada
+2. **Criar guia de troubleshooting** específico para Windows
+3. **Documentar performance** de cada método de fallback
+
+## 💡 INSIGHTS TÉCNICOS
+
+### 1. PROBLEM CORRELATION
+- **Ontem funcionou**: Provavelmente mudança de ambiente (Windows update, Node.js update, etc.)
+- **Path consistency**: Outros tools podem ter mesmo problema
+- **Windows-specific**: Problema não afetaria Linux/Mac
+
+### 2. ROBUST SYSTEM BENEFITS
+- **Múltiplos engines**: Mesmo que EEVEE falhe, CYCLES ou WORKBENCH podem funcionar
+- **Factory reset**: Contorna problemas de configuração
+- **Minimal scene**: Funciona mesmo sem template
+
+### 3. MONITORING APPROACH
+- **Detailed logging**: Cada etapa do processo logada
+- **Error classification**: Categorizar tipos de erro (spawn, path, timeout, etc.)
+- **Performance tracking**: Medir tempo de cada método
+
+## 🎯 OBJETIVO FINAL CLARO
+
+**Meta**: 3D Visualizer V1.4.0.a.2 → 100% funcional  
+**Bloqueador**: Windows path handling para execução do Blender  
+**Success Criteria**: 
+1. ✅ Blender executa sem exit code 1
+2. ✅ Preview gerado e salvo em uploads/
+3. ✅ Image proxy carrega preview no frontend
+4. ✅ Sistema robusto identifica método funcional
+5. ✅ End-to-end flow completo
+
+**Timeline Estimado**: 2-4 horas após implementar solução de path
+
+---
+
+**Criado em**: 17/07/2025  
+**Atualizado em**: 21/07/2025  
+**Status**: PROBLEM ANALYSIS COMPLETE - READY FOR SOLUTION IMPLEMENTATION  
+**Próxima Ação**: Implementar Solução 1 (Short Path Name) como prioridade máxima
+│   │   ├── services/
+│   │   │   └── blender-service.ts   # Serviço principal Blender
+│   │   └── routes/
+│   │       └── blender.ts           # Rotas API Blender
+│   ├── client/
+│   │   └── components/
+│   │       └── blender-visualizer.tsx # Interface frontend
+│   └── Blender/
+│       ├── template.blend           # Template 3D principal
+│       ├── render_audio_visualizer.py # Script Python render
+│       └── preview_script.py        # Script Python preview
+```
+
+### 2. STACK TECNOLÓGICO
+- **Backend**: Node.js + Express + TypeScript
+- **Frontend**: React + TypeScript + Vite
+- **3D Engine**: Blender 4.5 CLI
+- **Process Management**: child_process (spawn/execFile)
+- **File Serving**: express.static middleware
+- **Development**: ts-node/esm loader
+
+### 3. CONFIGURAÇÃO DE PATHS
+```typescript
+// blender-paths.ts
+export const BLENDER_PATHS = {
+  BLENDER_EXE: 'C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe',
+  SCRIPT_PATH: path.join(process.cwd(), 'Blender', 'render_audio_visualizer.py'),
+  TEMPLATE_PATH: path.join(process.cwd(), 'Blender', 'template.blend')
+};
+```
+
+## 🔧 IMPLEMENTAÇÃO IMAGE PROXY
+
+### 1. BACKEND (backend-only.ts)
+```typescript
+// Static file serving para image proxy
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads'), {
+  setHeaders: (res, path) => {
+    console.log('📁 Serving static file:', path);
+  }
+}));
+```
+
+### 2. FRONTEND (blender-visualizer.tsx)
+```typescript
+// URL completa para acessar imagens
+const imageUrl = `http://localhost:5001/uploads/blender/${filename}`;
+```
+
+### 3. ROUTES (blender.ts)
+```typescript
+// Retorna URL para static file serving
+previewUrl: `/uploads/blender/${filename}`
+```
+
+## 🐛 PROBLEMAS CRÍTICOS IDENTIFICADOS
+
+### 1. WINDOWS PATH HANDLING
+**Problema**: Blender executable em `C:\Program Files\Blender Foundation\Blender 4.5\blender.exe`
+- Espaços no caminho causam falha em spawn/execFile
+- Diferentes tentativas: shell: true/false, aspas, escaping
+
+**Tentativas Realizadas**:
+```typescript
+// Tentativa 1: shell: false
+spawn(this.BLENDER_PATH, args, { shell: false })
+
+// Tentativa 2: shell: true  
+spawn(this.BLENDER_PATH, args, { shell: true })
+
+// Tentativa 3: execFile
+execFile(this.BLENDER_PATH, args, options)
+
+// Tentativa 4: Aspas no path
+spawn('"C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe"', args)
+```
+
+### 2. PROCESS EXECUTION FAILURES
+**Sintomas**:
+- Exit code 1 do Blender
+- Processos não iniciam
+- Timeout em spawn
+- Stderr vazio ou incompleto
+
+**Logs Típicos**:
+```
+❌ Blender process failed with exit code 1
+❌ Blender spawn error: [detalhes não capturados]
+⏰ Blender process timeout, killing...
+```
+
+### 3. TERMINAL EXECUTION ISSUES
+**Problema**: Comandos via run_in_terminal falham
+- Não consegue executar backend
+- Não consegue testar Blender diretamente
+- Comandos ficam "hanging" sem output
+
+## 🔄 TENTATIVAS DE CORREÇÃO
+
+### 1. SPAWN CONFIGURATIONS
+```typescript
+// Configuração Atual (Última Tentativa)
+const blenderProcess = spawn(this.BLENDER_PATH, args, {
+  stdio: ['pipe', 'pipe', 'pipe'],
+  shell: true // Para Windows paths com espaços
+});
+
+// Com timeout e error handling
+const timeout = setTimeout(() => {
+  blenderProcess.kill('SIGTERM');
+  hasError = true;
+}, 30000);
+```
+
+### 2. ERROR HANDLING IMPROVEMENTS
+```typescript
+// Melhor captura de erros
+blenderProcess.on('error', (error) => {
+  console.error('❌ Blender spawn error:', error.message);
+  clearTimeout(timeout);
+  hasError = true;
+  resolve({ 
+    success: false, 
+    error: `Failed to start Blender: ${error.message}` 
+  });
+});
+```
+
+### 3. MULTIPLE EXECUTION METHODS
+- **spawn**: Tentado com shell: true/false
+- **execFile**: Tentado com diferentes timeouts
+- **Direct terminal**: Tentado via run_in_terminal
+
+## 📊 STATUS DOS COMPONENTES
+
+### ✅ FUNCIONANDO
+- **Express Server**: Configurado corretamente
+- **Static File Serving**: Middleware implementado
+- **Frontend Interface**: React components funcionais
+- **TypeScript Compilation**: Sem erros de tipo
+- **File Structure**: Organizada e consistente
+
+### ❌ COM PROBLEMAS
+- **Blender Execution**: Falha em spawn/execFile
+- **Process Management**: Timeout e hanging
+- **Terminal Commands**: Não respondem
+- **End-to-End Flow**: Não completável
+
+### 🔄 PARCIALMENTE IMPLEMENTADO
+- **Image Proxy**: Código pronto, não testável
+- **Error Logging**: Implementado mas output incompleto
+- **Timeout Handling**: Implementado mas não resolve problema base
+
+## 🎯 ANÁLISE TÉCNICA DETALHADA
+
+### 1. WORKING YESTERDAY vs BROKEN TODAY
+**Diferenças Potenciais**:
+- Windows updates que afetaram child_process
+- Alterações no path do Blender
+- Mudanças no Node.js/npm
+- Conflitos de processo/porta
+
+### 2. BLENDER INTEGRATION SPECIFICS
+**Funcionamento Esperado**:
+```bash
+# Comando que deveria funcionar
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" --background template.blend --python preview_script.py -- output.png
+```
+
+**Argumentos Detalhados**:
+- `--background`: Executar sem GUI
+- `template.blend`: Arquivo 3D template
+- `--python`: Executar script Python
+- `preview_script.py`: Script de render
+- `--`: Separador de argumentos
+- `output.png`: Caminho de saída
+
+### 3. PYTHON SCRIPTS INTEGRATION
+**render_audio_visualizer.py**: Script principal para render completo
+**preview_script.py**: Script para preview single frame
+**template.blend**: Arquivo 3D com setup de visualização
+
+## 🚨 PROBLEMAS PRIORITÁRIOS
+
+### 1. CRITICAL - BLENDER EXECUTION
+**Impacto**: Bloqueia todo o sistema
+**Causa**: Windows path com espaços
+**Soluções Tentadas**: 5+ abordagens diferentes
+**Status**: Não resolvido
+
+### 2. HIGH - TERMINAL HANGING
+**Impacto**: Impede debugging e testes
+**Causa**: Processo não responde
+**Workaround**: Necessário restart VS Code
+**Status**: Problema persistente
+
+### 3. MEDIUM - IMAGE PROXY VALIDATION
+**Impacto**: Não pode validar solução completa
+**Causa**: Dependente de Blender execution
+**Status**: Aguardando resolução do problema 1
+
+## 🔧 SOLUÇÕES PROPOSTAS
+
+### 1. BLENDER PATH ALTERNATIVES
+```typescript
+// Opção 1: Usar caminho curto do Windows
+const BLENDER_PATH = 'C:\\PROGRA~1\\BLENDE~1\\BLENDE~1\\blender.exe';
+
+// Opção 2: Copiar Blender para pasta sem espaços
+const BLENDER_PATH = 'C:\\Blender\\blender.exe';
+
+// Opção 3: Usar PowerShell para execução
+const powershellCommand = `& "${BLENDER_PATH}" ${args.join(' ')}`;
+```
+
+### 2. PROCESS EXECUTION ALTERNATIVES
+```typescript
+// Opção 1: Usar util.promisify
+const execAsync = util.promisify(exec);
+const result = await execAsync(`"${BLENDER_PATH}" ${args.join(' ')}`);
+
+// Opção 2: Usar cross-spawn package
+const spawn = require('cross-spawn');
+const process = spawn(BLENDER_PATH, args);
+
+// Opção 3: Usar shelljs
+const shell = require('shelljs');
+shell.exec(`"${BLENDER_PATH}" ${args.join(' ')}`);
+```
+
+### 3. DEBUGGING IMPROVEMENTS
+```typescript
+// Verificações pré-execução
+console.log('Path exists:', fs.existsSync(BLENDER_PATH));
+console.log('Path stats:', fs.statSync(BLENDER_PATH));
+console.log('Process cwd:', process.cwd());
+console.log('Process env:', process.env.PATH);
+```
+
+## 📋 NEXT STEPS - AÇÕES IMEDIATAS
+
+### 1. PRIORIDADE MÁXIMA
+- [ ] Resolver execução do Blender no Windows
+- [ ] Testar diferentes métodos de spawn
+- [ ] Implementar fallback para caminhos alternativos
+
+### 2. PRIORIDADE ALTA
+- [ ] Validar image proxy end-to-end
+- [ ] Testar geração de preview completa
+- [ ] Confirmar 100% funcionalidade
+
+### 3. PRIORIDADE MÉDIA
+- [ ] Documentar solução final
+- [ ] Criar testes automatizados
+- [ ] Otimizar performance
+
+## 🎯 OBJETIVO FINAL
+
+**Meta**: 3D Visualizer V1.4.0.a.2 → 100% funcional
+**Bloqueador**: Windows path handling para Blender execution
+**Sucesso**: Preview 3D gerado e exibido via image proxy
+
+---
+
+**Criado em**: 17/07/2025  
+**Status**: PROBLEM ANALYSIS COMPLETE - AWAITING SOLUTION  
+**Próxima Ação**: Implementar solução alternativa para Blender execution
+
+

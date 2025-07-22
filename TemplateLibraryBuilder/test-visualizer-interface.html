@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Zentraw 3D Visualizer V1.4.0.a.2 - TESTE REAL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(0,0,0,0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .upload-section {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .file-input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px dashed #fff;
+            border-radius: 10px;
+            background: transparent;
+            color: white;
+            font-size: 16px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .status {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            overflow-y: auto;
+        }
+        .success { color: #2ecc71; }
+        .error { color: #e74c3c; }
+        .info { color: #3498db; }
+        .feature-list {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .feature-list h3 {
+            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        .feature-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .feature-list li:before {
+            content: "✅ ";
+            color: #2ecc71;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Zentraw 3D Visualizer V1.4.0.a.2</h1>
+        
+        <div class="feature-list">
+            <h3>🚀 Funcionalidades Implementadas:</h3>
+            <ul>
+                <li>executeAudioVisualizerWithFallback method</li>
+                <li>Multiple execution strategies (CrossSpawn, PowerShell, NativeSpawn, Exec)</li>
+                <li>5-minute timeout for video rendering</li>
+                <li>Complete error handling and detailed logs</li>
+                <li>Audio-visual synchronization support</li>
+                <li>Full HD MP4 output (1920x1080)</li>
+                <li>Real Python script integration with Blender</li>
+            </ul>
+        </div>
+        
+        <div class="upload-section">
+            <h3>📁 Upload de Arquivos para Visualizador</h3>
+            <input type="file" id="audioFile" accept="audio/*" class="file-input" placeholder="Selecione arquivo de áudio">
+            <input type="file" id="imageFile" accept="image/*" class="file-input" placeholder="Selecione imagem">
+            <button onclick="uploadAndRender()" class="btn">🎬 GERAR VISUALIZADOR 3D</button>
+        </div>
+        
+        <div class="status" id="status">
+🎯 Sistema pronto! Selecione um arquivo de áudio e uma imagem para gerar o visualizador 3D.
+
+📋 O que será gerado:
+• MP4 em Full HD (1920x1080)
+• Sincronização entre áudio e visual
+• Cubo reagindo às frequências do áudio
+• Imagem aplicada como textura no plano de fundo
+• Renderização completa via Blender
+        </div>
+    </div>
+
+    <script>
+        async function uploadAndRender() {
+            const audioFile = document.getElementById('audioFile').files[0];
+            const imageFile = document.getElementById('imageFile').files[0];
+            const status = document.getElementById('status');
+            
+            if (!audioFile || !imageFile) {
+                status.innerHTML = '<span class="error">❌ Por favor, selecione tanto o arquivo de áudio quanto a imagem!</span>';
+                return;
+            }
+            
+            status.innerHTML = '<span class="info">🎬 Iniciando renderização do visualizador 3D...</span>';
+            
+            const formData = new FormData();
+            formData.append('audioFile', audioFile);
+            formData.append('imageFile', imageFile);
+            
+            try {
+                status.innerHTML += '\\n<span class="info">📡 Enviando arquivos para o backend...</span>';
+                
+                const response = await fetch('http://localhost:5002/api/blender/audio-visualizer', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    status.innerHTML += '\\n<span class="success">✅ VISUALIZADOR 3D GERADO COM SUCESSO!</span>';
+                    status.innerHTML += '\\n<span class="info">📊 Resultado:</span>';
+                    status.innerHTML += '\\n' + JSON.stringify(result, null, 2);
+                    
+                    if (result.outputPath) {
+                        status.innerHTML += '\\n<span class="success">🎥 Arquivo gerado: ' + result.outputPath + '</span>';
+                    }
+                } else {
+                    status.innerHTML += '\\n<span class="error">❌ Erro: ' + result.error + '</span>';
+                    if (result.detailedLogs) {
+                        status.innerHTML += '\\n<span class="info">📋 Logs detalhados:</span>';
+                        status.innerHTML += '\\n' + result.detailedLogs.join('\\n');
+                    }
+                }
+                
+            } catch (error) {
+                status.innerHTML += '\\n<span class="error">💥 Erro de conexão: ' + error.message + '</span>';
+                status.innerHTML += '\\n<span class="info">🔧 Certifique-se de que o backend está rodando em http://localhost:5002</span>';
+            }
+        }
+        
+        // Teste de conectividade
+        async function testConnection() {
+            try {
+                const response = await fetch('http://localhost:5002/api/test');
+                const result = await response.json();
+                document.getElementById('status').innerHTML += '\\n<span class="success">🌐 Conectado ao backend: ' + result.message + '</span>';
+            } catch (error) {
+                document.getElementById('status').innerHTML += '\\n<span class="error">🔌 Backend não encontrado - Execute: npx tsx backend-visualizer.js</span>';
+            }
+        }
+        
+        // Testar conexão ao carregar
+        window.onload = testConnection;
+    </script>
+</body>
+</html>

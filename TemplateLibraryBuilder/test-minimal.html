@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Zentraw Test</h1>
+    <button onclick="test()">TEST</button>
+    <div id="result"></div>
+    
+    <script>
+        function test() {
+            document.getElementById('result').innerHTML = 'Testing...';
+            
+            fetch('http://localhost:3000')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').innerHTML = 'SUCCESS: ' + data;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = 'ERROR: ' + error.message;
+                });
+        }
+        
+        // Auto test
+        setTimeout(test, 2000);
+    </script>
+</body>
+</html>

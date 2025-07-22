@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Zentraw Test - Working</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 20px; 
+            background: #1a1a1a; 
+            color: #00ff00; 
+        }
+        .container { 
+            background: #2a2a2a; 
+            padding: 20px; 
+            border-radius: 10px; 
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 { 
+            color: #00ffff; 
+            text-align: center;
+        }
+        button { 
+            background: #007acc; 
+            color: white; 
+            border: none; 
+            padding: 15px 30px; 
+            margin: 10px; 
+            cursor: pointer; 
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover { background: #005a9e; }
+        #log { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 15px; 
+            height: 400px; 
+            overflow-y: scroll; 
+            font-family: 'Courier New', monospace; 
+            white-space: pre-wrap;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        input[type="file"] {
+            background: #333;
+            color: white;
+            padding: 10px;
+            border: 1px solid #555;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .status { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px;
+        }
+        .success { background: #004400; color: #00ff00; }
+        .error { background: #440000; color: #ff4444; }
+        .info { background: #004444; color: #00ffff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Zentraw 3D Visualizer V1.4.0.a.2</h1>
+        
+        <div class="status info">
+            <strong>Server URL:</strong> http://localhost:3001<br>
+            <strong>Status:</strong> <span id="status">Testing...</span>
+        </div>
+        
+        <div style="text-align: center;">
+            <button onclick="testConnection()">🔗 TEST CONNECTION</button>
+            <button onclick="testVisualizer()">🎬 TEST VISUALIZER</button>
+            <button onclick="clearLog()">🗑️ CLEAR LOG</button>
+        </div>
+        
+        <div>
+            <h3>📁 Upload Files for Visualizer Test:</h3>
+            <input type="file" id="audioFile" accept="audio/*" placeholder="Select audio file">
+            <input type="file" id="imageFile" accept="image/*" placeholder="Select image file">
+        </div>
+        
+        <div>
+            <h3>📋 System Log:</h3>
+            <div id="log">🎬 Zentraw 3D Visualizer V1.4.0.a.2 Interface Loaded
+📋 Features Implemented:
+   ✅ executeAudioVisualizerWithFallback method
+   ✅ Multiple execution strategies (CrossSpawn, PowerShell, NativeSpawn, Exec)
+   ✅ 5-minute timeout for video rendering
+   ✅ Complete error handling and detailed logs
+   ✅ Audio-visual synchronization support
+   ✅ Full HD MP4 output (1920x1080)
+
+🚀 Ready for testing...</div>
+        </div>
+    </div>
+
+    <script>
+        function addLog(msg, type = 'info') {
+            const log = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const prefix = type === 'success' ? '✅' : type === 'error' ? '❌' : '📡';
+            log.textContent += `\n[${time}] ${prefix} ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').textContent = '🎬 Log cleared. Ready for new tests...';
+        }
+
+        async function testConnection() {
+            addLog('Testing backend connection...', 'info');
+            document.getElementById('status').textContent = 'Connecting...';
+            
+            try {
+                const response = await fetch('http://localhost:3001/api/test');
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog('CONNECTION SUCCESS!', 'success');
+                    addLog('Message: ' + data.message, 'success');
+                    addLog('Features: ' + data.features.length + ' implemented', 'success');
+                    document.getElementById('status').textContent = 'Connected ✅';
+                    
+                    data.features.forEach(feature => {
+                        addLog('  ✅ ' + feature, 'info');
+                    });
+                } else {
+                    addLog('Backend responded but failed', 'error');
+                    document.getElementById('status').textContent = 'Error ❌';
+                }
+            } catch (error) {
+                addLog('CONNECTION FAILED: ' + error.message, 'error');
+                addLog('Make sure to run: start-esm.bat', 'error');
+                document.getElementById('status').textContent = 'Disconnected ❌';
+            }
+        }
+
+        async function testVisualizer() {
+            const audioFile = document.getElementById('audioFile').files[0];
+            const imageFile = document.getElementById('imageFile').files[0];
+            
+            if (!audioFile) {
+                addLog('ERROR: Please select an audio file', 'error');
+                return;
+            }
+            
+            if (!imageFile) {
+                addLog('ERROR: Please select an image file', 'error');
+                return;
+            }
+            
+            addLog('STARTING VISUALIZER TEST...', 'info');
+            addLog('Audio file: ' + audioFile.name + ' (' + (audioFile.size/1024/1024).toFixed(2) + ' MB)', 'info');
+            addLog('Image file: ' + imageFile.name + ' (' + (imageFile.size/1024/1024).toFixed(2) + ' MB)', 'info');
+            
+            try {
+                const formData = new FormData();
+                formData.append('audioFile', audioFile);
+                formData.append('imageFile', imageFile);
+                
+                addLog('Uploading files to backend...', 'info');
+                
+                const response = await fetch('http://localhost:3001/api/blender/audio-visualizer', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    addLog('🎬 VISUALIZER 3D GENERATED SUCCESSFULLY!', 'success');
+                    addLog('Method: ' + result.method, 'success');
+                    addLog('Strategy: ' + result.strategy, 'success');
+                    addLog('Output file: ' + result.outputPath, 'success');
+                    
+                    addLog('--- Detailed Process Logs ---', 'info');
+                    result.detailedLogs.forEach(logEntry => {
+                        addLog(logEntry, 'info');
+                    });
+                    
+                    addLog('🎉 VISUALIZER TEST COMPLETED SUCCESSFULLY!', 'success');
+                } else {
+                    addLog('VISUALIZER ERROR: ' + result.error, 'error');
+                }
+                
+            } catch (error) {
+                addLog('NETWORK ERROR: ' + error.message, 'error');
+            }
+        }
+
+        // Auto-test connection on load
+        window.onload = function() {
+            addLog('Interface fully loaded!', 'success');
+            addLog('Auto-testing backend connection in 2 seconds...', 'info');
+            setTimeout(testConnection, 2000);
+        };
+    </script>
+</body>
+</html>

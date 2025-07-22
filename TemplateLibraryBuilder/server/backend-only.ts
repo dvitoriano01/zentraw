@@ -28,6 +28,11 @@ const uploadsPath = path.join(process.cwd(), 'uploads');
 app.use('/uploads', express.static(uploadsPath));
 console.log('📁 Static files serving from:', uploadsPath);
 
+// ✅ Servir arquivos de teste da pasta public
+const publicPath = path.join(process.cwd(), 'server', 'public');
+app.use('/test', express.static(publicPath));
+console.log('🧪 Test files serving from:', publicPath);
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -77,7 +82,7 @@ app.use((err: any, _req: any, res: any, _next: any) => {
 });
 
 // Adicionando logs detalhados para inicialização
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
   console.log(`🚀 Backend iniciado com sucesso na porta ${PORT}`);
 }).on('error', (err) => {

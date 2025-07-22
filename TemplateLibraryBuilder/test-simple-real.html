@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentraw 3D Visualizer V1.4.0.a.2 - Simple Real Test</title>
+    <style>
+        body {
+            background: #111;
+            color: #fff;
+            font-family: 'Consolas', monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .warning {
+            background: #663300;
+            color: #ffaa00;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #ffaa00;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .note {
+            background: #003366;
+            color: #66ccff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 2px solid #ff6600;
+            text-align: center;
+            font-weight: bold;
+        }
+        button { 
+            background: #ff6600; 
+            color: #000; 
+            border: none; 
+            padding: 15px 30px; 
+            margin: 10px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 16px;
+        }
+        button:hover { 
+            background: #ffaa00; 
+            transform: scale(1.05);
+        }
+        #log {
+            background: #000;
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            color: #00ff00;
+        }
+        input[type="file"] {
+            background: #333;
+            color: white;
+            padding: 10px;
+            border: 2px solid #ff6600;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .status { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px;
+        }
+        .success { background: #003300; color: #00ff00; border: 1px solid #00ff00; }
+        .error { background: #330000; color: #ff4444; border: 1px solid #ff4444; }
+        .info { background: #003333; color: #00ffff; border: 1px solid #00ffff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZENTRAW 3D Visualizer V1.4.0.a.2 - Simple Real Backend Test</h1>
+        
+        <div class="warning">
+            ⚠️ ATENÇÃO: Esta versão executa o BLENDER REAL DIRETAMENTE!<br>
+            Certifique-se de que o Blender está instalado em C:\Blender\blender.exe
+        </div>
+        
+        <div class="status info">
+            <strong>Simple Real Server URL:</strong> http://localhost:3004<br>
+            <strong>Status:</strong> <span id="status">Testing...</span><br>
+            <strong>Backend:</strong> Executa Blender diretamente via spawn process
+        </div>
+        
+        <div class="note">
+            <strong>Backend Simples:</strong> Executa Blender diretamente sem camadas de abstração<br>
+            <strong>Execução Real:</strong> Irá executar o Blender físico para gerar MP4 de verdade<br>
+            <strong>Comando:</strong> Execute start-simple-real.bat para iniciar o backend simples na porta 3004
+        </div>
+        
+        <div style="text-align: center;">
+            <button onclick="testConnection()">🔗 TEST SIMPLE CONNECTION</button>
+            <button onclick="testRealVisualizer()">🔥 EXECUTE SIMPLE REAL BLENDER</button>
+            <button onclick="clearLog()">🗑️ CLEAR LOG</button>
+        </div>
+        
+        <div>
+            <h3>📁 Upload Files for SIMPLE Real Visualizer:</h3>
+            <input type="file" id="audioFile" accept="audio/*" placeholder="Select audio file">
+            <input type="file" id="imageFile" accept="image/*" placeholder="Select image file">
+        </div>
+        
+        <div>
+            <h3>📋 Simple Real Execution Log:</h3>
+            <div id="log">🔥 Zentraw 3D Visualizer V1.4.0.a.2 - SIMPLE REAL BACKEND Interface
+📋 This interface executes Blender directly without abstraction layers
+🎬 Features:
+  - Direct Blender execution via spawn()
+  - Real-time stdout/stderr monitoring
+  - 5-minute timeout for rendering
+  - Full MP4 output generation
+  - Audio-visual synchronization
+
+🚀 Ready to test SIMPLE REAL Blender execution!
+
+</div>
+        </div>
+    </div>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3004';
+        
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}\n`;
+            log.textContent += logEntry;
+            log.scrollTop = log.scrollHeight;
+            
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        function clearLog() {
+            document.getElementById('log').textContent = '';
+            addLog('Log cleared', 'info');
+        }
+        
+        async function testConnection() {
+            try {
+                addLog('🔄 Testing simple connection to ' + SERVER_URL, 'info');
+                
+                const response = await fetch(`${SERVER_URL}/api/test`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog('✅ Simple Connection successful!', 'success');
+                    addLog(`📋 Message: ${data.message}`, 'info');
+                    addLog(`🔧 Blender Check:`, 'info');
+                    addLog(`   - EXE exists: ${data.blender?.exe_exists ? '✅' : '❌'}`, data.blender?.exe_exists ? 'success' : 'error');
+                    addLog(`   - Script exists: ${data.blender?.script_exists ? '✅' : '❌'}`, data.blender?.script_exists ? 'success' : 'error');
+                    addLog(`   - Template exists: ${data.blender?.template_exists ? '✅' : '❌'}`, data.blender?.template_exists ? 'success' : 'error');
+                    
+                    document.getElementById('status').textContent = 'Connected ✅';
+                    document.getElementById('status').style.color = '#00ff00';
+                } else {
+                    addLog('❌ Simple Connection failed', 'error');
+                    document.getElementById('status').textContent = 'Failed ❌';
+                    document.getElementById('status').style.color = '#ff4444';
+                }
+                
+            } catch (error) {
+                addLog('💥 Simple Connection error: ' + error.message, 'error');
+                addLog('💡 Make sure to run: start-simple-real.bat', 'error');
+                document.getElementById('status').textContent = 'Error ❌';
+                document.getElementById('status').style.color = '#ff4444';
+            }
+        }
+        
+        async function testRealVisualizer() {
+            const audioFile = document.getElementById('audioFile').files[0];
+            const imageFile = document.getElementById('imageFile').files[0];
+            
+            if (!audioFile || !imageFile) {
+                addLog('❌ Please select both audio and image files!', 'error');
+                return;
+            }
+            
+            addLog('🔥 Starting SIMPLE REAL visualizer execution...', 'info');
+            addLog(`📊 Audio: ${audioFile.name}`, 'info');
+            addLog(`🖼️ Image: ${imageFile.name}`, 'info');
+            
+            try {
+                const formData = new FormData();
+                formData.append('audioFile', audioFile);
+                formData.append('imageFile', imageFile);
+                
+                addLog('📤 Uploading files to simple real backend...', 'info');
+                
+                const response = await fetch(`${SERVER_URL}/api/blender/audio-visualizer`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    addLog('🎉 SIMPLE REAL Visualizer executed successfully!', 'success');
+                    addLog(`📁 Output: ${result.outputPath}`, 'success');
+                    addLog(`⏰ Timestamp: ${result.timestamp}`, 'info');
+                    
+                    if (result.output) {
+                        addLog('📋 Blender Output:', 'info');
+                        addLog(result.output, 'info');
+                    }
+                } else {
+                    addLog('❌ SIMPLE REAL Visualizer failed:', 'error');
+                    addLog(`💥 Error: ${result.error}`, 'error');
+                    if (result.details) {
+                        addLog(`📋 Details: ${result.details}`, 'error');
+                    }
+                    if (result.output) {
+                        addLog('📋 Blender Output:', 'info');
+                        addLog(result.output, 'info');
+                    }
+                }
+                
+            } catch (error) {
+                addLog('💥 SIMPLE REAL request error: ' + error.message, 'error');
+            }
+        }
+        
+        // Test connection on page load
+        window.onload = () => {
+            addLog('🔄 Page loaded, testing simple connection...', 'info');
+            testConnection();
+        };
+    </script>
+</body>
+</html>

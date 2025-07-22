@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { BlenderService } from '../services/blender-service.js';
+import { BlenderService, Model3DPreviewOptions } from '../services/blender-service-v2.js';
 
 const router = express.Router();
 
@@ -374,10 +374,8 @@ router.post('/preview', upload.fields([
       imageFile: imageFile.filename
     });
 
-    const blenderService = new BlenderService();
-    
-    // Gerar preview completo (um frame do template final) usando sistema robusto
-    const result = await blenderService.generatePreview({
+    // Gerar preview completo (um frame do template final) usando sistema robusto V2
+    const result = await BlenderService.generatePreview({
       audioFile: audioFile.path,
       imageFile: imageFile.path,
       renderEngine: renderEngine as 'eevee' | 'cycles',
@@ -418,6 +416,182 @@ router.post('/preview', upload.fields([
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Preview generation failed'
+    });
+  }
+});
+
+/**
+ * POST /api/blender/preview-3d
+ * Generates a preview for 3D models (.blend, .obj, .ply, .stl, .fbx)
+ */
+const upload3D = multer({ 
+  storage,
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100MB limite
+  },
+  fileFilter: (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+    console.log('🔍 File upload check:', { fieldname: file.fieldname, mimetype: file.mimetype, originalname: file.originalname });
+    
+    if (file.fieldname === 'file') {
+      // Aceitar arquivos 3D
+      const ext = path.extname(file.originalname).toLowerCase();
+      const allowed3DExtensions = ['.blend', '.obj', '.ply', '.stl', '.fbx', '.dae', '.3ds', '.x3d'];
+      
+      if (allowed3DExtensions.includes(ext)) {
+        console.log('✅ 3D file accepted:', file.originalname);
+        cb(null, true);
+      } else {
+        console.log('❌ 3D file rejected:', file.originalname, 'Extension:', ext);
+        cb(new Error(`Only 3D model files are allowed. Supported: ${allowed3DExtensions.join(', ')}`));
+      }
+    } else {
+      console.log('❌ Unexpected field:', file.fieldname);
+      cb(new Error('Unexpected field - use "file" for 3D models'));
+    }
+  }
+});
+
+router.post('/preview-3d', upload3D.single('file'), async (req: Request, res: Response) => {
+  try {
+    console.log('🎯 3D Preview generation request received');
+    console.log('📝 Request file:', req.file);
+    console.log('📝 Request body:', req.body);
+    
+    if (!req.file) {
+      console.log('❌ 3D file missing');
+      return res.status(400).json({
+        success: false,
+        error: '3D model file is required'
+      });
+    }
+
+    const modelFile = req.file;
+    const { quality = 'medium', width = '800', height = '600', camera_distance = '5' } = req.body;
+
+    console.log('🎬 Generating 3D preview for:', modelFile.originalname);
+
+    // Preparar opções para o BlenderService
+    const options = {
+      modelPath: modelFile.path,
+      outputPath: path.join(path.dirname(modelFile.path), `preview_${Date.now()}.png`),
+      quality: quality as 'low' | 'medium' | 'high',
+      width: parseInt(width),
+      height: parseInt(height),
+      cameraDistance: parseFloat(camera_distance)
+    };
+
+    console.log('🔧 Preview options:', options);
+
+    // Chamar o BlenderService V2 com método específico para 3D
+    const result = await BlenderService.generate3DPreview(options as Model3DPreviewOptions);
+
+    if (result.success) {
+      console.log('✅ 3D Preview generated successfully:', result.previewPath);
+      
+      // Corrigir URL para corresponder ao caminho real do arquivo
+      const relativePath = path.relative(path.join(process.cwd(), 'uploads'), result.previewPath);
+      const previewUrl = `/uploads/${relativePath.replace(/\\/g, '/')}`;
+      
+      res.json({
+        success: true,
+        previewPath: result.previewPath,
+        previewUrl: previewUrl,
+        modelFile: modelFile.originalname,
+        options: options
+      });
+    } else {
+      console.log('❌ 3D Preview generation failed:', result.error);
+      res.status(500).json({
+        success: false,
+        error: result.error || '3D Preview generation failed'
+      });
+    }
+
+  } catch (error) {
+    console.error('❌ 3D Preview generation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : '3D Preview generation failed'
+    });
+  }
+});
+
+/**
+ * POST /api/blender/preview-image
+ * Generates a preview with only image applied to plane (no audio required)
+ */
+router.post('/preview-image', upload.single('image'), async (req: Request, res: Response) => {
+  try {
+    console.log('🖼️ Image preview generation request received');
+    console.log('📝 Request file:', req.file);
+    console.log('📝 Request body:', req.body);
+    
+    if (!req.file) {
+      console.log('❌ Image file missing');
+      return res.status(400).json({
+        success: false,
+        error: 'Image file is required'
+      });
+    }
+
+    const imageFile = req.file;
+    const { quality = 'high', renderType = 'image-preview' } = req.body;
+
+    console.log('🖼️ Generating image preview for:', imageFile.originalname);
+
+    // Usar áudio padrão para o preview (só para não quebrar o sistema)
+    const defaultAudioPath = path.join(process.cwd(), 'Blender', 'sample_audio.wav');
+    let audioPath = defaultAudioPath;
+    
+    // Se não existe áudio padrão, criar um silence temporário
+    if (!fs.existsSync(defaultAudioPath)) {
+      console.log('⚠️ Default audio not found, using image-only preview mode');
+      // Por enquanto, usar o sistema sem áudio
+    }
+
+    // Gerar preview com imagem aplicada ao plane usando sistema robusto V2
+    const result = await BlenderService.generatePreview({
+      audioFile: audioPath, // Usar áudio padrão ou criar silence
+      imageFile: imageFile.path,
+      renderEngine: 'eevee' as 'eevee' | 'cycles',
+      cameraSettings: {
+        distance: 50,
+        height: 50,
+        angle: 50
+      },
+      animationStyle: 'cube' as 'cube' | 'sphere' | 'bars',
+      sensitivity: 50,
+      smoothing: 30
+    });
+
+    if (result.success && result.previewPath) {
+      // ✅ Gerar URL correta para static file serving
+      const relativePath = path.relative(path.join(process.cwd(), 'uploads'), result.previewPath);
+      const previewUrl = `/uploads/${relativePath.replace(/\\/g, '/')}`;
+      
+      console.log('✅ Image preview generated successfully:', previewUrl);
+      
+      res.json({
+        success: true,
+        previewUrl,
+        previewPath: result.previewPath,
+        renderTime: result.renderTime,
+        imageFile: imageFile.originalname,
+        message: `Image preview generated in ${result.renderTime}ms`
+      });
+    } else {
+      console.error('❌ Image preview generation failed:', result.error);
+      res.status(500).json({
+        success: false,
+        error: result.error || 'Image preview generation failed'
+      });
+    }
+
+  } catch (error) {
+    console.error('❌ Image preview generation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Image preview generation failed'
     });
   }
 });

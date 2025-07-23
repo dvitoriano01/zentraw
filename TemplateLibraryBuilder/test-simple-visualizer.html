@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentraw 3D Visualizer</title>
+</head>
+<body>
+    <h1>Zentraw 3D Visualizer</h1>
+    <button id="testConnection">Test Connection</button>
+    <button id="generateVisualizer">Generate Visualizer</button>
+
+    <script>
+        document.getElementById('testConnection').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/test');
+                if (response.ok) {
+                    alert('Connection Successful!');
+                } else {
+                    alert('Connection Failed!');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        document.getElementById('generateVisualizer').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/blender/audio-visualizer', {
+                    method: 'POST'
+                });
+                if (response.ok) {
+                    alert('Visualizer Generated Successfully!');
+                } else {
+                    alert('Failed to Generate Visualizer!');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

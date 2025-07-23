@@ -202,4 +202,13 @@ C:\Blender\blender.exe \
 
 ---
 
+## Nota Importante sobre Caminhos
+- Certifique-se de que todos os caminhos contendo espaços sejam envolvidos por aspas duplas (").
+- Exemplo:
+```bash
+"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend"
+```
+
+---
+
 **🎯 LEMBRETE CRÍTICO**: Manter APENAS o que funciona. Não criar novas versões até esta estar 100% funcional!

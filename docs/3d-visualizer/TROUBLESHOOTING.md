@@ -333,3 +333,15 @@ npm run dev:front
 - Backend: Terminal onde `npm run dev:back` está rodando
 - Frontend: Browser DevTools Console
 - Blender: Logs Python no terminal do backend
+
+---
+
+### Problema: Caminhos com Espaços
+**Causa**: Caminhos contendo espaços não são tratados corretamente em comandos do sistema ou scripts.
+
+**Solução**:
+- Sempre envolver caminhos em aspas duplas (") ao passá-los como argumentos.
+- Exemplo:
+```bash
+"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend"
+```

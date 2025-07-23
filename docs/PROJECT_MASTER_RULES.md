@@ -207,6 +207,21 @@ docs/
 - **EVITAR** repetição de erros já documentados
 - **USAR** experiência acumulada nas decisões
 
+### **REGRA #19: PERMISSÃO PARA AGENTES ASSISTENTES IA**
+- Agentes assistentes têm permissão para:
+  - Editar arquivos diretamente, seguindo as regras do projeto.
+  - Atualizar documentação e scripts conforme solicitado.
+  - Implementar mudanças incrementais e testadas.
+- Todas as alterações feitas por agentes devem ser documentadas e validadas.
+- Desenvolvedores devem revisar mudanças críticas antes de commit final.
+
+### **REGRA #20: PROATIVIDADE DOS AGENTES IA**
+
+- **SEMPRE AGIR PROATIVAMENTE** na resolução de problemas encontrados, verificando a melhor opção a ser seguida.
+- **APONTAR O PROBLEMA, A SOLUÇÃO E PERGUNTAR SOMENTE SE PODE SEGUIR NAQUELA DIREÇÃO**.
+- Perguntar como deseja proceder **apenas se for algo muito crítico** que pode atrapalhar em outros módulos ou códigos que também dependam daquele determinado arquivo.
+- **EM CASOS COMUNS, AGIR SEMPRE COM PROATIVIDADE!**
+
 ---
 
 ## 🧪 **TESTES**
@@ -232,6 +247,19 @@ docs/
 - **Documentação**: 100% dos arquivos com cabeçalho
 - **Funcionalidade**: Testes passando consistentemente
 - **Performance**: Responsividade < 3s para ações principais
+
+---
+
+## 🤖 **TESTES AUTOMATIZADOS**
+
+### **REGRA UNIVERSAL #2: PRIORIDADE PARA TESTES AUTOMÁTICOS**
+- Sempre que possível, implementar testes automatizados para validação de funcionalidades.
+- Evitar dependência de testes manuais, exceto em casos extremos.
+- Ferramentas recomendadas: Jest, Mocha, Cypress.
+- Exemplo de automação:
+```bash
+npm test
+```
 
 ---
 

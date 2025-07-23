@@ -387,3 +387,10 @@ TemplateLibraryBuilder/
 **Próxima Ação**: Aplicar este guia na V1.4.0.a.3  
 **Objetivo**: 3D Visualizer 100% funcional sem erros anteriores  
 **Garantia**: Baseado em experiência real e sistema funcionando identificado
+
+## Nota Importante sobre Caminhos
+- Certifique-se de que todos os caminhos contendo espaços sejam envolvidos por aspas duplas (").
+- Exemplo:
+```bash
+"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\TemplateLibraryBuilder\\Blender\\template.blend"
+```

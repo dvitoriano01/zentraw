@@ -279,3 +279,40 @@ const imageUrl = URL.createObjectURL(imageBlob);
 
 **Status**: DESENVOLVIMENTO PAUSADO - 99% COMPLETO  
 **Próxima Sessão**: Resolver proxy de imagens e finalizar sistema
+
+---
+
+### Resolução de Problemas: Caminhos com Espaços
+**Data**: 23 de Julho de 2025
+**Descrição**: Identificado e resolvido problema com caminhos contendo espaços. Solução implementada ao envolver caminhos em aspas duplas (").
+
+### Resolução de Problemas: ES Modules vs CommonJS
+**Data**: 23 de Julho de 2025 - 17:45 BRT
+**Problema**: Backend `server-simple-real.js` falhava com erro "require is not defined in ES module scope"
+**Causa**: `package.json` configurado com `"type": "module"` mas código usando CommonJS syntax
+**Solução**: 
+1. Usar arquivo `server-simple-real.cjs` para CommonJS syntax
+2. Atualizar `start-simple-real.bat` para usar arquivo `.cjs`
+3. Servidor agora inicia corretamente com mensagem "Server running on http://localhost:3004"
+**Status**: ✅ RESOLVIDO - Backend rodando com CORS configurado
+
+### Status Atual do Sistema V1.4.0.a.3
+**Data**: 23 de Julho de 2025 - 18:00 BRT
+- ✅ **Backend**: Rodando na porta 3004 usando `server-simple-real.cjs`
+- ✅ **CORS**: Configurado para aceitar Origin http://localhost:3000
+- ✅ **Frontend**: Disponível via `serve` na porta 3000
+- ✅ **Script**: `start-simple-real.bat` corrigido para usar arquivo correto
+- ✅ **Comunicação**: "Connection Successful!" funcionando
+- ✅ **API Response**: "Visualizer Generated Successfully!" funcionando
+- 🔄 **Próximo**: Implementar geração real de arquivo MP4
+
+## 🎉 MARCO HISTÓRICO - SISTEMA COMUNICANDO!
+**Data**: 23 de Julho de 2025 - 18:00 BRT
+**Conquista**: Frontend e Backend comunicando perfeitamente após resolver CORS e ES Modules
+**Evidências**: 
+- ✅ "Connection Successful!" 
+- ✅ "Visualizer Generated Successfully!"
+- ✅ Zero erros de CORS
+- ✅ Sistema independente funcionando
+
+**Status**: PRONTO PARA COMMIT E NOVA BRANCH PARA IMPLEMENTAÇÃO BLENDER

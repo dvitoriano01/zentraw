@@ -1,0 +1,14 @@
+{
+  "name": "zentraw-3d-visualizer",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev:back": "set NODE_ENV=development && tsx server/backend-only.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "tsx": "^3.12.7"
+  }
+}

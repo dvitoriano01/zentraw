@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zentraw 3D Visualizer V1.4.0.a.3</title>
+</head>
+<body>
+    <h1>Zentraw 3D Visualizer</h1>
+    <input type="file" id="audioInput" accept="audio/*">
+    <input type="file" id="imageInput" accept="image/*">
+    <br><br>
+    <button onclick="testConnection()">TEST CONNECTION</button>
+    <button onclick="testVisualizer()">TEST VISUALIZER</button>
+
+    <script>
+        async function testConnection() {
+            try {
+                const response = await fetch('http://localhost:3004/api/test');
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                alert('Connection failed!');
+                console.error(error);
+            }
+        }
+
+        async function testVisualizer() {
+            try {
+                const audioFile = document.getElementById('audioInput').files[0];
+                const imageFile = document.getElementById('imageInput').files[0];
+                if (!audioFile || !imageFile) {
+                    alert('Selecione ambos os arquivos de áudio e imagem!');
+                    return;
+                }
+                const formData = new FormData();
+                formData.append('audio', audioFile);
+                formData.append('image', imageFile);
+                const response = await fetch('http://localhost:3004/api/blender/audio-visualizer', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                alert('Visualizer generation failed!');
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>

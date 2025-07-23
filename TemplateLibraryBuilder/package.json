@@ -16,7 +16,8 @@
     "blender:test": "curl -X POST http://localhost:5001/api/blender/test-render",
     "blender:check": "curl -X GET http://localhost:5001/api/blender/test",
     "blender:preview": "curl -X POST http://localhost:5001/api/blender/preview",
-    "autofix": "scripts\\run-super-script.bat"
+    "autofix": "scripts\\run-super-script.bat",
+    "setup:env": "cd TemplateLibraryBuilder && npm install && echo Environment setup complete!"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

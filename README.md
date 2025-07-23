@@ -123,3 +123,25 @@ npm install
 # 3. Rode o projeto
 npm run dev
 ```
+
+---
+
+## 🤖 Regras para Agentes IA
+
+### **Protocolo de Interação com Assistentes**
+1. **🔍 Análise Inicial** - Verificar estrutura e contexto.
+2. **🧩 Decomposição** - Quebrar em tarefas menores.
+3. **🎯 Implementação** - Uma mudança por vez.
+4. **✅ Validação** - Testar cada alteração.
+5. **📚 Documentação** - Registrar mudanças.
+
+### **Desenvolvimento Assistido por IA**
+- **Consultar** documentação existente antes de implementar.
+- **Aplicar** lições aprendidas dos logs de sessão.
+- **Evitar** repetição de erros já documentados.
+- **Usar** experiência acumulada nas decisões.
+
+### **Proatividade dos Agentes IA**
+- **Sempre agir proativamente** na resolução de problemas encontrados.
+- **Apontar o problema, a solução e perguntar somente se necessário.**
+- **Em casos comuns, agir sempre com proatividade!**

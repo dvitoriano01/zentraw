@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Teste Backend Zentraw V1.4.0.a.2</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+      }
+      button {
+        margin: 5px;
+        padding: 10px;
+      }
+      .result {
+        margin: 10px 0;
+        padding: 10px;
+        background: #f5f5f5;
+      }
+      .success {
+        background: #d4edda;
+        color: #155724;
+      }
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Teste Zentraw Backend V1.4.0.a.2</h1>
+
+    <div class="test-section">
+      <h2>1. Teste Conectividade Backend</h2>
+      <button onclick="testBackend()">Testar Backend</button>
+      <div id="backend-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>2. Teste Preview Generation (SEM arquivo)</h2>
+      <button onclick="testPreviewWithoutFile()">Testar Preview (Sem Arquivo)</button>
+      <div id="preview-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>3. Upload e Preview Generation</h2>
+      <input type="file" id="fileInput" accept=".obj,.blend,.ply,.stl" />
+      <button onclick="testPreviewWithFile()">Testar Preview (Com Arquivo)</button>
+      <div id="upload-result" class="result"></div>
+    </div>
+
+    <script>
+      async function testBackend() {
+        const resultDiv = document.getElementById('backend-result');
+        resultDiv.innerHTML = '🔄 Testando...';
+
+        try {
+          const response = await fetch('http://localhost:5001/api/blender/test');
+          const data = await response.text();
+
+          if (response.ok) {
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = `✅ Backend OK: ${data}`;
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.innerHTML = `❌ Erro ${response.status}: ${data}`;
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.innerHTML = `❌ Erro de conexão: ${error.message}`;
+        }
+      }
+
+      async function testPreviewWithoutFile() {
+        const resultDiv = document.getElementById('preview-result');
+        resultDiv.innerHTML = '🔄 Testando preview sem arquivo...';
+
+        try {
+          const formData = new FormData();
+          // Adicionar dados mínimos para testar se chega ao BlenderService
+          formData.append('quality', 'medium');
+
+          const response = await fetch('http://localhost:5001/api/blender/preview', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await response.text();
+
+          if (response.ok) {
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = `✅ Preview endpoint OK: ${data}`;
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.innerHTML = `❌ Erro ${response.status}: ${data}`;
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.innerHTML = `❌ Erro de conexão: ${error.message}`;
+        }
+      }
+
+      async function testPreviewWithFile() {
+        const resultDiv = document.getElementById('upload-result');
+        const fileInput = document.getElementById('fileInput');
+
+        if (!fileInput.files[0]) {
+          resultDiv.className = 'result error';
+          resultDiv.innerHTML = '❌ Selecione um arquivo primeiro';
+          return;
+        }
+
+        resultDiv.innerHTML = '🔄 Testando upload e preview...';
+
+        try {
+          const formData = new FormData();
+          formData.append('file', fileInput.files[0]);
+          formData.append('quality', 'medium');
+
+          const response = await fetch('http://localhost:5001/api/blender/preview', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await response.text();
+
+          if (response.ok) {
+            resultDiv.className = 'result success';
+            resultDiv.innerHTML = `✅ Preview com arquivo OK: ${data}`;
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.innerHTML = `❌ Erro ${response.status}: ${data}`;
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.innerHTML = `❌ Erro de conexão: ${error.message}`;
+        }
+      }
+
+      // Testar automaticamente quando carregar
+      window.onload = function () {
+        setTimeout(testBackend, 1000);
+      };
+    </script>
+  </body>
+</html>

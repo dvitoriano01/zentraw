@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Zentraw REAL Test</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+        background: #0a0a0a;
+        color: #00ff00;
+      }
+      .container {
+        background: #1a1a1a;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 800px;
+        margin: 0 auto;
+        border: 2px solid #ff6600;
+      }
+      h1 {
+        color: #ff6600;
+        text-align: center;
+        text-shadow: 0 0 10px #ff6600;
+      }
+      .warning {
+        background: #330000;
+        color: #ff6600;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        border: 2px solid #ff6600;
+        text-align: center;
+        font-weight: bold;
+      }
+      button {
+        background: #ff6600;
+        color: #000;
+        border: none;
+        padding: 15px 30px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #ff8800;
+      }
+      #log {
+        background: #000;
+        color: #00ff00;
+        padding: 15px;
+        height: 400px;
+        overflow-y: scroll;
+        font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+        border: 2px solid #00ff00;
+        border-radius: 5px;
+        margin: 20px 0;
+      }
+      input[type='file'] {
+        background: #333;
+        color: white;
+        padding: 10px;
+        border: 2px solid #ff6600;
+        margin: 10px 0;
+        width: 100%;
+        border-radius: 5px;
+      }
+      .status {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+      }
+      .success {
+        background: #003300;
+        color: #00ff00;
+        border: 1px solid #00ff00;
+      }
+      .error {
+        background: #330000;
+        color: #ff4444;
+        border: 1px solid #ff4444;
+      }
+      .info {
+        background: #003333;
+        color: #00ffff;
+        border: 1px solid #00ffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ZENTRAW 3D Visualizer V1.4.0.a.2 - Real Backend Test (Direct Execution)</h1>
+
+      <div class="warning">
+        ⚠️ ATENÇÃO: Esta versão executa o BLENDER REAL!<br />
+        Certifique-se de que o Blender está instalado em C:\Blender\blender.exe
+      </div>
+
+      <div class="status info">
+        <strong>Real Server URL:</strong> http://localhost:3003<br />
+        <strong>Status:</strong> <span id="status">Testing...</span><br />
+        <strong>Backend:</strong> Calls actual BlenderServiceV2.renderAudioVisualizer
+      </div>
+
+      <div style="text-align: center">
+        <button onclick="testConnection()">🔗 TEST REAL CONNECTION</button>
+        <button onclick="testRealVisualizer()">🔥 EXECUTE REAL BLENDER</button>
+        <button onclick="clearLog()">🗑️ CLEAR LOG</button>
+      </div>
+
+      <div>
+        <h3>📁 Upload Files for REAL Visualizer:</h3>
+        <input type="file" id="audioFile" accept="audio/*" placeholder="Select audio file" />
+        <input type="file" id="imageFile" accept="image/*" placeholder="Select image file" />
+      </div>
+
+      <div>
+        <h3>📋 Real Execution Log:</h3>
+        <div id="log">
+          🔥 Zentraw 3D Visualizer V1.4.0.a.2 - REAL BACKEND Interface 📋 This interface calls the
+          ACTUAL BlenderService implementation 🎬 Features: 🔥 REAL
+          executeAudioVisualizerWithFallback method 🔥 REAL Multiple execution strategies 🔥 REAL
+          Blender executable execution 🔥 REAL MP4 file generation 🔥 REAL Audio-visual
+          synchronization ⚠️ Make sure Blender is installed and backend is running 🚀 Ready for REAL
+          testing...
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function addLog(msg, type = 'info') {
+        const log = document.getElementById('log');
+        const time = new Date().toLocaleTimeString();
+        const prefix =
+          type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : '📡';
+        log.textContent += `\n[${time}] ${prefix} ${msg}`;
+        log.scrollTop = log.scrollHeight;
+      }
+
+      function clearLog() {
+        document.getElementById('log').textContent =
+          '🔥 Real log cleared. Ready for actual Blender execution...';
+      }
+
+      async function testConnection() {
+        addLog('Testing REAL backend connection...', 'info');
+        document.getElementById('status').textContent = 'Connecting to REAL backend...';
+
+        try {
+          const response = await fetch('http://localhost:3003/api/test');
+          const data = await response.json();
+
+          if (data.success) {
+            addLog('REAL CONNECTION SUCCESS!', 'success');
+            addLog('Message: ' + data.message, 'success');
+            addLog('REAL Features: ' + data.features.length + ' implemented', 'success');
+            document.getElementById('status').textContent = 'Connected to REAL Backend ✅';
+
+            data.features.forEach((feature) => {
+              addLog('  🔥 ' + feature, 'success');
+            });
+          } else {
+            addLog('REAL Backend responded but failed', 'error');
+            document.getElementById('status').textContent = 'Error ❌';
+          }
+        } catch (error) {
+          addLog('REAL CONNECTION FAILED: ' + error.message, 'error');
+          addLog('Run: start-direct.bat', 'error');
+          document.getElementById('status').textContent = 'Disconnected ❌';
+        }
+      }
+
+      async function testRealVisualizer() {
+        const audioFile = document.getElementById('audioFile').files[0];
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        if (!audioFile) {
+          addLog('ERROR: Please select an audio file', 'error');
+          return;
+        }
+
+        if (!imageFile) {
+          addLog('ERROR: Please select an image file', 'error');
+          return;
+        }
+
+        addLog('🔥 STARTING REAL BLENDER EXECUTION...', 'warning');
+        addLog('This will take several minutes to complete!', 'warning');
+        addLog(
+          'Audio file: ' +
+            audioFile.name +
+            ' (' +
+            (audioFile.size / 1024 / 1024).toFixed(2) +
+            ' MB)',
+          'info',
+        );
+        addLog(
+          'Image file: ' +
+            imageFile.name +
+            ' (' +
+            (imageFile.size / 1024 / 1024).toFixed(2) +
+            ' MB)',
+          'info',
+        );
+
+        try {
+          const formData = new FormData();
+          formData.append('audioFile', audioFile);
+          formData.append('imageFile', imageFile);
+
+          addLog('Uploading files to REAL backend...', 'info');
+          addLog('Calling BlenderServiceV2.renderAudioVisualizer...', 'warning');
+
+          const response = await fetch('http://localhost:3003/api/blender/audio-visualizer', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            addLog('🔥 REAL BLENDER EXECUTION COMPLETED!', 'success');
+            addLog('Method: ' + result.method, 'success');
+            addLog('Strategy: ' + result.strategy, 'success');
+            addLog('REAL Output file: ' + result.outputPath, 'success');
+
+            if (result.detailedLogs) {
+              addLog('--- REAL Execution Logs ---', 'info');
+              result.detailedLogs.forEach((logEntry) => {
+                addLog(logEntry, 'info');
+              });
+            }
+
+            addLog('🎉 REAL MP4 FILE GENERATED!', 'success');
+            addLog('Check the uploads folder for your video!', 'success');
+          } else {
+            addLog('REAL BLENDER ERROR: ' + result.error, 'error');
+            if (result.stack) {
+              addLog('Stack trace: ' + result.stack, 'error');
+            }
+          }
+        } catch (error) {
+          addLog('REAL NETWORK ERROR: ' + error.message, 'error');
+        }
+      }
+
+      // Auto-test connection on load
+      window.onload = function () {
+        addLog('REAL interface loaded!', 'success');
+        addLog('Auto-testing REAL backend connection...', 'info');
+        setTimeout(testConnection, 2000);
+      };
+    </script>
+  </body>
+</html>

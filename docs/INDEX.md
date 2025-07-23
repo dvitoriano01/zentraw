@@ -1,12 +1,19 @@
 # ZENTRAW - Índice de Documentação
 
-**Versão Atual**: V1.4.0.a.1  
-**Última Atualização**: 17 de Julho de 2025  
-**Branch**: Feat--implement-3D-Visualizer-system-v1.4.0.a.2  
+**Versão Atual**: V1.4.0.a.2  
+**Última Atualização**: 23 de Julho de 2025  
+**Branch**: Tentando_Sair_do_Círculo_V1.4.0.a.2  
+**Status**: 🔄 REORGANIZAÇÃO COMPLETA APLICADA  
 
 ---
 
 ## 📚 **Estrutura de Documentação**
+
+### 📜 **Regras e Organização** (`docs/`)
+- [`PROJECT_MASTER_RULES.md`](PROJECT_MASTER_RULES.md) - 🚨 **TODAS AS REGRAS CONSOLIDADAS** - Documento Master
+- [`PROJECT_RULES.md`](PROJECT_RULES.md) - 🚨 **REGRAS OBRIGATÓRIAS** - Metodologia e organização
+- [`INDEX.md`](INDEX.md) - Índice principal da documentação
+- [`README.md`](README.md) - Guia principal do projeto
 
 ### 🎯 **Zentraw Core** (`docs/zentraw-core/`)
 Documentação principal do sistema Zentraw, changelogs e implementações:
@@ -34,10 +41,29 @@ Documentação principal do sistema Zentraw, changelogs e implementações:
 ### 🎬 **3D Visualizer** (`docs/3d-visualizer/`)
 Documentação completa do sistema 3D Visualizer:
 
+#### **🚀 GUIA DEFINITIVO V1.4.0.a.3**
+- [**ZENTRAW_V1.4.0.a.3_GUIA_DEFINITIVO.md**](3d-visualizer/ZENTRAW_V1.4.0.a.3_GUIA_DEFINITIVO.md) - **GUIA COMPLETO PARA V1.4.0.a.3**
+  - ✅ Sistema base funcionando identificado
+  - 🚫 Erros críticos a evitar (baseado em V1.4.0.a.2)
+  - 🛠️ Implementação passo a passo
+  - 🔄 Protocolo de rollback e métricas de sucesso
+
+#### **Documentos Principais**
 - [`README.md`](3d-visualizer/README.md) - Visão geral do 3D Visualizer
-- [`DEVELOPMENT_LOG.md`](3d-visualizer/DEVELOPMENT_LOG.md) - Log detalhado de desenvolvimento
 - [`TECHNICAL_SPECS.md`](3d-visualizer/TECHNICAL_SPECS.md) - Especificações técnicas
 - [`TROUBLESHOOTING.md`](3d-visualizer/TROUBLESHOOTING.md) - Guia de resolução de problemas
+- [`DEVELOPMENT_LOG.md`](3d-visualizer/DEVELOPMENT_LOG.md) - Log detalhado de desenvolvimento
+
+#### **V1.4.0.a.2 - Documentação de Sessão**
+- [`ZENTRAW_V1.4.0.a.2_MASTER_GUIDE.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_MASTER_GUIDE.md) - Guia master da versão
+- [`ZENTRAW_V1.4.0.a.2_CODIGO_COMPLETO.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_CODIGO_COMPLETO.md) - Código completo implementado
+- [`ZENTRAW_V1.4.0.a.2_TECHNICAL_LOG.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_TECHNICAL_LOG.md) - Log técnico detalhado
+- [`ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md) - Guia de tasks
+- [`ZENTRAW_V1.4.0.a.2_BLENDER_SYSTEM_COMPLETE_LOG.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_BLENDER_SYSTEM_COMPLETE_LOG.md) - Sistema Blender
+- [`ZENTRAW_V1.4.0.a.2_CLEAN_STRUCTURE.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_CLEAN_STRUCTURE.md) - Estrutura limpa
+- [`ZENTRAW_V1.4.0.a.2_CHAT_SESSION_LOG.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_CHAT_SESSION_LOG.md) - Log da sessão
+- [`ZENTRAW_V1.4.0.a.2_STATUS_AI_TEAM.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_STATUS_AI_TEAM.md) - Status da equipe AI
+- [`ZENTRAW_V1.4.0.a.2_COMMIT_PREPARATION.md`](3d-visualizer/ZENTRAW_V1.4.0.a.2_COMMIT_PREPARATION.md) - Preparação de commit
 
 ### 🎨 **Template Library Builder** (`TemplateLibraryBuilder/docs/`)
 Documentação específica do Editor de Imagens (mantida na pasta original):
@@ -46,6 +72,15 @@ Documentação específica do Editor de Imagens (mantida na pasta original):
 - [`CHANGELOG.md`](../TemplateLibraryBuilder/docs/CHANGELOG.md) - Changelog do Template Builder
 - [`INDEX.md`](../TemplateLibraryBuilder/docs/INDEX.md) - Índice de documentação
 - [`SOLUTION_SUMMARY.md`](../TemplateLibraryBuilder/docs/SOLUTION_SUMMARY.md) - Resumo de soluções
+
+### 🔧 **Scripts Organizados** (`TemplateLibraryBuilder/scripts/`)
+- [`3d_visualizer/`](../TemplateLibraryBuilder/scripts/3d_visualizer/) - Scripts do visualizador 3D organizados
+  - [`README.md`](../TemplateLibraryBuilder/scripts/3d_visualizer/README.md) - 58 arquivos experimentais organizados
+
+### 📁 **Documentação de Projetos** (`TemplateLibraryBuilder/docs/`)
+- [`3d_visualizer/`](../TemplateLibraryBuilder/docs/3d_visualizer/) - Documentação do visualizador 3D
+  - [`README.md`](../TemplateLibraryBuilder/docs/3d_visualizer/README.md) - 6 documentos .md organizados
+  - Troubleshooting, testes, instruções e planos de integração
 
 ### 🔧 **Sistema de Versionamento** (`docs/`)
 - [`AUTOMATIC_VERSIONING_SYSTEM.md`](AUTOMATIC_VERSIONING_SYSTEM.md) - Sistema de versionamento automático

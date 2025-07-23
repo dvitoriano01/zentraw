@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Zentraw 3D Visualizer Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #2c3e50;
+        color: white;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #34495e;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      h1 {
+        text-align: center;
+        color: #e74c3c;
+      }
+      .section {
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #3a4f63;
+        border-radius: 8px;
+      }
+      input[type='file'] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #2c3e50;
+        border: 2px solid #e74c3c;
+        border-radius: 5px;
+        color: white;
+      }
+      button {
+        width: 100%;
+        padding: 15px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px 0;
+      }
+      button:hover {
+        background-color: #c0392b;
+      }
+      #status {
+        background-color: #2c3e50;
+        padding: 15px;
+        border-radius: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #34495e;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .success {
+        color: #27ae60;
+      }
+      .error {
+        color: #e74c3c;
+      }
+      .info {
+        color: #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Zentraw 3D Visualizer V1.4.0.a.2</h1>
+
+      <div class="section">
+        <h3>Status do Sistema:</h3>
+        <ul>
+          <li>executeAudioVisualizerWithFallback: Implementado</li>
+          <li>Multiple execution strategies: Ativo</li>
+          <li>5-minute timeout: Configurado</li>
+          <li>Full HD MP4 output: Pronto</li>
+          <li>Audio-visual sync: Ativo</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Teste do Visualizador:</h3>
+        <label>Arquivo de Audio:</label>
+        <input type="file" id="audioFile" accept="audio/*" />
+
+        <label>Arquivo de Imagem:</label>
+        <input type="file" id="imageFile" accept="image/*" />
+
+        <button onclick="testVisualizer()">GERAR VISUALIZADOR 3D</button>
+        <button onclick="testConnection()">TESTAR CONEXAO</button>
+      </div>
+
+      <div class="section">
+        <h3>Log do Sistema:</h3>
+        <div id="status">
+          🎬 Zentraw 3D Visualizer V1.4.0.a.2 inicializando... 📋
+          executeAudioVisualizerWithFallback: Implementado 📋 Multiple execution strategies: Ativo
+          📋 5-minute timeout: Configurado 📋 Full HD MP4 output: Pronto 📋 Audio-visual sync: Ativo
+          🚀 Aguardando comando...
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function log(message, type = 'info') {
+        const status = document.getElementById('status');
+        const timestamp = new Date().toLocaleTimeString();
+        const className = type;
+        status.innerHTML += `\n[${timestamp}] <span class="${className}">${message}</span>`;
+        status.scrollTop = status.scrollHeight;
+      }
+
+      async function testConnection() {
+        log('Testando conexao com o backend...', 'info');
+
+        try {
+          const response = await fetch('http://localhost:5002/api/test');
+          const result = await response.json();
+          log('✓ Backend conectado: ' + result.message, 'success');
+        } catch (error) {
+          log('✗ Erro de conexao: ' + error.message, 'error');
+          log('Inicie o backend com: npx tsx backend-visualizer.js', 'info');
+        }
+      }
+
+      async function testVisualizer() {
+        const audioFile = document.getElementById('audioFile').files[0];
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        if (!audioFile) {
+          log('✗ Selecione um arquivo de audio', 'error');
+          return;
+        }
+
+        if (!imageFile) {
+          log('✗ Selecione um arquivo de imagem', 'error');
+          return;
+        }
+
+        log('Iniciando renderizacao do visualizador 3D...', 'info');
+        log('Audio: ' + audioFile.name, 'info');
+        log('Imagem: ' + imageFile.name, 'info');
+
+        const formData = new FormData();
+        formData.append('audioFile', audioFile);
+        formData.append('imageFile', imageFile);
+
+        try {
+          log('Enviando arquivos para o backend...', 'info');
+
+          const response = await fetch('http://localhost:5002/api/blender/audio-visualizer', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            log('✓ VISUALIZADOR 3D GERADO COM SUCESSO!', 'success');
+            log('Método: ' + result.method, 'success');
+            log('Estratégia: ' + result.strategy, 'success');
+
+            if (result.outputPath) {
+              log('Arquivo: ' + result.outputPath, 'success');
+            }
+
+            if (result.detailedLogs) {
+              log('--- Logs detalhados ---', 'info');
+              result.detailedLogs.forEach((logEntry) => {
+                log(logEntry, 'info');
+              });
+            }
+          } else {
+            log('✗ Erro: ' + result.error, 'error');
+
+            if (result.detailedLogs) {
+              log('--- Logs de erro ---', 'error');
+              result.detailedLogs.forEach((logEntry) => {
+                log(logEntry, 'error');
+              });
+            }
+          }
+        } catch (error) {
+          log('✗ Erro de rede: ' + error.message, 'error');
+        }
+      }
+
+      // Testar conexao ao carregar
+      window.onload = function () {
+        log('🎬 Interface do Zentraw 3D Visualizer V1.4.0.a.2 carregada!', 'success');
+        log('📋 Status: Aguardando conexao com backend...', 'info');
+        setTimeout(testConnection, 2000);
+      };
+    </script>
+  </body>
+</html>

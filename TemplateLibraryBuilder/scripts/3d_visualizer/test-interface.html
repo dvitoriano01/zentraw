@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste do Zentraw 3D Visualizer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+      .test-container {
+        background-color: #2a2a2a;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      button {
+        background-color: #6366f1;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #4f46e5;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #374151;
+        border-radius: 5px;
+        white-space: pre-wrap;
+      }
+      .success {
+        background-color: #065f46;
+      }
+      .error {
+        background-color: #7f1d1d;
+      }
+      .upload-area {
+        border: 2px dashed #6366f1;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin: 10px 0;
+      }
+      input[type='file'] {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎬 Zentraw 3D Visualizer - Teste</h1>
+
+    <div class="test-container">
+      <h2>📡 Teste de Conectividade</h2>
+      <button onclick="testServer()">Testar Servidor</button>
+      <button onclick="testBlender()">Testar Blender</button>
+      <div id="connectivity-result" class="result"></div>
+    </div>
+
+    <div class="test-container">
+      <h2>🎵 Teste de Upload</h2>
+      <div class="upload-area">
+        <p>Selecione um arquivo de áudio:</p>
+        <input type="file" id="audioFile" accept="audio/*" />
+      </div>
+      <div class="upload-area">
+        <p>Selecione uma imagem:</p>
+        <input type="file" id="imageFile" accept="image/*" />
+      </div>
+      <button onclick="testUpload()">Testar Upload</button>
+      <div id="upload-result" class="result"></div>
+    </div>
+
+    <div class="test-container">
+      <h2>🎬 Teste de Renderização</h2>
+      <button onclick="testRender()">Testar Render</button>
+      <div id="render-result" class="result"></div>
+    </div>
+
+    <script>
+      async function testServer() {
+        const resultDiv = document.getElementById('connectivity-result');
+        resultDiv.textContent = 'Testando servidor...';
+
+        try {
+          const response = await fetch('/api/blender/test');
+          const data = await response.json();
+
+          if (data.success) {
+            resultDiv.className = 'result success';
+            resultDiv.textContent = '✅ Servidor funcionando!\n' + JSON.stringify(data, null, 2);
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.textContent = '❌ Erro no servidor:\n' + JSON.stringify(data, null, 2);
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.textContent = '❌ Erro de conexão:\n' + error.message;
+        }
+      }
+
+      async function testBlender() {
+        const resultDiv = document.getElementById('connectivity-result');
+        resultDiv.textContent = 'Testando Blender...';
+
+        try {
+          const response = await fetch('/api/blender/test');
+          const data = await response.json();
+
+          resultDiv.className = 'result';
+          resultDiv.textContent = 'Resultado do teste Blender:\n' + JSON.stringify(data, null, 2);
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.textContent = '❌ Erro ao testar Blender:\n' + error.message;
+        }
+      }
+
+      async function testUpload() {
+        const resultDiv = document.getElementById('upload-result');
+        const audioFile = document.getElementById('audioFile').files[0];
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        if (!audioFile || !imageFile) {
+          resultDiv.className = 'result error';
+          resultDiv.textContent = '❌ Por favor selecione os arquivos de áudio e imagem';
+          return;
+        }
+
+        resultDiv.textContent = 'Testando upload...';
+
+        const formData = new FormData();
+        formData.append('audio', audioFile);
+        formData.append('image', imageFile);
+
+        try {
+          const response = await fetch('/api/blender/render', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            resultDiv.className = 'result success';
+            resultDiv.textContent =
+              '✅ Upload realizado com sucesso!\n' + JSON.stringify(data, null, 2);
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.textContent = '❌ Erro no upload:\n' + JSON.stringify(data, null, 2);
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.textContent = '❌ Erro de upload:\n' + error.message;
+        }
+      }
+
+      async function testRender() {
+        const resultDiv = document.getElementById('render-result');
+        resultDiv.textContent = 'Testando renderização...';
+
+        try {
+          const response = await fetch('/api/blender/test-render', {
+            method: 'POST',
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            resultDiv.className = 'result success';
+            resultDiv.textContent =
+              '✅ Teste de renderização concluído!\n' + JSON.stringify(data, null, 2);
+          } else {
+            resultDiv.className = 'result error';
+            resultDiv.textContent = '❌ Erro na renderização:\n' + JSON.stringify(data, null, 2);
+          }
+        } catch (error) {
+          resultDiv.className = 'result error';
+          resultDiv.textContent = '❌ Erro de renderização:\n' + error.message;
+        }
+      }
+
+      // Teste automático ao carregar
+      window.onload = function () {
+        setTimeout(testServer, 500);
+      };
+    </script>
+  </body>
+</html>

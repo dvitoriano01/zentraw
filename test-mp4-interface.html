@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste MP4 - Zentraw V1.4.0.a.3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .container {
+            background-color: #2d2d2d;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .button.danger {
+            background-color: #f44336;
+        }
+        .button.danger:hover {
+            background-color: #da190b;
+        }
+        .log {
+            background-color: #000;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .file-input {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #444;
+            border: none;
+            border-radius: 4px;
+            color: white;
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎬 Teste de Geração MP4 - Zentraw V1.4.0.a.3</h1>
+    
+    <div class="container">
+        <h2>🔧 Status do Backend</h2>
+        <button class="button" onclick="testConnection()">🔍 Testar Conexão API</button>
+        <button class="button" onclick="retryConnection()">🔄 Retentar Todas as Portas</button>
+        <button class="button" onclick="testBlenderDebug()">🧪 Debug Blender System</button>
+        <div id="connectionStatus"></div>
+    </div>
+
+    <div class="container">
+        <h2>📤 Upload e Geração MP4</h2>
+        <div>
+            <label>🎵 Arquivo de Áudio:</label>
+            <input type="file" id="audioFile" class="file-input" accept=".wav,.mp3">
+        </div>
+        <div>
+            <label>🖼️ Arquivo de Imagem:</label>
+            <input type="file" id="imageFile" class="file-input" accept=".jpg,.jpeg,.png">
+        </div>
+        <div>
+            <button class="button" onclick="generateMP4()">🚀 Gerar MP4</button>
+            <button class="button danger" onclick="clearLogs()">🧹 Limpar Logs</button>
+        </div>
+        <div class="progress" id="progressContainer" style="display: none;">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div id="uploadStatus"></div>
+    </div>
+
+    <div class="container">
+        <h2>📋 Logs de Execução</h2>
+        <div id="logs" class="log">Aguardando comandos...</div>
+    </div>
+
+    <script>
+        // Lista de portas para testar automaticamente
+        const POSSIBLE_PORTS = [5001, 5002, 3004, 3000];
+        let API_BASE = 'http://localhost:5001'; // Padrão inicial
+        let activePort = null;
+        
+        function log(message, type = 'info') {
+            const logsDiv = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            logsDiv.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').textContent = 'Logs limpos...\n';
+        }
+
+        function updateStatus(elementId, message, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="status ${isSuccess ? 'success' : 'error'}">${message}</div>`;
+        }
+
+        async function testConnection() {
+            log('🔍 Testando conexão com backend...');
+            
+            // Se já temos uma porta ativa, testa ela primeiro
+            if (activePort) {
+                const success = await testSinglePort(activePort);
+                if (success) return;
+            }
+            
+            // Testa todas as portas possíveis
+            log('🔄 Testando portas disponíveis: ' + POSSIBLE_PORTS.join(', '));
+            
+            for (const port of POSSIBLE_PORTS) {
+                log(`🔍 Testando porta ${port}...`);
+                const success = await testSinglePort(port);
+                if (success) {
+                    activePort = port;
+                    API_BASE = `http://localhost:${port}`;
+                    log(`✅ Backend encontrado na porta ${port}!`, 'success');
+                    updateStatus('connectionStatus', `✅ Backend Online - Porta ${port}`, true);
+                    return;
+                }
+            }
+            
+            log('❌ Nenhum backend encontrado nas portas testadas', 'error');
+            updateStatus('connectionStatus', '❌ Nenhum Backend Encontrado', false);
+        }
+
+        async function testSinglePort(port) {
+            try {
+                const response = await fetch(`http://localhost:${port}/api/blender/test`, {
+                    method: 'GET',
+                    timeout: 3000
+                });
+                
+                if (response.ok) {
+                    const data = await response.text();
+                    log(`✅ Porta ${port}: ${data}`, 'success');
+                    return true;
+                } else {
+                    log(`❌ Porta ${port}: Status ${response.status}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                log(`❌ Porta ${port}: ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function testBlenderDebug() {
+            if (!activePort) {
+                log('❌ Primeiro teste a conexão para encontrar o backend ativo', 'error');
+                return;
+            }
+            
+            log('🧪 Executando debug do sistema Blender...');
+            try {
+                const response = await fetch(`${API_BASE}/api/blender/debug`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`✅ Debug executado com sucesso!`, 'success');
+                    log(`🔧 Blender: ${data.blenderFound ? 'Encontrado' : 'Não encontrado'}`);
+                    log(`📁 Template: ${data.templateExists ? 'Encontrado' : 'Não encontrado'}`);
+                    log(`🐍 Script: ${data.scriptExists ? 'Encontrado' : 'Não encontrado'}`);
+                    
+                    updateStatus('connectionStatus', 
+                        `🧪 Sistema Debug:<br>
+                         • Blender: ${data.blenderFound ? '✅' : '❌'}<br>
+                         • Template: ${data.templateExists ? '✅' : '❌'}<br>
+                         • Script: ${data.scriptExists ? '✅' : '❌'}`, 
+                        data.blenderFound && data.templateExists && data.scriptExists);
+                } else {
+                    log(`❌ Erro no debug: Status ${response.status}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Erro no debug: ${error.message}`, 'error');
+            }
+        }
+
+        async function generateMP4() {
+            if (!activePort) {
+                log('❌ Primeiro teste a conexão para encontrar o backend ativo', 'error');
+                updateStatus('uploadStatus', '❌ Backend não encontrado', false);
+                return;
+            }
+            
+            const audioFile = document.getElementById('audioFile').files[0];
+            const imageFile = document.getElementById('imageFile').files[0];
+
+            if (!audioFile || !imageFile) {
+                log('❌ Por favor, selecione os arquivos de áudio e imagem', 'error');
+                updateStatus('uploadStatus', '❌ Selecione ambos os arquivos', false);
+                return;
+            }
+
+            log(`🎵 Arquivo de áudio: ${audioFile.name} (${(audioFile.size/1024/1024).toFixed(2)}MB)`);
+            log(`🖼️ Arquivo de imagem: ${imageFile.name} (${(imageFile.size/1024/1024).toFixed(2)}MB)`);
+
+            const formData = new FormData();
+            formData.append('audio', audioFile);
+            formData.append('image', imageFile);
+
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+
+            try {
+                log('📤 Enviando arquivos para o backend...');
+                updateStatus('uploadStatus', '📤 Enviando arquivos...', true);
+                
+                // Simular progresso durante upload
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 20;
+                    if (progress > 90) progress = 90;
+                    progressBar.style.width = progress + '%';
+                }, 500);
+
+                const startTime = Date.now();
+                const response = await fetch(`${API_BASE}/api/blender/audio-visualizer`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+
+                const responseData = await response.json();
+                const endTime = Date.now();
+                const duration = ((endTime - startTime) / 1000).toFixed(2);
+
+                if (response.ok && responseData.success) {
+                    log(`✅ MP4 gerado com sucesso em ${duration}s!`, 'success');
+                    log(`📁 Arquivo: ${responseData.outputFile || 'output.mp4'}`);
+                    log(`📊 Tamanho: ${responseData.fileSize ? (responseData.fileSize/1024/1024).toFixed(2) + 'MB' : 'N/A'}`);
+                    
+                    if (responseData.blenderLogs) {
+                        log('🔧 Logs do Blender:');
+                        log(responseData.blenderLogs);
+                    }
+
+                    updateStatus('uploadStatus', 
+                        `✅ MP4 Gerado com Sucesso!<br>
+                         • Tempo: ${duration}s<br>
+                         • Arquivo: ${responseData.outputFile || 'output.mp4'}<br>
+                         • Tamanho: ${responseData.fileSize ? (responseData.fileSize/1024/1024).toFixed(2) + 'MB' : 'N/A'}`, 
+                        true);
+                } else {
+                    log(`❌ Erro na geração: ${responseData.message || 'Erro desconhecido'}`, 'error');
+                    
+                    if (responseData.error) {
+                        log(`🔧 Detalhes do erro: ${responseData.error}`);
+                    }
+                    
+                    if (responseData.blenderLogs) {
+                        log('🔧 Logs do Blender:');
+                        log(responseData.blenderLogs);
+                    }
+
+                    updateStatus('uploadStatus', 
+                        `❌ Erro na Geração<br>
+                         • Status: ${response.status}<br>
+                         • Erro: ${responseData.message || 'Erro desconhecido'}`, 
+                        false);
+                }
+            } catch (error) {
+                log(`❌ Erro de rede: ${error.message}`, 'error');
+                updateStatus('uploadStatus', `❌ Erro de Rede: ${error.message}`, false);
+            } finally {
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        async function retryConnection() {
+            log('🔄 Forçando nova busca por backend...');
+            activePort = null;
+            await testConnection();
+        }
+
+        // Testar conexão automaticamente ao carregar a página
+        window.onload = function() {
+            log('🚀 Iniciando interface de teste...');
+            testConnection();
+        };
+    </script>
+</body>
+</html>

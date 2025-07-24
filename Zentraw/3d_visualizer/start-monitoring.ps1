@@ -1,0 +1,1 @@
+Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "cd /d `"C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`" && echo 🚀 Zentraw 3D Visualizer V1.4.0.a.4 Starting... && node server-simple-real.js && pause" -WindowStyle Normal

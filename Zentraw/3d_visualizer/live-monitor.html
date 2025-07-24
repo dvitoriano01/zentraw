@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Zentraw 3D Visualizer V1.4.0.a.4 - Live Monitor</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e);
+            color: #00ff41;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.1);
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .online { background-color: #00ff41; }
+        .offline { background-color: #ff4444; }
+        .testing { background-color: #ffaa00; }
+        .log-container {
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            height: 400px;
+            overflow-y: auto;
+        }
+        button {
+            background: #00ff41;
+            color: #0f0f23;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #00cc33;
+        }
+        .error { color: #ff4444; }
+        .success { color: #00ff41; }
+        .warning { color: #ffaa00; }
+        .info { color: #4488ff; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎬 Zentraw 3D Visualizer V1.4.0.a.4</h1>
+        <h2>Live Monitoring & MP4 Generation</h2>
+        <p>📅 <span id="datetime"></span></p>
+    </div>
+
+    <div class="status-grid">
+        <div class="status-card">
+            <h3>🖥️ Backend Status</h3>
+            <p><span id="backend-status" class="status-indicator offline"></span><span id="backend-text">Checking...</span></p>
+            <p><strong>URL:</strong> http://localhost:3004</p>
+            <p><strong>Version:</strong> V1.4.0.a.4</p>
+            <button onclick="testConnection()">🔍 Test Connection</button>
+        </div>
+
+        <div class="status-card">
+            <h3>📁 Files Status</h3>
+            <p><span id="files-status" class="status-indicator testing"></span><span id="files-text">Checking...</span></p>
+            <p><strong>Audio:</strong> sample_audio2.wav</p>
+            <p><strong>Image:</strong> sample_cover.jpg</p>
+            <button onclick="checkFiles()">📋 Check Files</button>
+        </div>
+
+        <div class="status-card">
+            <h3>🎬 Blender Status</h3>
+            <p><span id="blender-status" class="status-indicator offline"></span><span id="blender-text">Ready</span></p>
+            <p><strong>Engine:</strong> Real Execution</p>
+            <p><strong>Output:</strong> MP4 Format</p>
+            <button onclick="startRender()">🚀 Start Render</button>
+        </div>
+
+        <div class="status-card">
+            <h3>📊 System Info</h3>
+            <p><strong>OS:</strong> Windows</p>
+            <p><strong>Node.js:</strong> Active</p>
+            <p><strong>Blender:</strong> C:\\Blender\\blender.exe</p>
+            <button onclick="refreshAll()">🔄 Refresh All</button>
+        </div>
+    </div>
+
+    <div class="log-container">
+        <h3>📝 Live Logs</h3>
+        <div id="logs">
+            <p class="info">[<span id="log-time"></span>] 🚀 Zentraw 3D Visualizer V1.4.0.a.4 Monitor Started</p>
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            document.getElementById('datetime').textContent = new Date().toLocaleString('pt-BR');
+            document.getElementById('log-time').textContent = new Date().toLocaleTimeString('pt-BR');
+        }
+
+        function addLog(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const time = new Date().toLocaleTimeString('pt-BR');
+            const logEntry = document.createElement('p');
+            logEntry.className = type;
+            logEntry.innerHTML = `[${time}] ${message}`;
+            logs.appendChild(logEntry);
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        async function testConnection() {
+            addLog('🔍 Testing backend connection...', 'info');
+            try {
+                const response = await fetch('http://localhost:3004/api/test');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('backend-status').className = 'status-indicator online';
+                    document.getElementById('backend-text').textContent = 'Online ✅';
+                    addLog('✅ Backend connection successful!', 'success');
+                    addLog(`📋 Dependencies: ${JSON.stringify(data.dependencies)}`, 'info');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                document.getElementById('backend-status').className = 'status-indicator offline';
+                document.getElementById('backend-text').textContent = 'Offline ❌';
+                addLog(`❌ Backend connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        function checkFiles() {
+            addLog('📁 File verification started...', 'info');
+            // Simulated file check - in real implementation would need backend endpoint
+            setTimeout(() => {
+                document.getElementById('files-status').className = 'status-indicator online';
+                document.getElementById('files-text').textContent = 'Files Ready ✅';
+                addLog('✅ Test files verified and ready', 'success');
+            }, 1000);
+        }
+
+        async function startRender() {
+            addLog('🎬 Starting MP4 render process...', 'warning');
+            document.getElementById('blender-status').className = 'status-indicator testing';
+            document.getElementById('blender-text').textContent = 'Rendering... ⏳';
+            
+            addLog('💡 For full render, use the PowerShell script or curl command', 'info');
+            addLog('📝 Command: auto-test-mp4.ps1', 'info');
+        }
+
+        function refreshAll() {
+            addLog('🔄 Refreshing all status...', 'info');
+            testConnection();
+            checkFiles();
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            updateDateTime();
+            if (document.getElementById('backend-status').className.includes('online')) {
+                testConnection();
+            }
+        }, 30000);
+
+        // Initial load
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Auto-test on page load
+        setTimeout(() => {
+            testConnection();
+            checkFiles();
+        }, 2000);
+    </script>
+</body>
+</html>

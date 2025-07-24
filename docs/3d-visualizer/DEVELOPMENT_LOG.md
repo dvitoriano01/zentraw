@@ -1,12 +1,43 @@
-# 3D Visualizer - Log de Desenvolvimento V1.4.0
+# 3D Visualizer - Log de Desenvolvimento V1.4.0.a.4
 
-## Sessão: 16 de Julho de 2025
-**Branch**: Painel_Blender_02  
-**Objetivo**: Implementar sistema completo de 3D Visualizer com Blender
+## 🎉 MARCO DE RECUPERAÇÃO: RENDERIZAÇÃO MP4 RESTAURADA
+**Data**: 24 de Julho de 2025 - 12:30 BRT  
+**Branch**: feat_V1.4.0.a.4_Inicio  
+**Status**: ✅ **SISTEMA 95% FUNCIONAL NOVAMENTE**  
+**Resultado**: `test_final_output.mp4` gerado com sucesso após longa luta!
 
 ---
 
-## Timeline de Desenvolvimento
+## 🏆 SESSÃO DE RECUPERAÇÃO: 24 de Julho de 2025
+
+### ✅ **CONQUISTA DE RECUPERAÇÃO**
+- **Sistema recuperado após círculo de erros e problemas**
+- **Renderização MP4 funcionando novamente (já funcionou antes)**
+- **Evolução de caótico para altamente funcional outra vez**
+- **Lições aprendidas aplicadas com sucesso**
+
+#### **Arquivos Funcionando**
+```
+C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\
+├── server-simple-real.js          ✅ Backend V1.4.0.a.4
+├── test-simple-real.html          ✅ Interface funcionando
+├── start-simple-real.bat          ✅ Execução automática
+└── Blender/
+    ├── render_audio_visualizer.py ✅ Python script
+    ├── template.blend             ✅ Template válido
+    └── test_final_output.mp4      🎉 RESULTADO!
+```
+
+#### **Tecnologias Validadas**
+- **Node.js + Express**: Backend na porta 3004
+- **Multer**: Upload de áudio + imagem funcionando
+- **Blender 4.5.0**: Execução física real via spawn
+- **Python + numpy**: Análise de áudio para keyframes
+- **FFmpeg/H264**: Output MP4 1080x1920 30fps
+
+---
+
+## 📋 HISTÓRICO DE SESSÕES ANTERIORES
 
 ### ✅ Fase 1: Setup Inicial (Concluída)
 **Duração**: ~30 minutos
@@ -282,7 +313,59 @@ const imageUrl = URL.createObjectURL(imageBlob);
 
 ---
 
-### Resolução de Problemas: Caminhos com Espaços
+## 🚨 **PROBLEMAS RECORRENTES CRÍTICOS**
+
+### ⚠️ PROBLEMA RECORRENTE #1: Caminhos com Espaços no Windows
+**Frequência**: ALTÍSSIMA - Aparece em TODAS as sessões
+**Impacto**: Blender falha com exit code 1, gerando erro HTTP 500
+**Path Problemático**: `C:\Users\Denys Victoriano\...` (espaço no nome do usuário)
+
+#### **Sintomas Identificados**:
+- ✅ Backend executa normalmente
+- ✅ Upload de arquivos funciona 
+- ✅ Blender é encontrado e executado
+- ❌ **ERRO**: "Cannot read file 'C:\Users\Denys': No such file or directory"
+- ❌ Blender exit code: 1 (falha na execução)
+- ❌ HTTP 500 Internal Server Error no frontend
+
+#### **Causa Raiz**:
+Windows trunca paths com espaços quando não estão entre aspas duplas:
+- `C:\Users\Denys Victoriano\...` → `C:\Users\Denys` (TRUNCADO!)
+- Blender recebe path inválido e falha
+
+#### **Solução DEFINITIVA**:
+```javascript
+// ❌ ERRO: Arguments sem aspas
+const args = [
+    templateBlend,
+    '--background',
+    '--python', pythonScript,
+    // ... outros args sem aspas
+];
+
+// ✅ CORRETO: Arguments com aspas duplas
+const args = [
+    `"${templateBlend}"`,
+    '--background', 
+    '--python', `"${pythonScript}"`,
+    // ... todos os paths entre aspas
+];
+```
+
+#### **Checklist Anti-Regressão**:
+- [ ] ✅ SEMPRE verificar args do spawn() têm aspas em paths
+- [ ] ✅ SEMPRE testar em máquina com espaços no username  
+- [ ] ✅ SEMPRE validar logs do Blender em caso de exit code 1
+- [ ] ✅ NUNCA assumir que paths funcionam sem aspas no Windows
+
+#### **Histórico de Ocorrências**:
+- **23 Jul 2025**: Primeira detecção e correção
+- **24 Jul 2025**: Regressão - problema voltou
+- **PADRÃO**: Aparece sempre que spawn() é modificado
+
+---
+
+### Resolução de Problemas: Caminhos com Espaços (ARQUIVO ANTERIOR)
 **Data**: 23 de Julho de 2025
 **Descrição**: Identificado e resolvido problema com caminhos contendo espaços. Solução implementada ao envolver caminhos em aspas duplas (").
 

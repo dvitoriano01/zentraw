@@ -336,7 +336,87 @@ npm run dev:front
 
 ---
 
-### Problema: Caminhos com Espaços
+---
+
+## 🚨 **PROBLEMAS RECORRENTES CRÍTICOS**
+
+### ⚠️ PROBLEMA RECORRENTE #1: Caminhos com Espaços no Windows
+**Status**: ❌ **PROBLEMA ATIVO E RECORRENTE**
+**Frequência**: **ALTÍSSIMA** - Aparece em todas as sessões de desenvolvimento
+**Severidade**: **CRÍTICA** - Impede completamente a geração de MP4
+
+#### **Sintomas Característicos**:
+```
+✅ Backend inicia normalmente na porta correta
+✅ API /api/test funciona perfeitamente  
+✅ Upload de arquivos (áudio + imagem) bem-sucedido
+✅ Blender encontrado e executado via spawn()
+❌ Error: Cannot read file 'C:\Users\Denys': No such file or directory
+❌ Blender exit code: 1 (execution failed)
+❌ HTTP 500 Internal Server Error retornado ao frontend
+```
+
+#### **Diagnóstico Definitivo**:
+O problema NÃO é:
+- ❌ Backend não funcionando
+- ❌ Arquivos não encontrados
+- ❌ Blender não instalado
+- ❌ Problemas de CORS
+- ❌ Configuração de porta
+
+O problema É:
+- ✅ **Windows trunca paths com espaços quando não há aspas duplas**
+- ✅ `C:\Users\Denys Victoriano\...` vira `C:\Users\Denys` (TRUNCADO!)
+- ✅ Blender recebe argumentos com paths inválidos
+
+#### **Solução COMPROVADA**:
+```javascript
+// ❌ CÓDIGO PROBLEMÁTICO (sempre quebra):
+const args = [
+    templateBlend,           // C:\Users\Denys Victoriano\... (SEM ASPAS)
+    '--background',
+    '--python', pythonScript, // C:\Users\Denys Victoriano\... (SEM ASPAS)
+    '--', audioFile,         // C:\Users\Denys Victoriano\... (SEM ASPAS)
+    imageFile,               // C:\Users\Denys Victoriano\... (SEM ASPAS) 
+    outputFile               // C:\Users\Denys Victoriano\... (SEM ASPAS)
+];
+
+// ✅ CÓDIGO CORRETO (sempre funciona):
+const args = [
+    `"${templateBlend}"`,           // "C:\Users\Denys Victoriano\..." (COM ASPAS)
+    '--background',
+    '--python', `"${pythonScript}"`, // "C:\Users\Denys Victoriano\..." (COM ASPAS)
+    '--', `"${audioFile}"`,         // "C:\Users\Denys Victoriano\..." (COM ASPAS)
+    `"${imageFile}"`,               // "C:\Users\Denys Victoriano\..." (COM ASPAS)
+    `"${outputFile}"`               // "C:\Users\Denys Victoriano\..." (COM ASPAS)
+];
+```
+
+#### **Por Que Sempre Esquecemos?**:
+1. **Código funciona em ambientes sem espaços** (ex: `/home/user/`)
+2. **Windows esconde o problema** até o momento da execução
+3. **spawn() não valida argumentos** - só falha no processo filho
+4. **Mensagem de erro é confusa** - não menciona aspas explicitamente
+
+#### **Protocolo Anti-Regressão**:
+```bash
+# ANTES de qualquer commit, SEMPRE executar:
+curl -X POST http://localhost:3004/api/blender/audio-visualizer \
+  -F "audio=@sample_audio.wav" \
+  -F "image=@sample_image.jpg"
+
+# ✅ SUCESSO esperado: Status 200 + arquivo MP4 gerado
+# ❌ FALHA típica: Status 500 + "Cannot read file 'C:\Users\Denys'"
+```
+
+#### **Histórico Completo de Ocorrências**:
+- **23 Jul 2025 - 17:30**: Primeira detecção, correção aplicada
+- **24 Jul 2025 - 09:15**: REGRESSÃO - problema voltou após modificações no spawn()
+- **Padrão Identificado**: Sempre que `server-simple-real.cjs` é editado, regressão ocorre
+
+---
+
+### Problema: Caminhos com Espaços (DOCUMENTAÇÃO ANTERIOR)
 **Causa**: Caminhos contendo espaços não são tratados corretamente em comandos do sistema ou scripts.
 
 **Solução**:

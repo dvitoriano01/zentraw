@@ -1,50 +1,195 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Zentraw 3D Visualizer V1.4.0.a.3</title>
+    <title>Zentraw 3D Visualizer V1.4.0.a.4 - Official Test Interface</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .version { text-align: center; color: #666; margin-bottom: 30px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .file-input { margin: 10px 0; padding: 10px; width: 100%; }
+        button { padding: 12px 24px; margin: 10px 5px; background: #007cba; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #005a87; }
+        .logs { background: #f8f8f8; padding: 15px; border-radius: 5px; margin-top: 20px; font-family: monospace; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #cce7ff; color: #004085; border: 1px solid #b3d9ff; }
+    </style>
 </head>
 <body>
-    <h1>Zentraw 3D Visualizer</h1>
-    <input type="file" id="audioInput" accept="audio/*">
-    <input type="file" id="imageInput" accept="image/*">
-    <br><br>
-    <button onclick="testConnection()">TEST CONNECTION</button>
-    <button onclick="testVisualizer()">TEST VISUALIZER</button>
+    <div class="container">
+        <h1>🎬 Zentraw 3D Visualizer</h1>
+        <div class="version">V1.4.0.a.4 - Official Directory Test Interface</div>
+        
+        <div class="section">
+            <h3>📁 File Upload</h3>
+            <div>
+                <label>🎵 Audio File (.wav/.mp3):</label>
+                <input type="file" id="audioInput" accept="audio/*" class="file-input">
+            </div>
+            <div>
+                <label>🖼️ Image File (.jpg/.png):</label>
+                <input type="file" id="imageInput" accept="image/*" class="file-input">
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🔧 System Tests</h3>
+            <button onclick="testConnection()">🔍 Test Connection</button>
+            <button onclick="testDependencies()">📋 Check Dependencies</button>
+            <button onclick="loadSampleFiles()">📂 Load Sample Files</button>
+        </div>
+
+        <div class="section">
+            <h3>🚀 Blender Execution</h3>
+            <button onclick="testVisualizer()" style="background: #28a745;">🎬 Execute Real Blender Render</button>
+        </div>
+
+        <div id="status"></div>
+        <div id="logs" class="logs"></div>
+    </div>
 
     <script>
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logElement = document.getElementById('logs');
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function showStatus(message, type = 'info') {
+            const statusElement = document.getElementById('status');
+            statusElement.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
         async function testConnection() {
+            log('🔍 Testing connection to backend V1.4.0.a.4...');
+            showStatus('⏳ Testing connection...', 'info');
+            
             try {
                 const response = await fetch('http://localhost:3004/api/test');
                 const result = await response.json();
-                alert(result.message);
+                
+                log(`✅ Connection successful! ${result.message}`);
+                log(`📂 Official Directory: ${result.officialDirectory}`);
+                log(`📅 Version: ${result.version}`);
+                
+                showStatus(`✅ Connected! ${result.message}`, 'success');
+                return result;
             } catch (error) {
-                alert('Connection failed!');
-                console.error(error);
+                log(`❌ Connection failed: ${error.message}`);
+                showStatus('❌ Connection failed! Make sure backend is running on port 3004', 'error');
+                throw error;
             }
         }
 
+        async function testDependencies() {
+            log('📋 Checking system dependencies...');
+            
+            try {
+                const result = await testConnection();
+                const deps = result.dependencies;
+                
+                log('📋 Dependency Check Results:');
+                log(`  🔧 Blender: ${deps.blender ? '✅ Found' : '❌ Missing'} (C:\\Blender\\blender.exe)`);
+                log(`  📄 Template: ${deps.template ? '✅ Found' : '❌ Missing'} (template.blend)`);
+                log(`  🐍 Script: ${deps.script ? '✅ Found' : '❌ Missing'} (render_audio_visualizer.py)`);
+                log(`  📁 Uploads: ${deps.uploads ? '✅ Ready' : '❌ Missing'} (uploads folder)`);
+                
+                const allGood = deps.blender && deps.template && deps.script && deps.uploads;
+                showStatus(allGood ? '✅ All dependencies ready!' : '⚠️ Some dependencies missing!', allGood ? 'success' : 'error');
+                
+            } catch (error) {
+                log('❌ Could not check dependencies - backend not responding');
+            }
+        }
+
+        async function loadSampleFiles() {
+            log('📂 Loading sample files...');
+            showStatus('📂 Sample files would be loaded from Blender folder', 'info');
+            log('📁 Available sample files:');
+            log('  🎵 sample_audio2.wav (1.5MB)');
+            log('  🎵 sample_audio2.mp3 (344KB)');
+            log('  🖼️ sample_cover.jpg (362KB)');
+            log('💡 Please select these files manually from the Blender folder');
+        }
+
         async function testVisualizer() {
+            log('🚀 Starting Blender MP4 generation...');
+            showStatus('🚀 Generating MP4 with real Blender execution...', 'info');
+            
             try {
                 const audioFile = document.getElementById('audioInput').files[0];
                 const imageFile = document.getElementById('imageInput').files[0];
+                
                 if (!audioFile || !imageFile) {
-                    alert('Selecione ambos os arquivos de áudio e imagem!');
+                    log('❌ Files missing! Please select both audio and image files');
+                    showStatus('❌ Please select both audio and image files!', 'error');
                     return;
                 }
+
+                log(`📁 Files selected:`);
+                log(`  🎵 Audio: ${audioFile.name} (${(audioFile.size/1024/1024).toFixed(2)}MB)`);
+                log(`  🖼️ Image: ${imageFile.name} (${(imageFile.size/1024).toFixed(2)}KB)`);
+                
                 const formData = new FormData();
                 formData.append('audio', audioFile);
                 formData.append('image', imageFile);
+                
+                log('📤 Uploading files and starting Blender render...');
+                const startTime = Date.now();
+                
                 const response = await fetch('http://localhost:3004/api/blender/audio-visualizer', {
                     method: 'POST',
                     body: formData
                 });
+                
                 const result = await response.json();
-                alert(result.message);
+                const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+                
+                if (result.success) {
+                    log(`🎉 SUCCESS! MP4 generated in ${duration} seconds`);
+                    log(`📁 Output file: ${result.output}`);
+                    log(`📏 File size: ${result.fileSize} bytes`);
+                    log(`🔢 Exit code: ${result.exitCode}`);
+                    
+                    showStatus(`🎉 MP4 Generated Successfully! (${duration}s)`, 'success');
+                    
+                    if (result.blenderLog) {
+                        log('📋 Blender Logs:');
+                        log(result.blenderLog);
+                    }
+                } else {
+                    log(`❌ FAILED after ${duration} seconds`);
+                    log(`💬 Message: ${result.message}`);
+                    log(`🔢 Exit code: ${result.exitCode}`);
+                    
+                    showStatus(`❌ MP4 Generation Failed!`, 'error');
+                    
+                    if (result.blenderLog) {
+                        log('📋 Blender Logs:');
+                        log(result.blenderLog);
+                    }
+                    if (result.errorLog) {
+                        log('⚠️ Error Logs:');
+                        log(result.errorLog);
+                    }
+                }
+                
             } catch (error) {
-                alert('Visualizer generation failed!');
-                console.error(error);
+                log(`💥 Exception during render: ${error.message}`);
+                showStatus('💥 Render failed with exception!', 'error');
             }
         }
+
+        // Auto-load on page start
+        window.onload = function() {
+            log('🚀 Zentraw 3D Visualizer V1.4.0.a.4 - Official Test Interface');
+            log('📂 Official Directory: C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer');
+            log('💡 Click "Test Connection" to verify backend is running');
+        };
     </script>
 </body>
 </html>

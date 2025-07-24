@@ -1,9 +1,21 @@
 # ZENTRAW
 
-> Media Central for Artists — Criação visual e sonora impulsionada por IA.
+>### 🚀 **NOVIDADES V1.4.0.a.4** (24/07/2025)
+
+- 🎉 **RENDERIZAÇÃO MP4 RECUPERADA E CONFIRMADA!** - Sistema 95% funcional novamente
+- 🎬 **Arquivo Gerado**: `test_final_output.mp4` com template + imagem + animação  
+- 🔄 **SISTEMA RESTAURADO** - Após círculo de erros, voltamos ao funcionamento real
+- ✅ **EXECUÇÃO FÍSICA DO BLENDER** - Blender 4.5.0 executando realmente (não simulado)
+- ✅ **TEMPLATE VÁLIDO** - template.blend carregado com objetos Plane e Cube
+- ✅ **IMAGEM APLICADA** - Cover image aplicada como textura no Plane
+- ✅ **ANIMAÇÃO FUNCIONAL** - Keyframes aplicados no Cube baseados em amplitude de áudio
+- ✅ **UPLOAD SEGURO** - Multer com storage personalizado funcionando
+- ✅ **LOGS DETALHADOS** - stdout/stderr em tempo real + timestamps
+- ✅ **PATHS WINDOWS** - Problema de espaços nos caminhos resolvido definitivamente
+- ⚠️ **PRÓXIMO PASSO** - Integrar áudio original no MP4 final (já funcionou antes!)al for Artists — Criação visual e sonora impulsionada por IA.
 
 ![Zentraw](https://img.shields.io/badge/Zentraw-CreativeAI-blueviolet?style=for-the-badge&logo=react)
-![Version](https://img.shields.io/badge/Version-V1.4.0.a.2-success?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-V1.4.0.a.4-success?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-3D_Visualizer-brightgreen?style=for-the-badge)
 
 ---
@@ -12,22 +24,27 @@
 
 **Zentraw** é uma plataforma híbrida que une arte, música e tecnologia para oferecer ferramentas profissionais de criação visual e musical. Desenvolvida por e para criadores digitais, a Zentraw combina inteligência artificial com controle criativo manual, oferecendo um ambiente ágil, intuitivo e inspirador.
 
-### 🚀 **NOVIDADES V1.4.0.a.2** (17/07/2025)
+### 🚀 **NOVIDADES V1.4.0.a.4** (24/07/2025)
 
-- 🆕 **3D VISUALIZER IMPLEMENTADO** - Sistema completo de renderização 3D com Blender
-- ✅ **INTERFACE SPECTERR** - Layout profissional com sidebars organizadas
-- ✅ **CONTROLES DE CÂMERA** - Posição, rotação e zoom 3D em tempo real
-- ✅ **BLENDER INTEGRATION** - Execução automática via Python scripting
-- ✅ **EEVEE_NEXT ENGINE** - Compatibilidade com versões recentes do Blender
-- ✅ **PREVIEW SYSTEM** - Geração de previews 3D em ~2.5s
-- � **TASKS ATUALIZADAS** - Sistema de tasks VS Code completamente revisado
-- 📋 **DOCUMENTAÇÃO COMPLETA** - Guia completo de tasks e desenvolvimento
+- � **PRIMEIRA RENDERIZAÇÃO MP4 REAL CONFIRMADA!** - Sistema 95% funcional
+- 🎬 **Arquivo Gerado**: `test_final_output.mp4` com template + imagem + animação
+- ✅ **EXECUÇÃO FÍSICA DO BLENDER** - Blender 4.5.0 executando realmente
+- ✅ **TEMPLATE VÁLIDO** - template.blend carregado com objetos Plane e Cube
+- ✅ **IMAGEM APLICADA** - Cover image aplicada como textura no Plane
+- ✅ **ANIMAÇÃO FUNCIONAL** - Keyframes aplicados no Cube baseados em amplitude de áudio
+- ✅ **UPLOAD SEGURO** - Multer com storage personalizado funcionando
+- ✅ **LOGS DETALHADOS** - stdout/stderr em tempo real + timestamps
+- ✅ **PATHS WINDOWS** - Problema de espaços nos caminhos resolvido definitivamente
+- ⚠️ **PRÓXIMO PASSO** - Integrar áudio original no MP4 final (codec AAC)
 
-### 🎮 **COMO USAR - TASKS V1.4.0.a.2**
+### 🎮 **COMO USAR - V1.4.0.a.4 SISTEMA FUNCIONANDO**
 
-#### **Desenvolvimento:**
-1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🚀 Start Zentraw Backend V1.4.0.a.2`
-2. `Ctrl+Shift+P` → `Tasks: Run Task` → `🎨 Start Zentraw Frontend V1.4.0.a.2`
+#### **Execução do Sistema Validado:**
+1. `cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"`
+2. `start-simple-real.bat` (Backend na porta 3004)
+3. Abrir `http://localhost:3000/test-simple-real.html`
+4. Upload áudio + imagem → **Execute Simple Real Blender**
+5. **Resultado**: MP4 gerado em `Blender/` (95% funcional)
 3. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔍 Test Backend Connection`
 
 #### **Quando há Problemas:**
@@ -81,14 +98,18 @@
 - Análise de performance e sugestões de promoção por IA
 - Exportação para playlists, mídia e distribuição
 
-### 🎬 3D Visualizer (NOVO V1.4.0)
+### 🎬 3D Visualizer V1.4.0.a.4 (OFICIAL)
 
+- **Diretório Oficial**: `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`
 - **Render Engine**: Integração completa com Blender (EEVEE_NEXT)
+- **Real Blender Execution**: Execução física do Blender com spawn + timeout
 - **Interface Specterr**: Layout profissional com controles organizados
 - **Camera Controls**: Posição 3D, rotação e zoom em tempo real
 - **Preview System**: Geração rápida de previews (~2.5s)
 - **File Support**: Upload de áudio e imagem para visualização 3D
 - **Customization**: Configurações de resolução, qualidade e estilo de animação
+- **MP4 Generation**: Formato correto MPEG4/H264 com verificação de arquivo real
+- **Detailed Logging**: stdout/stderr em tempo real + verificação de dependências
 
 ### 🔗 Integrações com APIs
 
@@ -122,6 +143,11 @@ npm install
 
 # 3. Rode o projeto
 npm run dev
+
+# 4. Para 3D Visualizer V1.4.0.a.4 (DIRETÓRIO OFICIAL)
+cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"
+start-simple-real.bat
+# Backend inicia na porta 3004
 ```
 
 ---

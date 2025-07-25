@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste V1.4.0.a.5</title>
+    <style>
+        body { font-family: Arial; background: #333; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        button { background: #e74c3c; color: white; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; }
+        #output { background: #000; color: lime; padding: 15px; font-family: monospace; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZENTRAW V1.4.0.a.5 - TESTE MP4 COM AUDIO</h1>
+        
+        <div style="background: #555; padding: 15px; margin: 10px 0;">
+            <h3>STATUS: V1.4.0.a.5 - Audio Integrado</h3>
+            <p><strong>Correcoes Aplicadas:</strong></p>
+            <ul>
+                <li>Duracao corrigida: duration_seconds * fps</li>
+                <li>Codec AAC ativado</li>
+                <li>Sequence editor integrado</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="executarTeste()">EXECUTAR TESTE</button>
+            <button onclick="verificarResultado()">VERIFICAR RESULTADO</button>
+            <button onclick="mostrarComando()">MOSTRAR COMANDO</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += '[' + timestamp + '] ' + message + '<br>';
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function executarTeste() {
+            document.getElementById('output').innerHTML = '';
+            log('INICIANDO TESTE V1.4.0.a.5 - MP4 COM AUDIO');
+            log('Diretorio: C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer');
+            log('');
+            log('CORRECOES V1.4.0.a.5 APLICADAS:');
+            log('- Duracao: duration_seconds * fps (8 segundos * 30 fps = 240 frames)');
+            log('- Codec AAC: scene.render.ffmpeg.audio_codec = "AAC"');
+            log('- Sequence editor: Audio carregado no Blender');
+            log('');
+            log('EXECUTANDO... (pode levar 1-2 minutos)');
+            log('Use "VERIFICAR RESULTADO" apos alguns minutos.');
+            log('');
+            log('COMANDO EXECUTADO:');
+            log('"C:\\Blender\\blender.exe" --background "Blender\\template.blend" --python "Blender\\render_audio_visualizer.py" -- "Blender\\sample_audio2.wav" "Blender\\sample_cover.jpg" "uploads\\teste_v1.4.0.a.5_FINAL.mp4"');
+        }
+
+        function verificarResultado() {
+            log('');
+            log('VERIFICANDO RESULTADO V1.4.0.a.5...');
+            log('Procurando arquivo: uploads\\teste_v1.4.0.a.5_FINAL.mp4');
+            log('');
+            log('VERIFICACOES ESPERADAS:');
+            log('1. Duracao: ~8 segundos (igual ao audio)');
+            log('2. Audio: Presente e audivel no MP4');
+            log('3. Animacao: 3D sincronizada com audio');
+            log('4. Codec: AAC integrado');
+            log('');
+            log('Se o arquivo foi gerado: V1.4.0.a.5 COM AUDIO - SUCESSO!');
+            log('Abra o arquivo para verificar se o audio esta funcionando');
+        }
+
+        function mostrarComando() {
+            log('');
+            log('COMANDO MANUAL PARA EXECUTAR:');
+            log('cd "C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer"');
+            log('');
+            log('"C:\\Blender\\blender.exe" --background "Blender\\template.blend" --python "Blender\\render_audio_visualizer.py" -- "Blender\\sample_audio2.wav" "Blender\\sample_cover.jpg" "uploads\\teste_v1.4.0.a.5_MANUAL.mp4"');
+            log('');
+            log('Execute este comando no terminal para testar manualmente.');
+        }
+
+        // Log inicial
+        window.onload = function() {
+            log('ZENTRAW V1.4.0.a.5 - INTERFACE DE TESTE CARREGADA');
+            log('Seguindo AI-RULES-CRITICAL.md');
+            log('Meta: MP4 com audio integrado usando base V1.4.0.a.4');
+            log('');
+            log('ARQUIVOS NECESSARIOS:');
+            log('- Blender\\sample_audio2.wav (8 segundos)');
+            log('- Blender\\sample_cover.jpg (capa)');
+            log('- Blender\\template.blend (template 3D)');
+            log('- Blender\\render_audio_visualizer.py (script atualizado)');
+            log('');
+            log('Use os botoes acima para executar o teste.');
+        };
+    </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 /**
- * Zentraw 3D Visualizer V1.4.0.a.4
- * Data: 23/07/2025 - 18:15 BRT
- * Propósito: Backend Express para upload e execução Blender (REAL)
- * Status: Funcional com upload de arquivos e execução Blender
+ * Zentraw 3D Visualizer V1.4.0.a.5
+ * Data: 24/07/2025 - 13:50 BRT
+ * Propósito: Backend Express para upload e execução Blender (REAL) - BÁSICO WAV
+ * Status: Funcional com correção de paths Windows + V1.4.0.a.5 básico
  * Dependências: express, multer, child_process, path, fs
  * Autor: GitHub Copilot
  * Categoria: Backend
@@ -35,7 +35,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.get('/api/test', (req, res) => {
-    res.json({ success: true, message: 'Connection Successful!' });
+    res.json({ success: true, message: 'Connection Successful - V1.4.0.a.5 BÁSICO (Official Directory)!' });
 });
 
 app.post('/api/blender/audio-visualizer', upload.fields([
@@ -52,7 +52,7 @@ app.post('/api/blender/audio-visualizer', upload.fields([
     const outputFile = path.join(UPLOADS_DIR, 'output_' + Date.now() + '.mp4');
     const blenderExe = 'C:\\Blender\\blender.exe'; // Caminho absoluto do Blender
     const templateBlend = path.resolve(__dirname, 'Blender', 'template.blend');
-    const pythonScript = path.resolve(__dirname, 'Blender', 'render_audio_visualizer_working.py');
+    const pythonScript = path.resolve(__dirname, 'Blender', 'render_audio_visualizer.py');
     
     // Verificar se arquivos existem
     if (!fs.existsSync(templateBlend)) {
@@ -72,16 +72,21 @@ app.post('/api/blender/audio-visualizer', upload.fields([
     
     const args = [
         '--background',
-        `"${templateBlend}"`,
-        '--python', `"${pythonScript}"`,
+        templateBlend,
+        '--python', 
+        pythonScript,
         '--', 
-        `"${path.resolve(audioFile)}"`, 
-        `"${path.resolve(imageFile)}"`, 
-        `"${path.resolve(outputFile)}"`
+        path.resolve(audioFile), 
+        path.resolve(imageFile), 
+        path.resolve(outputFile)
     ];
     
+    // Log dos argumentos para debug
+    console.log('🔧 Blender arguments:');
+    args.forEach((arg, i) => console.log(`  [${i}]: "${arg}"`));
+    
     const blenderProcess = spawn(blenderExe, args, { 
-        shell: true,
+        // Remover shell: true para tratar paths com espaços corretamente
         timeout: 300000 // 5 minutos timeout
     });
     let blenderLog = '';
@@ -115,7 +120,7 @@ app.post('/api/blender/audio-visualizer', upload.fields([
                 console.log(`✅ MP4 generated successfully! Size: ${fileSize} bytes`);
                 res.json({ 
                     success: true, 
-                    message: 'Visualizer Generated Successfully!', 
+                    message: '✅ V1.4.0.a.5 BÁSICO - Visualizer Generated Successfully! (Official Directory)', 
                     output: outputFile,
                     fileSize: fileSize,
                     log: blenderLog 
@@ -129,11 +134,11 @@ app.post('/api/blender/audio-visualizer', upload.fields([
                 });
             }
         } else {
-            console.log(`❌ V1.4.0.a.3 - Failed to generate MP4! Exit code: ${code}`);
+            console.log(`❌ V1.4.0.a.5 - Failed to generate MP4! Exit code: ${code}`);
             console.log(`📋 Blender log:\n${blenderLog}`);
             res.status(500).json({ 
                 success: false, 
-                message: `❌ V1.4.0.a.3 - Failed to generate MP4! Exit code: ${code} (Official Directory)`, 
+                message: `❌ V1.4.0.a.5 BÁSICO - Failed to generate MP4! Exit code: ${code} (Official Directory)`, 
                 exitCode: code,
                 log: blenderLog,
                 diagnostics: {

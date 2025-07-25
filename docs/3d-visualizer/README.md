@@ -1,22 +1,19 @@
 # Zentraw 3D Visualizer V1.4.0.a.4 - SISTEMA FUNCIONANDO
 
 ## 🎯 **STATUS ATUAL CONFIRMADO**
-- **Versão**: V1.4.0.a.4
-- **Data**: 24 de Julho de 2025 - 12:50 BRT  
-- **Branch**: feat_V1.4.0.a.4_Inicio
-- **Status**: 🎉 **RENDERIZAÇÃO MP4 REAL FUNCIONANDO!**
+- **Versão**: V1.4.0.a.5
+- **Data**: 24 de Julho de 2025 - 13:30 BRT  
+- **Branch**: Feat_V1.4.0.a.5_Render_MP4_com_audio
+- **Status**: � **TESTE V1.4.0.a.5 - INTEGRAÇÃO DE ÁUDIO!**
 
-**✅ CONQUISTA PRINCIPAL V1.4.0.a.4 (24/07/2025 - 12:30 BRT):**
-- 🔄 **SISTEMA RECUPERADO APÓS CÍRCULO DE ERROS**: Renderização MP4 voltou a funcionar!
-- 🎯 **Resultado**: `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\test_final_output.mp4`
-- ✅ **Execução REAL do Blender**: Blender 4.5.0 executando fisicamente (não simulado)
-- ✅ **Template Válido**: template.blend carregado com objetos Plane e Cube funcionando
-- ✅ **Imagem Aplicada**: Cover image aplicada como textura no Plane
-- ✅ **Animação Funcional**: Keyframes aplicados no Cube baseados em análise de áudio
-- ✅ **Upload Seguro**: Multer com storage personalizado funcionando perfeitamente
-- ✅ **Logs Detalhados**: stdout/stderr em tempo real + timestamps
-- ✅ **Paths Windows**: Problema de espaços nos caminhos resolvido definitivamente
-- ⚠️ **Próximo Passo**: Reintegrar áudio original no MP4 final (já funcionou antes, V1.4.0.a.5)
+**✅ CONQUISTA PRINCIPAL V1.4.0.a.5 (24/07/2025 - 13:45 BRT):**
+- 🎵 **TESTE V1.4.0.a.5 - BÁSICO WAV**: Sistema mantendo simplicidade com arquivos .WAV nativos
+- 🔄 **BASE SÓLIDA**: Sistema V1.4.0.a.4 funcionando como base (MP4 sem áudio confirmado)
+- 🎯 **Objetivo**: Testar com arquivos .WAV nativos do Blender (sem codec AAC)
+- ✅ **Script Atualizado**: render_audio_visualizer.py V1.4.0.a.5 básico (.WAV nativo)
+- ✅ **Arquivos de Teste**: sample_audio2.wav + sample_cover.jpg + template.blend disponíveis
+- ✅ **Sistema Pronto**: Backend + Frontend preparados para teste básico
+- ⚠️ **Próximo Passo**: Testar V1.4.0.a.5 básico com arquivos .WAV (sem complexidade AAC)
 
 **🛠️ IMPLEMENTAÇÕES TÉCNICAS VALIDADAS V1.4.0.a.4:**
 - Express + Multer: Upload de áudio + imagem ✅ FUNCIONANDO
@@ -31,25 +28,26 @@
 
 ### **Frontend Atual (Funcional)**
 - **Interface**: `test-simple-real.html`
-- **URL Local**: http://localhost:3000/test-simple-real.html ✅ FUNCIONANDO
+- **URL Local**: Abrir arquivo HTML diretamente (não precisa de servidor)
 - **Backend URL**: http://localhost:3004 ✅ FUNCIONANDO
 - **Tipo**: Interface de teste simples e funcional
 - **Status**: ✅ CORS RESOLVIDO - Frontend/Backend comunicando perfeitamente!
 
-### **Como Inicializar (SISTEMA FUNCIONANDO V1.4.0.a.4)**
+### **Como Inicializar (SISTEMA FUNCIONANDO V1.4.0.a.5)**
 ```bash
 # 1. Navegar para a pasta OFICIAL CONFIRMADA
 cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"
 
-# 2. Iniciar backend V1.4.0.a.4 (FUNCIONANDO)
+# 2. Iniciar backend V1.4.0.a.5 (FUNCIONANDO)
 start-simple-real.bat
+# Ou manualmente: node server-simple-real.cjs
 
 # 3. Abrir interface (VALIDADA)
-# http://localhost:3000/test-simple-real.html
+# Abrir test-simple-real.html diretamente no navegador
 
 # 4. Testar sistema completo
 # Upload áudio + imagem → Execute Simple Real Blender
-# Resultado: MP4 gerado em Blender/ (CONFIRMADO)
+# Resultado: MP4 gerado em uploads/ (CONFIRMADO)
 ```
 
 ## 📁 **ARQUITETURA ATUAL LIMPA (DIRETÓRIO OFICIAL)**
@@ -57,13 +55,31 @@ start-simple-real.bat
 ### **Sistema Principal (Arquivos Essenciais)**
 ```
 Zentraw\3d_visualizer\          # ✅ DIRETÓRIO OFICIAL
-├── server-simple-real.js          # ✅ Backend definitivo V1.4.0.a.4 (porta 3004)
+├── server-simple-real.cjs         # ✅ Backend definitivo V1.4.0.a.5 (porta 3004)
 ├── start-simple-real.bat          # ✅ Script de execução 
 ├── test-simple-real.html          # ✅ Interface de teste
 ├── package.json                   # ✅ Dependências instaladas
 └── Blender/
-    ├── render_audio_visualizer.py # ✅ Script Python V1.4.0.a.4
-    └── template.blend             # ✅ Template 3D
+    ├── render_audio_visualizer.py # ✅ Script Python V1.4.0.a.5 (básico .WAV)
+    ├── template.blend             # ✅ Template 3D
+    ├── sample_audio2.wav          # 🎵 Arquivo de teste para áudio
+    ├── sample_cover.jpg           # 🖼️ Arquivo de teste para imagem
+    └── test_final_output.mp4      # 📹 Último MP4 gerado (V1.4.0.a.4)
+```
+
+### **📁 ARQUIVOS DE TESTE DISPONÍVEIS**
+**Localização**: `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\`
+
+```
+✅ ARQUIVOS PARA TESTE AUTOMATIZADO V1.4.0.a.5:
+├── sample_audio2.wav          # 🎵 Áudio de teste (.WAV format)
+├── sample_cover.jpg           # 🖼️ Imagem de capa de teste  
+└── template.blend             # 🎬 Template Blender com objetos Plane/Cube
+
+🎯 USO PARA TESTES:
+• sample_audio2.wav → Upload de áudio para análise e trilha sonora
+• sample_cover.jpg → Upload de imagem para textura do Plane
+• template.blend → Template 3D base para renderização
 ```
 
 ### **Arquivos Arquivados (Limpeza Realizada)**
@@ -79,9 +95,9 @@ TemplateLibraryBuilder/archived-tests/
 
 ## ✅ **FUNCIONALIDADES ATUAIS (VERIFICADAS)**
 
-### **Backend (server-simple-real.js)**
-- ✅ **Localização**: `Zentraw\3d_visualizer\server-simple-real.js` (DIRETÓRIO OFICIAL)
-- ✅ **Versão**: V1.4.0.a.4 com execução real do Blender
+### **Backend (server-simple-real.cjs)**
+- ✅ **Localização**: `Zentraw\3d_visualizer\server-simple-real.cjs` (DIRETÓRIO OFICIAL)
+- ✅ **Versão**: V1.4.0.a.5 com execução real do Blender
 - ✅ **Porta**: 3004 (única e definitiva)
 - ✅ **API Endpoints**: `/api/test` e `/api/blender/audio-visualizer`
 - ✅ **CORS**: Configurado para funcionar
@@ -90,9 +106,9 @@ TemplateLibraryBuilder/archived-tests/
 
 ### **Interface (test-simple-real.html)**
 - ✅ **Localização**: `Zentraw\3d_visualizer\test-simple-real.html` (DIRETÓRIO OFICIAL)
-- ✅ **URL**: http://localhost:3000/test-simple-real.html ou file://
+- ✅ **URL**: Abrir arquivo HTML diretamente no navegador
 - ✅ **Upload de Arquivos**: Áudio + Imagem
-- ✅ **Test Connection**: Verifica backend e dependências V1.4.0.a.4
+- ✅ **Test Connection**: Verifica backend e dependências V1.4.0.a.5
 - ✅ **Execute Blender**: Chama execução real do Blender
 - ✅ **Logs em Tempo Real**: Stdout/stderr do processo
 - ✅ **Verificação de Dependências**: Checa se Blender/scripts existem
@@ -100,7 +116,7 @@ TemplateLibraryBuilder/archived-tests/
 ### **Execução Blender**
 - ✅ **Localização**: `Zentraw\3d_visualizer\Blender\` (DIRETÓRIO OFICIAL)
 - ✅ **Comando Real**: Executa `C:\Blender\blender.exe` fisicamente
-- ✅ **Script Python**: `render_audio_visualizer.py` V1.4.0.a.4 completo
+- ✅ **Script Python**: `render_audio_visualizer.py` V1.4.0.a.5 básico
 - ✅ **Template**: `template.blend` configurado
 - ✅ **Output**: Gera MP4 em `Zentraw\3d_visualizer\uploads\`
 
@@ -115,12 +131,12 @@ TemplateLibraryBuilder/archived-tests/
 - **Imports TypeScript**: Problemas com ES modules vs CommonJS
 - **Documentação Espalhada**: Logs e guias em vários locais
 
-### **✅ Soluções Implementadas V1.4.0.a.3**
+### **✅ Soluções Implementadas V1.4.0.a.5**
 - **Backend Único**: Apenas `server-simple-real.cjs` (porta 3004)
 - **Interface Única**: Apenas `test-simple-real.html`
-- **CORS Resolvido**: Frontend na porta 3000, Backend na porta 3004
-- **ES Modules Fix**: Usar arquivo .cjs para CommonJS syntax
-- **Serve Package**: Frontend servido via `serve -s . -l 3000`
+- **CORS Resolvido**: Interface HTML direta + Backend na porta 3004
+- **CommonJS Fix**: Usar arquivo .cjs para CommonJS syntax
+- **Sem Servidor Frontend**: Interface HTML abre diretamente
 - **Comunicação Funcionando**: ✅ "Connection Successful!" e "Visualizer Generated Successfully!"
 - **Documentação Centralizada**: Guias mestres atualizados
 
@@ -146,7 +162,7 @@ TemplateLibraryBuilder/archived-tests/
 - ❌ BlenderService abstrações
 - ❌ Vite/React - Sistema simples funciona sem
 
-## 🎯 **WORKFLOW ATUAL**
+## 🎯 **WORKFLOW ATUAL - V1.4.0.a.5 (TESTE COM ÁUDIO)**
 
 ### **1. Preparação**
 ```bash
@@ -154,28 +170,37 @@ TemplateLibraryBuilder/archived-tests/
 C:\Blender\blender.exe --version
 dir "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer.py"
 dir "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+
+# Verificar arquivos de teste
+dir "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\sample_audio2.wav"
+dir "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\sample_cover.jpg"
 ```
 
-### **2. Execução**
+### **2. Execução V1.4.0.a.5**
 ```bash
 cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"
 start-simple-real.bat
-# Backend V1.4.0.a.4 inicia na porta 3004
+# OU manualmente: node server-simple-real.cjs
+# Backend V1.4.0.a.5 inicia na porta 3004 com configuração básica .WAV
 ```
 
 ### **3. Interface**
 ```bash
-# Abrir no navegador
+# Abrir arquivo HTML diretamente no navegador
 test-simple-real.html
-# Conecta automaticamente ao localhost:3004
+# Interface conecta automaticamente ao localhost:3004
 ```
 
-### **4. Teste Completo**
+### **4. Teste Completo V1.4.0.a.5 COM ÁUDIO**
 1. **Test Connection** → Verifica se tudo está funcionando
-2. **Upload Audio** → Selecionar arquivo .wav/.mp3
-3. **Upload Image** → Selecionar arquivo .jpg/.png  
-4. **Execute Simple Real Blender** → Processar arquivo
-5. **Verificar Output** → Arquivo MP4 em `uploads/`
+2. **Upload Audio** → Usar `sample_audio2.wav` (ou outro arquivo .wav)
+3. **Upload Image** → Usar `sample_cover.jpg` (ou outro arquivo .jpg/.png)  
+4. **Execute Simple Real Blender** → Processar arquivo básico (.WAV analysis)
+5. **Verificar Output BÁSICO** → Arquivo MP4 em `uploads/` com animação baseada em .WAV!
+
+### **🎵 DIFERENÇA V1.4.0.a.5 vs V1.4.0.a.4**
+- ❌ **V1.4.0.a.4**: MP4 gerado SEM áudio (codec 'NONE')
+- ✅ **V1.4.0.a.5**: MP4 gerado SEM áudio mas com análise .WAV aplicada à animação (básico)
 
 ## 📊 **MÉTRICAS DE SUCESSO**
 

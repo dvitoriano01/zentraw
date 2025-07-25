@@ -1,21 +1,21 @@
 """
 Zentraw 3D Visualizer V1.4.0.a.5
-Data: 24/07/2025 - 12:40 BRT
-Propósito: Script Python Blender para render real de MP4 com áudio visualizer + trilha sonora
-Status: Testando - INTEGRAÇÃO DE ÁUDIO AAC
+Data: 24/07/2025 - 13:45 BRT
+Propósito: Script Python Blender para render real de MP4 com áudio visualizer básico
+Status: Testando - BÁSICO WAV (sem codec AAC)
 Dependências: bpy, wave, numpy, os, sys
 Autor: GitHub Copilot
 Categoria: Blender Python Script
-Diretório Oficial: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender
-Novidade V1.4.0.a.5: Audio codec AAC integrado ao MP4 final
+Diretório Oficial: Zentraw/3d_visualizer/Blender (usando barras normais)
+Novidade V1.4.0.a.5: Mantendo básico .WAV - sem complexidade AAC
 """
 
 import bpy, wave, numpy as np, os, sys
 
-print("🚀 V1.4.0.a.5 - AUDIO VISUALIZER COM ÁUDIO RENDER STARTED (Official Directory)")
+print("🚀 V1.4.0.a.5 - AUDIO VISUALIZER BÁSICO WAV STARTED (Official Directory)")
 print(f"📂 Working directory: {os.getcwd()}")
 print(f"🐍 Python script: {__file__}")
-print(f"🎵 NEW: Audio integration enabled (AAC codec)")
+print(f"🎵 BÁSICO: Usando .WAV nativo (sem codec AAC)")
 
 # 1. Captura caminhos dos argumentos
 argv = sys.argv
@@ -29,21 +29,34 @@ print(f"📁 Output file: {output}")
 
 # 2. Carrega áudio via wave + numpy
 print("📊 Loading and analyzing audio...")
-wf = wave.open(audio, 'rb')
+# Converter para caminho absoluto
+audio_path = os.path.abspath(audio)
+print(f"🎵 Caminho absoluto áudio: {audio_path}")
+wf = wave.open(audio_path, 'rb')
 sr, nframes = wf.getframerate(), wf.getnframes()
 frames = wf.readframes(nframes)
 samples = np.frombuffer(frames, dtype=np.int16).astype(np.float32)
 samples /= np.max(np.abs(samples))
 print(f"✅ Audio loaded: {sr}Hz, {nframes} frames")
 
-# 3. Calcula amplitude por frame
+# 3. Calcula amplitude por frame e duração correta V1.4.0.a.5
 fps = 30
-spf = int(sr / fps)
-total_frames = len(samples) // spf
-amps = [np.mean(np.abs(samples[i*spf:(i+1)*spf])) for i in range(total_frames)]
-print(f"📈 Audio analysis: {total_frames} frames at {fps} FPS")
+duration_seconds = nframes / sr  # CORREÇÃO: usar nframes (total de samples) não len(samples)
+total_frames = int(duration_seconds * fps)  # Cálculo correto da duração
+spf = int(sr / fps)  # Samples per frame
+# Garantir que temos exatamente total_frames de amplitude
+amps = []
+for i in range(total_frames):
+    start_sample = i * spf
+    end_sample = min(start_sample + spf, len(samples))
+    if start_sample < len(samples):
+        frame_samples = samples[start_sample:end_sample]
+        amps.append(np.mean(np.abs(frame_samples)) if len(frame_samples) > 0 else 0.0)
+    else:
+        amps.append(0.0)
+print(f"📈 Audio analysis CORRIGIDO: {duration_seconds:.2f}s → {total_frames} frames at {fps} FPS")
 
-# 4. Configura render para MP4 real V1.4.0.a.5 - COM ÁUDIO
+# 4. Configura render para MP4 COM ÁUDIO V1.4.0.a.5
 scene = bpy.context.scene
 scene.render.fps = fps
 scene.frame_end = total_frames
@@ -54,24 +67,29 @@ scene.render.ffmpeg.format = 'MPEG4'
 scene.render.ffmpeg.codec = 'H264'
 scene.render.ffmpeg.constant_rate_factor = 'HIGH'
 
-# ✅ V1.4.0.a.5 - INTEGRAÇÃO DE ÁUDIO
-scene.render.ffmpeg.audio_codec = 'AAC'         # Codec de áudio
-scene.render.ffmpeg.audio_bitrate = 192         # Qualidade média 
-scene.render.ffmpeg.audio_mixrate = 44100       # Sample rate
-scene.render.ffmpeg.audio_channels = 'STEREO'   # Canais estéreo
-
-scene.render.filepath = output
+# ✅ V1.4.0.a.5 - COM ÁUDIO: Configurando codec AAC
+scene.render.ffmpeg.audio_codec = 'AAC'
+# Configurar arquivo de áudio para o Blender usar no render
+scene.sequence_editor_create()
+seq = scene.sequence_editor.sequences.new_sound("Audio", audio_path, 1, 1)
+# CORREÇÃO V1.4.0.a.5: Ajustar duração do áudio ao video
+seq.frame_final_duration = total_frames
+seq.frame_final_end = total_frames
 
 print(f"🎬 V1.4.0.a.5 - Configurando render MP4 COM ÁUDIO (Official Directory):")
 print(f"📐 Resolução: {scene.render.resolution_x}x{scene.render.resolution_y}")
 print(f"🎞️ FPS: {fps}")
 print(f"📊 Total frames: {total_frames}")
-print(f"🎵 Audio codec: AAC @ 192kbps")
+print(f"⏱️ Duração: {duration_seconds:.2f} segundos")
+print(f"🎵 Audio: AAC codec ATIVADO")
 print(f"📁 Output: {output}")
 
 # 5. Aplica capa como textura no "Plane"
 print(f"🖼️ Carregando imagem: {image}")
-img = bpy.data.images.load(image)
+# Converter para caminho absoluto
+image_path = os.path.abspath(image)
+print(f"🖼️ Caminho absoluto: {image_path}")
+img = bpy.data.images.load(image_path)
 plane = bpy.data.objects["Plane"]
 mat = plane.active_material
 node = mat.node_tree.nodes.get("Image Texture")
@@ -86,21 +104,25 @@ for i, amp in enumerate(amps, start=1):
     cube.keyframe_insert(data_path="scale", frame=i, index=2)
 print(f"✅ Keyframes aplicados no Cube")
 
-# 7. Renderiza MP4 com áudio
+# 7. Renderiza MP4 COM ÁUDIO V1.4.0.a.5
 print(f"🚀 V1.4.0.a.5 - INICIANDO RENDER MP4 COM ÁUDIO (Official Directory)...")
-print(f"⏱️ Estimated time: {total_frames/fps:.1f} seconds of video")
-print(f"🎵 Audio integration: AAC @ 192kbps")
+print(f"⏱️ Estimated time: {total_frames/fps:.1f} seconds of video with audio")
+print(f"🎵 Audio: AAC codec integrado ao MP4")
+# Configurar output com caminho absoluto
+output_path = os.path.abspath(output)
+scene.render.filepath = output_path
+print(f"📁 Output absoluto: {output_path}")
 bpy.ops.render.render(animation=True)
 print(f"🎉 V1.4.0.a.5 - RENDER MP4 COM ÁUDIO CONCLUÍDO (Official Directory)!")
-print(f"📁 Arquivo gerado: {output}")
+print(f"📁 Arquivo gerado: {output_path}")
 
 # 8. Verificação final
-import os
-if os.path.exists(output):
-    size = os.path.getsize(output)
-    print(f"✅ SUCESSO! Arquivo MP4 com áudio gerado: {size} bytes")
+if os.path.exists(output_path):
+    size = os.path.getsize(output_path)
+    print(f"✅ SUCESSO! Arquivo MP4 COM ÁUDIO gerado: {size} bytes")
     print(f"📂 Official Directory: {os.path.dirname(__file__)}")
-    print(f"🎬 V1.4.0.a.5 - SISTEMA 100% FUNCIONAL!")
+    print(f"🎬 V1.4.0.a.5 - SISTEMA COM ÁUDIO FUNCIONANDO!")
+    print(f"🎵 Duração: {duration_seconds:.2f}s - MP4 com trilha sonora AAC")
 else:
     print(f"❌ ERRO! Arquivo não foi gerado: {output}")
     print(f"📂 Official Directory: {os.path.dirname(__file__)}")

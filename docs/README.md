@@ -1,21 +1,38 @@
-# 🎯 ZENTRAW 3D VISUALIZER V1.4.0.a.2 - DOCUMENTATION
+# 📚 ZENTRAW - DOCUMENTAÇÃO OFICIAL
 
-## 🚀 **SISTEMA FUNCIONANDO - READY TO USE**
+## 🚨 **PARA AGENTES IA - LEIA ANTES DE TUDO**
+**ARQUIVO CRÍTICO**: [../AI-RULES-CRITICAL.md](../AI-RULES-CRITICAL.md)
 
-### **Backend Definitivo**
-- **Arquivo**: `server-simple-real.js` 
-- **Porta**: 3004
-- **Status**: ✅ Funcional e limpo
+### **📄 DOCUMENTOS ESSENCIAIS**
+1. **[CHANGELOG.md](./CHANGELOG.md)** - **FONTE DA VERDADE** (arquivos exatos)
+2. **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - Erros já resolvidos  
+3. **[3d-visualizer/README.md](./3d-visualizer/README.md)** - Status módulo atual
 
-### **Interface de Teste**
-- **Arquivo**: `test-simple-real.html`
-- **URL**: http://localhost:3004
-- **Status**: ✅ Upload + execução real
+### **🎯 VERSÃO ATUAL: V1.4.0.a.5**
+- **Status**: MP4 gerado, áudio em integração
+- **Base**: V1.4.0.a.4 (renderização física confirmada)  
+- **Diretório**: `C:\...\zentraw\Zentraw\3d_visualizer\`
+- **Backend**: `server-simple-real.cjs` (❌ NÃO .js!)
 
-### **Script de Execução**
-- **Arquivo**: `start-simple-real.bat`
-- **Função**: Inicia backend na porta 3004
-- **Status**: ✅ Pronto para uso
+---
+
+## 🏗️ **REGRAS ORGANIZACIONAIS**
+
+### **✅ PADRÃO TODOS OS MÓDULOS**
+```
+modulo/
+├── README.md          # Status + arquivos ativos
+├── CHANGELOG.md       # Fonte da verdade técnica
+├── package.json       # Dependências exatas
+├── src/              # Código ativo
+└── archive/          # ❌ Obsoletos (NÃO USAR)
+```
+
+### **🔒 REGRAS DE ARQUIVAMENTO**
+- **Mover para /archive/**: Arquivos obsoletos
+- **NUNCA usar**: Qualquer arquivo arquivado
+- **SEMPRE documentar**: Motivo do arquivamento
+- **ATUALIZAR**: CHANGELOG com arquivos ativos
 
 ---
 

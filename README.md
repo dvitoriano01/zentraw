@@ -152,22 +152,24 @@ start-simple-real.bat
 
 ---
 
-## 🤖 Regras para Agentes IA
+## 🚨 **REGRAS CRÍTICAS PARA AGENTES IA**
 
-### **Protocolo de Interação com Assistentes**
-1. **🔍 Análise Inicial** - Verificar estrutura e contexto.
-2. **🧩 Decomposição** - Quebrar em tarefas menores.
-3. **🎯 Implementação** - Uma mudança por vez.
-4. **✅ Validação** - Testar cada alteração.
-5. **📚 Documentação** - Registrar mudanças.
+### **📚 LEIA PRIMEIRO: [AI-RULES-CRITICAL.md](./AI-RULES-CRITICAL.md)**
 
-### **Desenvolvimento Assistido por IA**
-- **Consultar** documentação existente antes de implementar.
-- **Aplicar** lições aprendidas dos logs de sessão.
-- **Evitar** repetição de erros já documentados.
-- **Usar** experiência acumulada nas decisões.
+#### **⚡ PROTOCOLO OBRIGATÓRIO**
+1. **CONSULTAR [docs/CHANGELOG.md](./docs/CHANGELOG.md)** → Arquivos exatos da versão atual  
+2. **NUNCA usar /archive/** → São obsoletos e causam erros
+3. **SEMPRE testar** → Validar cada mudança imediatamente
+4. **BASE FUNCIONAL** → Partir sempre da versão anterior que funcionou
 
-### **Proatividade dos Agentes IA**
-- **Sempre agir proativamente** na resolução de problemas encontrados.
-- **Apontar o problema, a solução e perguntar somente se necessário.**
-- **Em casos comuns, agir sempre com proatividade!**
+#### **🚨 ERROS MAIS COMUNS (NÃO REPETIR)**
+- ❌ `server-simple-real.js` → ✅ USE `server-simple-real.cjs`
+- ❌ Arquivos de `/archive/` → ✅ USE apenas do CHANGELOG atual
+- ❌ Unicode paths no Python → ✅ USE forward slashes
+- ❌ `shell: true` no spawn → ✅ USE executável direto
+
+#### **🎯 ESTADO ATUAL - V1.4.0.a.5** 
+- **Status**: MP4 gerado, áudio em integração
+- **Base Sólida**: V1.4.0.a.4 (renderização física confirmada)
+- **Diretório**: `C:\...\zentraw\Zentraw\3d_visualizer\`
+- **Arquivos Ativos**: Listados em [docs/CHANGELOG.md](./docs/CHANGELOG.md)

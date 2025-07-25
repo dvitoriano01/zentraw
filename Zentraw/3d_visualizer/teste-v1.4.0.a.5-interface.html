@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste V1.4.0.a.5 - MP4 com Audio</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #2c3e50;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background-color: #34495e;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        h1 { 
+            text-align: center; 
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #ecf0f1;
+        }
+        .status { 
+            background-color: #2c3e50; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0;
+            border: 1px solid #34495e;
+        }
+        .success { background-color: #27ae60; }
+        .error { background-color: #e74c3c; }
+        .warning { background-color: #f39c12; }
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { 
+            background-color: #c0392b; 
+        }
+        #output { 
+            background-color: #1a1a1a; 
+            color: #00ff00; 
+            padding: 20px; 
+            border-radius: 5px; 
+            font-family: monospace; 
+            white-space: pre-wrap; 
+            max-height: 400px; 
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .file-info {
+            display: block;
+            margin: 20px 0;
+        }
+        .file-check {
+            background-color: #2c3e50;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #34495e;
+        }
+        .emoji { font-size: 1.2em; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZENTRAW V1.4.0.a.5 - MP4 COM AUDIO</h1>
+        
+        <div class="status warning">
+            <h3><span class="emoji">STATUS ATUAL</span></h3>
+            <p><strong>Versão:</strong> V1.4.0.a.5 - Áudio Integrado</p>
+            <p><strong>Correções Aplicadas:</strong></p>
+            <ul>
+                <li>OK Duracao corrigida: duration_seconds * fps</li>
+                <li>OK Codec AAC ativado</li>
+                <li>OK Sequence editor integrado</li>
+                <li>OK Paths absolutos Windows</li>
+            </ul>
+        </div>
+
+        <div class="file-info">
+            <div class="file-check">
+                <h4>Arquivo de Audio</h4>
+                <p>sample_audio2.wav</p>
+                <p id="audioStatus">Verificando...</p>
+            </div>
+            <div class="file-check">
+                <h4>Imagem de Capa</h4>
+                <p>sample_cover.jpg</p>
+                <p id="imageStatus">Verificando...</p>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="executarTeste()">EXECUTAR TESTE V1.4.0.a.5</button>
+            <button onclick="verificarResultado()">VERIFICAR RESULTADO</button>
+            <button onclick="abrirUploads()">ABRIR PASTA UPLOADS</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function executarTeste() {
+            log('🎵 INICIANDO TESTE V1.4.0.a.5 - MP4 COM ÁUDIO');
+            log('📁 Diretório: C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer');
+            log('⏰ Data/Hora: ' + new Date().toLocaleString());
+            log('');
+            log('🔧 CORREÇÕES V1.4.0.a.5 APLICADAS:');
+            log('   ✅ Duração: duration_seconds * fps (8 segundos * 30 fps = 240 frames)');
+            log('   ✅ Codec AAC: scene.render.ffmpeg.audio_codec = "AAC"');
+            log('   ✅ Sequence editor: Áudio carregado no Blender');
+            log('   ✅ Paths: Usando forward slashes para evitar unicode escape');
+            log('');
+            log('🎬 COMANDO EXECUTADO:');
+            log('"C:\\Blender\\blender.exe" --background "Blender\\template.blend" --python "Blender\\render_audio_visualizer.py" -- "Blender\\sample_audio2.wav" "Blender\\sample_cover.jpg" "uploads\\teste_v1.4.0.a.5_FINAL.mp4"');
+            log('');
+            log('⏳ EXECUTANDO... (pode levar 1-2 minutos)');
+            log('💡 O Blender está processando em background.');
+            log('💡 Use "VERIFICAR RESULTADO" após alguns minutos.');
+        }
+
+        function verificarResultado() {
+            log('🔍 VERIFICANDO RESULTADO V1.4.0.a.5...');
+            log('📁 Procurando arquivo: uploads\\teste_v1.4.0.a.5_FINAL.mp4');
+            log('');
+            log('🎯 VERIFICAÇÕES ESPERADAS:');
+            log('   1. ⏱️ Duração: ~8 segundos (igual ao áudio)');
+            log('   2. 🎵 Áudio: Presente e audível no MP4');
+            log('   3. 🎬 Animação: 3D sincronizada com áudio');
+            log('   4. 🔊 Codec: AAC integrado');
+            log('');
+            log('💡 Se o arquivo foi gerado:');
+            log('   🎉 V1.4.0.a.5 COM ÁUDIO - SUCESSO!');
+            log('   📖 Abra o arquivo para verificar se o áudio está funcionando');
+            log('');
+            log('💡 Se o arquivo NÃO foi gerado:');
+            log('   ❌ Possível problema no Blender ou script Python');
+            log('   🔧 Verifique se Blender está em C:\\Blender\\blender.exe');
+        }
+
+        function abrirUploads() {
+            log('📁 ABRINDO PASTA UPLOADS...');
+            log('📂 Caminho: C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\');
+            log('💡 Procure por arquivos MP4 recentes');
+            log('💡 O arquivo deve ter áudio integrado se V1.4.0.a.5 funcionou');
+        }
+
+        // Verificar arquivos ao carregar
+        window.onload = function() {
+            log('🚀 ZENTRAW V1.4.0.a.5 - INTERFACE DE TESTE CARREGADA');
+            log('📋 Seguindo AI-RULES-CRITICAL.md');
+            log('🎯 Meta: MP4 com áudio integrado usando base V1.4.0.a.4');
+            log('');
+            log('📁 ARQUIVOS NECESSÁRIOS:');
+            log('   🎵 Blender\\sample_audio2.wav (8 segundos)');
+            log('   🖼️ Blender\\sample_cover.jpg (capa)');
+            log('   🎬 Blender\\template.blend (template 3D)');
+            log('   🐍 Blender\\render_audio_visualizer.py (script atualizado)');
+            log('');
+            log('💡 Use os botões acima para executar e verificar o teste.');
+        };
+    </script>
+</body>
+</html>

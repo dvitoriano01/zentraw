@@ -1,13 +1,14 @@
 
 /**
- * Zentraw 3D Visualizer V1.4.0.a.4
- * Data: 23/07/2025 - 18:50 BRT
- * Propósito: Backend Express com EXECUÇÃO REAL DO BLENDER - Upload de arquivos + Render MP4
- * Status: Funcional - REAL BLENDER EXECUTION
+ * Zentraw 3D Visualizer V1.4.0.a.5
+ * Data: 24/07/2025 - 13:50 BRT
+ * Propósito: Backend Express com EXECUÇÃO REAL DO BLENDER - PATHS FIX para Windows com espaços
+ * Status: Funcional - PATHS CORRIGIDOS para espaços no Windows
  * Dependências: express, multer, child_process, path, fs
  * Autor: GitHub Copilot
  * Categoria: Backend
  * Diretório Oficial: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer
+ * Fix V1.4.0.a.5: Correção de paths com espaços usando aspas duplas
  */
 
 const express = require('express');
@@ -84,21 +85,29 @@ app.post('/api/blender/audio-visualizer', upload.fields([
         });
     }
     
-    const outputFile = path.join(UPLOADS_DIR, 'visualizer_' + Date.now() + '.mp4');
+    const outputFile = path.resolve(UPLOADS_DIR, 'visualizer_' + Date.now() + '.mp4');
     const blenderExe = 'C:\\Blender\\blender.exe';
     const templateBlend = path.resolve(__dirname, 'Blender', 'template.blend');
     const pythonScript = path.resolve(__dirname, 'Blender', 'render_audio_visualizer.py');
+    const audioPath = path.resolve(audioFile);
+    const imagePath = path.resolve(imageFile);
     
     console.log('🎬 Blender Command:', blenderExe);
     console.log('📋 Template:', templateBlend);
     console.log('🐍 Script:', pythonScript);
+    console.log('🎵 Audio:', audioPath);
+    console.log('🖼️ Image:', imagePath);
     console.log('📁 Output:', outputFile);
     
     const args = [
         '--background',
-        templateBlend,
-        '--python', pythonScript,
-        '--', audioFile, imageFile, outputFile
+        `"${templateBlend}"`,
+        '--python', 
+        `"${pythonScript}"`,
+        '--', 
+        `"${audioPath}"`, 
+        `"${imagePath}"`, 
+        `"${outputFile}"`
     ];
     
     const blenderProcess = spawn(blenderExe, args, {

@@ -86,12 +86,17 @@
 ### **PRINCÍPIOS OBRIGATÓRIOS:**
 
 ```
+🛡️ BLINDAGEM TOTAL: NUNCA PERDER FUNCIONALIDADE EXISTENTE
+🔧 CORREÇÃO PRIORITÁRIA: VERIFICAR POSSIBILIDADE DE CORREÇÃO TÉCNICA ANTES DE ROLLBACK
+🚫 ARQUIVOS DE REFERÊNCIA: NUNCA incorporar - SOMENTE estudar e reescrever (em blocos identificados para que, se necessário, sejam deletados)
+🚫 PASTAS ARQUIVADAS: NUNCA recuperar de /archive/ ou "NÃO USAR" - JAMAIS! (exceto com autorização expressa do DEV)
 ✅ UMA MUDANÇA POR VEZ
 ✅ TESTAR IMEDIATAMENTE após cada mudança
 ✅ DOCUMENTAR decisão em TEMPO REAL
 ✅ PRESERVAR funcionalidade existente
 ✅ APLICAR mudança MÍNIMA necessária
 ✅ VALIDAR antes de continuar
+🚨 ROLLBACK IMEDIATO se funcionalidade quebrar E correção não for possível
 ```
 
 ### **FLUXO DE EXECUÇÃO:**
@@ -206,10 +211,12 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 1. 🛑 PARAR modificações imediatamente
 2. 📋 CONSULTAR TROUBLESHOOTING.md
-3. 🔄 APLICAR solução conhecida OU
-4. 📞 REVERTER para última versão estável
-5. 🔍 IDENTIFICAR causa raiz
-6. 📝 DOCUMENTAR problema e solução
+3. � VERIFICAR A POSSIBILIDADE DE CORREÇÃO, SEM QUEBRAR O CÓDIGO OU A BLINDAGEM, ANTES DE SUGERIR ROLLBACK TOTAL
+4. 🔧 APLICAR correção técnica mínima SE possível OU
+5. �🔄 APLICAR solução conhecida OU
+6. 📞 REVERTER para última versão estável APENAS como último recurso
+7. 🔍 IDENTIFICAR causa raiz
+8. 📝 DOCUMENTAR problema e solução
 ```
 
 ### **❓ SISTEMA DESCONHECIDO:**
@@ -287,11 +294,14 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 1. 🛑 PARAR todas as modificações
 2. 📊 DOCUMENTAR estado atual encontrado
-3. 🔄 REVERTER para último estado estável
-4. 📝 REGISTRAR problema no TROUBLESHOOTING.md
-5. 📋 ATUALIZAR documentação baseada na REALIDADE
-6. ✅ VALIDAR sistema novamente
-7. 📊 REGISTRAR recuperação no log de decisões
+3. � ANALISAR possibilidade de correção técnica preservando blindagem
+4. 🔧 APLICAR correção mínima SE viável E segura
+5. 🧪 TESTAR correção mantendo funcionalidade base
+6. �🔄 REVERTER para último estado estável APENAS se correção falhar
+7. 📝 REGISTRAR problema no TROUBLESHOOTING.md
+8. 📋 ATUALIZAR documentação baseada na REALIDADE
+9. ✅ VALIDAR sistema novamente
+10. 📊 REGISTRAR recuperação no log de decisões
 ```
 
 ---
@@ -331,6 +341,8 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ### **AGENTE VIOLANDO PROTOCOLO:**
 
 - ❌ Usa arquivos de /archive/
+- ❌ Usa pastas "NÃO USAR" 
+- ❌ Incorpora código de referência diretamente
 - ❌ Modifica sem testar estado atual
 - ❌ Não documenta mudanças
 - ❌ Ignora hierarquia de prioridades

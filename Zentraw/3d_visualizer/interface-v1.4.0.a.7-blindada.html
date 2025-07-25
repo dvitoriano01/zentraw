@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Zentraw V1.4.0.a.7 - Interface Blindada</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status-card h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .form-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #E8F4FD;
+        }
+        
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-group select option {
+            background: #2a5298;
+            color: white;
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+            min-width: 150px;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .button.test {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+        
+        .button.test:hover {
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+        
+        .logs {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logs h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        .log-entry {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .log-info {
+            background: rgba(33, 150, 243, 0.2);
+            border-left: 4px solid #2196F3;
+        }
+        
+        .log-success {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .log-error {
+            background: rgba(244, 67, 54, 0.2);
+            border-left: 4px solid #f44336;
+        }
+        
+        .log-warning {
+            background: rgba(255, 152, 0, 0.2);
+            border-left: 4px solid #FF9800;
+        }
+        
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .status {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .backup-badge {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Zentraw 3D Visualizer V1.4.0.a.7</h1>
+            <p>🔧 EVOLUÇÃO BLINDADA - Base V1.4.0.a.5 Preservada <span class="version-badge">FUNCIONAL</span></p>
+            <p>🎯 Sincronização Corrigida + Logs Detalhados <span class="version-badge backup-badge">TESTANDO</span></p>
+        </div>
+
+        <div class="status" id="systemStatus">
+            <div class="status-card">
+                <h3>📊 Status do Sistema</h3>
+                <div id="serverStatus">🔄 Verificando...</div>
+            </div>
+            <div class="status-card">
+                <h3>🐍 Scripts Disponíveis</h3>
+                <div id="scriptsStatus">🔄 Carregando...</div>
+            </div>
+            <div class="status-card">
+                <h3>📁 Arquivos de Teste</h3>
+                <div id="testFilesStatus">🔄 Verificando...</div>
+            </div>
+        </div>
+
+        <div class="grid-layout">
+            <div class="form-section">
+                <h3>🎵 Upload de Arquivos</h3>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="audioFile">🎵 Arquivo de Áudio (WAV):</label>
+                        <input type="file" id="audioFile" name="audio" accept=".wav" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imageFile">🖼️ Arquivo de Imagem (JPG/PNG):</label>
+                        <input type="file" id="imageFile" name="image" accept=".jpg,.jpeg,.png" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="scriptVersion">🐍 Versão do Script:</label>
+                        <select id="scriptVersion" name="scriptVersion">
+                            <option value="v1.4.0.a.5">V1.4.0.a.5 (BACKUP SEGURO) 🛡️</option>
+                            <option value="v1.4.0.a.7" selected>V1.4.0.a.7 (SINCRONIZAÇÃO CORRIGIDA) 🔧</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="button" id="renderButton">🚀 Executar Render</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>🧪 Testes Rápidos</h3>
+                <p>Usar arquivos de teste incluídos no sistema:</p>
+                <br>
+                
+                <button class="button test" onclick="testSample3Audio()">
+                    🎵 Testar sample_audio3.wav (V1.4.0.a.7)
+                </button>
+                
+                <button class="button test" onclick="testSample2Audio()">
+                    🎵 Testar sample_audio2.wav (V1.4.0.a.5)
+                </button>
+                
+                <button class="button" onclick="checkSystemStatus()">
+                    🔍 Verificar Status Sistema
+                </button>
+                
+                <button class="button" onclick="clearLogs()">
+                    🧹 Limpar Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="progress" id="progressSection">
+            <h3>🔄 Progresso do Render</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div id="progressText">Iniciando...</div>
+        </div>
+
+        <div class="logs">
+            <h3>📋 Logs do Sistema</h3>
+            <div id="logContainer">
+                <div class="log-entry log-info">
+                    🛡️ Sistema V1.4.0.a.7 BLINDADO inicializado com base V1.4.0.a.5 preservada
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3004/api';
+        let logCount = 1;
+
+        // Adicionar log
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // Limitar número de logs
+            if (logContainer.children.length > 100) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+
+        // Verificar status do sistema
+        async function checkSystemStatus() {
+            addLog('🔍 Verificando status do sistema...', 'info');
+            
+            try {
+                const response = await fetch(`${API_BASE}/status`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                addLog(`✅ Servidor: ${data.version}`, 'success');
+                addLog(`📊 Base: ${data.base}`, 'info');
+                addLog(`📁 Uploads: ${data.uploads ? 'OK' : 'ERRO'}`, data.uploads ? 'success' : 'error');
+                
+                // Atualizar status na interface
+                document.getElementById('serverStatus').innerHTML = `
+                    ✅ ${data.version}<br>
+                    📊 ${data.base}<br>
+                    ⏰ ${new Date(data.timestamp).toLocaleTimeString()}
+                `;
+                
+                // Atualizar scripts disponíveis
+                let scriptsHtml = '';
+                for (const [version, script] of Object.entries(data.scripts)) {
+                    const status = script.exists ? '✅' : '❌';
+                    scriptsHtml += `${status} ${version}: ${script.file}<br>`;
+                    addLog(`${status} Script ${version}: ${script.exists ? 'DISPONÍVEL' : 'AUSENTE'}`, script.exists ? 'success' : 'error');
+                }
+                document.getElementById('scriptsStatus').innerHTML = scriptsHtml;
+                
+                return data;
+            } catch (error) {
+                addLog(`❌ Erro ao verificar status: ${error.message}`, 'error');
+                document.getElementById('serverStatus').innerHTML = '❌ Servidor offline';
+                return null;
+            }
+        }
+
+        // Testar com sample_audio3.wav
+        async function testSample3Audio() {
+            addLog('🧪 Iniciando teste com sample_audio3.wav (V1.4.0.a.7)...', 'info');
+            
+            try {
+                // Simular upload com arquivos locais
+                const formData = new FormData();
+                formData.append('scriptVersion', 'v1.4.0.a.7');
+                
+                showProgress();
+                updateProgress(10, 'Preparando teste com sample_audio3.wav...');
+                
+                // Usar endpoint de teste específico
+                const response = await fetch(`${API_BASE}/blender/test-sample3`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog('✅ Endpoint de teste pronto, executando render...', 'success');
+                    
+                    // Agora executar o render real
+                    updateProgress(30, 'Executando Blender com sample_audio3.wav...');
+                    
+                    // Como não podemos fazer upload de arquivos locais diretamente,
+                    // mostrar instruções para o usuário
+                    addLog('📋 Para testar sample_audio3.wav:', 'warning');
+                    addLog('1. Navegue até C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\Blender\\', 'info');
+                    addLog('2. Execute: TESTE-BLINDADO-V1.4.0.a.7.bat', 'info');
+                    addLog('3. Ou use a interface para upload manual', 'info');
+                    
+                    updateProgress(100, 'Instruções exibidas - Execute teste manual');
+                    
+                } else {
+                    addLog(`❌ Falha no teste: ${data.message}`, 'error');
+                    updateProgress(0, 'Teste falhou');
+                }
+                
+                hideProgress();
+                
+            } catch (error) {
+                addLog(`❌ Erro no teste: ${error.message}`, 'error');
+                hideProgress();
+            }
+        }
+
+        // Testar com sample_audio2.wav
+        async function testSample2Audio() {
+            addLog('🧪 Para testar sample_audio2.wav (V1.4.0.a.5):', 'warning');
+            addLog('1. Execute: TESTE-COMPLETO-V1.4.0.a.5.bat', 'info');
+            addLog('2. Ou use a interface para upload manual', 'info');
+        }
+
+        // Mostrar progresso
+        function showProgress() {
+            document.getElementById('progressSection').style.display = 'block';
+        }
+
+        // Esconder progresso
+        function hideProgress() {
+            setTimeout(() => {
+                document.getElementById('progressSection').style.display = 'none';
+            }, 3000);
+        }
+
+        // Atualizar progresso
+        function updateProgress(percent, text) {
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressText').textContent = text;
+        }
+
+        // Limpar logs
+        function clearLogs() {
+            document.getElementById('logContainer').innerHTML = '';
+            addLog('🧹 Logs limpos', 'info');
+        }
+
+        // Submit do formulário
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const scriptVersion = formData.get('scriptVersion');
+            
+            addLog(`🚀 Iniciando render com script ${scriptVersion}...`, 'info');
+            
+            const renderButton = document.getElementById('renderButton');
+            renderButton.disabled = true;
+            renderButton.textContent = '🔄 Renderizando...';
+            
+            showProgress();
+            updateProgress(10, 'Enviando arquivos...');
+            
+            try {
+                const response = await fetch(`${API_BASE}/blender/audio-visualizer`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                updateProgress(50, 'Executando Blender...');
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog(`✅ ${data.message}`, 'success');
+                    addLog(`📊 Script usado: ${data.scriptUsed}`, 'info');
+                    addLog(`📁 Arquivo gerado: ${data.output}`, 'success');
+                    addLog(`📊 Tamanho: ${data.fileSize} bytes (${(data.fileSize/1024/1024).toFixed(2)} MB)`, 'info');
+                    addLog(`🏆 Qualidade: ${data.quality}`, 'success');
+                    addLog(`⏱️ Tempo de render: ${data.renderTime}`, 'info');
+                    
+                    updateProgress(100, 'Render concluído com sucesso!');
+                } else {
+                    addLog(`❌ ${data.message}`, 'error');
+                    if (data.log) {
+                        addLog(`📋 Log: ${data.log.slice(-200)}...`, 'warning');
+                    }
+                    updateProgress(0, 'Render falhou');
+                }
+                
+            } catch (error) {
+                addLog(`❌ Erro na requisição: ${error.message}`, 'error');
+                updateProgress(0, 'Erro na conexão');
+            } finally {
+                renderButton.disabled = false;
+                renderButton.textContent = '🚀 Executar Render';
+                hideProgress();
+            }
+        });
+
+        // Verificar status na inicialização
+        window.addEventListener('load', () => {
+            addLog('🛡️ Interface V1.4.0.a.7 BLINDADA carregada', 'success');
+            checkSystemStatus();
+        });
+
+        // Verificar status a cada 30 segundos
+        setInterval(checkSystemStatus, 30000);
+    </script>
+</body>
+</html>

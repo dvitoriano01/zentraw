@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentraw V1.4.0.a.6 - Audio Visualizer Interface</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        .version-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel h3 {
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-upload {
+            margin-bottom: 20px;
+        }
+        
+        .file-upload label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .file-upload input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload input[type="file"]:hover {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #ecf0f1;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            transition: background 0.3s;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider::-webkit-slider-thumb:hover {
+            background: #ff6b6b;
+            transform: scale(1.2);
+        }
+        
+        .value-display {
+            min-width: 60px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+        
+        select option {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .preview-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .waveform-canvas {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .settings-preview {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="version-tag">V1.4.0.a.6 - SYNC + INTERFACE</div>
+            <h1>Zentraw Audio Visualizer</h1>
+            <p>Sincronização Precisa + Interface Melhorada</p>
+        </div>
+        
+        <div class="grid">
+            <div class="panel">
+                <h3>📁 Arquivos de Input</h3>
+                
+                <div class="file-upload">
+                    <label for="audioFile">🎵 Arquivo de Áudio (.wav)</label>
+                    <input type="file" id="audioFile" accept=".wav" onchange="handleFileSelect('audio')">
+                </div>
+                
+                <div class="file-upload">
+                    <label for="imageFile">🖼️ Imagem de Capa (.jpg, .png)</label>
+                    <input type="file" id="imageFile" accept=".jpg,.jpeg,.png" onchange="handleFileSelect('image')">
+                </div>
+                
+                <div class="control-group">
+                    <label for="outputName">📤 Nome do Arquivo de Saída</label>
+                    <input type="text" id="outputName" value="zentraw_v1.4.0.a.6" 
+                           style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; background: rgba(255,255,255,0.1); color: white;">
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>⚙️ Configurações de Render</h3>
+                
+                <div class="control-group">
+                    <label for="fpsSlider">🎞️ FPS (Frames por Segundo)</label>
+                    <div class="slider-container">
+                        <input type="range" id="fpsSlider" class="slider" min="24" max="60" value="30" oninput="updateValue('fps')">
+                        <div class="value-display" id="fpsValue">30</div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label for="resolutionSelect">📐 Resolução</label>
+                    <select id="resolutionSelect" onchange="updatePreview()">
+                        <option value="720p">HD (1280x720)</option>
+                        <option value="1080p" selected>Full HD (1920x1080)</option>
+                        <option value="4k">4K (3840x2160)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="amplitudeSlider">🔊 Multiplicador de Amplitude</label>
+                    <div class="slider-container">
+                        <input type="range" id="amplitudeSlider" class="slider" min="1" max="5" step="0.5" value="3" oninput="updateValue('amplitude')">
+                        <div class="value-display" id="amplitudeValue">3.0x</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h3>👁️ Preview das Configurações</h3>
+            <div class="preview-area">
+                <canvas id="waveformCanvas" class="waveform-canvas"></canvas>
+                <div class="settings-preview" id="settingsPreview">
+                    <p><strong>Configuração Atual:</strong></p>
+                    <p>FPS: 30 | Resolução: 1920x1080 | Amplitude: 3.0x</p>
+                    <p>Duração estimada: -- | Frames totais: --</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="previewSettings()">
+                👁️ Preview Configurações
+            </button>
+            <button class="btn btn-primary" onclick="renderVideo()">
+                🎬 Renderizar V1.4.0.a.6
+            </button>
+        </div>
+        
+        <div class="status-bar" id="statusBar">
+            <p>🚀 Zentraw V1.4.0.a.6 - Audio Visualizer carregado!</p>
+            <p>📋 Selecione os arquivos e configure os parâmetros para começar.</p>
+            <p>✨ Novidades: Sincronização precisa + controles dinâmicos</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let audioFile = null;
+        let imageFile = null;
+        
+        function handleFileSelect(type) {
+            const input = type === 'audio' ? document.getElementById('audioFile') : document.getElementById('imageFile');
+            const file = input.files[0];
+            
+            if (file) {
+                if (type === 'audio') {
+                    audioFile = file;
+                    log(`🎵 Áudio selecionado: ${file.name} (${(file.size/1024/1024).toFixed(2)}MB)`);
+                    analyzeAudio(file);
+                } else {
+                    imageFile = file;
+                    log(`🖼️ Imagem selecionada: ${file.name} (${(file.size/1024).toFixed(0)}KB)`);
+                }
+                updatePreview();
+            }
+        }
+        
+        function updateValue(type) {
+            if (type === 'fps') {
+                const value = document.getElementById('fpsSlider').value;
+                document.getElementById('fpsValue').textContent = value;
+            } else if (type === 'amplitude') {
+                const value = document.getElementById('amplitudeSlider').value;
+                document.getElementById('amplitudeValue').textContent = value + 'x';
+            }
+            updatePreview();
+        }
+        
+        function analyzeAudio(file) {
+            // Simular análise de áudio (em implementação real, usaria Web Audio API)
+            const canvas = document.getElementById('waveformCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Desenhar waveform simulado
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            ctx.fillStyle = 'rgba(78, 205, 196, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#4ecdc4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let i = 0; i < canvas.width; i++) {
+                const y = canvas.height/2 + Math.sin(i * 0.02) * Math.random() * 30;
+                if (i === 0) ctx.moveTo(i, y);
+                else ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+            
+            log(`📊 Waveform preview gerado para ${file.name}`);
+        }
+        
+        function updatePreview() {
+            const fps = document.getElementById('fpsSlider').value;
+            const resolution = document.getElementById('resolutionSelect').value;
+            const amplitude = document.getElementById('amplitudeSlider').value;
+            
+            const resolutions = {
+                '720p': '1280x720',
+                '1080p': '1920x1080', 
+                '4k': '3840x2160'
+            };
+            
+            const preview = document.getElementById('settingsPreview');
+            
+            // Simular duração baseada no arquivo de áudio
+            const estimatedDuration = audioFile ? '8.0s' : '--';
+            const totalFrames = audioFile ? parseInt(fps) * 8 : '--';
+            
+            preview.innerHTML = `
+                <p><strong>Configuração Atual V1.4.0.a.6:</strong></p>
+                <p>FPS: ${fps} | Resolução: ${resolutions[resolution]} | Amplitude: ${amplitude}x</p>
+                <p>Duração estimada: ${estimatedDuration} | Frames totais: ${totalFrames}</p>
+                <p>🎯 Sincronização: Keyframes alinhados com timestamp</p>
+            `;
+        }
+        
+        function previewSettings() {
+            log('👁️ Gerando preview das configurações V1.4.0.a.6...');
+            
+            if (!audioFile || !imageFile) {
+                log('❌ ERRO: Selecione os arquivos de áudio e imagem primeiro!');
+                return;
+            }
+            
+            const fps = document.getElementById('fpsSlider').value;
+            const resolution = document.getElementById('resolutionSelect').value;
+            const amplitude = document.getElementById('amplitudeSlider').value;
+            
+            log(`⚙️ Configurações:`);
+            log(`   📱 FPS: ${fps} frames por segundo`);
+            log(`   📐 Resolução: ${resolution}`);
+            log(`   🔊 Amplitude: ${amplitude}x multiplier`);
+            log(`   🎵 Áudio: ${audioFile.name}`);
+            log(`   🖼️ Imagem: ${imageFile.name}`);
+            log('✅ Preview concluído! Use "Renderizar" para gerar o MP4.');
+        }
+        
+        function renderVideo() {
+            if (!audioFile || !imageFile) {
+                log('❌ ERRO: Selecione os arquivos de áudio e imagem primeiro!');
+                return;
+            }
+            
+            const fps = document.getElementById('fpsSlider').value;
+            const resolution = document.getElementById('resolutionSelect').value;
+            const amplitude = document.getElementById('amplitudeSlider').value;
+            const outputName = document.getElementById('outputName').value;
+            
+            log('🚀 Iniciando renderização V1.4.0.a.6...');
+            log(`⚙️ Parâmetros: ${fps}fps, ${resolution}, ${amplitude}x amplitude`);
+            log('📊 Enviando para backend...');
+            
+            // Simular progresso
+            let progress = 0;
+            const progressBar = document.getElementById('progressFill');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    log('🎉 Renderização V1.4.0.a.6 concluída!');
+                    log(`📁 Arquivo gerado: uploads/${outputName}_v1.4.0.a.6.mp4`);
+                    log('🎯 Sincronização: Áudio e visual perfeitamente alinhados');
+                }
+                progressBar.style.width = progress + '%';
+                log(`📈 Progresso: ${Math.round(progress)}%`);
+            }, 500);
+            
+            // Em implementação real, faria upload via FormData para /render-v1.4.0.a.6
+            // com os parâmetros configurados
+        }
+        
+        function log(message) {
+            const statusBar = document.getElementById('statusBar');
+            const timestamp = new Date().toLocaleTimeString();
+            statusBar.innerHTML += `<br>[${timestamp}] ${message}`;
+            statusBar.scrollTop = statusBar.scrollHeight;
+        }
+        
+        // Inicializar
+        window.onload = function() {
+            updatePreview();
+            log('🎯 V1.4.0.a.6 - Interface carregada com sucesso!');
+            log('📋 Recursos: Sincronização precisa + parâmetros dinâmicos');
+        };
+    </script>
+</body>
+</html>

@@ -5,13 +5,14 @@ const path = require('path');
 
 
 /**
- * Zentraw 3D Visualizer V1.4.0.a.4
- * Data: 23/07/2025 - 18:45 BRT
- * Propósito: Backend Express com EXECUÇÃO REAL DO BLENDER - Upload de arquivos + Render MP4
- * Status: Funcional - REAL BLENDER EXECUTION
- * Dependências: express, multer, child_process, path, fs
+ * Zentraw TemplateLibraryBuilder Backend V1.4.0.a.2
+ * Data: 24/07/2025 - 15:45 BRT
+ * Propósito: Backend Express para TemplateLibraryBuilder - Sistema isolado (sem 3D Visualizer)
+ * Status: Funcional - Core functionality only
+ * Dependências: express, multer, path, fs
  * Autor: GitHub Copilot
- * Categoria: Backend
+ * Categoria: Backend - TemplateLibraryBuilder
+ * Nota: Sistema 3D Visualizer movido para Zentraw/3d_visualizer/
  */
 
 const express = require('express');
@@ -40,56 +41,49 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// TEST CONNECTION - Verificar dependências
+// CORE FUNCTIONALITY - Health check and basic API
 app.get('/api/test', (req, res) => {
-    const blenderExe = 'C:\\Blender\\blender.exe';
-    const templateBlend = path.resolve(__dirname, 'Blender', 'template.blend');
-    const pythonScript = path.resolve(__dirname, 'Blender', 'render_audio_visualizer.py');
-    
     const checks = {
-        blender: fs.existsSync(blenderExe),
-        template: fs.existsSync(templateBlend),
-        script: fs.existsSync(pythonScript),
-        uploads: fs.existsSync(UPLOADS_DIR)
+        server: true,
+        uploads: fs.existsSync(UPLOADS_DIR),
+        timestamp: new Date().toISOString()
     };
     
-    console.log('V1.4.0.a.4 - Dependency Check:', checks);
+    console.log('V1.4.0.a.2 - TemplateLibraryBuilder Health Check:', checks);
     
     res.json({ 
         success: true, 
-        message: 'Connection Successful - V1.4.0.a.4!',
-        dependencies: checks,
-        version: 'V1.4.0.a.4',
+        message: 'TemplateLibraryBuilder Backend V1.4.0.a.2 - Funcionando!',
+        checks: checks,
+        version: 'V1.4.0.a.2',
+        module: 'TemplateLibraryBuilder',
+        note: '3D Visualizer movido para Zentraw/3d_visualizer/',
         timestamp: new Date().toISOString()
     });
 });
 
-// BLENDER REAL EXECUTION - Upload + Render
-app.post('/api/blender/audio-visualizer', upload.fields([
-    { name: 'audio', maxCount: 1 },
-    { name: 'image', maxCount: 1 }
+// TEMPLATE LIBRARY BUILDER - Core functionality endpoints
+app.post('/api/template/upload', upload.fields([
+    { name: 'template', maxCount: 1 },
+    { name: 'assets', maxCount: 10 }
 ]), (req, res) => {
-    console.log('🚀 V1.4.0.a.4 - REAL BLENDER EXECUTION STARTED');
+    console.log('� TemplateLibraryBuilder Upload Request V1.4.0.a.2');
     console.log('📁 Files received:', req.files);
     
-    const audioFile = req.files?.audio?.[0]?.path;
-    const imageFile = req.files?.image?.[0]?.path;
+    const templateFile = req.files?.template?.[0]?.path;
     
-    if (!audioFile || !imageFile) {
+    if (!templateFile) {
         return res.status(400).json({ 
             success: false, 
-            message: 'Audio and image files required.',
-            version: 'V1.4.0.a.4'
+            message: 'Template file required.',
+            version: 'V1.4.0.a.2'
         });
     }
     
-    const outputFile = path.join(UPLOADS_DIR, 'visualizer_' + Date.now() + '.mp4');
-    const blenderExe = 'C:\\Blender\\blender.exe';
-    const templateBlend = path.resolve(__dirname, 'Blender', 'template.blend');
-    const pythonScript = path.resolve(__dirname, 'Blender', 'render_audio_visualizer.py');
+    const outputFile = path.join(UPLOADS_DIR, 'template_' + Date.now() + '.json');
     
-    console.log('🎬 Blender Command:', blenderExe);
-    console.log('📋 Arguments:', [
+    console.log('📁 Template file:', templateFile);
+    console.log('📁 Output file:', outputFile);
         '--background',
         `"${templateBlend}"`,
         '--python', `"${pythonScript}"`,

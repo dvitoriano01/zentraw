@@ -20,6 +20,10 @@ if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR);
 
 const app = express();
 app.use(express.json());
+
+// Servir arquivos estáticos (HTML, CSS, JS) do diretório atual
+app.use(express.static(__dirname));
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -33,6 +37,11 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => cb(null, Date.now() + '_' + file.originalname)
 });
 const upload = multer({ storage });
+
+// Rota específica para a interface principal
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'test-simple-real.html'));
+});
 
 app.get('/api/test', (req, res) => {
     res.json({ success: true, message: 'Connection Successful - V1.4.0.a.5 BÁSICO (Official Directory)!' });

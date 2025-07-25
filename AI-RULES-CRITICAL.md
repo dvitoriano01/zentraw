@@ -42,6 +42,21 @@
 ✅ SEMPRE usar: Apenas arquivos listados no CHANGELOG atual
 ```
 
+### **❌ PORTA INCORRETA - BACKEND**
+```javascript
+❌ ERRO: const PORT = 3006; // Porta aleatória não documentada
+✅ SOLUÇÃO: const PORT = 3004; // Porta oficial documentada Zentraw
+```
+
+### **❌ SERVIDOR PROCESSO ZOMBIE - CRITICAL**
+```bash
+❌ PROBLEMA: Servidor antigo ainda rodando mesmo após modificações
+❌ SINTOMA: API retorna versão antiga (V1.4.0.a.4) após correções aplicadas
+❌ CAUSA: Processo node.exe cached ou múltiplos processos simultâneos
+✅ SOLUÇÃO: Restart manual completo do VS Code + verificar Task Manager
+✅ ALTERNATIVA: Usar porta diferente temporariamente para forçar restart
+```
+
 ---
 
 ## ✅ **VERSÃO ATUAL: V1.4.0.a.5**
@@ -61,10 +76,10 @@
 └── uploads/                         # ✅ Output directory
 ```
 
-### **⚠️ PROBLEMA ATUAL**
-- **Status**: MP4 gerado MAS duração incorreta (dobro do áudio)
-- **Causa**: Cálculo de duração usando len(samples) ao invés de nframes
-- **Próximo**: Corrigir fórmula duration_seconds = nframes / sr
+### **⚠️ STATUS ATUAL**
+- **Sistema:** ✅ FUNCIONAL - MP4 com áudio integrado e duração correta
+- **Localização:** `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\`
+- **Próxima Evolução:** V1.4.0.a.7 - Melhorias baseadas em V1.4.0.a.5 validado
 
 ---
 
@@ -117,8 +132,8 @@
 C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\
 ```
 
-**Base Sólida**: V1.4.0.a.4 (MP4 gerado com sucesso)  
-**Meta Atual**: V1.4.0.a.5 (Integrar áudio no MP4)  
+**Base Sólida**: V1.4.0.a.5 (MP4 com áudio duração correta + funcional)  
+**Meta Futura**: V1.4.0.a.7 (Melhorias baseadas em sistema validado)  
 **Arquivos Base**: Listados no CHANGELOG.md V1.4.0.a.5
 
 ---

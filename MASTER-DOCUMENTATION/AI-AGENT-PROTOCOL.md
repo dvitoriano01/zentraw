@@ -12,6 +12,7 @@
 ### **⚡ ANTES DE QUALQUER AÇÃO (SEQUÊNCIA RÍGIDA):**
 
 #### **ETAPA 1: HIERARQUIA DOCUMENTAL (OBRIGATÓRIO)**
+
 ```
 1.1 📚 LER ZENTRAW-MASTER-RULES.md
     ├── Confirmar prioridades hierárquicas
@@ -35,6 +36,7 @@
 ```
 
 #### **ETAPA 2: VALIDAÇÃO FÍSICA (CRÍTICO)**
+
 ```
 2.1 ✅ CONFIRMAR EXISTÊNCIA FÍSICA
     ├── Todos os arquivos listados existem?
@@ -56,6 +58,7 @@
 ```
 
 #### **ETAPA 3: CONTEXTO TÉCNICO (OBRIGATÓRIO)**
+
 ```
 3.1 📋 CONSULTAR CHANGELOG.md
     ├── Entender evolução do módulo
@@ -81,6 +84,7 @@
 ## ⚡ **DURANTE EXECUÇÃO (PROTOCOLO RÍGIDO)**
 
 ### **PRINCÍPIOS OBRIGATÓRIOS:**
+
 ```
 ✅ UMA MUDANÇA POR VEZ
 ✅ TESTAR IMEDIATAMENTE após cada mudança
@@ -91,6 +95,7 @@
 ```
 
 ### **FLUXO DE EXECUÇÃO:**
+
 ```
 PASSO 1: 📝 PLANEJAR
 ├── Definir objetivo específico
@@ -122,6 +127,7 @@ PASSO 4: 📊 DOCUMENTAR
 ## 📝 **APÓS EXECUÇÃO (OBRIGATÓRIO)**
 
 ### **ATUALIZAÇÃO DOCUMENTAL (SEQUÊNCIA RÍGIDA):**
+
 ```
 ETAPA 1: DOCUMENTAÇÃO MODULAR
 ├── 1.1 ATUALIZAR README.md do módulo
@@ -147,6 +153,7 @@ ETAPA 1: DOCUMENTAÇÃO MODULAR
 ```
 
 ### **ATUALIZAÇÃO MASTER (OBRIGATÓRIO):**
+
 ```
 ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ├── 2.1 ATUALIZAR MODULE-STATUS-TRACKER.md
@@ -171,6 +178,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ## 🔍 **PROTOCOLOS ESPECÍFICOS POR SITUAÇÃO**
 
 ### **🆕 NOVO MÓDULO:**
+
 ```
 1. 📁 APLICAR MODULE-ARCHITECTURE-STANDARD.md
 2. 📝 PREENCHER templates obrigatórios
@@ -181,6 +189,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 
 ### **🔧 MODIFICAÇÃO EXISTENTE:**
+
 ```
 1. 🎯 CONFIRMAR estado atual via README.md
 2. 🧪 TESTAR sistema antes de modificar
@@ -188,9 +197,12 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 4. 🧪 VALIDAR imediatamente
 5. 📝 DOCUMENTAR em tempo real
 6. 📊 ATUALIZAR status tracker
+7. 📝 CHAT EM PORTUGUÊS
+8. ⚡ CÓDIGOS E TERMOS UNIVERSAIS EM INGLÊS
 ```
 
 ### **🚨 SISTEMA QUEBRADO:**
+
 ```
 1. 🛑 PARAR modificações imediatamente
 2. 📋 CONSULTAR TROUBLESHOOTING.md
@@ -201,6 +213,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 
 ### **❓ SISTEMA DESCONHECIDO:**
+
 ```
 1. 🔍 NUNCA assumir - sempre investigar
 2. 📊 EXECUTAR auditoria completa
@@ -215,10 +228,11 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ## 🤖 **COMUNICAÇÃO PADRÃO DO AGENTE**
 
 ### **PROTOCOLO DE ENTRADA (OBRIGATÓRIO):**
+
 ```
 🤖 AGENTE: [NOME/ID] - PROTOCOLO INICIADO
 ├── 🏛️ ZENTRAW-MASTER-RULES.md: ✅ LIDO
-├── 🏗️ MODULE-ARCHITECTURE-STANDARD.md: ✅ LIDO  
+├── 🏗️ MODULE-ARCHITECTURE-STANDARD.md: ✅ LIDO
 ├── 📋 MODULE-STATUS-TRACKER.md: ✅ CONSULTADO
 ├── 🎯 [MÓDULO]/docs/README.md: ✅ LIDO
 ├── 📊 Módulo identificado: [NOME_MÓDULO]
@@ -229,6 +243,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 
 ### **DURANTE TRABALHO:**
+
 ```
 ⚡ [TIMESTAMP] EXECUTANDO: [AÇÃO_ESPECÍFICA]
 🧪 [TIMESTAMP] TESTANDO: [RESULTADO]
@@ -237,6 +252,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ```
 
 ### **PROTOCOLO DE SAÍDA (OBRIGATÓRIO):**
+
 ```
 🤖 AGENTE: [NOME/ID] - PROTOCOLO FINALIZADO
 ├── ✅ Objetivo alcançado: [SIM/NÃO]
@@ -256,16 +272,18 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ## 🚨 **SITUAÇÕES DE EMERGÊNCIA**
 
 ### **🛑 QUANDO PARAR IMEDIATAMENTE:**
+
 ```
 ❌ Documentação contradiz realidade massivamente
 ❌ Sistema funcionando diverge totalmente dos docs
 ❌ Múltiplos arquivos críticos ausentes
-❌ Versões completamente desalinhadas  
+❌ Versões completamente desalinhadas
 ❌ Modificação causou quebra crítica
 ❌ Instrução causa loop infinito de erro
 ```
 
 ### **🔄 PROTOCOLO DE RECUPERAÇÃO:**
+
 ```
 1. 🛑 PARAR todas as modificações
 2. 📊 DOCUMENTAR estado atual encontrado
@@ -281,6 +299,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ## 🎯 **OBJETIVOS DESTE PROTOCOLO**
 
 ### **ELIMINAÇÃO GARANTIDA DE:**
+
 - ❌ Uso de documentação desatualizada
 - ❌ Modificações baseadas em suposições
 - ❌ Loops infinitos de "correção"
@@ -289,6 +308,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 - ❌ Decisões não documentadas
 
 ### **GARANTIA ABSOLUTA DE:**
+
 - ✅ Validação física antes de ação
 - ✅ Preservação de funcionalidade
 - ✅ Documentação em tempo real
@@ -301,6 +321,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ## 🏆 **MÉTRICAS DE SUCESSO**
 
 ### **AGENTE SEGUINDO PROTOCOLO:**
+
 - ✅ 100% validação física antes de ação
 - ✅ 0% modificações baseadas em suposições
 - ✅ 100% documentação atualizada após ação
@@ -308,6 +329,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 - ✅ 100% rastreabilidade de decisões
 
 ### **AGENTE VIOLANDO PROTOCOLO:**
+
 - ❌ Usa arquivos de /archive/
 - ❌ Modifica sem testar estado atual
 - ❌ Não documenta mudanças

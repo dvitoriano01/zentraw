@@ -1,0 +1,1194 @@
+[2025-07-25T20:04:34.877Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3004
+[2025-07-25T20:04:34.882Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-25T20:04:34.883Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-25T20:04:34.883Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-25T20:05:25.786Z] [INFO] Health check solicitado
+[2025-07-25T20:09:17.410Z] [INFO] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Iniciando render parametrizado
+[2025-07-25T20:09:17.511Z] [INFO] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Executando Blender: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend --background --python C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py -- C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474157373_audio.wav C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474157381_image.png C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4 {"audioFile":{},"imageFile":{},"resolution":"1080x1920","fps":"30","samples":"128","renderEngine":"CYCLES","amplitudeMultiplier":"3","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#00ff08","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+[2025-07-25T20:09:19.344Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Read blend: "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+Fra:1 Mem:9.11M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+Fra:1 Mem:9.11M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+
+[2025-07-25T20:09:19.346Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:9.11M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:8.88M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:8.88M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:8.88M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:8.97M (Peak 10.02M) | Time:00:00.32 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:19.465Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:09:19.466Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+
+[2025-07-25T20:09:19.469Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+
+[2025-07-25T20:09:19.470Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.44 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:09:19.471Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:8.97M (Peak 36.13M) | Time:00:00.45 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:19.489Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:12.98M (Peak 36.13M) | Time:00:00.46 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:19.578Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.55M (Peak 163.55M) | Time:00:00.55 | Remaining:00:11.27 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:19.721Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.55M (Peak 346.09M) | Time:00:00.70 | Remaining:00:14.61 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:09:19.797Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.55M (Peak 346.09M) | Time:00:00.77 | Remaining:00:06.27 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:09:21.141Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.56M (Peak 346.09M) | Time:00:02.12 | Remaining:00:00.99 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:09:21.289Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.56M (Peak 346.09M) | Time:00:02.26 | Remaining:00:00.60 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:09:21.423Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:163.56M (Peak 346.09M) | Time:00:02.40 | Remaining:00:00.27 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:09:26.697Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:1 Mem:377.14M (Peak 472.06M) | Time:00:07.67 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:1 Mem:377.14M (Peak 472.06M) | Time:00:07.67 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:09:27.043Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 1
+Time: 00:08.02 (Saving: 00:00.24)
+
+
+[2025-07-25T20:09:27.207Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:09:27.209Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:2 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:2 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:2 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:2 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:27.330Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+
+[2025-07-25T20:09:27.332Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+
+[2025-07-25T20:09:27.334Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+
+[2025-07-25T20:09:27.335Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:09:27.336Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+
+[2025-07-25T20:09:27.337Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:2 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:27.356Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:12.98M (Peak 472.06M) | Time:00:00.31 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:27.440Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:00.39 | Remaining:00:10.66 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:27.594Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:00.55 | Remaining:00:14.98 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:09:27.802Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:00.75 | Remaining:00:09.06 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:09:28.068Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:01.02 | Remaining:00:05.80 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:09:28.325Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:01.28 | Remaining:00:04.67 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:09:28.583Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:01.53 | Remaining:00:04.00 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:09:28.706Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.55M (Peak 472.06M) | Time:00:01.66 | Remaining:00:03.19 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 38/128
+
+[2025-07-25T20:09:29.342Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.56M (Peak 472.06M) | Time:00:02.29 | Remaining:00:01.19 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:09:29.365Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.56M (Peak 472.06M) | Time:00:02.32 | Remaining:00:00.66 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:09:29.408Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:163.56M (Peak 472.06M) | Time:00:02.36 | Remaining:00:00.29 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:09:34.647Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:2 Mem:377.14M (Peak 472.06M) | Time:00:07.60 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:2 Mem:377.14M (Peak 472.06M) | Time:00:07.60 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:09:34.779Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 2
+Time: 00:07.73 (Saving: 00:00.04)
+
+
+[2025-07-25T20:09:34.946Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:09:34.948Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:3 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:3 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:3 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:3 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:35.061Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:09:35.063Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+
+[2025-07-25T20:09:35.066Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:3 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:35.081Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:12.98M (Peak 472.06M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:35.144Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:00.36 | Remaining:00:08.01 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:35.307Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:00.52 | Remaining:00:09.42 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 3/128
+
+[2025-07-25T20:09:35.578Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:00.79 | Remaining:00:05.29 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 11/128
+
+[2025-07-25T20:09:35.836Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:01.05 | Remaining:00:04.33 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 19/128
+
+[2025-07-25T20:09:36.085Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:01.30 | Remaining:00:03.75 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 27/128
+
+[2025-07-25T20:09:36.329Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:01.54 | Remaining:00:03.31 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 35/128
+
+[2025-07-25T20:09:36.569Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:01.79 | Remaining:00:02.94 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 43/128
+
+[2025-07-25T20:09:36.914Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:02.13 | Remaining:00:02.14 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 59/128
+
+[2025-07-25T20:09:37.126Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:02.34 | Remaining:00:01.44 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 75/128
+
+[2025-07-25T20:09:37.195Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:02.41 | Remaining:00:01.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:09:37.223Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:02.44 | Remaining:00:00.71 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:09:37.269Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:163.55M (Peak 472.06M) | Time:00:02.49 | Remaining:00:00.31 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:09:42.606Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:3 Mem:377.13M (Peak 472.06M) | Time:00:07.82 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:3 Mem:377.13M (Peak 472.06M) | Time:00:07.82 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:09:42.728Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 3
+Time: 00:07.94 (Saving: 00:00.04)
+
+
+[2025-07-25T20:09:42.899Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:9.11M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:09:42.900Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:9.11M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:4 Mem:9.11M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:4 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:4 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:4 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:43.015Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:09:43.019Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+
+[2025-07-25T20:09:43.021Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:4 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:43.035Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:12.98M (Peak 472.06M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:43.093Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.55M (Peak 472.06M) | Time:00:00.36 | Remaining:00:07.27 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:43.258Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.55M (Peak 472.06M) | Time:00:00.52 | Remaining:00:09.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 3/128
+
+[2025-07-25T20:09:43.530Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.55M (Peak 472.06M) | Time:00:00.80 | Remaining:00:05.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 11/128
+
+[2025-07-25T20:09:43.787Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.55M (Peak 472.06M) | Time:00:01.05 | Remaining:00:04.31 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 19/128
+
+[2025-07-25T20:09:43.918Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.55M (Peak 472.06M) | Time:00:01.18 | Remaining:00:03.30 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 27/128
+
+[2025-07-25T20:09:44.718Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.56M (Peak 472.06M) | Time:00:01.98 | Remaining:00:01.00 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:09:44.750Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.56M (Peak 472.06M) | Time:00:02.02 | Remaining:00:00.57 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:09:44.778Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:163.56M (Peak 472.06M) | Time:00:02.04 | Remaining:00:00.24 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:09:50.182Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:4 Mem:377.14M (Peak 472.06M) | Time:00:07.45 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:4 Mem:377.14M (Peak 472.06M) | Time:00:07.45 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:09:50.300Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 4
+Time: 00:07.57 (Saving: 00:00.03)
+
+
+[2025-07-25T20:09:50.464Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:09:50.465Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:5 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:5 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:5 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:5 Mem:8.88M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:50.584Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+
+[2025-07-25T20:09:50.585Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+
+[2025-07-25T20:09:50.587Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+
+[2025-07-25T20:09:50.589Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+
+[2025-07-25T20:09:50.589Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:09:50.590Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+
+[2025-07-25T20:09:50.591Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+
+[2025-07-25T20:09:50.592Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:50.610Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:12.98M (Peak 472.06M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:50.722Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.55M (Peak 472.06M) | Time:00:00.42 | Remaining:00:14.13 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:50.895Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.55M (Peak 472.06M) | Time:00:00.59 | Remaining:00:17.95 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:09:51.100Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.55M (Peak 472.06M) | Time:00:00.79 | Remaining:00:09.95 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:09:51.251Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.55M (Peak 472.06M) | Time:00:00.95 | Remaining:00:05.21 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:09:52.409Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.56M (Peak 472.06M) | Time:00:02.10 | Remaining:00:01.07 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:09:52.429Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.56M (Peak 472.06M) | Time:00:02.12 | Remaining:00:00.60 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:09:52.449Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:163.56M (Peak 472.06M) | Time:00:02.14 | Remaining:00:00.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:09:57.715Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:5 Mem:377.14M (Peak 472.06M) | Time:00:07.41 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:5 Mem:377.14M (Peak 472.06M) | Time:00:07.41 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:09:57.849Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 5
+Time: 00:07.54 (Saving: 00:00.04)
+
+
+[2025-07-25T20:09:58.019Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:09:58.020Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:6 Mem:9.11M (Peak 472.06M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:6 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:6 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:6 Mem:8.88M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:58.136Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+
+[2025-07-25T20:09:58.138Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+
+[2025-07-25T20:09:58.141Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:09:58.143Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:6 Mem:8.97M (Peak 472.06M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:09:58.157Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:12.98M (Peak 472.06M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:09:58.238Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:00.38 | Remaining:00:10.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:09:58.383Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:00.53 | Remaining:00:14.23 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:09:58.584Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:00.73 | Remaining:00:08.68 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:09:58.870Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:01.02 | Remaining:00:05.81 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:09:59.127Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:01.27 | Remaining:00:04.67 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:09:59.382Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:01.53 | Remaining:00:04.00 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:09:59.637Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:01.78 | Remaining:00:03.50 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 38/128
+
+[2025-07-25T20:09:59.758Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.55M (Peak 472.06M) | Time:00:01.90 | Remaining:00:02.85 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 46/128
+
+[2025-07-25T20:10:00.265Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.57M (Peak 472.06M) | Time:00:02.41 | Remaining:00:01.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:00.289Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.57M (Peak 472.06M) | Time:00:02.44 | Remaining:00:00.71 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:00.315Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:163.57M (Peak 472.06M) | Time:00:02.46 | Remaining:00:00.30 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:05.701Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:6 Mem:377.15M (Peak 472.07M) | Time:00:07.85 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:6 Mem:377.15M (Peak 472.07M) | Time:00:07.85 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:05.836Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 6
+Time: 00:07.98 (Saving: 00:00.04)
+
+
+[2025-07-25T20:10:06.005Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:10:06.007Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:7 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:7 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:7 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:7 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:06.122Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:06.124Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+
+[2025-07-25T20:10:06.126Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:10:06.128Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:7 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:06.143Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:12.98M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:06.217Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:00.38 | Remaining:00:09.42 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:06.361Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:00.52 | Remaining:00:13.71 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:06.562Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:00.72 | Remaining:00:08.51 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:06.824Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:00.98 | Remaining:00:05.54 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:10:07.077Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:01.24 | Remaining:00:04.50 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:10:07.329Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:01.49 | Remaining:00:03.87 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:10:07.579Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:01.74 | Remaining:00:03.40 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 38/128
+
+[2025-07-25T20:10:07.699Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.55M (Peak 472.07M) | Time:00:01.86 | Remaining:00:02.77 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 46/128
+
+[2025-07-25T20:10:08.213Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.56M (Peak 472.07M) | Time:00:02.37 | Remaining:00:01.24 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:08.237Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.56M (Peak 472.07M) | Time:00:02.40 | Remaining:00:00.69 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:08.262Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:163.56M (Peak 472.07M) | Time:00:02.42 | Remaining:00:00.30 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:13.505Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:7 Mem:377.14M (Peak 472.07M) | Time:00:07.66 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:7 Mem:377.14M (Peak 472.07M) | Time:00:07.66 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:13.634Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 7
+Time: 00:07.79 (Saving: 00:00.03)
+
+
+[2025-07-25T20:10:13.809Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:10:13.811Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:8 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:8 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:8 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:8 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:13.926Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:13.927Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+
+[2025-07-25T20:10:13.929Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+
+[2025-07-25T20:10:13.931Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:10:13.932Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:8 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:13.948Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:12.98M (Peak 472.07M) | Time:00:00.31 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:14.069Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.55M (Peak 472.07M) | Time:00:00.43 | Remaining:00:15.40 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:14.217Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.55M (Peak 472.07M) | Time:00:00.58 | Remaining:00:16.94 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:14.424Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.55M (Peak 472.07M) | Time:00:00.78 | Remaining:00:09.67 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:14.695Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.55M (Peak 472.07M) | Time:00:01.06 | Remaining:00:06.08 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:10:14.839Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.55M (Peak 472.07M) | Time:00:01.20 | Remaining:00:04.29 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:10:15.848Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.56M (Peak 472.07M) | Time:00:02.21 | Remaining:00:01.13 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:15.871Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.56M (Peak 472.07M) | Time:00:02.23 | Remaining:00:00.64 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:15.891Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:163.56M (Peak 472.07M) | Time:00:02.25 | Remaining:00:00.27 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:21.100Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:8 Mem:377.14M (Peak 472.07M) | Time:00:07.46 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:8 Mem:377.14M (Peak 472.07M) | Time:00:07.46 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:21.222Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 8
+Time: 00:07.58 (Saving: 00:00.03)
+
+
+[2025-07-25T20:10:21.395Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:10:21.396Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:9 Mem:9.11M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:9 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:9 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:9 Mem:8.88M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.17 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:21.512Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+
+[2025-07-25T20:10:21.514Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+
+[2025-07-25T20:10:21.517Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:9 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:21.532Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:12.98M (Peak 472.07M) | Time:00:00.31 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:21.633Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.55M (Peak 472.07M) | Time:00:00.41 | Remaining:00:12.82 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:21.776Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.55M (Peak 472.07M) | Time:00:00.55 | Remaining:00:15.36 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:21.869Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.55M (Peak 472.07M) | Time:00:00.64 | Remaining:00:06.84 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:23.173Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.56M (Peak 472.07M) | Time:00:01.95 | Remaining:00:00.98 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:23.318Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.56M (Peak 472.07M) | Time:00:02.09 | Remaining:00:00.59 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:23.446Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:163.56M (Peak 472.07M) | Time:00:02.22 | Remaining:00:00.27 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:28.942Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:9 Mem:377.14M (Peak 472.07M) | Time:00:07.72 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:9 Mem:377.14M (Peak 472.07M) | Time:00:07.72 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:29.085Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 9
+Time: 00:07.86 (Saving: 00:00.04)
+
+
+[2025-07-25T20:10:29.267Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:9.11M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:10:29.269Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:9.11M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:10 Mem:9.11M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:10 Mem:8.88M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:10 Mem:8.88M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:10 Mem:8.88M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.18 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:29.388Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:29.390Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+
+[2025-07-25T20:10:29.393Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:10 Mem:8.97M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:29.410Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:12.98M (Peak 472.07M) | Time:00:00.32 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:29.490Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:00.40 | Remaining:00:10.25 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:29.635Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:00.55 | Remaining:00:14.21 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:29.846Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:00.76 | Remaining:00:08.87 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:30.111Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:01.02 | Remaining:00:05.71 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:10:30.375Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:01.29 | Remaining:00:04.65 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:10:30.635Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:01.54 | Remaining:00:04.00 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:10:30.761Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.55M (Peak 472.07M) | Time:00:01.67 | Remaining:00:03.20 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 38/128
+
+[2025-07-25T20:10:31.408Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.56M (Peak 472.07M) | Time:00:02.32 | Remaining:00:01.19 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:31.436Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.56M (Peak 472.07M) | Time:00:02.35 | Remaining:00:00.67 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:31.464Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:163.56M (Peak 472.07M) | Time:00:02.37 | Remaining:00:00.29 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:37.039Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:10 Mem:377.14M (Peak 472.07M) | Time:00:07.95 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:10 Mem:377.14M (Peak 472.07M) | Time:00:07.95 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:37.165Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 10
+Time: 00:08.08 (Saving: 00:00.03)
+
+
+[2025-07-25T20:10:37.331Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+Fra:11 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+
+[2025-07-25T20:10:37.332Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:11 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:11 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:11 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:37.451Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:37.453Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+
+[2025-07-25T20:10:37.456Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+
+[2025-07-25T20:10:37.457Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:11 Mem:8.97M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:37.475Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:12.98M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:37.555Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:00.39 | Remaining:00:10.23 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:37.711Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:00.54 | Remaining:00:14.91 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:37.927Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:00.76 | Remaining:00:09.19 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:38.199Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:01.03 | Remaining:00:05.90 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:10:38.476Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:01.31 | Remaining:00:04.82 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:10:38.601Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.55M (Peak 472.07M) | Time:00:01.43 | Remaining:00:03.68 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:10:39.410Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.56M (Peak 472.07M) | Time:00:02.24 | Remaining:00:01.16 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:39.442Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.56M (Peak 472.07M) | Time:00:02.27 | Remaining:00:00.65 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:39.471Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:163.56M (Peak 472.07M) | Time:00:02.30 | Remaining:00:00.28 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:45.307Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:11 Mem:377.14M (Peak 472.07M) | Time:00:08.14 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:11 Mem:377.14M (Peak 472.07M) | Time:00:08.14 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:45.426Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 11
+Time: 00:08.26 (Saving: 00:00.03)
+
+
+[2025-07-25T20:10:45.587Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+Fra:12 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+
+[2025-07-25T20:10:45.589Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:12 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:12 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:12 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:45.704Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:45.706Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.27 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+
+[2025-07-25T20:10:45.709Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+
+[2025-07-25T20:10:45.710Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:12 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:45.724Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:12.98M (Peak 472.07M) | Time:00:00.29 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:45.821Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.55M (Peak 472.07M) | Time:00:00.39 | Remaining:00:12.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:45.961Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.55M (Peak 472.07M) | Time:00:00.53 | Remaining:00:14.92 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:46.031Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.55M (Peak 472.07M) | Time:00:00.60 | Remaining:00:06.25 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:47.293Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.56M (Peak 472.07M) | Time:00:01.86 | Remaining:00:00.94 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:47.442Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.56M (Peak 472.07M) | Time:00:02.01 | Remaining:00:00.57 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:47.564Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:163.56M (Peak 472.07M) | Time:00:02.13 | Remaining:00:00.26 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:52.797Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:12 Mem:377.14M (Peak 472.07M) | Time:00:07.37 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Sample 128/128
+Fra:12 Mem:377.14M (Peak 472.07M) | Time:00:07.37 | Mem:150.38M, Peak:150.38M | Scene, ViewLayer | Finished
+
+[2025-07-25T20:10:52.914Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Append frame 12
+Time: 00:07.48 (Saving: 00:00.03)
+
+
+[2025-07-25T20:10:53.081Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | AudioCube
+
+[2025-07-25T20:10:53.082Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Sun
+Fra:13 Mem:9.11M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:13 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:13 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:13 Mem:8.88M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.16 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:53.197Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Procedurals
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Background
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera
+
+[2025-07-25T20:10:53.199Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Meshes
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building BVH
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH light 4/3 | Building OptiX acceleration structure
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building BVH
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Sun 3/3 | Building OptiX acceleration structure
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building BVH
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Geometry BVH Cube.001 2/3 | Building OptiX acceleration structure
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building OptiX acceleration structure
+
+[2025-07-25T20:10:53.202Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Objects Flags
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Camera Volume
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Lookup Tables
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Integrator
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.08M, Peak:0.08M | Scene, ViewLayer | Updating Film
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.00M, Peak:0.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Baking
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:13 Mem:8.97M (Peak 472.07M) | Time:00:00.28 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+
+[2025-07-25T20:10:53.216Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:12.98M (Peak 472.07M) | Time:00:00.30 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 0/128
+
+[2025-07-25T20:10:53.304Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:00.39 | Remaining:00:11.15 | Mem:0.09M, Peak:0.09M | Scene, ViewLayer | Sample 1/128
+
+[2025-07-25T20:10:53.445Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:00.53 | Remaining:00:14.36 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 2/128
+
+[2025-07-25T20:10:53.642Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:00.72 | Remaining:00:08.65 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 6/128
+
+[2025-07-25T20:10:53.901Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:00.98 | Remaining:00:05.57 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 14/128
+
+[2025-07-25T20:10:54.162Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:01.24 | Remaining:00:04.55 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 22/128
+
+[2025-07-25T20:10:54.411Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:01.49 | Remaining:00:03.90 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 30/128
+
+[2025-07-25T20:10:54.534Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.55M (Peak 472.07M) | Time:00:01.62 | Remaining:00:03.12 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 38/128
+
+[2025-07-25T20:10:55.186Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.56M (Peak 472.07M) | Time:00:02.27 | Remaining:00:01.18 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 80/128
+
+[2025-07-25T20:10:55.210Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.56M (Peak 472.07M) | Time:00:02.29 | Remaining:00:00.66 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 96/128
+
+[2025-07-25T20:10:55.236Z] [DEBUG] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender Output: Fra:13 Mem:163.56M (Peak 472.07M) | Time:00:02.32 | Remaining:00:00.28 | Mem:0.09M, Peak:150.38M | Scene, ViewLayer | Sample 112/128
+
+[2025-07-25T20:10:55.393Z] [INFO] Solicitação de parada de render: 69e90f9c-2d9f-4f7e-93d6-c77f425798fc
+[2025-07-25T20:10:55.404Z] [INFO] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Parando processo de render: 69e90f9c-2d9f-4f7e-93d6-c77f425798fc
+[2025-07-25T20:10:55.432Z] [WARNING] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Processo Blender forçado a parar (SIGKILL)
+[2025-07-25T20:10:55.433Z] [WARNING] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Aviso: Erro ao limpar arquivos temporários: EBUSY: resource busy or locked, unlink 'C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474157373_audio.wav'
+[2025-07-25T20:10:55.605Z] [INFO] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Blender process finalizado com código: null
+[2025-07-25T20:10:55.606Z] [ERROR] [69e90f9c-2d9f-4f7e-93d6-c77f425798fc] Render falhou com código: null
+[2025-07-25T20:15:47.286Z] [INFO] Health check solicitado
+[2025-07-25T20:19:32.700Z] [INFO] [da904b18-35d9-482c-a095-597125913ee6] Iniciando render parametrizado
+[2025-07-25T20:19:32.802Z] [INFO] [da904b18-35d9-482c-a095-597125913ee6] Executando Blender: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend --background --python C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py -- C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474772661_audio.wav C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474772666_image.png C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4 {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"24","samples":"32","renderEngine":"BLENDER_EEVEE","amplitudeMultiplier":"1","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"2","cameraDistance":"15","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#00ff08","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+[2025-07-25T20:19:34.155Z] [DEBUG] [da904b18-35d9-482c-a095-597125913ee6] Blender Output: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Read blend: "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+
+[2025-07-25T20:19:34.156Z] [ERROR] [da904b18-35d9-482c-a095-597125913ee6] Blender Error: Traceback (most recent call last):
+  File "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py", line 152, in <module>
+    bpy.context.scene.render.engine = RENDER_ENGINE
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: bpy_struct: item.attr = val: enum "BLENDER_EEVEE" not found in ('BLENDER_EEVEE_NEXT', 'BLENDER_WORKBENCH', 'CYCLES')
+
+[2025-07-25T20:19:34.157Z] [DEBUG] [da904b18-35d9-482c-a095-597125913ee6] Blender Output: 🎯 V1.4.0.a.8 - EVOLUÇÃO PARAMETRIZADA INICIADA
+🛡️ BLINDAGEM: V1.4.0.a.7 sync perfeito preservado
+⚙️ NOVIDADE: Parâmetros configuráveis completos
+📂 Working directory: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender
+🐍 Python script: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py
+🎵 Audio file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474772661_audio.wav
+🖼️ Image file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474772666_image.png
+📁 Output file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+⚙️ Settings JSON: {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"24","samples":"32","renderEngine":"BLENDER_EEVEE","amplitudeMultiplier":"1","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"2","cameraDistance":"15","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#00ff08","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+✅ Configurações carregadas com sucesso
+📊 CONFIGURAÇÕES APLICADAS V1.4.0.a.8 OTIMIZADO:
+   🎬 Resolução: 1920x1080 (Full HD padrão)
+   🎞️ FPS: 24
+   🔍 Samples: 32
+   ⚡ Engine: BLENDER_EEVEE (Eevee padrão - 3x mais rápido)
+   📊 Amplitude Multiplier: 1.0x (V1.4.0.a.7 BLINDADO)
+   🌊 Suavização: 1
+   🎧 Canais: mono
+   📦 Escala Base: 1.0x
+   📈 Escala Máxima: 2.0x
+   📷 Distância Câmera: 15.0m
+   💡 Intensidade Luz: 1000.0W
+📊 Loading and analyzing audio...
+🎵 Caminho absoluto áudio: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753474772661_audio.wav
+🔍 ANÁLISE DETALHADA:
+   📊 Sample rate: 48000 Hz
+   📈 Total frames: 227324
+   🎧 Canais: 2 (stereo)
+   🔧 PROCESSAMENTO: Usando canal esquerdo
+   🔢 Samples array length: 227324
+🎬 Setting up scene...
+
+[2025-07-25T20:19:34.279Z] [DEBUG] [da904b18-35d9-482c-a095-597125913ee6] Blender Output: 
+Blender quit
+
+[2025-07-25T20:19:34.311Z] [INFO] [da904b18-35d9-482c-a095-597125913ee6] Blender process finalizado com código: 0
+[2025-07-25T20:19:34.312Z] [SUCCESS] [da904b18-35d9-482c-a095-597125913ee6] Render concluído: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+[2025-07-25T20:42:21.894Z] [INFO] Health check solicitado
+[2025-07-25T20:43:12.085Z] [INFO] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Iniciando render parametrizado
+[2025-07-25T20:43:12.187Z] [INFO] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Executando Blender: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend --background --python C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py -- C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753476192046_audio.wav C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753476192051_image.png C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4 {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"32","renderEngine":"BLENDER_EEVEE","amplitudeMultiplier":"2","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#00ff08","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+[2025-07-25T20:43:13.510Z] [DEBUG] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Blender Output: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Read blend: "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+
+[2025-07-25T20:43:13.511Z] [ERROR] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Blender Error: Traceback (most recent call last):
+  File "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py", line 152, in <module>
+    bpy.context.scene.render.engine = RENDER_ENGINE
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: bpy_struct: item.attr = val: enum "BLENDER_EEVEE" not found in ('BLENDER_EEVEE_NEXT', 'BLENDER_WORKBENCH', 'CYCLES')
+
+[2025-07-25T20:43:13.512Z] [DEBUG] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Blender Output: 🎯 V1.4.0.a.8 - EVOLUÇÃO PARAMETRIZADA INICIADA
+🛡️ BLINDAGEM: V1.4.0.a.7 sync perfeito preservado
+⚙️ NOVIDADE: Parâmetros configuráveis completos
+📂 Working directory: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender
+🐍 Python script: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py
+🎵 Audio file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753476192046_audio.wav
+🖼️ Image file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753476192051_image.png
+📁 Output file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+⚙️ Settings JSON: {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"32","renderEngine":"BLENDER_EEVEE","amplitudeMultiplier":"2","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#00ff08","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+✅ Configurações carregadas com sucesso
+📊 CONFIGURAÇÕES APLICADAS V1.4.0.a.8 OTIMIZADO:
+   🎬 Resolução: 1920x1080 (Full HD padrão)
+   🎞️ FPS: 30
+   🔍 Samples: 32
+   ⚡ Engine: BLENDER_EEVEE (Eevee padrão - 3x mais rápido)
+   📊 Amplitude Multiplier: 2.0x (V1.4.0.a.7 BLINDADO)
+   🌊 Suavização: 1
+   🎧 Canais: mono
+   📦 Escala Base: 1.0x
+   📈 Escala Máxima: 5.0x
+   📷 Distância Câmera: 10.0m
+   💡 Intensidade Luz: 1000.0W
+📊 Loading and analyzing audio...
+🎵 Caminho absoluto áudio: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753476192046_audio.wav
+🔍 ANÁLISE DETALHADA:
+   📊 Sample rate: 48000 Hz
+   📈 Total frames: 227324
+   🎧 Canais: 2 (stereo)
+   🔧 PROCESSAMENTO: Usando canal esquerdo
+   🔢 Samples array length: 227324
+🎬 Setting up scene...
+
+[2025-07-25T20:43:13.629Z] [DEBUG] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Blender Output: 
+Blender quit
+
+[2025-07-25T20:43:13.664Z] [INFO] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Blender process finalizado com código: 0
+[2025-07-25T20:43:13.665Z] [SUCCESS] [a119eb11-ffe3-4f31-b1d8-88ca10de1359] Render concluído: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+[2025-07-25T20:45:41.932Z] [INFO] Health check solicitado
+[2025-07-25T21:02:09.297Z] [INFO] Health check solicitado
+[2025-07-25T21:02:25.611Z] [INFO] [18382136-3f12-4d08-a980-e169642ef0a2] Iniciando render parametrizado
+[2025-07-25T21:02:25.712Z] [INFO] [18382136-3f12-4d08-a980-e169642ef0a2] Executando Blender: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend --background --python C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py -- C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753477345580_audio.wav C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753477345584_image.png C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4 {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"128","renderEngine":"BLENDER_EEVEE_NEXT","amplitudeMultiplier":"3","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#4caf50","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+[2025-07-25T21:02:27.090Z] [DEBUG] [18382136-3f12-4d08-a980-e169642ef0a2] Blender Output: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Read blend: "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+
+[2025-07-25T21:02:27.091Z] [ERROR] [18382136-3f12-4d08-a980-e169642ef0a2] Blender Error: Traceback (most recent call last):
+  File "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py", line 174, in <module>
+    eevee.use_bloom = True  # Visual melhor
+    ^^^^^^^^^^^^^^^
+AttributeError: 'SceneEEVEE' object has no attribute 'use_bloom'
+
+[2025-07-25T21:02:27.092Z] [DEBUG] [18382136-3f12-4d08-a980-e169642ef0a2] Blender Output: 🎯 V1.4.0.a.8 - EVOLUÇÃO PARAMETRIZADA INICIADA
+🛡️ BLINDAGEM: V1.4.0.a.7 sync perfeito preservado
+⚙️ NOVIDADE: Parâmetros configuráveis completos
+📂 Working directory: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender
+🐍 Python script: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.py
+🎵 Audio file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753477345580_audio.wav
+🖼️ Image file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753477345584_image.png
+📁 Output file: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+⚙️ Settings JSON: {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"128","renderEngine":"BLENDER_EEVEE_NEXT","amplitudeMultiplier":"3","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#4caf50","scriptVersion":"v1.4.0.a.8","outputName":"output_v1.4.0.a.8"}
+✅ Configurações carregadas com sucesso
+📊 CONFIGURAÇÕES APLICADAS V1.4.0.a.8 OTIMIZADO:
+   🎬 Resolução: 1920x1080 (Full HD padrão)
+   🎞️ FPS: 30
+   🔍 Samples: 128
+   ⚡ Engine: BLENDER_EEVEE_NEXT (Eevee Next padrão - 3x mais rápido)
+   📊 Amplitude Multiplier: 3.0x (V1.4.0.a.7 BLINDADO)
+   🌊 Suavização: 1
+   🎧 Canais: mono
+   📦 Escala Base: 1.0x
+   📈 Escala Máxima: 5.0x
+   📷 Distância Câmera: 10.0m
+   💡 Intensidade Luz: 1000.0W
+📊 Loading and analyzing audio...
+🎵 Caminho absoluto áudio: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753477345580_audio.wav
+🔍 ANÁLISE DETALHADA:
+   📊 Sample rate: 48000 Hz
+   📈 Total frames: 227324
+   🎧 Canais: 2 (stereo)
+   🔧 PROCESSAMENTO: Usando canal esquerdo
+   🔢 Samples array length: 227324
+🎬 Setting up scene...
+🚀 Render engine: BLENDER_EEVEE_NEXT
+📐 Resolução: 1920x1080
+🎞️ FPS: 30
+
+[2025-07-25T21:02:27.214Z] [DEBUG] [18382136-3f12-4d08-a980-e169642ef0a2] Blender Output: 
+Blender quit
+
+[2025-07-25T21:02:27.247Z] [INFO] [18382136-3f12-4d08-a980-e169642ef0a2] Blender process finalizado com código: 0
+[2025-07-25T21:02:27.248Z] [SUCCESS] [18382136-3f12-4d08-a980-e169642ef0a2] Render concluído: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+[2025-07-25T21:25:51.696Z] [INFO] Health check solicitado
+[2025-07-25T21:26:09.651Z] [INFO] [39bf9f18-8d81-41e9-9037-9fce4f26df59] Iniciando render parametrizado
+[2025-07-25T21:26:09.752Z] [ERROR] [39bf9f18-8d81-41e9-9037-9fce4f26df59] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T21:29:14.968Z] [INFO] Health check solicitado
+[2025-07-25T21:30:20.380Z] [INFO] Health check solicitado
+[2025-07-25T21:30:32.242Z] [INFO] [4eafb966-7e65-42e1-9565-799091b94167] Iniciando render parametrizado
+[2025-07-25T21:30:32.342Z] [ERROR] [4eafb966-7e65-42e1-9565-799091b94167] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T21:32:27.231Z] [INFO] Health check solicitado
+[2025-07-25T22:21:50.824Z] [INFO] [18abb1cc-854a-4daf-986f-c679ab132ef6] Iniciando render parametrizado
+[2025-07-25T22:21:50.928Z] [ERROR] [18abb1cc-854a-4daf-986f-c679ab132ef6] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T22:22:09.807Z] [INFO] [dc6780e2-c543-4cdd-be3e-7c2a41008c8d] Iniciando render parametrizado
+[2025-07-25T22:22:09.909Z] [ERROR] [dc6780e2-c543-4cdd-be3e-7c2a41008c8d] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T22:24:56.761Z] [INFO] Health check solicitado
+[2025-07-25T22:25:10.301Z] [INFO] [a5fabd2d-8cf9-4377-950c-df253e6af7de] Iniciando render parametrizado
+[2025-07-25T22:25:10.403Z] [ERROR] [a5fabd2d-8cf9-4377-950c-df253e6af7de] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T22:44:03.527Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3004
+[2025-07-25T22:44:03.529Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-25T22:44:03.530Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-25T22:44:03.531Z] [INFO] 📁 Diretórios: uploads=c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-25T22:45:09.821Z] [INFO] Health check solicitado
+[2025-07-25T22:45:22.159Z] [INFO] [c2c01c9a-1fb8-4370-ad30-381a19b70c14] Iniciando render parametrizado
+[2025-07-25T22:45:22.260Z] [ERROR] [c2c01c9a-1fb8-4370-ad30-381a19b70c14] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T22:49:43.436Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3004
+[2025-07-25T22:49:43.438Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-25T22:49:43.439Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-25T22:49:43.439Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-25T22:50:36.507Z] [INFO] Health check solicitado
+[2025-07-25T22:50:48.534Z] [INFO] [35c4c592-d345-4a0d-a289-f5d24383b4e0] Iniciando render parametrizado
+[2025-07-25T22:50:48.636Z] [ERROR] [35c4c592-d345-4a0d-a289-f5d24383b4e0] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T22:57:22.880Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3004
+[2025-07-25T22:57:22.883Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-25T22:57:22.884Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-25T22:57:22.884Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-25T23:37:40.908Z] [INFO] Health check solicitado
+[2025-07-25T23:38:08.546Z] [INFO] [1f32c41b-ebac-4d91-b8e3-09258c735980] Iniciando render parametrizado
+[2025-07-25T23:38:08.649Z] [ERROR] [1f32c41b-ebac-4d91-b8e3-09258c735980] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-25T23:38:37.266Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3004
+[2025-07-25T23:38:37.268Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-25T23:38:37.269Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-25T23:38:37.269Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-25T23:38:48.324Z] [INFO] Health check solicitado
+[2025-07-25T23:38:57.753Z] [INFO] [68a93ed5-6911-4353-aea8-35b0aa6c9e02] Iniciando render parametrizado
+[2025-07-25T23:38:57.855Z] [ERROR] [68a93ed5-6911-4353-aea8-35b0aa6c9e02] Erro ao executar render: The "path" argument must be of type string. Received undefined

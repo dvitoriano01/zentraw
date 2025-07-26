@@ -1,8 +1,69 @@
 # 🚨 ZENTRAW 3D VISUALIZER - TROUBLESHOOTING GUIDE
 
-**Versão:** V1.4.0.a.7  
+**Versão:** V1.4.0.a.8  
 **Data:** 25/07/2025  
-**Status:** SYNC DEFINITIVAMENTE CORRIGIDO
+**Status:** ❌ PROBLEMA CRÍTICO ATIVO - PATH UNDEFINED
+
+---
+
+## 🚨 **PROBLEMA ATIVO - NÃO RESOLVIDO**
+
+### **❌ PATH UNDEFINED ERROR - V1.4.0.a.8**
+
+**Problema:** `The "path" argument must be of type string. Received undefined`  
+**Impacto:** 100% renders falhando  
+**Status:** ❌ NÃO RESOLVIDO após múltiplas tentativas
+
+#### **ERRO REPRODUZÍVEL:**
+```
+[19:45:22] ✅ Render iniciado com sucesso
+[19:45:22] 🆔 Process ID: c2c01c9a-1fb8-4370-ad30-381a19b70c14
+[19:45:24] 🚀 Iniciando execução do Blender...
+[19:45:24] ❌ Erro fatal: The "path" argument must be of type string. Received undefined
+[19:45:24] ❌ Render falhou: The "path" argument must be of type string. Received undefined
+```
+
+#### **CORREÇÕES TENTADAS (SEM SUCESSO):**
+
+1. **Path Resolution Fix:**
+   ```javascript
+   // ANTES: const currentDir = __dirname || path.dirname(new URL(import.meta.url).pathname);
+   // DEPOIS: const currentDir = __dirname; // CommonJS sempre tem __dirname
+   ```
+
+2. **Argument Validation:**
+   ```javascript
+   // Validação rigorosa de todos os argumentos Python
+   for (let i = 0; i < pythonArgs.length; i++) {
+       if (typeof arg !== 'string') {
+           // Error handling
+       }
+   }
+   ```
+
+3. **Python Script Validation:**
+   ```python
+   # Validação rigorosa no script Python
+   if not isinstance(audio_path, str) or not audio_path:
+       raise ValueError("Caminho do áudio não é uma string válida")
+   ```
+
+4. **File Existence Checks:**
+   - Upload validation
+   - Physical file verification
+   - Path type checking
+
+#### **ANÁLISE TÉCNICA:**
+- **Backend:** ✅ Inicia corretamente
+- **File Upload:** ✅ Funciona
+- **Path Creation:** ✅ Paths criados corretamente
+- **Blender Spawn:** ❌ FALHA com path undefined
+- **Root Cause:** DESCONHECIDA após investigação extensiva
+
+#### **RECOMENDAÇÃO:**
+- **🔄 ROLLBACK para V1.4.0.a.7 (FUNCIONANDO)**
+- **🔍 Investigação mais profunda da cadeia de argumentos**
+- **📋 Continuação na próxima sessão**
 
 ---
 

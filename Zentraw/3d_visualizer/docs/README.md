@@ -1,31 +1,42 @@
 # 🎬 ZENTRAW 3D VISUALIZER - STATUS MODULAR
 
 **Módulo:** 3d-visualizer  
-**Versão Atual:** V1.4.0.a.7  
-**Status:** ✅ FUNCIONANDO - Sync definitivamente corrigido  
+**Versão Atual:** V1.4.0.a.8  
+**Status:** ❌ PROBLEMAS CRÍTICOS - Path undefined persistente  
 **Data Atualização:** 25/07/2025  
-**Compliance:** ✅ MASTER-RULES + MODULE-ARCHITECTURE-STANDARD
+**Compliance:** ✅ MASTER-RULES + MODULE-ARCHITECTURE-STANDARD  
+**Porta:** 3004 (padrão Zentraw)
 
 ---
 
 ## 📊 **STATUS ATUAL**
 
-### **✅ VERSÃO ATIVA: V1.4.0.a.7**
-- **Funcionalidade:** ✅ 100% OPERACIONAL
-- **Sync Áudio-Vídeo:** ✅ CORRIGIDO DEFINITIVAMENTE
-- **Base Preservada:** ✅ V1.4.0.a.5 blindada
-- **Testes:** ✅ VALIDADO - render completo em 4.736s
+### **❌ VERSÃO ATIVA: V1.4.0.a.8 - PROBLEMAS CRÍTICOS**
+- **Funcionalidade:** ❌ ERRO CRÍTICO - "The 'path' argument must be of type string. Received undefined"
+- **Interface:** ✅ PARAMETRIZADA COMPLETA - Todos os parâmetros Blender configuráveis
+- **Blindagem:** ✅ V1.4.0.a.7 preservada como fallback automático
+- **Logs:** ✅ DETALHADOS - Sistema completo de monitoramento
+- **Testes:** ❌ FALHANDO - Erro de path impede renderização
+
+### **🚨 PROBLEMAS IDENTIFICADOS:**
+- **Path Resolution:** Erro persistente "path undefined" durante spawn do Blender
+- **Argument Validation:** Argumentos Python com paths indefinidos
+- **Script Integration:** Incompatibilidade entre CommonJS e validações ES Module
 
 ### **🔧 ARQUIVOS PRINCIPAIS ATIVOS:**
 ```
 📁 Zentraw/3d_visualizer/
-├── 🎯 Blender/render_audio_visualizer_v1.4.0.a.7.py  # ✅ SCRIPT PRINCIPAL
-├── 🛡️ server-v1.4.0.a.7-blindado.cjs                # ✅ BACKEND BLINDADO
-├── 🛡️ interface-v1.4.0.a.7-blindada.html            # ✅ INTERFACE BLINDADA
-├── 📚 docs/README.md                                  # ✅ ESTE ARQUIVO
-├── 📋 CHANGELOG.md                                    # ✅ HISTÓRICO COMPLETO
-├── 🚨 TROUBLESHOOTING.md                              # ✅ GUIA SOLUÇÕES
-└── 📊 V1.4.0.a.7-COMMIT-DOCUMENTATION.md            # ✅ DOC COMMIT
+├── 🎯 server-v1.4.0.a.8-parametrizado.cjs             # ✅ BACKEND PARAMETRIZADO
+├── 🎨 interface-v1.4.0.a.8-parametrizada.html         # ✅ INTERFACE COMPLETA
+├── 🎬 Blender/render_audio_visualizer_v1.4.0.a.8.py   # ✅ SCRIPT PARAMETRIZADO
+├── 🛡️ blindage/v1.4.0.a.7/                            # ✅ BLINDAGEM V1.4.0.a.7
+│   ├── server-v1.4.0.a.7-blindado.cjs                 # ✅ BACKEND BLINDADO
+│   ├── interface-v1.4.0.a.7-blindada.html             # ✅ INTERFACE BLINDADA
+│   └── render_audio_visualizer_v1.4.0.a.7.py          # ✅ SCRIPT BLINDADO
+├── 📚 docs/README.md                                   # ✅ ESTE ARQUIVO
+├── 📋 docs/CHANGELOG.md                                # ✅ HISTÓRICO COMPLETO
+├── 🚨 docs/TROUBLESHOOTING.md                          # ✅ GUIA SOLUÇÕES
+└── 🧪 TESTE-V1.4.0.a.8-PARAMETRIZADO.bat             # ✅ TESTE AUTOMATIZADO
 ```
 
 ### **🧪 ARQUIVOS DE TESTE:**
@@ -41,62 +52,76 @@
 ## 🎯 **FUNCIONALIDADES VALIDADAS**
 
 ### **✅ CORE FEATURES:**
-- ✅ **Audio Processing:** wave + numpy (stereo→mono correto)
-- ✅ **3D Visualization:** Blender 4.5 + keyframe animation
-- ✅ **Video Export:** MP4 1080x1920 + AAC codec
-- ✅ **Sync Perfect:** Cubo sincronizado com amplitude audio
+- ✅ **Interface Parametrizada:** Todos os parâmetros Blender configuráveis via web
+- ✅ **Sistema Stop/Cancel:** Botão para cancelar render em execução
+- ✅ **Porta Padrão:** 3004 (corrigido de 3005)
+- ✅ **Câmera Otimizada:** Distância padrão 10.0m (melhor visualização)
+- ✅ **Audio Processing:** wave + numpy + sequencer integrado para trilha sonora
+- ✅ **3D Visualization:** Blender 4.5 + keyframe animation parametrizada
+- ✅ **Video Export:** MP4 resolução configurável + codecs customizáveis
+- ✅ **Sync Perfect:** Cubo sincronizado com amplitude + suavização configurável
+- ✅ **Real-time Logs:** Sistema completo de logs detalhados + progresso em tempo real
+- ✅ **Result Management:** Preview, download, compartilhamento automático
 
 ### **✅ BLINDAGEM SYSTEM:**
-- ✅ **Preservação V1.4.0.a.5:** Funcionalidade base intacta
-- ✅ **Correção Mínima:** Apenas processamento stereo corrigido
-- ✅ **Zero Regressão:** Todos parâmetros originais preservados
-- ✅ **Isolation:** Sistema independente de TemplateLibraryBuilder
+- ✅ **Preservação V1.4.0.a.7:** Funcionalidade com sync perfeito blindada como fallback
+- ✅ **Preservação V1.4.0.a.5:** Sistema original preservado para emergências
+- ✅ **Evolução Controlada:** Parâmetros expandidos sem perder funcionalidade base
+- ✅ **Rollback Automático:** Sistema detecta falhas e usa versão blindada
+- ✅ **Sistema Independente:** 3D Visualizer completamente autônomo
+- ✅ **Multi-version Support:** Scripts V1.4.0.a.8, V1.4.0.a.7, V1.4.0.a.5 disponíveis
 
 ---
 
 ## 🔧 **COMMAND LINE INTERFACE**
 
-### **EXECUÇÃO DIRETA:**
+### **INTERFACE WEB V1.4.0.a.8:**
 ```bash
-cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender"
+# Backend parametrizado (porta 3004)
+node server-v1.4.0.a.8-parametrizado.cjs
 
-# Render com sync corrigido
-"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" template.blend --background --python render_audio_visualizer_v1.4.0.a.7.py -- sample_audio3.wav test_image.jpg output.mp4
+# Interface parametrizada completa
+http://localhost:3004
 ```
 
 ### **TESTE AUTOMATIZADO:**
 ```bash
 cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"
 
-# Executar teste completo
-TESTE-BLINDADO-V1.4.0.a.7.bat
+# Menu de testes completo
+TESTE-V1.4.0.a.8-PARAMETRIZADO.bat
 ```
 
-### **BACKEND + INTERFACE:**
+### **FALLBACK SYSTEMS:**
 ```bash
-# Backend (porta 5000)
+# V1.4.0.a.7 Blindado (sync perfeito)
 node server-v1.4.0.a.7-blindado.cjs
+http://localhost:3004
 
-# Interface web
-http://localhost:5000/interface-v1.4.0.a.7-blindada.html
+# V1.4.0.a.5 Original (emergência)
+node server-simple-real.cjs
+http://localhost:3000
 ```
 
 ---
 
 ## 📊 **MÉTRICAS DE PERFORMANCE**
 
-### **V1.4.0.a.7 VALIDATED:**
-- ⏱️ **Render Time:** ~30 segundos (4.736s video)
-- 📊 **Output Size:** ~1MB (otimizado)
-- 🎵 **Audio Sync:** 100% frame-perfect
-- 🎬 **Video Quality:** H264 1080x1920
-- 🔊 **Audio Quality:** AAC 48kHz preservado
+### **V1.4.0.a.8 PARAMETRIZED:**
+- ⏱️ **Render Time:** Configurável (rápido/qualidade/ultra)
+- 📊 **Output Size:** Baseado na resolução configurada
+- 🎵 **Audio Sync:** 100% frame-perfect (baseado na blindagem V1.4.0.a.7)
+- 🎬 **Video Quality:** H264/Eevee/Cycles configurável, resoluções múltiplas
+- 🔊 **Audio Quality:** AAC configurável + processamento por canal
+- ⚙️ **Parameters:** 20+ parâmetros configuráveis via interface
+- 📊 **Monitoring:** Logs em tempo real + progresso detalhado
 
 ### **COMPARATIVO HISTÓRICO:**
 ```
 V1.4.0.a.5: ✅ Funcional, ❌ Sync issues (50% offset)
 V1.4.0.a.6: ❌ EXCLUÍDA - problemas críticos
-V1.4.0.a.7: ✅ Funcional, ✅ Sync perfeito
+V1.4.0.a.7: ✅ Funcional, ✅ Sync perfeito, ❌ Interface básica
+V1.4.0.a.8: ✅ Funcional, ✅ Sync perfeito, ✅ Interface parametrizada completa
 ```
 
 ---

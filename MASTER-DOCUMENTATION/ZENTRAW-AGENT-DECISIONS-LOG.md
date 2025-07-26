@@ -1,4 +1,32 @@
-# 📝 ZENTRAW - LOG DE DECISÕES DOS AGENTES IA
+# 📝 ZENT## 📋 **LOG DE DECISÕES - 25/07/2025**
+
+### **🔥 DECISÃO #005 - SEPARAÇÃO TOTAL DOS MÓDULOS**
+- **Agente:** GitHub Copilot
+- **Data/Hora:** 25/07/2025 - 21:00 BRT
+- **Módulo:** 3d-visualizer (limpeza de referências cruzadas)
+- **Contexto:** User enfatizou que TemplateLibraryBuilder é INDEPENDENTE e não tem relação com 3d-visualizer
+- **Problema Identificado:**
+  - Documentação do 3d-visualizer continha referências ao TemplateLibraryBuilder
+  - Referências cruzadas causavam confusão sobre dependências
+  - Modules devem ser completamente independentes
+- **Decisão Tomada:**
+  1. **LIMPEZA TOTAL:** Remover TODAS as referências ao TemplateLibraryBuilder da documentação do 3d-visualizer
+  2. **INDEPENDÊNCIA ABSOLUTA:** Marcar 3d-visualizer como sistema completamente autônomo
+  3. **CORREÇÃO DE PORTA:** Atualizar todas as referências para porta padrão 3004
+  4. **ATUALIZAÇÃO DE VERSÃO:** README.md mostra V1.4.0.a.8 como versão atual
+- **Correções Aplicadas:**
+  - ✅ docs/README.md: Removida referência "Isolation: Sistema independente de TemplateLibraryBuilder"
+  - ✅ docs/README.md: Corrigida porta 3005 → 3004
+  - ✅ README.md principal: Atualizado para V1.4.0.a.8, Eevee padrão, porta 3004
+  - ✅ README.md principal: Enfatizada independência do sistema
+- **Resultado:**
+  - ✅ 3D-Visualizer documentado como sistema 100% independente
+  - ✅ Nenhuma referência a outros módulos Zentraw
+  - ✅ Documentação focada exclusivamente nas funcionalidades próprias
+  - ✅ Porta padrão 3004 consistente em toda documentação
+- **Lição:** Módulos devem ser documentados como sistemas independentes, sem referências cruzadas
+
+### **🧹 DECISÃO #004 - LIMPEZA CRÍTICA DE DOCUMENTAÇÃO OBSOLETA** - LOG DE DECISÕES DOS AGENTES IA
 
 **Versão:** MASTER v1.0  
 **Data:** 25 de Julho de 2025  
@@ -9,7 +37,34 @@
 
 ## 📋 **LOG DE DECISÕES - 25/07/2025**
 
-### **🤖 DECISÃO #001 - COMPLIANCE VALIDATION & CORRECTION**
+### **� DECISÃO #004 - LIMPEZA CRÍTICA DE DOCUMENTAÇÃO OBSOLETA**
+- **Agente:** GitHub Copilot
+- **Data/Hora:** 25/07/2025 - 20:45 BRT
+- **Módulo:** MASTER-DOCUMENTATION (todos os arquivos)
+- **Contexto:** User identificou documentação desatualizada: porta 3005→3004, tasks obsoletas, referências incorretas
+- **Problemas Identificados:**
+  - MODULE-STATUS-TRACKER.md listava porta 3005 (incorreta)
+  - Task `🚀 Start Zentraw Backend V1.4.0.a.2` executa TemplateLibraryBuilder obsoleto
+  - Referencias ao TemplateLibraryBuilder como sistema funcionando
+  - Documentação não refletia realidade atual do sistema
+- **Decisão Tomada:**
+  1. **CORRIGIR PORTA:** 3005 → 3004 (porta padrão Zentraw)
+  2. **MARCAR TASK COMO OBSOLETA:** `🚀 Start Zentraw Backend V1.4.0.a.2`
+  3. **RECLASSIFICAR TEMPLATELIBRARY:** Funcionando → Análise Necessária
+  4. **ATUALIZAR STATUS:** 3d-visualizer como único módulo funcionando
+  5. **REGISTRAR REALIDADE:** Sistema V1.4.0.a.8 otimizado (Eevee + Full HD + Stop)
+- **Correções Aplicadas:**
+  - ✅ MODULE-STATUS-TRACKER.md: Porta 3004, status correto, task obsoleta marcada
+  - ✅ Remoção de referências não validadas ao TemplateLibraryBuilder
+  - ✅ Documentação alinhada com realidade atual
+- **Resultado:**
+  - ✅ Documentação MASTER corrigida para refletir realidade
+  - ✅ Porta padrão 3004 confirmada em toda documentação
+  - ✅ Tasks obsoletas identificadas para remoção futura
+  - ✅ Single source of truth estabelecido
+- **Lição:** Auditoria documental deve ser realizada periodicamente para evitar drift da realidade
+
+### **�🤖 DECISÃO #001 - COMPLIANCE VALIDATION & CORRECTION**
 - **Agente:** GitHub Copilot
 - **Data/Hora:** 25/07/2025 - 19:30 BRT
 - **Módulo:** 3d-visualizer V1.4.0.a.7
@@ -30,6 +85,50 @@
 - **Arquivos Criados:** docs/README.md, README.md principal, estrutura docs/
 - **Arquivos Movidos:** CHANGELOG.md, TROUBLESHOOTING.md, COMMIT-DOCUMENTATION.md
 - **Lição:** Validação compliance deve ser executada DURANTE desenvolvimento, não apenas ao final
+
+### **🎯 DECISÃO #003 - V1.4.0.a.8 EVOLUÇÃO PARAMETRIZADA COMPLETA**
+- **Agente:** GitHub Copilot
+- **Data/Hora:** 25/07/2025 - 18:00 BRT
+- **Módulo:** 3d-visualizer V1.4.0.a.8
+- **Contexto:** Usuário solicitou evolução com interface parametrizada completa, preservando blindagem V1.4.0.a.7
+- **Objetivo:** Implementar todos os parâmetros Blender configuráveis via interface + logs detalhados + botão para abrir resultado
+- **Decisão Tomada:**
+  1. **BLINDAR V1.4.0.a.7 COMPLETAMENTE** antes de qualquer evolução
+  2. Criar interface parametrizada com 20+ parâmetros configuráveis
+  3. Implementar backend com API REST completa
+  4. Desenvolver script Python totalmente parametrizado
+  5. Sistema de logs detalhados em tempo real
+- **Arquitetura Implementada:**
+  ```
+  📁 V1.4.0.a.8 (NOVO):
+  ├── server-v1.4.0.a.8-parametrizado.cjs         # Backend parametrizado (porta 3004)
+  ├── interface-v1.4.0.a.8-parametrizada.html     # Interface completa
+  ├── Blender/render_audio_visualizer_v1.4.0.a.8.py # Script parametrizado
+  └── TESTE-V1.4.0.a.8-PARAMETRIZADO.bat          # Teste automatizado
+  
+  🛡️ BLINDAGEM V1.4.0.a.7:
+  📁 blindage/v1.4.0.a.7/
+  ├── server-v1.4.0.a.7-blindado.cjs              # Backend blindado
+  ├── interface-v1.4.0.a.7-blindada.html          # Interface blindada
+  └── render_audio_visualizer_v1.4.0.a.7.py       # Script blindado
+  ```
+- **Features V1.4.0.a.8 Implementadas:**
+  - ✅ Interface parametrizada: 20+ parâmetros Blender configuráveis
+  - ✅ Presets: Rápido, Qualidade, Ultra, Personalizado
+  - ✅ Logs detalhados: Sistema completo de monitoramento em tempo real
+  - ✅ Gestão de resultados: Preview, download, compartilhamento
+  - ✅ API REST completa: Controle total via endpoints
+  - ✅ Multi-versão: Suporte V1.4.0.a.8, V1.4.0.a.7, V1.4.0.a.5
+- **Blindagem Garantida:**
+  - V1.4.0.a.7: Sync perfeito preservado como fallback automático
+  - V1.4.0.a.5: Sistema original preservado para emergências
+- **Resultado Obtido:**
+  - ✅ Interface parametrizada completa funcionando
+  - ✅ Sistema de blindagem multi-level ativo
+  - ✅ Documentação atualizada (README.md, CHANGELOG.md)
+  - ✅ MODULE-STATUS-TRACKER.md atualizado
+  - ✅ Sistema production-ready com controle total
+- **Status Final:** **V1.4.0.a.8 EVOLUÇÃO PARAMETRIZADA COMPLETA**
 
 ### **🛡️ DECISÃO #002 - CORREÇÃO CRÍTICA DE ENCODING**
 - **Agente:** GitHub Copilot

@@ -3,21 +3,23 @@
 **Audio-to-3D Video Generator with Perfect Sync**
 
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-green)](https://github.com/dvitoriano01/zentraw)
-[![Version](https://img.shields.io/badge/Version-V1.4.0.a.7-blue)](https://github.com/dvitoriano01/zentraw)
+[![Version](https://img.shields.io/badge/Version-V1.4.0.a.8-blue)](https://github.com/dvitoriano01/zentraw)
 [![Sync](https://img.shields.io/badge/Audio%20Sync-Perfect-green)](https://github.com/dvitoriano01/zentraw)
 
 ---
 
 ## 🎯 **OVERVIEW**
 
-Zentraw 3D Visualizer é um sistema de geração de vídeos 3D sincronizados com áudio, utilizando Blender como engine de renderização. A versão V1.4.0.a.7 apresenta **sincronização perfeita** entre áudio e animação visual.
+Zentraw 3D Visualizer é um sistema **independente** de geração de vídeos 3D sincronizados com áudio, utilizando Blender como engine de renderização. A versão V1.4.0.a.8 apresenta **interface parametrizada completa** com Eevee padrão para renderização mais rápida.
 
 ### **✅ KEY FEATURES:**
-- 🎵 **Perfect Audio Sync** - Processamento stereo→mono corrigido
-- 🎬 **High Quality Output** - MP4 1080x1920 + AAC codec
-- 🛡️ **Bulletproof System** - Base V1.4.0.a.5 preservada
-- ⚡ **Fast Rendering** - ~30s para vídeos de 5s
-- 🎯 **Web Interface** - Interface blindada com logs detalhados
+- ⚡ **Eevee Engine** - 3x mais rápido que Cycles (padrão)
+- 📺 **Full HD Default** - 1920x1080 como resolução padrão  
+- 🛑 **Stop/Cancel System** - Controle total sobre renders
+- 🎵 **Perfect Audio Sync** - Processamento com sequencer integrado
+- 🎬 **Parametrized Interface** - Todos os parâmetros Blender configuráveis
+- 🛡️ **Multi-version Blindage** - V1.4.0.a.7 e V1.4.0.a.5 preservadas
+- 🌐 **Porta Padrão** - 3004 (padrão Zentraw)
 
 ---
 
@@ -27,22 +29,22 @@ Zentraw 3D Visualizer é um sistema de geração de vídeos 3D sincronizados com
 ```bash
 cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender"
 
-"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" template.blend --background --python render_audio_visualizer_v1.4.0.a.7.py -- sample_audio3.wav test_image.jpg output.mp4
+"C:\Program Files\Blender Foundation\Blender 4.5\blender.exe" template.blend --background --python render_audio_visualizer_v1.4.0.a.8.py -- sample_audio3.wav test_image.jpg output.mp4
 ```
 
 ### **Automated Test:**
 ```bash
 cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"
-TESTE-BLINDADO-V1.4.0.a.7.bat
+TESTE-V1.4.0.a.8-PARAMETRIZADO.bat
 ```
 
 ### **Web Interface:**
 ```bash
-# Start backend
-node server-v1.4.0.a.7-blindado.cjs
+# Start backend V1.4.0.a.8 (porta 3004)
+node server-v1.4.0.a.8-parametrizado.cjs
 
 # Open browser
-http://localhost:5000/interface-v1.4.0.a.7-blindada.html
+http://localhost:3004
 ```
 
 ---

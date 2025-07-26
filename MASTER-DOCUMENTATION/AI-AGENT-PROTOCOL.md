@@ -96,7 +96,7 @@
 ✅ PRESERVAR funcionalidade existente
 ✅ APLICAR mudança MÍNIMA necessária
 ✅ VALIDAR antes de continuar
-🚨 ROLLBACK IMEDIATO se funcionalidade quebrar E correção não for possível
+🚨 ROLLBACK IMEDIATO se funcionalidade quebrar E correção não for possível - MAS SOMENTE SE ESGOTADAS AS POSSIBILIDADES DE CORREÇÃO E COM AUTORIZAÇÃO EXPRESSA DO DEV!!
 ```
 
 ### **FLUXO DE EXECUÇÃO:**
@@ -341,7 +341,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ### **AGENTE VIOLANDO PROTOCOLO:**
 
 - ❌ Usa arquivos de /archive/
-- ❌ Usa pastas "NÃO USAR" 
+- ❌ Usa pastas "NÃO USAR"
 - ❌ Incorpora código de referência diretamente
 - ❌ Modifica sem testar estado atual
 - ❌ Não documenta mudanças

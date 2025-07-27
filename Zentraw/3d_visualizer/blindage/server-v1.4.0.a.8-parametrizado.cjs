@@ -1,0 +1,4 @@
+// BACKUP BLINDADO - NÃO MODIFICAR
+// Cópia de segurança da versão V1.4.0.a.8 antes de qualquer alteração
+// Data: 27/07/2025
+

@@ -1,9 +1,76 @@
 # 🤖 ZENTRAW - PROTOCOLO PARA AGENTES IA
 
+---
+
+🚨🚨🚨 ATENÇÃO: ALERTA DE COMPLIANCE CRÍTICO 🚨🚨🚨
+
+É ESTRITAMENTE PROIBIDO, sob qualquer circunstância, utilizar, sugerir, executar ou referenciar tasks, scripts, comandos, exemplos ou fluxos do TemplateLibraryBuilder para o módulo `Zentraw/3d_visualizer`.
+
+🔴 TODA E QUALQUER AÇÃO, TESTE, EXEMPLO OU INSTRUÇÃO DEVE SER EXCLUSIVA DO DIRETÓRIO `Zentraw/3d_visualizer`.
+
+🔴 VIOLAÇÕES DEVEM SER DOCUMENTADAS IMEDIATAMENTE NO LOG DE DECISÕES E REPORTADAS AO DEV RESPONSÁVEL.
+
+🔴 O AGENTE QUEBROU O PROTOCOLO AO SUGERIR TASKS/SCRIPTS DE OUTRO MÓDULO: ESTE INCIDENTE FOI REGISTRADO E SERVE COMO EXEMPLO DE ERRO CRÍTICO QUE NÃO PODE SE REPETIR.
+
+🔒 O cumprimento deste alerta é OBRIGATÓRIO e INVIOLÁVEL. Qualquer dúvida, SEMPRE priorize a auditoria do diretório oficial do módulo antes de agir.
+
+⚠️ AVISO IMPORTANTE SOBRE ESCOPO DESTE DOCUMENTO ⚠️
+
+Este protocolo, exemplos de porta (3004), comandos, scripts e todas as instruções aqui presentes se aplicam EXCLUSIVAMENTE ao módulo oficial `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`.
+
+O sistema TemplateLibraryBuilder é independente, possui documentação e tasks próprias, e NÃO deve ser usado como referência para o 3d_visualizer.
+
+Qualquer menção a TemplateLibraryBuilder, portas antigas (5001, 3005) ou caminhos legados neste contexto deve ser ignorada e reportada para correção imediata.
+
+NÃO USAR A TASK Restart Backend V1.4.0.a.2
+
+Porta oficial do backend 3d_visualizer: **3004** (NUNCA usar outra porta neste módulo).
+
+---
+
 **Versão:** MASTER v1.0  
 **Data:** 24 de Julho de 2025  
 **Autoridade:** ZENTRAW-MASTER-RULES.md  
 **Aplicação:** OBRIGATÓRIA para TODOS os agentes IA
+
+---
+
+## ⚡ CONTEXTO INICIAL DO AGENTE (OBRIGATÓRIO)
+
+Antes de qualquer ação, o agente IA deve:
+
+1. **Registrar Diretório Oficial do Módulo**
+
+   - Exemplo: `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`
+   - Nunca utilizar ou referenciar diretórios antigos, como TemplateLibraryBuilder.
+
+2. **Validar e Documentar Versão e Status**
+
+   - Confirmar versão ativa do módulo e status funcional real.
+   - Registrar se o sistema está online/offline, porta utilizada, e status do backend.
+
+3. **Registrar Objetivo do Usuário e Limitações**
+
+   - Anotar o objetivo declarado pelo usuário para a sessão.
+   - Listar restrições explícitas (ex: “NÃO usar TemplateLibraryBuilder”, “NÃO modificar arquivos blindados”).
+
+4. **Coletar e Validar Contexto Técnico**
+
+   - Ler e validar todos os arquivos obrigatórios: ZENTRAW-MASTER-RULES.md, MODULE-ARCHITECTURE-STANDARD.md, MODULE-STATUS-TRACKER.md, README.md do módulo.
+   - Garantir que não há referências a sistemas, arquivos ou diretórios antigos na documentação ou no escopo da sessão.
+
+5. **Registrar Estado Inicial**
+
+   - Documentar o “estado do sistema” no início da sessão: arquivos presentes, serviços ativos, variáveis de ambiente relevantes.
+
+6. **Prompt Dinâmico**
+   - Sempre iniciar a sessão com um prompt contextualizado, incluindo diretório oficial, objetivo do usuário, restrições e status do sistema.
+
+> **Atenção:**
+
+1-Qualquer referência a TemplateLibraryBuilder, arquivos ou caminhos antigos deve ser ignorada e, se encontrada, reportada para correção imediata.
+
+2- O DEV é iniciante e não entende muito de códigos, seja PROATIVO e sempre que for necessário executar ações, especifique o diretório e o script ou comando para ele executar. Como agente, você tem autorização para executar os testes, bem como utilizar as ferramentas necessárias para a edição e refatoração de códigos para a solução do problema, DESDE QUE SIGA TODOS OS PROTOCOLOS DE SEGURAÇA E BLINDE AS VERSÕES ANTERIORES, para não perdemos o que já foi conquistado e está funcional. Execute as ações necessárias. Em casos críticos, questione o caminho a seguir.
 
 ---
 
@@ -180,7 +247,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 
 ---
 
-## 🔍 **PROTOCOLOS ESPECÍFICOS POR SITUAÇÃO**
+### **🔍 PROTOCOLOS ESPECÍFICOS POR SITUAÇÃO**
 
 ### **🆕 NOVO MÓDULO:**
 
@@ -228,15 +295,60 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 4. 🎯 CRIAR README.md baseado na realidade
 5. 📋 ATUALIZAR MODULE-STATUS-TRACKER.md
 6. ⚡ APLICAR padronização gradual
-```
 
 ---
 
-## 🤖 **COMUNICAÇÃO PADRÃO DO AGENTE**
+### **🔎 DIRETRIZES DE PESQUISA EXTERNA E CONSULTA DE FONTES**
+
+Sempre que houver necessidade de solucionar problemas, implementar integrações, validar comportamentos ou buscar conhecimento técnico sobre softwares, APIs, frameworks ou bibliotecas externas (exemplo: Blender 4.5), o agente IA deve seguir as diretrizes abaixo:
+
+1. **Priorizar Fontes Oficiais e Documentação Primária**
+   - Buscar sempre primeiro na documentação oficial do software (ex: https://docs.blender.org para Blender, https://docs.python.org para Python, etc).
+   - Consultar changelogs, guias de migração, referências de API, manuais de uso e FAQs diretamente do site oficial.
+   - Validar se a documentação corresponde exatamente à versão utilizada no projeto (ex: Blender 4.5, não 4.0 ou 3.x).
+
+2. **Utilizar Repositórios Oficiais e Comunidades Reconhecidas**
+   - Buscar exemplos, issues e discussões em repositórios oficiais (ex: GitHub do Blender, Add-ons, etc).
+   - Utilizar fóruns oficiais, Stack Overflow, Blender Artists, DevTalk, Reddit técnico, entre outros reconhecidos pela comunidade.
+   - Priorizar respostas e soluções com alta reputação, aceitação e atualização recente.
+
+3. **Validação de Soluções de Terceiros**
+   - Conferir se a solução de terceiros é amplamente aceita, tem boa reputação e está atualizada para a versão em uso.
+   - Evitar blogs, vídeos ou tutoriais sem referência técnica clara, sem código-fonte ou sem validação por outros desenvolvedores.
+   - Sempre comparar a solução de terceiros com a documentação oficial antes de aplicar.
+
+4. **Registro e Citação de Fontes**
+   - Toda fonte externa consultada deve ser registrada na documentação do projeto (link, data, trecho relevante ou print/screenshot se aplicável).
+   - Ao implementar uma solução baseada em fonte externa, citar explicitamente a origem no comentário do código ou no log de decisões.
+
+5. **Pesquisa Automatizada pelo Agente**
+   - O agente deve, ao identificar dúvida técnica, buscar automaticamente:
+     - Documentação oficial da versão exata (ex: “Blender 4.5 Python API” ou “Blender 4.5 command line arguments”).
+     - Exemplos de código e integração em fontes oficiais e fóruns reconhecidos.
+     - Relatos de bugs, limitações e soluções em issues oficiais e discussões técnicas.
+   - Registrar no log de decisões todas as fontes externas consultadas, mesmo que não utilizadas diretamente.
+
+6. **Prompt de Pesquisa e Solicitação do Usuário**
+   - O usuário pode solicitar explicitamente pesquisas, por exemplo:
+     - “Pesquisar documentação oficial do Blender sobre [tema]”
+     - “Buscar exemplos de integração Blender + Node.js”
+     - “Verificar problemas conhecidos do render engine Eevee Next”
+   - O agente deve interpretar essas solicitações como prioridade máxima e apresentar as fontes consultadas e um resumo dos achados.
+
+7. **Validação e Aplicação Segura**
+   - Antes de aplicar qualquer solução externa, validar se ela é compatível com o contexto do projeto, não viola blindagens e não introduz dependências não autorizadas.
+   - Testar a solução em ambiente controlado antes de promover para produção.
+
+> **Importante:** Toda consulta, pesquisa ou implementação baseada em fonte externa deve ser documentada, rastreável e validada quanto à versão, aplicabilidade e segurança para o projeto.
+
+---
+
+### **🤖 COMUNICAÇÃO PADRÃO DO AGENTE**
 
 ### **PROTOCOLO DE ENTRADA (OBRIGATÓRIO):**
 
 ```
+
 🤖 AGENTE: [NOME/ID] - PROTOCOLO INICIADO
 ├── 🏛️ ZENTRAW-MASTER-RULES.md: ✅ LIDO
 ├── 🏗️ MODULE-ARCHITECTURE-STANDARD.md: ✅ LIDO
@@ -247,20 +359,24 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ├── ✅ Arquivos físicos validados: [QTD] arquivos existem
 ├── 🧪 Sistema testado: [FUNCIONANDO/PROBLEMAS]
 └── 🎯 Objetivo: [DESCRIÇÃO_CLARA]
+
 ```
 
 ### **DURANTE TRABALHO:**
 
 ```
+
 ⚡ [TIMESTAMP] EXECUTANDO: [AÇÃO_ESPECÍFICA]
 🧪 [TIMESTAMP] TESTANDO: [RESULTADO]
 📝 [TIMESTAMP] DOCUMENTANDO: [MUDANÇA]
 ✅ [TIMESTAMP] VALIDADO: [STATUS]
+
 ```
 
 ### **PROTOCOLO DE SAÍDA (OBRIGATÓRIO):**
 
 ```
+
 🤖 AGENTE: [NOME/ID] - PROTOCOLO FINALIZADO
 ├── ✅ Objetivo alcançado: [SIM/NÃO]
 ├── 📊 Sistema funcional: [CONFIRMADO/PROBLEMAS]
@@ -272,26 +388,29 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 ├── 🔍 VALIDATION-CHECKLIST.md executado: [SIM]
 ├── ⚠️ Problemas identificados: [LISTA_OU_NENHUM]
 └── 📋 Próximos passos recomendados: [LISTA_OU_NENHUM]
+
 ```
 
 ---
-
-## 🚨 **SITUAÇÕES DE EMERGÊNCIA**
+### **🚨 SITUAÇÕES DE EMERGÊNCIA**
 
 ### **🛑 QUANDO PARAR IMEDIATAMENTE:**
 
 ```
+
 ❌ Documentação contradiz realidade massivamente
 ❌ Sistema funcionando diverge totalmente dos docs
 ❌ Múltiplos arquivos críticos ausentes
 ❌ Versões completamente desalinhadas
 ❌ Modificação causou quebra crítica
 ❌ Instrução causa loop infinito de erro
+
 ```
 
 ### **🔄 PROTOCOLO DE RECUPERAÇÃO:**
 
 ```
+
 1. 🛑 PARAR todas as modificações
 2. 📊 DOCUMENTAR estado atual encontrado
 3. � ANALISAR possibilidade de correção técnica preservando blindagem
@@ -302,11 +421,12 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 8. 📋 ATUALIZAR documentação baseada na REALIDADE
 9. ✅ VALIDAR sistema novamente
 10. 📊 REGISTRAR recuperação no log de decisões
+
 ```
 
 ---
 
-## 🎯 **OBJETIVOS DESTE PROTOCOLO**
+### **🎯 OBJETIVOS DESTE PROTOCOLO**
 
 ### **ELIMINAÇÃO GARANTIDA DE:**
 
@@ -328,7 +448,7 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 
 ---
 
-## 🏆 **MÉTRICAS DE SUCESSO**
+### **🏆 MÉTRICAS DE SUCESSO**
 
 ### **AGENTE SEGUINDO PROTOCOLO:**
 
@@ -352,7 +472,8 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 
 **🚨 ESTE PROTOCOLO É OBRIGATÓRIO E INVIOLÁVEL**
 
-**Autoridade:** ZENTRAW-MASTER-RULES.md  
-**Vigência:** IMEDIATA para todos os agentes  
-**Compliance:** OBRIGATÓRIO - Sem exceções  
+**Autoridade:** ZENTRAW-MASTER-RULES.md
+**Vigência:** IMEDIATA para todos os agentes
+**Compliance:** OBRIGATÓRIO - Sem exceções
 **Validação:** MODULE-STATUS-TRACKER.md + VALIDATION-CHECKLIST.md
+```

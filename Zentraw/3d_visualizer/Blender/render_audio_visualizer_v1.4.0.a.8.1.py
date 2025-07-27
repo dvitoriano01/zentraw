@@ -40,6 +40,11 @@ try:
     audio_path = argv[dash_index + 1]
     image_path = argv[dash_index + 2] if len(argv) > dash_index + 2 else None
     output_path = argv[dash_index + 3] if len(argv) > dash_index + 3 else "output.mp4"
+    # Garantir caminho absoluto e diretório existente
+    output_path = os.path.abspath(output_path)
+    output_dir = os.path.dirname(output_path)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, exist_ok=True)
     config_json = argv[dash_index + 4] if len(argv) > dash_index + 4 else None
     
     # Verificação de tipo de dados
@@ -79,7 +84,7 @@ if config_json and not os.path.exists(config_json):
 print(f"✅ Todos os arquivos validados com sucesso")
 print(f"🎵 Áudio: {audio_path}")
 print(f"🖼️ Imagem: {image_path}")
-print(f"📁 Output: {output_path}")
+print(f"📁 Output (absoluto): {output_path}")
 print(f"⚙️ Config: {config_json}")
 
 # 2. Função para ler configurações (🛡️ BLINDAGEM V1.4.0.a.7)
@@ -115,7 +120,7 @@ AUDIO_CHANNELS = get_setting('audioChannels', 'mono')
 # Parâmetros visuais
 BACKGROUND_COLOR = tuple(int(get_setting('backgroundColor', '#000000')[i:i+2], 16)/255.0 for i in (1, 3, 5))
 PARTICLE_COLOR = tuple(int(get_setting('particleColor', '#00ff00')[i:i+2], 16)/255.0 for i in (1, 3, 5))
-CAMERA_DISTANCE = get_setting('cameraDistance', 7)
+CAMERA_DISTANCE = float(get_setting('cameraDistance', 7))
 CUBE_SCALE = float(get_setting('cubeScale', 0.5))
 MAX_SCALE = float(get_setting('maxScale', 4.0))
 PARTICLE_COUNT = int(get_setting('particleCount', 64))
@@ -188,6 +193,7 @@ bg_node = bpy.context.scene.world.node_tree.nodes["Background"]
 bg_node.inputs[0].default_value = (*BACKGROUND_COLOR, 1.0)
 
 # Configurar output
+print(f"🔒 Definindo caminho de saída do render: {output_path}")
 bpy.context.scene.render.filepath = output_path
 bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
 bpy.context.scene.render.ffmpeg.format = 'MPEG4'
@@ -216,7 +222,16 @@ with wave.open(audio_path, 'rb') as wav_file:
             audio_data = audio_data[:, 0]  # Usar canal esquerdo
     
     # Normalizar
-    audio_data = audio_data.astype(np.float32) / np.iinfo(audio_data.dtype).max
+    if np.issubdtype(audio_data.dtype, np.integer):
+        audio_data = audio_data.astype(np.float32) / np.iinfo(audio_data.dtype).max
+    elif np.issubdtype(audio_data.dtype, np.floating):
+        # Se já for float, apenas normaliza para -1.0 a 1.0 se necessário
+        max_val = np.abs(audio_data).max()
+        if max_val > 1.0:
+            audio_data = audio_data / max_val
+        audio_data = audio_data.astype(np.float32)
+    else:
+        raise ValueError(f"Tipo de dado de áudio não suportado: {audio_data.dtype}")
 
 print(f"🎵 Áudio carregado: {len(audio_data)} samples, {sample_rate}Hz, {n_channels} canais")
 
@@ -375,6 +390,14 @@ print(f"🎵 Com áudio: {os.path.exists(audio_path)}")
 try:
     bpy.ops.render.render(animation=True)
     print("🎉 Render concluído com sucesso!")
+    # Listar arquivos no diretório de saída para depuração
+    print(f"📂 Arquivos no diretório de saída ({output_dir}):")
+    for f in os.listdir(output_dir):
+        print(f" - {f}")
+    if os.path.exists(output_path):
+        print(f"✅ Arquivo MP4 gerado: {output_path}")
+    else:
+        print(f"❌ Arquivo MP4 NÃO encontrado: {output_path}")
 except Exception as e:
     print(f"❌ Erro durante render: {e}")
     sys.exit(1)

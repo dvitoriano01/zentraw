@@ -99,7 +99,7 @@
     {
       "label": "🔍 Test Backend Connection",
       "type": "shell",
-      "command": "curl http://localhost:5001/health && echo. && curl http://localhost:5001/api/blender/test",
+      "command": "curl http://localhost:3004/health && echo. && curl http://localhost:3004/api/blender/test",
       "group": "test",
       "isBackground": false,
       "problemMatcher": [],
@@ -118,7 +118,7 @@
     {
       "label": "🧪 Debug Blender System",
       "type": "shell",
-      "command": "curl http://localhost:5001/api/blender/debug",
+      "command": "curl http://localhost:3004/api/blender/debug",
       "group": "test",
       "isBackground": false,
       "problemMatcher": [],
@@ -127,6 +127,25 @@
         "reveal": "always",
         "focus": false,
         "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "🚀 Start Zentraw Backend (OFICIAL)",
+      "type": "shell",
+      "command": "cd Zentraw\\3d_visualizer && set NODE_ENV=development && tsx server/index.ts",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated",
         "showReuseMessage": false,
         "clear": true
       },

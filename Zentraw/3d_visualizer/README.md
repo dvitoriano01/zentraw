@@ -116,6 +116,23 @@ http://localhost:3004
 
 ---
 
+## Status Atual (27/07/2025)
+- Renderização executa sem erro, arquivo MP4 aparece no diretório de saída.
+- Problema: MP4 pode estar corrompido ou não é reconhecido pela interface.
+- Compliance total com AI-AGENT-PROTOCOL.md.
+
+## Problemas Conhecidos
+- Arquivo MP4 não é baixado corretamente pela interface.
+- Necessário validar integridade do arquivo e logs do Blender.
+
+## Próximos Passos
+- Testar reprodução manual do arquivo MP4.
+- Auditar logs do Blender para mensagens de erro.
+- Validar integração do botão de download na interface.
+- Documentar decisões e próximos passos em TROUBLESHOOTING.md e ZENTRAW-AGENT-DECISIONS-LOG.md.
+
+---
+
 **🛡️ BULLETPROOF SYSTEM - PRODUCTION READY**
 
 *Perfect audio sync - Preserved functionality - Complete documentation*

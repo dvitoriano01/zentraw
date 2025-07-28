@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎯 Zentraw V1.4.0.a.8 - Interface Parametrizada Completa</title>
+    <title>🎯 Zentraw V1.4.0.a.8.2 - Interface Parametrizada Completa</title>
     <style>
         * {
             margin: 0;
@@ -294,14 +294,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8</h1>
-            <div class="status">Interface Parametrizada Completa - Blindagem V1.4.0.a.7 Ativa</div>
+            <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8.2</h1>
+            <div class="status">Interface Parametrizada Completa - Script CYCLES V1.4.0.a.8.2 Ativo</div>
         </div>
 
         <div class="blindage-info">
             <h4>🛡️ Sistema de Blindagem Ativo</h4>
             <p><strong>V1.4.0.a.7 Blindada:</strong> Funcionalidade com sync perfeito preservada como fallback</p>
-            <p><strong>V1.4.0.a.8 Evolution:</strong> Interface parametrizada completa + logs detalhados</p>
+            <p><strong>V1.4.0.a.8.2 Evolution:</strong> CYCLES Engine + Timestamp + Logs detalhados</p>
         </div>
         
         <div class="main-content">
@@ -441,7 +441,8 @@
                         <div class="form-group">
                             <label for="scriptVersion">🔧 Versão do Script:</label>
                             <select id="scriptVersion">
-                                <option value="v1.4.0.a.8.1" selected>V1.4.0.a.8.1 (Hotfix Blender 4.5+)</option>
+                                <option value="v1.4.0.a.8.2" selected>V1.4.0.a.8.2 (Hotfix CYCLES + Timestamp)</option>
+                                <option value="v1.4.0.a.8.1">V1.4.0.a.8.1 (EEVEE - Antigo)</option>
                                 <option value="v1.4.0.a.8">V1.4.0.a.8 (Parametrizado)</option>
                                 <option value="v1.4.0.a.7">V1.4.0.a.7 (Blindado - Fallback)</option>
                                 <option value="v1.4.0.a.5">V1.4.0.a.5 (Original - Emergência)</option>
@@ -479,9 +480,9 @@
                 <div class="section-card">
                     <h3>📝 Logs Detalhados</h3>
                     <div class="logs-container" id="logsContainer">
-                        <div class="log-entry log-info">[INIT] Interface V1.4.0.a.8 carregada</div>
+                        <div class="log-entry log-info">[INIT] Interface V1.4.0.a.8.2 carregada</div>
                         <div class="log-entry log-info">[BLINDAGE] V1.4.0.a.7 blindada e disponível</div>
-                        <div class="log-entry log-success">[READY] Sistema pronto para render parametrizado</div>
+                        <div class="log-entry log-success">[READY] Sistema pronto com script V1.4.0.a.8.2 (CYCLES)</div>
                     </div>
                     <div style="margin-top: 10px; display: flex; gap: 10px;">
                         <button class="btn btn-secondary" onclick="clearLogs()">🧹 Limpar Logs</button>
@@ -518,9 +519,10 @@
         });
 
         function initializeInterface() {
-            addLog('🚀 Inicializando Interface V1.4.0.a.8...', 'info');
+            addLog('🚀 Inicializando Interface V1.4.0.a.8.2...', 'info');
             addLog('🛡️ Sistema de blindagem V1.4.0.a.7 carregado', 'success');
             addLog('⚙️ Interface parametrizada completa ativa', 'success');
+            addLog('🔧 Script padrão: V1.4.0.a.8.2 (CYCLES + Timestamp)', 'success');
             
             // Event listeners para preview de arquivos
             document.getElementById('audioFile').addEventListener('change', previewAudio);

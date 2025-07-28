@@ -297,50 +297,97 @@ ETAPA 2: DOCUMENTAÇÃO CENTRAL
 6. ⚡ APLICAR padronização gradual
 
 ---
+```
 
 ### **🔎 DIRETRIZES DE PESQUISA EXTERNA E CONSULTA DE FONTES**
 
 Sempre que houver necessidade de solucionar problemas, implementar integrações, validar comportamentos ou buscar conhecimento técnico sobre softwares, APIs, frameworks ou bibliotecas externas (exemplo: Blender 4.5), o agente IA deve seguir as diretrizes abaixo:
 
-1. **Priorizar Fontes Oficiais e Documentação Primária**
-   - Buscar sempre primeiro na documentação oficial do software (ex: https://docs.blender.org para Blender, https://docs.python.org para Python, etc).
-   - Consultar changelogs, guias de migração, referências de API, manuais de uso e FAQs diretamente do site oficial.
-   - Validar se a documentação corresponde exatamente à versão utilizada no projeto (ex: Blender 4.5, não 4.0 ou 3.x).
+#### **📚 1. PRIORIZAR FONTES OFICIAIS E DOCUMENTAÇÃO PRIMÁRIA**
 
-2. **Utilizar Repositórios Oficiais e Comunidades Reconhecidas**
-   - Buscar exemplos, issues e discussões em repositórios oficiais (ex: GitHub do Blender, Add-ons, etc).
-   - Utilizar fóruns oficiais, Stack Overflow, Blender Artists, DevTalk, Reddit técnico, entre outros reconhecidos pela comunidade.
-   - Priorizar respostas e soluções com alta reputação, aceitação e atualização recente.
+```
+✅ BUSCAR SEMPRE PRIMEIRO:
+├── 📖 Documentação oficial do software (ex: https://docs.blender.org)
+├── 🔄 Changelogs e guias de migração oficiais
+├── 🔌 Referências de API e manuais de uso
+├── ❓ FAQs diretamente do site oficial
+└── ✅ Validar versão exata (ex: Blender 4.5, não 4.0 ou 3.x)
+```
 
-3. **Validação de Soluções de Terceiros**
-   - Conferir se a solução de terceiros é amplamente aceita, tem boa reputação e está atualizada para a versão em uso.
-   - Evitar blogs, vídeos ou tutoriais sem referência técnica clara, sem código-fonte ou sem validação por outros desenvolvedores.
-   - Sempre comparar a solução de terceiros com a documentação oficial antes de aplicar.
+#### **🏛️ 2. UTILIZAR REPOSITÓRIOS OFICIAIS E COMUNIDADES RECONHECIDAS**
 
-4. **Registro e Citação de Fontes**
-   - Toda fonte externa consultada deve ser registrada na documentação do projeto (link, data, trecho relevante ou print/screenshot se aplicável).
-   - Ao implementar uma solução baseada em fonte externa, citar explicitamente a origem no comentário do código ou no log de decisões.
+```
+🔍 FONTES VÁLIDAS:
+├── 💻 Repositórios oficiais (GitHub do Blender, Add-ons)
+├── 🏢 Fóruns oficiais e Stack Overflow
+├── 🎨 Blender Artists, DevTalk, Reddit técnico
+├── ⭐ Respostas com alta reputação e aceitação
+└── 📅 Soluções atualizadas recentemente
+```
 
-5. **Pesquisa Automatizada pelo Agente**
-   - O agente deve, ao identificar dúvida técnica, buscar automaticamente:
-     - Documentação oficial da versão exata (ex: “Blender 4.5 Python API” ou “Blender 4.5 command line arguments”).
-     - Exemplos de código e integração em fontes oficiais e fóruns reconhecidos.
-     - Relatos de bugs, limitações e soluções em issues oficiais e discussões técnicas.
-   - Registrar no log de decisões todas as fontes externas consultadas, mesmo que não utilizadas diretamente.
+#### **🔐 3. VALIDAÇÃO DE SOLUÇÕES DE TERCEIROS**
 
-6. **Prompt de Pesquisa e Solicitação do Usuário**
-   - O usuário pode solicitar explicitamente pesquisas, por exemplo:
-     - “Pesquisar documentação oficial do Blender sobre [tema]”
-     - “Buscar exemplos de integração Blender + Node.js”
-     - “Verificar problemas conhecidos do render engine Eevee Next”
-   - O agente deve interpretar essas solicitações como prioridade máxima e apresentar as fontes consultadas e um resumo dos achados.
+```
+⚠️ CRITÉRIOS OBRIGATÓRIOS:
+├── ✅ Solução amplamente aceita pela comunidade
+├── ⭐ Boa reputação e validação por outros devs
+├── 📅 Atualizada para versão em uso
+├── ❌ Evitar blogs sem referência técnica clara
+├── ❌ Evitar tutoriais sem código-fonte
+└── 🔍 Sempre comparar com documentação oficial
+```
 
-7. **Validação e Aplicação Segura**
-   - Antes de aplicar qualquer solução externa, validar se ela é compatível com o contexto do projeto, não viola blindagens e não introduz dependências não autorizadas.
-   - Testar a solução em ambiente controlado antes de promover para produção.
+#### **📝 4. REGISTRO E CITAÇÃO DE FONTES**
 
-> **Importante:** Toda consulta, pesquisa ou implementação baseada em fonte externa deve ser documentada, rastreável e validada quanto à versão, aplicabilidade e segurança para o projeto.
+```
+📋 DOCUMENTAÇÃO OBRIGATÓRIA:
+├── 🔗 Link da fonte externa consultada
+├── 📅 Data da consulta
+├── 📄 Trecho relevante ou screenshot
+├── 💬 Citação explícita no código/log
+└── 📊 Registro no log de decisões
+```
 
+#### **🤖 5. PESQUISA AUTOMATIZADA PELO AGENTE**
+
+```
+🔍 O AGENTE DEVE BUSCAR AUTOMATICAMENTE:
+├── 📖 Documentação oficial da versão exata
+├── 💡 Exemplos de código em fontes oficiais
+├── 🐛 Relatos de bugs e limitações conhecidas
+├── 💬 Issues oficiais e discussões técnicas
+└── 📊 Registrar TODAS as fontes consultadas
+```
+
+#### **🎯 6. PROMPT DE PESQUISA E SOLICITAÇÃO DO USUÁRIO**
+
+```
+📞 EXEMPLOS DE SOLICITAÇÕES VÁLIDAS:
+├── "Pesquisar documentação oficial do Blender sobre [tema]"
+├── "Buscar exemplos de integração Blender + Node.js"
+├── "Verificar problemas conhecidos do render engine Eevee Next"
+├── 🚀 Interpretar como prioridade máxima
+└── 📊 Apresentar fontes consultadas + resumo
+```
+
+#### **🛡️ 7. VALIDAÇÃO E APLICAÇÃO SEGURA**
+
+```
+⚡ ANTES DE APLICAR SOLUÇÃO EXTERNA:
+├── ✅ Compatível com contexto do projeto
+├── 🛡️ Não viola blindagens existentes
+├── 📦 Não introduz dependências não autorizadas
+├── 🧪 Testar em ambiente controlado
+└── 🚀 Promover para produção apenas após validação
+```
+
+---
+
+**🔒 COMPLIANCE OBRIGATÓRIO:**
+
+> Toda consulta, pesquisa ou implementação baseada em fonte externa deve ser documentada, rastreável e validada quanto à versão, aplicabilidade e segurança para o projeto.
+
+```
 ---
 
 ### **🤖 COMUNICAÇÃO PADRÃO DO AGENTE**
@@ -469,7 +516,198 @@ Sempre que houver necessidade de solucionar problemas, implementar integrações
 - ❌ Cria documentação contraditória
 
 ---
+```
 
+## 🎯 **PROTOCOLO DE INTERAÇÃO COM DEV INICIANTE**
+
+### **📋 PERFIL DO DESENVOLVEDOR:**
+
+- **Especialidades:** Produção Musical, Graphic Design, 3D Motion Graphics, Audio Design
+- **Limitação:** Iniciante em códigos e desenvolvimento técnico
+- **Necessidade:** Instruções claras, caminhos específicos, execução direta
+
+### **⚡ PADRÃO DE PROATIVIDADE OBRIGATÓRIO:**
+
+#### **🚀 ANTES DE QUALQUER AÇÃO:**
+
+```
+✅ APRESENTAR PLANO COMPLETO
+✅ SOLICITAR CONFIRMAÇÃO APENAS EM CASOS CRÍTICOS
+✅ EXECUTAR AUTOMATICAMENTE TAREFAS TÉCNICAS BÁSICAS
+✅ PREPARAR AMBIENTE DE TESTE COMPLETO
+❌ NÃO PERGUNTAR DETALHES BÁSICOS QUE ATRASAM O FLUXO
+❌ NÃO SOLICITAR CONFIRMAÇÃO PARA TAREFAS ROTINEIRAS
+```
+
+#### **🎯 CASOS QUE EXIGEM CONFIRMAÇÃO:**
+
+- Modificações que podem quebrar sistema funcional
+- Alterações em arquivos blindados críticos
+- Rollback de versões estáveis
+- Mudanças arquiteturais significativas
+
+### **📝 FORMATO PADRÃO DE COMUNICAÇÃO:**
+
+#### **🔧 PARA CORREÇÕES E IMPLEMENTAÇÕES:**
+
+```
+🔧 Para corrigir [PROBLEMA]:
+
+1. 📁 Navegue para o diretório correto: 📂 [DIRETÓRIO_ESPECÍFICO]
+2. ⚡ Execute: [COMANDO_ESPECÍFICO]
+3. 🌐 O servidor deve iniciar na porta [PORTA]
+4. 🔗 Acesse: http://localhost:[PORTA] para usar a interface
+
+✅ A correção foi aplicada! Teste novamente no terminal. 🎯
+```
+
+#### **📍 LOCALIZAÇÃO CORRETA DE ARQUIVOS:**
+
+```
+📍 LOCALIZAÇÃO CORRETA:
+
+O arquivo 🔸 [NOME_ARQUIVO] está localizado em:
+
+[CAMINHO_COMPLETO_ABSOLUTO]
+
+❌ Você executou no diretório errado:
+[CAMINHO_ERRADO]
+
+✅ Execute no diretório correto:
+[COMANDOS_ESPECÍFICOS_COM_CD]
+```
+
+#### **🧪 PARA TESTES FINAIS:**
+
+```
+🧪 Para testar a correção:
+
+1. Navegue para o diretório correto: 📂 3d_visualizer
+2. Execute: node server-v1.4.0.a.8-parametrizado.cjs
+3. O servidor deve agora:
+   1. ✅ [COMPORTAMENTO_ESPERADO_1]
+   2. ✅ [COMPORTAMENTO_ESPERADO_2]
+   3. ✅ [COMPORTAMENTO_ESPERADO_3]
+   4. ✅ [COMPORTAMENTO_ESPERADO_4]
+4. Acesse http://localhost:[PORTA] para usar a interface
+
+A correção foi aplicada! Teste novamente no terminal. 🎯
+```
+
+### **🎯 ELEMENTOS VISUAIS OBRIGATÓRIOS:**
+
+#### **✅ ÍCONES E FORMATAÇÃO:**
+
+- 🔧 Para correções técnicas
+- 📁/📂 Para diretórios
+- ⚡ Para comandos de execução
+- 🌐 Para servidores
+- 🔗 Para links/URLs
+- ✅ Para confirmações/sucessos
+- ❌ Para erros/problemas
+- 📍 Para localizações
+- 🔸 Para arquivos específicos
+- 🎯 Para call-to-action final
+
+#### **📋 ESTRUTURA DE LISTAS:**
+
+```
+1. [PASSO_CLARO]
+2. [COMANDO_ESPECÍFICO]
+3. [RESULTADO_ESPERADO]
+4. [AÇÃO_SEGUINTE]
+```
+
+#### **🔗 LINKS E CAMINHOS CLICÁVEIS:**
+
+- Sempre fornecer caminhos completos e absolutos
+- Usar formatação de código para comandos: `comando aqui`
+- Links sempre como: http://localhost:3004 (nunca apenas "localhost")
+
+### **⚡ FLUXO DE TRABALHO PADRÃO:**
+
+#### **ETAPA 1: PLANEJAMENTO (INTERNO)**
+
+```
+1. 🔍 Analisar problema
+2. 🎯 Definir solução técnica
+3. 🛡️ Verificar impacto em blindagem
+4. 📋 Preparar plano de execução
+```
+
+#### **ETAPA 2: COMUNICAÇÃO COM DEV**
+
+```
+1. 📝 Apresentar plano resumido
+2. ⚡ Solicitar confirmação APENAS se crítico
+3. 🔧 Executar correções automaticamente
+4. 📊 Preparar ambiente de teste
+```
+
+#### **ETAPA 3: ENTREGA PARA TESTE**
+
+```
+1. ✅ Sistema corrigido e funcional
+2. 📋 Instruções claras de teste
+3. 🔗 Links e comandos prontos
+4. 📊 Resultados esperados documentados
+```
+
+### **🚨 PROTOCOLO CRÍTICO - QUANDO QUESTIONAR:**
+
+#### **⚠️ SITUAÇÕES QUE EXIGEM CONFIRMAÇÃO:**
+
+```
+🛑 PARAR E QUESTIONAR quando:
+├── Correção pode quebrar sistema funcionando
+├── Múltiplas soluções técnicas possíveis
+├── Rollback pode ser necessário
+├── Mudança afeta arquitetura crítica
+└── Conflito entre blindagem e correção
+```
+
+#### **✅ EXECUTAR AUTOMATICAMENTE:**
+
+```
+🚀 EXECUTAR SEM PERGUNTAR:
+├── Correções de sintaxe
+├── Ajustes de configuração
+├── Debugging de logs
+├── Testes de funcionalidade
+├── Atualizações de documentação
+└── Preparação de ambiente
+```
+
+### **📊 EXEMPLO COMPLETO DE COMUNICAÇÃO:**
+
+```
+🔧 Para corrigir o bug do MP4:
+
+1. 📁 Navegue para o diretório correto: 📂 3d_visualizer
+2. ⚡ Execute: `node server-v1.4.0.a.8-parametrizado.cjs`
+3. 🌐 O servidor deve iniciar na porta 3004
+4. 🔗 Acesse: http://localhost:3004 para usar a interface
+
+O servidor deve agora:
+1. ✅ Iniciar sem erros de sintaxe
+2. ✅ Mostrar os logs de debug do 🔍 currentDir
+3. ✅ Rodar na porta 3004 (corrigida)
+4. ✅ Processar renders sem erros de path
+
+✅ A correção foi aplicada! Teste novamente no terminal. 🎯
+```
+
+---
+
+**🔒 COMPLIANCE OBRIGATÓRIO:**
+
+- Esta seção complementa o item já existente: "O DEV é iniciante e não entende muito de códigos..."
+- Todos os agentes devem seguir este padrão visual e de comunicação
+- Proatividade é obrigatória, questionamentos apenas em casos críticos
+- Formato de apresentação deve ser consistente entre todos os agentes
+
+```
+---
 **🚨 ESTE PROTOCOLO É OBRIGATÓRIO E INVIOLÁVEL**
 
 **Autoridade:** ZENTRAW-MASTER-RULES.md

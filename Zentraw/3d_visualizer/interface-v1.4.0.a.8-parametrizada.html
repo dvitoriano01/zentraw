@@ -1,939 +1,1152 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎯 Zentraw V1.4.0.a.8 - Interface Parametrizada Completa</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 20px;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        .header .status {
-            font-size: 1.2em;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 20px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .header .status {
+        font-size: 1.2em;
+        color: #4caf50;
+        font-weight: bold;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 30px;
+      }
+
+      .left-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .right-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .section-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .section-card h3 {
+        color: #4caf50;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #e8f4fd;
+        font-size: 14px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #4caf50;
+        outline: none;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+      }
+
+      .form-group input[type="range"] {
+        -webkit-appearance: none;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+      }
+
+      .form-group input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        background: #4caf50;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .range-display {
+        text-align: center;
+        margin-top: 5px;
+        font-size: 12px;
+        color: #4caf50;
+        font-weight: bold;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(45deg, #2196f3, #1976d2);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+      }
+
+      .btn-danger {
+        background: linear-gradient(45deg, #f44336, #d32f2f);
+        color: white;
+      }
+
+      .logs-container {
+        height: 400px;
+        overflow-y: auto;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .log-entry {
+        margin-bottom: 5px;
+        padding: 5px;
+        border-radius: 3px;
+      }
+
+      .log-info {
+        color: #4caf50;
+      }
+      .log-warning {
+        color: #ff9800;
+      }
+      .log-error {
+        color: #f44336;
+      }
+      .log-success {
+        color: #8bc34a;
+      }
+
+      .progress-container {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 10px 0;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #4caf50, #8bc34a);
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 10px;
+      }
+
+      .file-preview {
+        max-width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .result-container {
+        display: none;
+        background: rgba(76, 175, 80, 0.1);
+        border: 2px solid #4caf50;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .result-video {
+        max-width: 100%;
+        border-radius: 10px;
+        margin: 15px 0;
+      }
+
+      .presets {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .preset-btn {
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        color: white;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .preset-btn:hover {
+        background: rgba(76, 175, 80, 0.3);
+        border-color: #4caf50;
+      }
+
+      .blindage-info {
+        background: rgba(255, 193, 7, 0.1);
+        border: 2px solid #ffc107;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .blindage-info h4 {
+        color: #ffc107;
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 1024px) {
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 30px;
+          grid-template-columns: 1fr;
         }
-        
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .right-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .section-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .section-card h3 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
+
         .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+          grid-template-columns: 1fr;
         }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #E8F4FD;
-            font-size: 14px;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #4CAF50;
-            outline: none;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
-        }
-        
-        .form-group input[type="range"] {
-            -webkit-appearance: none;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-        }
-        
-        .form-group input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4CAF50;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .range-display {
-            text-align: center;
-            margin-top: 5px;
-            font-size: 12px;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-        
-        .btn-secondary {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-            color: white;
-        }
-        
-        .logs-container {
-            height: 400px;
-            overflow-y: auto;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .log-entry {
-            margin-bottom: 5px;
-            padding: 5px;
-            border-radius: 3px;
-        }
-        
-        .log-info { color: #4CAF50; }
-        .log-warning { color: #FF9800; }
-        .log-error { color: #f44336; }
-        .log-success { color: #8BC34A; }
-        
-        .progress-container {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
-        
-        .file-preview {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .result-container {
-            display: none;
-            background: rgba(76, 175, 80, 0.1);
-            border: 2px solid #4CAF50;
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .result-video {
-            max-width: 100%;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-        
-        .presets {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        
-        .preset-btn {
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-        
-        .preset-btn:hover {
-            background: rgba(76, 175, 80, 0.3);
-            border-color: #4CAF50;
-        }
-
-        .blindage-info {
-            background: rgba(255, 193, 7, 0.1);
-            border: 2px solid #FFC107;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .blindage-info h4 {
-            color: #FFC107;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8</h1>
-            <div class="status">Interface Parametrizada Completa - Blindagem V1.4.0.a.7 Ativa</div>
+      <div class="header">
+        <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8</h1>
+        <div class="status">
+          Interface Parametrizada Completa - Blindagem V1.4.0.a.7 Ativa
         </div>
+      </div>
 
-        <div class="blindage-info">
-            <h4>🛡️ Sistema de Blindagem Ativo</h4>
-            <p><strong>V1.4.0.a.7 Blindada:</strong> Funcionalidade com sync perfeito preservada como fallback</p>
-            <p><strong>V1.4.0.a.8 Evolution:</strong> Interface parametrizada completa + logs detalhados</p>
-        </div>
-        
-        <div class="main-content">
-            <div class="left-panel">
-                <!-- Arquivos de Input -->
-                <div class="section-card">
-                    <h3>📁 Arquivos de Input</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="audioFile">🎵 Arquivo de Áudio:</label>
-                            <input type="file" id="audioFile" accept=".wav,.mp3,.ogg,.flac" />
-                        </div>
-                        <div class="form-group">
-                            <label for="imageFile">🖼️ Imagem de Background:</label>
-                            <input type="file" id="imageFile" accept=".jpg,.jpeg,.png,.bmp" />
-                        </div>
-                    </div>
-                    <div id="filePreview"></div>
-                </div>
+      <div class="blindage-info">
+        <h4>🛡️ Sistema de Blindagem Ativo</h4>
+        <p>
+          <strong>V1.4.0.a.7 Blindada:</strong> Funcionalidade com sync perfeito
+          preservada como fallback
+        </p>
+        <p>
+          <strong>V1.4.0.a.8 Evolution:</strong> Interface parametrizada
+          completa + logs detalhados
+        </p>
+      </div>
 
-                <!-- Parâmetros de Render -->
-                <div class="section-card">
-                    <h3>🎬 Parâmetros de Render</h3>
-                    <div class="presets">
-                        <div class="preset-btn" onclick="applyPreset('fast')">⚡ Rápido</div>
-                        <div class="preset-btn" onclick="applyPreset('quality')">🎯 Qualidade</div>
-                        <div class="preset-btn" onclick="applyPreset('ultra')">🔥 Ultra</div>
-                        <div class="preset-btn" onclick="applyPreset('custom')">⚙️ Custom</div>
-                    </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="resolution">📐 Resolução:</label>
-                            <select id="resolution">
-                                <option value="1920x1080" selected>📺 Full HD (1920x1080) - Padrão</option>
-                                <option value="1080x1920">📱 Vertical HD (1080x1920)</option>
-                                <option value="1280x720">🎬 HD (1280x720)</option>
-                                <option value="2560x1440">🖥️ 2K QHD (2560x1440)</option>
-                                <option value="3840x2160">🔥 4K UHD (3840x2160)</option>
-                                <option value="custom">⚙️ Personalizado</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="fps">🎞️ FPS (Frames por Segundo):</label>
-                            <input type="range" id="fps" min="24" max="60" value="30" oninput="updateRangeDisplay('fps')" />
-                            <div class="range-display" id="fps-display">30 FPS</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="samples">🔍 Samples (Qualidade Render):</label>
-                            <input type="range" id="samples" min="32" max="512" value="128" oninput="updateRangeDisplay('samples')" />
-                            <div class="range-display" id="samples-display">128 Samples</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="renderEngine">🚀 Engine de Render:</label>
-                            <select id="renderEngine">
-                                <option value="BLENDER_EEVEE_NEXT" selected>⚡ Eevee Next (Rápido - Recomendado)</option>
-                                <option value="CYCLES">🎯 Cycles (Realístico)</option>
-                                <option value="BLENDER_WORKBENCH">👁️ Workbench (Preview)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Parâmetros de Áudio -->
-                <div class="section-card">
-                    <h3>🎵 Parâmetros de Áudio</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="amplitudeMultiplier">📊 Multiplicador de Amplitude:</label>
-                            <input type="range" id="amplitudeMultiplier" min="0.5" max="10" value="3" step="0.1" oninput="updateRangeDisplay('amplitudeMultiplier')" />
-                            <div class="range-display" id="amplitudeMultiplier-display">3.0x</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="smoothing">🌊 Suavização de Amplitude:</label>
-                            <input type="range" id="smoothing" min="1" max="20" value="1" oninput="updateRangeDisplay('smoothing')" />
-                            <div class="range-display" id="smoothing-display">1 (Sem suavização)</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="frequencyRange">🎼 Faixa de Frequência:</label>
-                            <select id="frequencyRange">
-                                <option value="full">Completa (20Hz-20kHz)</option>
-                                <option value="bass">Graves (20Hz-250Hz)</option>
-                                <option value="mid">Médios (250Hz-4kHz)</option>
-                                <option value="treble">Agudos (4kHz-20kHz)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="audioChannels">🎧 Processamento de Canais:</label>
-                            <select id="audioChannels">
-                                <option value="mono">Mono (Canal Esquerdo)</option>
-                                <option value="stereo_left">Stereo - Canal Esquerdo</option>
-                                <option value="stereo_right">Stereo - Canal Direito</option>
-                                <option value="stereo_mix">Stereo - Mix dos Canais</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Parâmetros Visuais -->
-                <div class="section-card">
-                    <h3>🎨 Parâmetros Visuais</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="cubeScale">📦 Escala Base do Cubo:</label>
-                            <input type="range" id="cubeScale" min="0.1" max="5" value="1" step="0.1" oninput="updateRangeDisplay('cubeScale')" />
-                            <div class="range-display" id="cubeScale-display">1.0x</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="maxScale">📈 Escala Máxima (Picos):</label>
-                            <input type="range" id="maxScale" min="1" max="20" value="5" step="0.5" oninput="updateRangeDisplay('maxScale')" />
-                            <div class="range-display" id="maxScale-display">5.0x</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="cameraDistance">📷 Distância da Câmera:</label>
-                            <input type="range" id="cameraDistance" min="3" max="15" value="10.0" step="0.1" oninput="updateRangeDisplay('cameraDistance')" />
-                            <div class="range-display" id="cameraDistance-display">10.0m</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lightIntensity">💡 Intensidade da Luz:</label>
-                            <input type="range" id="lightIntensity" min="100" max="2000" value="1000" step="50" oninput="updateRangeDisplay('lightIntensity')" />
-                            <div class="range-display" id="lightIntensity-display">1000W</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="backgroundColor">🌈 Cor de Fundo:</label>
-                            <input type="color" id="backgroundColor" value="#1e3c72" />
-                        </div>
-                        <div class="form-group">
-                            <label for="cubeColor">🎨 Cor do Cubo:</label>
-                            <input type="color" id="cubeColor" value="#4CAF50" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Controles de Execução -->
-                <div class="section-card">
-                    <h3>⚡ Controles de Execução</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="scriptVersion">🔧 Versão do Script:</label>
-                            <select id="scriptVersion">
-                                <option value="v1.4.0.a.8.1" selected>V1.4.0.a.8.1 (Hotfix Blender 4.5+)</option>
-                                <option value="v1.4.0.a.8">V1.4.0.a.8 (Parametrizado)</option>
-                                <option value="v1.4.0.a.7">V1.4.0.a.7 (Blindado - Fallback)</option>
-                                <option value="v1.4.0.a.5">V1.4.0.a.5 (Original - Emergência)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="outputName">📁 Nome do Arquivo de Saída:</label>
-                            <input type="text" id="outputName" value="output_v1.4.0.a.8" placeholder="Nome sem extensão" />
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 15px; margin-top: 20px;">
-                        <button class="btn btn-primary" onclick="startRender()">🚀 Iniciar Render</button>
-                        <button class="btn btn-secondary" onclick="validateSetup()">🔍 Validar Setup</button>
-                        <button class="btn btn-danger" onclick="stopRender()">🛑 Parar Render</button>
-                    </div>
-                </div>
+      <div class="main-content">
+        <div class="left-panel">
+          <!-- Arquivos de Input -->
+          <div class="section-card">
+            <h3>📁 Arquivos de Input</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="audioFile">🎵 Arquivo de Áudio:</label>
+                <input
+                  type="file"
+                  id="audioFile"
+                  accept=".wav,.mp3,.ogg,.flac"
+                />
+              </div>
+              <div class="form-group">
+                <label for="imageFile">🖼️ Imagem de Background:</label>
+                <input
+                  type="file"
+                  id="imageFile"
+                  accept=".jpg,.jpeg,.png,.bmp"
+                />
+              </div>
             </div>
-            
-            <div class="right-panel">
-                <!-- Status e Progresso -->
-                <div class="section-card">
-                    <h3>📊 Status do Sistema</h3>
-                    <div id="systemStatus">
-                        <p><strong>Backend:</strong> <span id="backendStatus">🔄 Verificando...</span></p>
-                        <p><strong>Blender:</strong> <span id="blenderStatus">🔄 Verificando...</span></p>
-                        <p><strong>Última Execução:</strong> <span id="lastExecution">Nenhuma</span></p>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar"></div>
-                    </div>
-                    <div id="progressText">Aguardando...</div>
-                </div>
+            <div id="filePreview"></div>
+          </div>
 
-                <!-- Logs Detalhados -->
-                <div class="section-card">
-                    <h3>📝 Logs Detalhados</h3>
-                    <div class="logs-container" id="logsContainer">
-                        <div class="log-entry log-info">[INIT] Interface V1.4.0.a.8 carregada</div>
-                        <div class="log-entry log-info">[BLINDAGE] V1.4.0.a.7 blindada e disponível</div>
-                        <div class="log-entry log-success">[READY] Sistema pronto para render parametrizado</div>
-                    </div>
-                    <div style="margin-top: 10px; display: flex; gap: 10px;">
-                        <button class="btn btn-secondary" onclick="clearLogs()">🧹 Limpar Logs</button>
-                        <button class="btn btn-secondary" onclick="exportLogs()">💾 Exportar Logs</button>
-                    </div>
-                </div>
-
-                <!-- Resultado -->
-                <div class="section-card result-container" id="resultContainer">
-                    <h3>🎉 Render Concluído</h3>
-                    <div id="resultInfo"></div>
-                    <video class="result-video" id="resultVideo" controls></video>
-                    <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
-                        <button class="btn btn-primary" onclick="openResult()">📂 Abrir Pasta</button>
-                        <button class="btn btn-secondary" onclick="downloadResult()">⬇️ Download</button>
-                        <button class="btn btn-secondary" onclick="shareResult()">📤 Compartilhar</button>
-                    </div>
-                </div>
+          <!-- Parâmetros de Render -->
+          <div class="section-card">
+            <h3>🎬 Parâmetros de Render</h3>
+            <div class="presets">
+              <div class="preset-btn" onclick="applyPreset('fast')">
+                ⚡ Rápido
+              </div>
+              <div class="preset-btn" onclick="applyPreset('quality')">
+                🎯 Qualidade
+              </div>
+              <div class="preset-btn" onclick="applyPreset('ultra')">
+                🔥 Ultra
+              </div>
+              <div class="preset-btn" onclick="applyPreset('custom')">
+                ⚙️ Custom
+              </div>
             </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="resolution">📐 Resolução:</label>
+                <select id="resolution">
+                  <option value="1920x1080" selected>
+                    📺 Full HD (1920x1080) - Padrão
+                  </option>
+                  <option value="1080x1920">📱 Vertical HD (1080x1920)</option>
+                  <option value="1280x720">🎬 HD (1280x720)</option>
+                  <option value="2560x1440">🖥️ 2K QHD (2560x1440)</option>
+                  <option value="3840x2160">🔥 4K UHD (3840x2160)</option>
+                  <option value="custom">⚙️ Personalizado</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="fps">🎞️ FPS (Frames por Segundo):</label>
+                <input
+                  type="range"
+                  id="fps"
+                  min="24"
+                  max="60"
+                  value="30"
+                  oninput="updateRangeDisplay('fps')"
+                />
+                <div class="range-display" id="fps-display">30 FPS</div>
+              </div>
+              <div class="form-group">
+                <label for="samples">🔍 Samples (Qualidade Render):</label>
+                <input
+                  type="range"
+                  id="samples"
+                  min="32"
+                  max="512"
+                  value="128"
+                  oninput="updateRangeDisplay('samples')"
+                />
+                <div class="range-display" id="samples-display">
+                  128 Samples
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="renderEngine">🚀 Engine de Render:</label>
+                <select id="renderEngine">
+                  <option value="BLENDER_EEVEE_NEXT" selected>
+                    ⚡ Eevee Next (Rápido - Recomendado)
+                  </option>
+                  <option value="CYCLES">🎯 Cycles (Realístico)</option>
+                  <option value="BLENDER_WORKBENCH">
+                    👁️ Workbench (Preview)
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parâmetros de Áudio -->
+          <div class="section-card">
+            <h3>🎵 Parâmetros de Áudio</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="amplitudeMultiplier"
+                  >📊 Multiplicador de Amplitude:</label
+                >
+                <input
+                  type="range"
+                  id="amplitudeMultiplier"
+                  min="0.5"
+                  max="10"
+                  value="3"
+                  step="0.1"
+                  oninput="updateRangeDisplay('amplitudeMultiplier')"
+                />
+                <div class="range-display" id="amplitudeMultiplier-display">
+                  3.0x
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="smoothing">🌊 Suavização de Amplitude:</label>
+                <input
+                  type="range"
+                  id="smoothing"
+                  min="1"
+                  max="20"
+                  value="1"
+                  oninput="updateRangeDisplay('smoothing')"
+                />
+                <div class="range-display" id="smoothing-display">
+                  1 (Sem suavização)
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="frequencyRange">🎼 Faixa de Frequência:</label>
+                <select id="frequencyRange">
+                  <option value="full">Completa (20Hz-20kHz)</option>
+                  <option value="bass">Graves (20Hz-250Hz)</option>
+                  <option value="mid">Médios (250Hz-4kHz)</option>
+                  <option value="treble">Agudos (4kHz-20kHz)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="audioChannels">🎧 Processamento de Canais:</label>
+                <select id="audioChannels">
+                  <option value="mono">Mono (Canal Esquerdo)</option>
+                  <option value="stereo_left">Stereo - Canal Esquerdo</option>
+                  <option value="stereo_right">Stereo - Canal Direito</option>
+                  <option value="stereo_mix">Stereo - Mix dos Canais</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parâmetros Visuais -->
+          <div class="section-card">
+            <h3>🎨 Parâmetros Visuais</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cubeScale">📦 Escala Base do Cubo:</label>
+                <input
+                  type="range"
+                  id="cubeScale"
+                  min="0.1"
+                  max="5"
+                  value="1"
+                  step="0.1"
+                  oninput="updateRangeDisplay('cubeScale')"
+                />
+                <div class="range-display" id="cubeScale-display">1.0x</div>
+              </div>
+              <div class="form-group">
+                <label for="maxScale">📈 Escala Máxima (Picos):</label>
+                <input
+                  type="range"
+                  id="maxScale"
+                  min="1"
+                  max="20"
+                  value="5"
+                  step="0.5"
+                  oninput="updateRangeDisplay('maxScale')"
+                />
+                <div class="range-display" id="maxScale-display">5.0x</div>
+              </div>
+              <div class="form-group">
+                <label for="cameraDistance">📷 Distância da Câmera:</label>
+                <input
+                  type="range"
+                  id="cameraDistance"
+                  min="3"
+                  max="15"
+                  value="10.0"
+                  step="0.1"
+                  oninput="updateRangeDisplay('cameraDistance')"
+                />
+                <div class="range-display" id="cameraDistance-display">
+                  10.0m
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="lightIntensity">💡 Intensidade da Luz:</label>
+                <input
+                  type="range"
+                  id="lightIntensity"
+                  min="100"
+                  max="2000"
+                  value="1000"
+                  step="50"
+                  oninput="updateRangeDisplay('lightIntensity')"
+                />
+                <div class="range-display" id="lightIntensity-display">
+                  1000W
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="backgroundColor">🌈 Cor de Fundo:</label>
+                <input type="color" id="backgroundColor" value="#1e3c72" />
+              </div>
+              <div class="form-group">
+                <label for="cubeColor">🎨 Cor do Cubo:</label>
+                <input type="color" id="cubeColor" value="#4CAF50" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Controles de Execução -->
+          <div class="section-card">
+            <h3>⚡ Controles de Execução</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="scriptVersion">🔧 Versão do Script:</label>
+                <select id="scriptVersion">
+                  <option value="v1.4.0.a.8.1" selected>
+                    V1.4.0.a.8.1 (Hotfix Blender 4.5+)
+                  </option>
+                  <option value="v1.4.0.a.8">V1.4.0.a.8 (Parametrizado)</option>
+                  <option value="v1.4.0.a.7">
+                    V1.4.0.a.7 (Blindado - Fallback)
+                  </option>
+                  <option value="v1.4.0.a.5">
+                    V1.4.0.a.5 (Original - Emergência)
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="outputName">📁 Nome do Arquivo de Saída:</label>
+                <input
+                  type="text"
+                  id="outputName"
+                  value="output_v1.4.0.a.8"
+                  placeholder="Nome sem extensão"
+                />
+              </div>
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 20px">
+              <button class="btn btn-primary" onclick="startRender()">
+                🚀 Iniciar Render
+              </button>
+              <button class="btn btn-secondary" onclick="validateSetup()">
+                🔍 Validar Setup
+              </button>
+              <button class="btn btn-danger" onclick="stopRender()">
+                🛑 Parar Render
+              </button>
+            </div>
+          </div>
         </div>
+
+        <div class="right-panel">
+          <!-- Status e Progresso -->
+          <div class="section-card">
+            <h3>📊 Status do Sistema</h3>
+            <div id="systemStatus">
+              <p>
+                <strong>Backend:</strong>
+                <span id="backendStatus">🔄 Verificando...</span>
+              </p>
+              <p>
+                <strong>Blender:</strong>
+                <span id="blenderStatus">🔄 Verificando...</span>
+              </p>
+              <p>
+                <strong>Última Execução:</strong>
+                <span id="lastExecution">Nenhuma</span>
+              </p>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div id="progressText">Aguardando...</div>
+          </div>
+
+          <!-- Logs Detalhados -->
+          <div class="section-card">
+            <h3>📝 Logs Detalhados</h3>
+            <div class="logs-container" id="logsContainer">
+              <div class="log-entry log-info">
+                [INIT] Interface V1.4.0.a.8 carregada
+              </div>
+              <div class="log-entry log-info">
+                [BLINDAGE] V1.4.0.a.7 blindada e disponível
+              </div>
+              <div class="log-entry log-success">
+                [READY] Sistema pronto para render parametrizado
+              </div>
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 10px">
+              <button class="btn btn-secondary" onclick="clearLogs()">
+                🧹 Limpar Logs
+              </button>
+              <button class="btn btn-secondary" onclick="exportLogs()">
+                💾 Exportar Logs
+              </button>
+            </div>
+          </div>
+
+          <!-- Resultado -->
+          <div class="section-card result-container" id="resultContainer">
+            <h3>🎉 Render Concluído</h3>
+            <div id="resultInfo"></div>
+            <video class="result-video" id="resultVideo" controls></video>
+            <div
+              style="
+                margin-top: 15px;
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+              "
+            >
+              <button class="btn btn-primary" onclick="openResult()">
+                📂 Abrir Pasta
+              </button>
+              <button class="btn btn-secondary" onclick="downloadResult()">
+                ⬇️ Download
+              </button>
+              <button class="btn btn-secondary" onclick="shareResult()">
+                📤 Compartilhar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Estado global da aplicação
-        let renderingProcess = null;
-        let currentSettings = {};
-        let statusInterval = null;
+      // Estado global da aplicação
+      let renderingProcess = null;
+      let currentSettings = {};
+      let statusInterval = null;
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeInterface();
-            checkSystemStatus();
-            loadSettings();
-        });
+      // Inicialização
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeInterface();
+        checkSystemStatus();
+        loadSettings();
+      });
 
-        function initializeInterface() {
-            addLog('🚀 Inicializando Interface V1.4.0.a.8...', 'info');
-            addLog('🛡️ Sistema de blindagem V1.4.0.a.7 carregado', 'success');
-            addLog('⚙️ Interface parametrizada completa ativa', 'success');
-            
-            // Event listeners para preview de arquivos
-            document.getElementById('audioFile').addEventListener('change', previewAudio);
-            document.getElementById('imageFile').addEventListener('change', previewImage);
-            
-            addLog('✅ Interface inicializada com sucesso', 'success');
-        }
+      function initializeInterface() {
+        addLog("🚀 Inicializando Interface V1.4.0.a.8...", "info");
+        addLog("🛡️ Sistema de blindagem V1.4.0.a.7 carregado", "success");
+        addLog("⚙️ Interface parametrizada completa ativa", "success");
 
-        function checkSystemStatus() {
-            addLog('🔍 Verificando status do sistema...', 'info');
-            
-            // Verificar backend
-            fetch('/api/health')
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('backendStatus').innerHTML = '✅ Online';
-                        addLog('✅ Backend conectado e funcionando', 'success');
-                    } else {
-                        throw new Error('Backend offline');
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('backendStatus').innerHTML = '❌ Offline';
-                    addLog('❌ Backend offline - Verifique se o servidor está rodando', 'error');
-                });
-            
-            // Verificar Blender (simulado)
-            setTimeout(() => {
-                document.getElementById('blenderStatus').innerHTML = '✅ Disponível (Blender 4.5)';
-                addLog('✅ Blender 4.5 detectado e disponível', 'success');
-            }, 1000);
-        }
+        // Event listeners para preview de arquivos
+        document
+          .getElementById("audioFile")
+          .addEventListener("change", previewAudio);
+        document
+          .getElementById("imageFile")
+          .addEventListener("change", previewImage);
 
-        function updateRangeDisplay(inputId) {
-            const input = document.getElementById(inputId);
-            const display = document.getElementById(inputId + '-display');
-            let value = input.value;
-            let suffix = '';
-            
-            switch(inputId) {
-                case 'fps': suffix = ' FPS'; break;
-                case 'samples': suffix = ' Samples'; break;
-                case 'amplitudeMultiplier': suffix = 'x'; break;
-                case 'smoothing': suffix = value == 1 ? ' (Sem suavização)' : ' frames'; break;
-                case 'cubeScale': suffix = 'x'; break;
-                case 'maxScale': suffix = 'x'; break;
-                case 'cameraDistance': suffix = 'm'; break;
-                case 'lightIntensity': suffix = 'W'; break;
-            }
-            
-            display.textContent = value + suffix;
-        }
+        addLog("✅ Interface inicializada com sucesso", "success");
+      }
 
-        function applyPreset(preset) {
-            addLog(`🎛️ Aplicando preset: ${preset}`, 'info');
-            
-            const presets = {
-                fast: {
-                    fps: 24,
-                    samples: 64,
-                    renderEngine: 'BLENDER_EEVEE_NEXT',
-                    resolution: '1280x720'
-                },
-                quality: {
-                    fps: 30,
-                    samples: 128,
-                    renderEngine: 'BLENDER_EEVEE_NEXT',
-                    resolution: '1920x1080'
-                },
-                ultra: {
-                    fps: 60,
-                    samples: 256, 
-                    renderEngine: 'CYCLES',
-                    resolution: '3840x2160'
-                },
-                custom: {
-                    // Manter valores atuais
-                }
-            };
-            
-            if (presets[preset]) {
-                Object.keys(presets[preset]).forEach(key => {
-                    const element = document.getElementById(key);
-                    if (element) {
-                        element.value = presets[preset][key];
-                        if (element.type === 'range') {
-                            updateRangeDisplay(key);
-                        }
-                    }
-                });
-                addLog(`✅ Preset ${preset} aplicado com sucesso`, 'success');
-            }
-        }
+      function checkSystemStatus() {
+        addLog("🔍 Verificando status do sistema...", "info");
 
-        function previewAudio(event) {
-            const file = event.target.files[0];
-            if (file) {
-                addLog(`🎵 Arquivo de áudio selecionado: ${file.name} (${(file.size/1024/1024).toFixed(2)}MB)`, 'info');
-                
-                const audio = document.createElement('audio');
-                audio.controls = true;
-                audio.src = URL.createObjectURL(file);
-                audio.className = 'file-preview';
-                
-                const preview = document.getElementById('filePreview');
-                preview.innerHTML = '<h4>🎵 Preview do Áudio:</h4>';
-                preview.appendChild(audio);
-            }
-        }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                addLog(`🖼️ Imagem selecionada: ${file.name} (${(file.size/1024/1024).toFixed(2)}MB)`, 'info');
-                
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.className = 'file-preview';
-                img.style.maxHeight = '200px';
-                
-                const preview = document.getElementById('filePreview');
-                if (!preview.innerHTML.includes('Preview do Áudio')) {
-                    preview.innerHTML = '<h4>🖼️ Preview da Imagem:</h4>';
-                } else {
-                    preview.innerHTML += '<h4>🖼️ Preview da Imagem:</h4>';
-                }
-                preview.appendChild(img);
-            }
-        }
-
-        function validateSetup() {
-            addLog('🔍 Validando configuração atual...', 'info');
-            
-            const audioFile = document.getElementById('audioFile').files[0];
-            const imageFile = document.getElementById('imageFile').files[0];
-            
-            let isValid = true;
-            
-            if (!audioFile) {
-                addLog('❌ Erro: Arquivo de áudio não selecionado', 'error');
-                isValid = false;
-            }
-            
-            if (!imageFile) {
-                addLog('❌ Erro: Imagem de background não selecionada', 'error');
-                isValid = false;
-            }
-            
-            // Validar parâmetros
-            const fps = document.getElementById('fps').value;
-            const samples = document.getElementById('samples').value;
-            
-            if (fps < 24 || fps > 60) {
-                addLog('⚠️ Aviso: FPS fora da faixa recomendada (24-60)', 'warning');
-            }
-            
-            if (samples > 256) {
-                addLog('⚠️ Aviso: Muitos samples podem tornar o render muito lento', 'warning');
-            }
-            
-            if (isValid) {
-                addLog('✅ Configuração válida - Pronto para render!', 'success');
-                collectCurrentSettings();
+        // Verificar backend
+        fetch("/api/health")
+          .then((response) => {
+            if (response.ok) {
+              document.getElementById("backendStatus").innerHTML = "✅ Online";
+              addLog("✅ Backend conectado e funcionando", "success");
             } else {
-                addLog('❌ Configuração inválida - Corrija os erros acima', 'error');
+              throw new Error("Backend offline");
             }
-            
-            return isValid;
+          })
+          .catch((error) => {
+            document.getElementById("backendStatus").innerHTML = "❌ Offline";
+            addLog(
+              "❌ Backend offline - Verifique se o servidor está rodando",
+              "error"
+            );
+          });
+
+        // Verificar Blender (simulado)
+        setTimeout(() => {
+          document.getElementById("blenderStatus").innerHTML =
+            "✅ Disponível (Blender 4.5)";
+          addLog("✅ Blender 4.5 detectado e disponível", "success");
+        }, 1000);
+      }
+
+      function updateRangeDisplay(inputId) {
+        const input = document.getElementById(inputId);
+        const display = document.getElementById(inputId + "-display");
+        let value = input.value;
+        let suffix = "";
+
+        switch (inputId) {
+          case "fps":
+            suffix = " FPS";
+            break;
+          case "samples":
+            suffix = " Samples";
+            break;
+          case "amplitudeMultiplier":
+            suffix = "x";
+            break;
+          case "smoothing":
+            suffix = value == 1 ? " (Sem suavização)" : " frames";
+            break;
+          case "cubeScale":
+            suffix = "x";
+            break;
+          case "maxScale":
+            suffix = "x";
+            break;
+          case "cameraDistance":
+            suffix = "m";
+            break;
+          case "lightIntensity":
+            suffix = "W";
+            break;
         }
 
-        function collectCurrentSettings() {
-            currentSettings = {
-                // Arquivos
-                audioFile: document.getElementById('audioFile').files[0],
-                imageFile: document.getElementById('imageFile').files[0],
-                
-                // Render
-                resolution: document.getElementById('resolution').value,
-                fps: document.getElementById('fps').value,
-                samples: document.getElementById('samples').value,
-                renderEngine: document.getElementById('renderEngine').value,
-                
-                // Áudio
-                amplitudeMultiplier: document.getElementById('amplitudeMultiplier').value,
-                smoothing: document.getElementById('smoothing').value,
-                frequencyRange: document.getElementById('frequencyRange').value,
-                audioChannels: document.getElementById('audioChannels').value,
-                
-                // Visual
-                cubeScale: document.getElementById('cubeScale').value,
-                maxScale: document.getElementById('maxScale').value,
-                cameraDistance: document.getElementById('cameraDistance').value,
-                lightIntensity: document.getElementById('lightIntensity').value,
-                backgroundColor: document.getElementById('backgroundColor').value,
-                cubeColor: document.getElementById('cubeColor').value,
-                
-                // Execução
-                scriptVersion: document.getElementById('scriptVersion').value,
-                outputName: document.getElementById('outputName').value
-            };
-            
-            addLog('📊 Configurações coletadas e validadas', 'info');
+        display.textContent = value + suffix;
+      }
+
+      function applyPreset(preset) {
+        addLog(`🎛️ Aplicando preset: ${preset}`, "info");
+
+        const presets = {
+          fast: {
+            fps: 24,
+            samples: 64,
+            renderEngine: "BLENDER_EEVEE_NEXT",
+            resolution: "1280x720",
+          },
+          quality: {
+            fps: 30,
+            samples: 128,
+            renderEngine: "BLENDER_EEVEE_NEXT",
+            resolution: "1920x1080",
+          },
+          ultra: {
+            fps: 60,
+            samples: 256,
+            renderEngine: "CYCLES",
+            resolution: "3840x2160",
+          },
+          custom: {
+            // Manter valores atuais
+          },
+        };
+
+        if (presets[preset]) {
+          Object.keys(presets[preset]).forEach((key) => {
+            const element = document.getElementById(key);
+            if (element) {
+              element.value = presets[preset][key];
+              if (element.type === "range") {
+                updateRangeDisplay(key);
+              }
+            }
+          });
+          addLog(`✅ Preset ${preset} aplicado com sucesso`, "success");
+        }
+      }
+
+      function previewAudio(event) {
+        const file = event.target.files[0];
+        if (file) {
+          addLog(
+            `🎵 Arquivo de áudio selecionado: ${file.name} (${(
+              file.size /
+              1024 /
+              1024
+            ).toFixed(2)}MB)`,
+            "info"
+          );
+
+          const audio = document.createElement("audio");
+          audio.controls = true;
+          audio.src = URL.createObjectURL(file);
+          audio.className = "file-preview";
+
+          const preview = document.getElementById("filePreview");
+          preview.innerHTML = "<h4>🎵 Preview do Áudio:</h4>";
+          preview.appendChild(audio);
+        }
+      }
+
+      function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          addLog(
+            `🖼️ Imagem selecionada: ${file.name} (${(
+              file.size /
+              1024 /
+              1024
+            ).toFixed(2)}MB)`,
+            "info"
+          );
+
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(file);
+          img.className = "file-preview";
+          img.style.maxHeight = "200px";
+
+          const preview = document.getElementById("filePreview");
+          if (!preview.innerHTML.includes("Preview do Áudio")) {
+            preview.innerHTML = "<h4>🖼️ Preview da Imagem:</h4>";
+          } else {
+            preview.innerHTML += "<h4>🖼️ Preview da Imagem:</h4>";
+          }
+          preview.appendChild(img);
+        }
+      }
+
+      function validateSetup() {
+        addLog("🔍 Validando configuração atual...", "info");
+
+        const audioFile = document.getElementById("audioFile").files[0];
+        const imageFile = document.getElementById("imageFile").files[0];
+
+        let isValid = true;
+
+        if (!audioFile) {
+          addLog("❌ Erro: Arquivo de áudio não selecionado", "error");
+          isValid = false;
         }
 
-        function startRender() {
-            if (!validateSetup()) {
-                return;
+        if (!imageFile) {
+          addLog("❌ Erro: Imagem de background não selecionada", "error");
+          isValid = false;
+        }
+
+        // Validar parâmetros
+        const fps = document.getElementById("fps").value;
+        const samples = document.getElementById("samples").value;
+
+        if (fps < 24 || fps > 60) {
+          addLog("⚠️ Aviso: FPS fora da faixa recomendada (24-60)", "warning");
+        }
+
+        if (samples > 256) {
+          addLog(
+            "⚠️ Aviso: Muitos samples podem tornar o render muito lento",
+            "warning"
+          );
+        }
+
+        if (isValid) {
+          addLog("✅ Configuração válida - Pronto para render!", "success");
+          collectCurrentSettings();
+        } else {
+          addLog("❌ Configuração inválida - Corrija os erros acima", "error");
+        }
+
+        return isValid;
+      }
+
+      function collectCurrentSettings() {
+        currentSettings = {
+          // Arquivos
+          audioFile: document.getElementById("audioFile").files[0],
+          imageFile: document.getElementById("imageFile").files[0],
+
+          // Render
+          resolution: document.getElementById("resolution").value,
+          fps: document.getElementById("fps").value,
+          samples: document.getElementById("samples").value,
+          renderEngine: document.getElementById("renderEngine").value,
+
+          // Áudio
+          amplitudeMultiplier: document.getElementById("amplitudeMultiplier")
+            .value,
+          smoothing: document.getElementById("smoothing").value,
+          frequencyRange: document.getElementById("frequencyRange").value,
+          audioChannels: document.getElementById("audioChannels").value,
+
+          // Visual
+          cubeScale: document.getElementById("cubeScale").value,
+          maxScale: document.getElementById("maxScale").value,
+          cameraDistance: document.getElementById("cameraDistance").value,
+          lightIntensity: document.getElementById("lightIntensity").value,
+          backgroundColor: document.getElementById("backgroundColor").value,
+          cubeColor: document.getElementById("cubeColor").value,
+
+          // Execução
+          scriptVersion: document.getElementById("scriptVersion").value,
+          outputName: document.getElementById("outputName").value,
+        };
+
+        addLog("📊 Configurações coletadas e validadas", "info");
+      }
+
+      function startRender() {
+        if (!validateSetup()) {
+          return;
+        }
+
+        addLog("🚀 Iniciando processo de render...", "info");
+        updateProgress(0, "Preparando arquivos...");
+
+        const formData = new FormData();
+        formData.append("audio", currentSettings.audioFile);
+        formData.append("image", currentSettings.imageFile);
+        formData.append("settings", JSON.stringify(currentSettings));
+
+        fetch("/api/render/parametrized", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              renderingProcess = data.processId; // Salvar ID do processo
+              addLog("✅ Render iniciado com sucesso", "success");
+              addLog(`🆔 Process ID: ${data.processId}`, "info");
+              pollRenderStatus(data.processId);
+            } else {
+              addLog(`❌ Erro ao iniciar render: ${data.error}`, "error");
             }
-            
-            addLog('🚀 Iniciando processo de render...', 'info');
-            updateProgress(0, 'Preparando arquivos...');
-            
-            const formData = new FormData();
-            formData.append('audio', currentSettings.audioFile);
-            formData.append('image', currentSettings.imageFile);
-            formData.append('settings', JSON.stringify(currentSettings));
-            
-            fetch('/api/render/parametrized', {
-                method: 'POST',
-                body: formData
+          })
+          .catch((error) => {
+            addLog(`❌ Erro de conexão: ${error.message}`, "error");
+          });
+      }
+
+      function pollRenderStatus(processId) {
+        statusInterval = setInterval(() => {
+          fetch(`/api/render/status/${processId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              updateProgress(data.progress, data.status);
+
+              if (data.logs) {
+                data.logs.forEach((log) => addLog(log.message, log.type));
+              }
+
+              if (data.completed) {
+                clearInterval(statusInterval);
+                statusInterval = null;
+                renderingProcess = null;
+                handleRenderComplete(data);
+              }
+
+              if (data.error) {
+                clearInterval(statusInterval);
+                statusInterval = null;
+                renderingProcess = null;
+                addLog(`❌ Render falhou: ${data.error}`, "error");
+                updateProgress(0, "Erro no render");
+              }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    renderingProcess = data.processId; // Salvar ID do processo
-                    addLog('✅ Render iniciado com sucesso', 'success');
-                    addLog(`🆔 Process ID: ${data.processId}`, 'info');
-                    pollRenderStatus(data.processId);
-                } else {
-                    addLog(`❌ Erro ao iniciar render: ${data.error}`, 'error');
-                }
-            })
-            .catch(error => {
-                addLog(`❌ Erro de conexão: ${error.message}`, 'error');
+            .catch((error) => {
+              addLog(`❌ Erro ao verificar status: ${error.message}`, "error");
             });
-        }
+        }, 2000);
+      }
 
-        function pollRenderStatus(processId) {
-            statusInterval = setInterval(() => {
-                fetch(`/api/render/status/${processId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        updateProgress(data.progress, data.status);
-                        
-                        if (data.logs) {
-                            data.logs.forEach(log => addLog(log.message, log.type));
-                        }
-                        
-                        if (data.completed) {
-                            clearInterval(statusInterval);
-                            statusInterval = null;
-                            renderingProcess = null;
-                            handleRenderComplete(data);
-                        }
-                        
-                        if (data.error) {
-                            clearInterval(statusInterval);
-                            statusInterval = null;
-                            renderingProcess = null;
-                            addLog(`❌ Render falhou: ${data.error}`, 'error');
-                            updateProgress(0, 'Erro no render');
-                        }
-                    })
-                    .catch(error => {
-                        addLog(`❌ Erro ao verificar status: ${error.message}`, 'error');
-                    });
-            }, 2000);
-        }
+      function handleRenderComplete(data) {
+        addLog("🎉 Render concluído com sucesso!", "success");
+        updateProgress(100, "Render concluído!");
 
-        function handleRenderComplete(data) {
-            addLog('🎉 Render concluído com sucesso!', 'success');
-            updateProgress(100, 'Render concluído!');
-            
-            const resultContainer = document.getElementById('resultContainer');
-            const resultInfo = document.getElementById('resultInfo');
-            const resultVideo = document.getElementById('resultVideo');
-            
-            resultInfo.innerHTML = `
+        const resultContainer = document.getElementById("resultContainer");
+        const resultInfo = document.getElementById("resultInfo");
+        const resultVideo = document.getElementById("resultVideo");
+
+        resultInfo.innerHTML = `
                 <p><strong>📁 Arquivo:</strong> ${data.outputFile}</p>
                 <p><strong>⏱️ Duração:</strong> ${data.duration}</p>
                 <p><strong>📊 Tamanho:</strong> ${data.fileSize}</p>
                 <p><strong>🎬 Resolução:</strong> ${data.resolution}</p>
             `;
-            
-            resultVideo.src = data.videoUrl;
-            resultContainer.style.display = 'block';
-            
-            document.getElementById('lastExecution').textContent = new Date().toLocaleString();
-        }
 
-        function updateProgress(percent, status) {
-            document.getElementById('progressBar').style.width = percent + '%';
-            document.getElementById('progressText').textContent = status;
-        }
+        resultVideo.src = data.videoUrl;
+        resultContainer.style.display = "block";
 
-        function stopRender() {
-            addLog('🛑 Parando processo de render...', 'warning');
-            
-            // Desabilitar botão para evitar cliques múltiplos
-            const stopBtn = document.querySelector('button[onclick="stopRender()"]');
-            stopBtn.disabled = true;
-            stopBtn.textContent = '⏳ Parando...';
-            
-            // Fazer requisição para parar o render
-            fetch('/api/render/stop', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    processId: renderingProcess || 'all',
-                    force: true 
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    addLog('✅ Render cancelado com sucesso!', 'success');
-                    updateProgress(0, 'Render cancelado pelo usuário');
-                    
-                    // Parar polling de status
-                    if (statusInterval) {
-                        clearInterval(statusInterval);
-                        statusInterval = null;
-                    }
-                    
-                    renderingProcess = null;
-                } else {
-                    addLog(`❌ Erro ao cancelar render: ${data.error}`, 'error');
-                }
-            })
-            .catch(error => {
-                addLog(`❌ Erro de comunicação ao cancelar: ${error.message}`, 'error');
-            })
-            .finally(() => {
-                // Reabilitar botão
-                setTimeout(() => {
-                    stopBtn.disabled = false;
-                    stopBtn.textContent = '🛑 Parar Render';
-                }, 2000);
-            });
-        }
+        document.getElementById("lastExecution").textContent =
+          new Date().toLocaleString();
+      }
 
-        function openResult() {
-            addLog('📂 Abrindo pasta do resultado...', 'info');
-            // Implementar abertura da pasta
-        }
+      function updateProgress(percent, status) {
+        document.getElementById("progressBar").style.width = percent + "%";
+        document.getElementById("progressText").textContent = status;
+      }
 
-        function downloadResult() {
-            addLog('⬇️ Iniciando download do resultado...', 'info');
-            // Implementar download
-        }
+      function stopRender() {
+        addLog("🛑 Parando processo de render...", "warning");
 
-        function shareResult() {
-            addLog('📤 Preparando compartilhamento...', 'info');
-            // Implementar compartilhamento
-        }
+        // Desabilitar botão para evitar cliques múltiplos
+        const stopBtn = document.querySelector(
+          'button[onclick="stopRender()"]'
+        );
+        stopBtn.disabled = true;
+        stopBtn.textContent = "⏳ Parando...";
 
-        function addLog(message, type = 'info') {
-            const logsContainer = document.getElementById('logsContainer');
-            const timestamp = new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.className = `log-entry log-${type}`;
-            logEntry.textContent = `[${timestamp}] ${message}`;
-            
-            logsContainer.appendChild(logEntry);
-            logsContainer.scrollTop = logsContainer.scrollHeight;
-            
-            // Limitar número de logs
-            const logs = logsContainer.children;
-            if (logs.length > 100) {
-                logsContainer.removeChild(logs[0]);
+        // Fazer requisição para parar o render
+        fetch("/api/render/stop", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            processId: renderingProcess || "all",
+            force: true,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              addLog("✅ Render cancelado com sucesso!", "success");
+              updateProgress(0, "Render cancelado pelo usuário");
+
+              // Parar polling de status
+              if (statusInterval) {
+                clearInterval(statusInterval);
+                statusInterval = null;
+              }
+
+              renderingProcess = null;
+            } else {
+              addLog(`❌ Erro ao cancelar render: ${data.error}`, "error");
             }
-        }
+          })
+          .catch((error) => {
+            addLog(
+              `❌ Erro de comunicação ao cancelar: ${error.message}`,
+              "error"
+            );
+          })
+          .finally(() => {
+            // Reabilitar botão
+            setTimeout(() => {
+              stopBtn.disabled = false;
+              stopBtn.textContent = "🛑 Parar Render";
+            }, 2000);
+          });
+      }
 
-        function clearLogs() {
-            document.getElementById('logsContainer').innerHTML = '';
-            addLog('🧹 Logs limpos', 'info');
-        }
+      function openResult() {
+        addLog("📂 Abrindo pasta do resultado...", "info");
+        // Implementar abertura da pasta
+      }
 
-        function exportLogs() {
-            const logs = document.getElementById('logsContainer').innerText;
-            const blob = new Blob([logs], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `zentraw-logs-${new Date().toISOString().slice(0,19)}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
-            addLog('💾 Logs exportados com sucesso', 'success');
-        }
+      function downloadResult() {
+        addLog("⬇️ Iniciando download do resultado...", "info");
+        // Implementar download
+      }
 
-        function loadSettings() {
-            const saved = localStorage.getItem('zentraw-settings');
-            if (saved) {
-                try {
-                    const settings = JSON.parse(saved);
-                    // Aplicar configurações salvas
-                    addLog('📥 Configurações anteriores carregadas', 'info');
-                } catch (e) {
-                    addLog('⚠️ Erro ao carregar configurações salvas', 'warning');
-                }
-            }
-        }
+      function shareResult() {
+        addLog("📤 Preparando compartilhamento...", "info");
+        // Implementar compartilhamento
+      }
 
-        function saveSettings() {
-            localStorage.setItem('zentraw-settings', JSON.stringify(currentSettings));
-            addLog('💾 Configurações salvas localmente', 'success');
-        }
+      function addLog(message, type = "info") {
+        const logsContainer = document.getElementById("logsContainer");
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement("div");
+        logEntry.className = `log-entry log-${type}`;
+        logEntry.textContent = `[${timestamp}] ${message}`;
 
-        // Salvar configurações automaticamente quando mudarem
-        document.addEventListener('change', saveSettings);
-        document.addEventListener('input', saveSettings);
+        logsContainer.appendChild(logEntry);
+        logsContainer.scrollTop = logsContainer.scrollHeight;
+
+        // Limitar número de logs
+        const logs = logsContainer.children;
+        if (logs.length > 100) {
+          logsContainer.removeChild(logs[0]);
+        }
+      }
+
+      function clearLogs() {
+        document.getElementById("logsContainer").innerHTML = "";
+        addLog("🧹 Logs limpos", "info");
+      }
+
+      function exportLogs() {
+        const logs = document.getElementById("logsContainer").innerText;
+        const blob = new Blob([logs], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `zentraw-logs-${new Date()
+          .toISOString()
+          .slice(0, 19)}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+        addLog("💾 Logs exportados com sucesso", "success");
+      }
+
+      function loadSettings() {
+        const saved = localStorage.getItem("zentraw-settings");
+        if (saved) {
+          try {
+            const settings = JSON.parse(saved);
+            // Aplicar configurações salvas
+            addLog("📥 Configurações anteriores carregadas", "info");
+          } catch (e) {
+            addLog("⚠️ Erro ao carregar configurações salvas", "warning");
+          }
+        }
+      }
+
+      function saveSettings() {
+        localStorage.setItem(
+          "zentraw-settings",
+          JSON.stringify(currentSettings)
+        );
+        addLog("💾 Configurações salvas localmente", "success");
+      }
+
+      // Salvar configurações automaticamente quando mudarem
+      document.addEventListener("change", saveSettings);
+      document.addEventListener("input", saveSettings);
     </script>
-</body>
+  </body>
 </html>

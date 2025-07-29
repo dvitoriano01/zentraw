@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎯 Zentraw V1.4.0.a.8.3 - Single Execution Control</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 20px;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .header .version {
+        font-size: 1.2em;
+        color: #4caf50;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      /* ✅ STATUS INDICATOR SYSTEM */
+      .status-panel {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .status-light {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .status-light.ready {
+        background: #4caf50;
+        box-shadow: 0 0 20px #4caf50;
+        animation: pulse-ready 2s infinite;
+      }
+
+      .status-light.busy {
+        background: #ff9800;
+        box-shadow: 0 0 20px #ff9800;
+        animation: pulse-busy 1s infinite;
+      }
+
+      .status-light.error {
+        background: #f44336;
+        box-shadow: 0 0 20px #f44336;
+        animation: pulse-error 0.5s infinite;
+      }
+
+      @keyframes pulse-ready {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+
+      @keyframes pulse-busy {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.1); }
+      }
+
+      @keyframes pulse-error {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .status-text {
+        font-size: 1.4em;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .status-text.ready { color: #4caf50; }
+      .status-text.busy { color: #ff9800; }
+      .status-text.error { color: #f44336; }
+
+      /* ✅ PROGRESS BAR */
+      .progress-container {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 8px;
+        margin-top: 10px;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(45deg, #4caf50, #8bc34a);
+        width: 0%;
+        transition: width 0.3s ease;
+        animation: progress-glow 2s infinite;
+      }
+
+      .progress-bar.hidden {
+        display: none;
+      }
+
+      @keyframes progress-glow {
+        0%, 100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+        50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+      }
+
+      /* ✅ SYSTEM INFO */
+      .system-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+        font-size: 0.9em;
+      }
+
+      .info-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .info-label {
+        color: #bbb;
+        font-size: 0.8em;
+        margin-bottom: 5px;
+      }
+
+      .info-value {
+        font-weight: bold;
+        color: #fff;
+      }
+
+      /* ✅ RENDER BUTTON STATES */
+      .render-button {
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .render-button:hover:not(:disabled) {
+        background: linear-gradient(45deg, #45a049, #4caf50);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+      }
+
+      .render-button:disabled {
+        background: linear-gradient(45deg, #666, #555);
+        cursor: not-allowed;
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .render-button.busy {
+        background: linear-gradient(45deg, #ff9800, #f57c00);
+        animation: button-pulse 1s infinite;
+      }
+
+      @keyframes button-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+
+      /* ✅ PARAMETERS SECTION */
+      .parameters-section {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #4caf50;
+        font-weight: bold;
+      }
+
+      .param-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .param-group {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .param-group h3 {
+        color: #8bc34a;
+        margin-bottom: 15px;
+        font-size: 1.2em;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #ddd;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 1em;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+      }
+
+      /* ✅ AUDIO UPLOAD */
+      .upload-section {
+        background: rgba(76, 175, 80, 0.1);
+        border: 2px dashed #4caf50;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .upload-section:hover {
+        background: rgba(76, 175, 80, 0.2);
+        border-color: #8bc34a;
+      }
+
+      .upload-section.dragover {
+        background: rgba(76, 175, 80, 0.3);
+        border-color: #8bc34a;
+        transform: scale(1.02);
+      }
+
+      .upload-icon {
+        font-size: 3em;
+        margin-bottom: 15px;
+        color: #4caf50;
+      }
+
+      .upload-text {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+      }
+
+      .file-input {
+        display: none;
+      }
+
+      .file-button {
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        border: none;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: all 0.3s ease;
+      }
+
+      .file-button:hover {
+        background: linear-gradient(45deg, #45a049, #4caf50);
+        transform: translateY(-1px);
+      }
+
+      /* ✅ RESULTS SECTION */
+      .results-section {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: none;
+      }
+
+      .results-section.show {
+        display: block;
+        animation: slideIn 0.5s ease;
+      }
+
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .result-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .result-info {
+        flex: 1;
+      }
+
+      .result-name {
+        font-weight: bold;
+        color: #4caf50;
+        margin-bottom: 5px;
+      }
+
+      .result-details {
+        color: #bbb;
+        font-size: 0.9em;
+      }
+
+      .download-button {
+        background: linear-gradient(45deg, #2196f3, #1976d2);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .download-button:hover {
+        background: linear-gradient(45deg, #1976d2, #2196f3);
+        transform: translateY(-1px);
+      }
+
+      /* ✅ RESPONSIVE DESIGN */
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px;
+        }
+        
+        .param-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .system-info {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ✅ HEADER -->
+      <div class="header">
+        <h1>🎯 Zentraw 3D Visualizer</h1>
+        <div class="version">V1.4.0.a.8.3 - Single Execution Control</div>
+      </div>
+
+      <!-- ✅ STATUS PANEL -->
+      <div class="status-panel">
+        <div class="status-indicator">
+          <div class="status-light ready" id="statusLight"></div>
+          <div class="status-text ready" id="statusText">Sistema Pronto</div>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-bar hidden" id="progressBar"></div>
+        </div>
+
+        <div class="system-info">
+          <div class="info-item">
+            <div class="info-label">Status do Sistema</div>
+            <div class="info-value" id="systemStatus">READY</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Versão</div>
+            <div class="info-value">V1.4.0.a.8.3</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Última Atualização</div>
+            <div class="info-value" id="lastUpdate">--</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Execução Única</div>
+            <div class="info-value" style="color: #4caf50;">✅ ATIVA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ AUDIO UPLOAD -->
+      <div class="upload-section" id="uploadSection">
+        <div class="upload-icon">🎵</div>
+        <div class="upload-text">Selecione um arquivo de áudio para visualizar</div>
+        <div class="upload-text" style="font-size: 0.9em; color: #bbb;">
+          Formatos suportados: MP3, WAV, M4A, FLAC
+        </div>
+        <input type="file" id="audioFile" class="file-input" accept="audio/*" />
+        <button class="file-button" onclick="document.getElementById('audioFile').click()">
+          📂 Escolher Arquivo
+        </button>
+        <div id="fileName" style="margin-top: 15px; font-weight: bold; display: none;"></div>
+      </div>
+
+      <!-- ✅ PARAMETERS SECTION -->
+      <div class="parameters-section">
+        <h2 class="section-title">⚙️ Parâmetros de Renderização</h2>
+        
+        <div class="param-grid">
+          <!-- Camera Parameters -->
+          <div class="param-group">
+            <h3>📷 Câmera</h3>
+            <div class="form-group">
+              <label>Distância da Câmera:</label>
+              <input type="number" id="cameraDistance" value="10.0" step="0.1" min="1" max="50" />
+            </div>
+            <div class="form-group">
+              <label>Altura da Câmera:</label>
+              <input type="number" id="cameraHeight" value="5.0" step="0.1" min="0" max="20" />
+            </div>
+            <div class="form-group">
+              <label>Ângulo X da Câmera:</label>
+              <input type="number" id="cameraAngleX" value="15.0" step="0.1" min="-90" max="90" />
+            </div>
+          </div>
+
+          <!-- Geometry Parameters -->
+          <div class="param-group">
+            <h3>📦 Geometria</h3>
+            <div class="form-group">
+              <label>Número de Cubos:</label>
+              <input type="number" id="cubeCount" value="20" min="5" max="100" />
+            </div>
+            <div class="form-group">
+              <label>Escala dos Cubos:</label>
+              <input type="number" id="cubeScale" value="1.0" step="0.1" min="0.1" max="5" />
+            </div>
+            <div class="form-group">
+              <label>Multiplicador de Amplitude:</label>
+              <input type="number" id="amplitudeMultiplier" value="2.0" step="0.1" min="0.1" max="10" />
+            </div>
+          </div>
+
+          <!-- Audio Parameters -->
+          <div class="param-group">
+            <h3>🎵 Áudio</h3>
+            <div class="form-group">
+              <label>Faixa de Frequência:</label>
+              <input type="number" id="frequencyRange" value="1000.0" step="100" min="100" max="10000" />
+            </div>
+            <div class="form-group">
+              <label>Taxa de Quadros:</label>
+              <select id="frameRate">
+                <option value="24">24 FPS</option>
+                <option value="30" selected>30 FPS</option>
+                <option value="60">60 FPS</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Visual Parameters -->
+          <div class="param-group">
+            <h3>🎨 Visual</h3>
+            <div class="form-group">
+              <label>Matiz da Cor:</label>
+              <input type="number" id="colorHue" value="0.6" step="0.01" min="0" max="1" />
+            </div>
+            <div class="form-group">
+              <label>Saturação:</label>
+              <input type="number" id="colorSaturation" value="0.8" step="0.01" min="0" max="1" />
+            </div>
+            <div class="form-group">
+              <label>Brilho:</label>
+              <input type="number" id="colorValue" value="1.0" step="0.01" min="0" max="1" />
+            </div>
+          </div>
+
+          <!-- Lighting Parameters -->
+          <div class="param-group">
+            <h3>💡 Iluminação</h3>
+            <div class="form-group">
+              <label>Força da Emissão:</label>
+              <input type="number" id="emissionStrength" value="2.0" step="0.1" min="0" max="10" />
+            </div>
+            <div class="form-group">
+              <label>Energia da Luz:</label>
+              <input type="number" id="lightEnergy" value="5.0" step="0.1" min="0" max="50" />
+            </div>
+          </div>
+
+          <!-- Render Parameters -->
+          <div class="param-group">
+            <h3>🔧 Renderização</h3>
+            <div class="form-group">
+              <label>Engine de Render:</label>
+              <select id="renderEngine">
+                <option value="CYCLES" selected>Cycles</option>
+                <option value="EEVEE">EEVEE</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Samples de Render:</label>
+              <input type="number" id="renderSamples" value="128" min="16" max="512" />
+            </div>
+            <div class="form-group">
+              <label>Nome do Arquivo:</label>
+              <input type="text" id="outputName" placeholder="output_v1.4.0.a.8.3" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ✅ RENDER BUTTON -->
+        <button class="render-button" id="renderButton" onclick="startRender()">
+          🚀 Gerar Visualização
+        </button>
+      </div>
+
+      <!-- ✅ RESULTS SECTION -->
+      <div class="results-section" id="resultsSection">
+        <h2 class="section-title">📊 Resultados</h2>
+        <div id="resultsList"></div>
+      </div>
+    </div>
+
+    <script>
+      // ✅ GLOBAL VARIABLES
+      let isRenderInProgress = false;
+      let statusInterval = null;
+
+      // ✅ INITIALIZE
+      document.addEventListener('DOMContentLoaded', function() {
+        setupEventListeners();
+        startStatusPolling();
+        updateLastUpdate();
+      });
+
+      // ✅ EVENT LISTENERS
+      function setupEventListeners() {
+        // File input change
+        document.getElementById('audioFile').addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            document.getElementById('fileName').textContent = `📁 ${file.name}`;
+            document.getElementById('fileName').style.display = 'block';
+            
+            // Auto-generate output name
+            const baseName = file.name.replace(/\.[^/.]+$/, "");
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('.')[0];
+            document.getElementById('outputName').value = `${baseName}_v1.4.0.a.8.3_${timestamp}`;
+          }
+        });
+
+        // Drag and drop
+        const uploadSection = document.getElementById('uploadSection');
+        
+        uploadSection.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          uploadSection.classList.add('dragover');
+        });
+
+        uploadSection.addEventListener('dragleave', function(e) {
+          e.preventDefault();
+          uploadSection.classList.remove('dragover');
+        });
+
+        uploadSection.addEventListener('drop', function(e) {
+          e.preventDefault();
+          uploadSection.classList.remove('dragover');
+          
+          const files = e.dataTransfer.files;
+          if (files.length > 0 && files[0].type.startsWith('audio/')) {
+            document.getElementById('audioFile').files = files;
+            document.getElementById('audioFile').dispatchEvent(new Event('change'));
+          }
+        });
+      }
+
+      // ✅ STATUS POLLING
+      function startStatusPolling() {
+        statusInterval = setInterval(updateRenderStatus, 1000);
+        updateRenderStatus(); // Initial call
+      }
+
+      function updateRenderStatus() {
+        fetch('/api/render/status')
+          .then(response => response.json())
+          .then(data => {
+            updateStatusUI(data);
+          })
+          .catch(error => {
+            console.error('Status update error:', error);
+            updateStatusUI({ isRenderInProgress: false, error: true });
+          });
+      }
+
+      function updateStatusUI(data) {
+        const statusLight = document.getElementById('statusLight');
+        const statusText = document.getElementById('statusText');
+        const systemStatus = document.getElementById('systemStatus');
+        const renderButton = document.getElementById('renderButton');
+        const progressBar = document.getElementById('progressBar');
+
+        // Update global state
+        isRenderInProgress = data.isRenderInProgress || false;
+
+        // Update visual status
+        if (data.error) {
+          setStatus('error', 'Erro de Conexão', 'ERROR');
+          renderButton.disabled = true;
+        } else if (data.isRenderInProgress) {
+          setStatus('busy', 'Renderizando...', 'BUSY');
+          renderButton.disabled = true;
+          renderButton.textContent = '⏳ Renderizando... (Aguarde)';
+          renderButton.classList.add('busy');
+          progressBar.classList.remove('hidden');
+        } else {
+          setStatus('ready', 'Sistema Pronto', 'READY');
+          renderButton.disabled = false;
+          renderButton.textContent = '🚀 Gerar Visualização';
+          renderButton.classList.remove('busy');
+          progressBar.classList.add('hidden');
+        }
+
+        updateLastUpdate();
+      }
+
+      function setStatus(type, text, systemText) {
+        const statusLight = document.getElementById('statusLight');
+        const statusText = document.getElementById('statusText');
+        const systemStatus = document.getElementById('systemStatus');
+
+        // Remove all status classes
+        statusLight.className = 'status-light ' + type;
+        statusText.className = 'status-text ' + type;
+        
+        statusText.textContent = text;
+        systemStatus.textContent = systemText;
+      }
+
+      function updateLastUpdate() {
+        document.getElementById('lastUpdate').textContent = 
+          new Date().toLocaleTimeString('pt-BR');
+      }
+
+      // ✅ RENDER FUNCTION
+      async function startRender() {
+        const audioFile = document.getElementById('audioFile').files[0];
+        
+        if (!audioFile) {
+          alert('❌ Por favor, selecione um arquivo de áudio primeiro!');
+          return;
+        }
+
+        if (isRenderInProgress) {
+          alert('⚠️ Um render já está em progresso. Aguarde a conclusão.');
+          return;
+        }
+
+        // Prepare form data
+        const formData = new FormData();
+        formData.append('audio', audioFile);
+        
+        // Add all parameters
+        const params = {
+          outputName: document.getElementById('outputName').value || `output_v1.4.0.a.8.3_${Date.now()}`,
+          cameraDistance: document.getElementById('cameraDistance').value,
+          cameraHeight: document.getElementById('cameraHeight').value,
+          cameraAngleX: document.getElementById('cameraAngleX').value,
+          cubeCount: document.getElementById('cubeCount').value,
+          cubeScale: document.getElementById('cubeScale').value,
+          frequencyRange: document.getElementById('frequencyRange').value,
+          amplitudeMultiplier: document.getElementById('amplitudeMultiplier').value,
+          colorHue: document.getElementById('colorHue').value,
+          colorSaturation: document.getElementById('colorSaturation').value,
+          colorValue: document.getElementById('colorValue').value,
+          emissionStrength: document.getElementById('emissionStrength').value,
+          lightEnergy: document.getElementById('lightEnergy').value,
+          renderEngine: document.getElementById('renderEngine').value,
+          renderSamples: document.getElementById('renderSamples').value,
+          frameRate: document.getElementById('frameRate').value
+        };
+
+        // Add parameters to form data
+        Object.keys(params).forEach(key => {
+          formData.append(key, params[key]);
+        });
+
+        try {
+          console.log('🚀 Iniciando render com controle de execução única...');
+          
+          const response = await fetch('/api/render', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            console.log('✅ Render concluído com sucesso!', result);
+            showResult(result);
+          } else {
+            console.error('❌ Erro no render:', result);
+            if (response.status === 409) {
+              alert('⚠️ Um render já está em progresso. Sistema de execução única ativo.');
+            } else {
+              alert(`❌ Erro no render: ${result.error || 'Erro desconhecido'}`);
+            }
+          }
+
+        } catch (error) {
+          console.error('❌ Erro na requisição:', error);
+          alert(`❌ Erro na comunicação: ${error.message}`);
+        }
+      }
+
+      // ✅ SHOW RESULT
+      function showResult(result) {
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsList = document.getElementById('resultsList');
+
+        const resultHTML = `
+          <div class="result-item">
+            <div class="result-info">
+              <div class="result-name">🎬 ${result.outputPath}</div>
+              <div class="result-details">
+                📊 Tamanho: ${(result.outputSize / 1024 / 1024).toFixed(2)} MB | 
+                🕐 ${new Date(result.renderTime).toLocaleString('pt-BR')} |
+                ⚡ Execução Única: ${result.singleExecution ? '✅' : '❌'} |
+                🎯 Qualidade Otimizada: ${result.qualityOptimized ? '✅' : '❌'}
+              </div>
+            </div>
+            <a href="${result.outputPath}" class="download-button" download>
+              💾 Download
+            </a>
+          </div>
+        `;
+
+        resultsList.insertAdjacentHTML('afterbegin', resultHTML);
+        resultsSection.classList.add('show');
+
+        // Success notification
+        setTimeout(() => {
+          alert(`✅ Render concluído com sucesso!\n📁 Arquivo: ${result.outputPath}\n⚡ Sistema de execução única garantiu qualidade otimizada!`);
+        }, 500);
+      }
+
+      // ✅ CLEANUP ON PAGE UNLOAD
+      window.addEventListener('beforeunload', function() {
+        if (statusInterval) {
+          clearInterval(statusInterval);
+        }
+      });
+    </script>
+  </body>
+</html>

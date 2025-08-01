@@ -1,9 +1,9 @@
 # ZENTRAW
 
->### 🚀 **NOVIDADES V1.4.0.a.4** (24/07/2025)
+> ### 🚀 **NOVIDADES V1.4.0.a.4** (24/07/2025)
 
 - 🎉 **RENDERIZAÇÃO MP4 RECUPERADA E CONFIRMADA!** - Sistema 95% funcional novamente
-- 🎬 **Arquivo Gerado**: `test_final_output.mp4` com template + imagem + animação  
+- 🎬 **Arquivo Gerado**: `test_final_output.mp4` com template + imagem + animação
 - 🔄 **SISTEMA RESTAURADO** - Após círculo de erros, voltamos ao funcionamento real
 - ✅ **EXECUÇÃO FÍSICA DO BLENDER** - Blender 4.5.0 executando realmente (não simulado)
 - ✅ **TEMPLATE VÁLIDO** - template.blend carregado com objetos Plane e Cube
@@ -40,19 +40,22 @@
 ### 🎮 **COMO USAR - V1.4.0.a.4 SISTEMA FUNCIONANDO**
 
 #### **Execução do Sistema Validado:**
+
 1. `cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer"`
 2. `start-simple-real.bat` (Backend na porta 3004)
 3. Abrir `http://localhost:3000/test-simple-real.html`
 4. Upload áudio + imagem → **Execute Simple Real Blender**
 5. **Resultado**: MP4 gerado em `Blender/` (95% funcional)
-3. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔍 Test Backend Connection`
+6. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔍 Test Backend Connection`
 
 #### **Quando há Problemas:**
+
 1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🛑 Stop All Node Processes`
 2. `Ctrl+Shift+P` → `Tasks: Run Task` → `🔄 Restart Backend V1.4.0.a.2 (Complete)`
 3. `Ctrl+Shift+P` → `Tasks: Run Task` → `🧪 Debug Blender System`
 
 #### **Build:**
+
 1. `Ctrl+Shift+P` → `Tasks: Run Task` → `🏗️ Build Zentraw V1.4.0.a.2`
 
 📖 **Documentação Completa**: [/docs/ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md](./docs/ZENTRAW_V1.4.0.a.2_TASKS_GUIA_COMPLETO.md)
@@ -157,19 +160,28 @@ start-simple-real.bat
 ### **📚 LEIA PRIMEIRO: [AI-RULES-CRITICAL.md](./AI-RULES-CRITICAL.md)**
 
 #### **⚡ PROTOCOLO OBRIGATÓRIO**
-1. **CONSULTAR [docs/CHANGELOG.md](./docs/CHANGELOG.md)** → Arquivos exatos da versão atual  
+
+1. **CONSULTAR [docs/CHANGELOG.md](./docs/CHANGELOG.md)** → Arquivos exatos da versão atual
 2. **NUNCA usar /archive/** → São obsoletos e causam erros
 3. **SEMPRE testar** → Validar cada mudança imediatamente
 4. **BASE FUNCIONAL** → Partir sempre da versão anterior que funcionou
 
 #### **🚨 ERROS MAIS COMUNS (NÃO REPETIR)**
+
 - ❌ `server-simple-real.js` → ✅ USE `server-simple-real.cjs`
 - ❌ Arquivos de `/archive/` → ✅ USE apenas do CHANGELOG atual
 - ❌ Unicode paths no Python → ✅ USE forward slashes
 - ❌ `shell: true` no spawn → ✅ USE executável direto
 
-#### **🎯 ESTADO ATUAL - V1.4.0.a.5** 
+#### **🎯 ESTADO ATUAL - V1.4.0.a.5**
+
 - **Status**: MP4 gerado, áudio em integração
 - **Base Sólida**: V1.4.0.a.4 (renderização física confirmada)
 - **Diretório**: `C:\...\zentraw\Zentraw\3d_visualizer\`
 - **Arquivos Ativos**: Listados em [docs/CHANGELOG.md](./docs/CHANGELOG.md)
+
+### ❌ Erro "template.blend not found":
+
+- Sintoma: Blender não encontra o arquivo template.blend no diretório Blender
+- Ação: Validado que o arquivo existe em C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend
+- Status: Corrigido, pronto para novo teste

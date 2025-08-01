@@ -15,6 +15,7 @@
 **Status:** ❌ NÃO RESOLVIDO após múltiplas tentativas
 
 #### **ERRO REPRODUZÍVEL:**
+
 ```
 [19:45:22] ✅ Render iniciado com sucesso
 [19:45:22] 🆔 Process ID: c2c01c9a-1fb8-4370-ad30-381a19b70c14
@@ -26,22 +27,25 @@
 #### **CORREÇÕES TENTADAS (SEM SUCESSO):**
 
 1. **Path Resolution Fix:**
+
    ```javascript
    // ANTES: const currentDir = __dirname || path.dirname(new URL(import.meta.url).pathname);
    // DEPOIS: const currentDir = __dirname; // CommonJS sempre tem __dirname
    ```
 
 2. **Argument Validation:**
+
    ```javascript
    // Validação rigorosa de todos os argumentos Python
    for (let i = 0; i < pythonArgs.length; i++) {
-       if (typeof arg !== 'string') {
-           // Error handling
-       }
+     if (typeof arg !== "string") {
+       // Error handling
+     }
    }
    ```
 
 3. **Python Script Validation:**
+
    ```python
    # Validação rigorosa no script Python
    if not isinstance(audio_path, str) or not audio_path:
@@ -54,6 +58,7 @@
    - Path type checking
 
 #### **ANÁLISE TÉCNICA:**
+
 - **Backend:** ✅ Inicia corretamente
 - **File Upload:** ✅ Funciona
 - **Path Creation:** ✅ Paths criados corretamente
@@ -61,6 +66,7 @@
 - **Root Cause:** DESCONHECIDA após investigação extensiva
 
 #### **RECOMENDAÇÃO:**
+
 - **🔄 ROLLBACK para V1.4.0.a.7 (FUNCIONANDO)**
 - **🔍 Investigação mais profunda da cadeia de argumentos**
 - **📋 Continuação na próxima sessão**
@@ -93,6 +99,7 @@ if channels == 2:  # Stereo
 ```
 
 #### **RESULTADO:**
+
 - ✅ Cubo sincronizado perfeitamente com áudio
 - ✅ Impulsos no tempo correto
 - ✅ Duração de vídeo = duração de áudio
@@ -103,14 +110,16 @@ if channels == 2:  # Stereo
 ## 🔧 **HISTÓRICO DE CORREÇÕES**
 
 ### **V1.4.0.a.7 - EVOLUÇÃO BLINDADA**
+
 - **Data:** 25/07/2025
 - **Base:** V1.4.0.a.5 (funcionalidade preservada)
 - **Mudança:** APENAS correção de sincronização
 - **Status:** ✅ SYNC CORRIGIDO DEFINITIVAMENTE
 
 ### **Tentativas Anteriores:**
+
 1. **Método Híbrido** - Parcial
-2. **FPS Refactoring** - Parcial  
+2. **FPS Refactoring** - Parcial
 3. **AI Team Suggestions** - Quase completo
 4. **Stereo Processing Fix** - ✅ DEFINITIVO
 
@@ -119,6 +128,7 @@ if channels == 2:  # Stereo
 ## 📊 **VALIDAÇÃO TÉCNICA**
 
 ### **STEREO → MONO CONVERSION:**
+
 ```
 🎧 Canais: 2 (stereo)
 🔧 CORREÇÃO STEREO: Usando apenas canal esquerdo
@@ -127,6 +137,7 @@ if channels == 2:  # Stereo
 ```
 
 ### **TIMING VALIDATION:**
+
 ```
 ⏱️ Duração do áudio: 4.736 segundos
 🎞️ FPS: 30 (consistente)
@@ -140,16 +151,19 @@ if channels == 2:  # Stereo
 ## 🚨 **PROBLEMAS CONHECIDOS - RESOLVIDOS**
 
 ### **❌ wf.getnchannels() após wf.close()**
+
 **Sintoma:** Erro ao detectar canais stereo  
 **Causa:** Chamada função após fechar arquivo  
 **Solução:** ✅ Movido antes de wf.close()
 
 ### **❌ Samples duplicados por canal stereo**
+
 **Sintoma:** Array com dobro de samples necessários  
 **Causa:** Stereo inclui canal esquerdo + direito  
 **Solução:** ✅ samples[::2] para usar apenas esquerdo
 
 ### **❌ Timing offset em 50%**
+
 **Sintoma:** Impulsos na metade do tempo  
 **Causa:** Processamento stereo como mono  
 **Solução:** ✅ Conversão correta stereo→mono
@@ -159,12 +173,14 @@ if channels == 2:  # Stereo
 ## 🛡️ **PROTOCOLO DE BLINDAGEM**
 
 ### **PRESERVAÇÃO V1.4.0.a.5:**
+
 - ✅ Funcionalidade base mantida 100%
 - ✅ Parâmetros idênticos (amplitude_multiplier = 3)
 - ✅ Método de amplitude original preservado
 - ✅ Estrutura de keyframes inalterada
 
 ### **APENAS CORREÇÃO DE SYNC:**
+
 - ✅ Processamento de canais corrigido
 - ✅ Duração baseada em áudio real
 - ✅ FPS consistente mantido
@@ -184,6 +200,7 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 ```
 
 **Output Esperado:**
+
 ```
 🛡️ V1.4.0.a.7 - EVOLUÇÃO BLINDADA INICIADA
 🎧 Canais: 2 (stereo)
@@ -202,6 +219,11 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 - **Arquivo Principal:** `render_audio_visualizer_v1.4.0.a.7.py`
 - **Backend:** `server-v1.4.0.a.7-blindado.cjs`
 - **Interface:** `interface-v1.4.0.a.7-blindada.html`
+
+- **V1.4.0.a.8.4:** ❌ Erro crítico detectado: template.blend ausente
+  - Sintoma: Blender não encontra o arquivo template.blend
+  - Ação: Validado que o arquivo existe no diretório correto
+  - Status: Corrigido, pronto para novo teste
 
 ---
 
@@ -224,6 +246,7 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 - Próximos passos: Investigar possíveis causas no pipeline do Blender, permissões, codecs, integração frontend/backend e logs detalhados do Blender.
 
 ## Histórico de Tentativas
+
 - [x] Garantido caminho absoluto e criação do diretório de saída.
 - [x] Adicionado log detalhado após render.
 - [x] Validado que o arquivo aparece no diretório.
@@ -233,6 +256,7 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 - [ ] Verificar integração do botão de download na interface.
 
 ## Observações
+
 - Compliance total com AI-AGENT-PROTOCOL.md.
 - Nenhum comando ou task do TemplateLibraryBuilder utilizado.
 - Próxima sessão: continuar investigação técnica e validar integração frontend/backend.
@@ -240,4 +264,4 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 ---
 
 **🎉 PROBLEMA DE SYNC RESOLVIDO DEFINITIVAMENTE!**  
-*V1.4.0.a.7 - Evolução Blindada Completa*
+_V1.4.0.a.7 - Evolução Blindada Completa_

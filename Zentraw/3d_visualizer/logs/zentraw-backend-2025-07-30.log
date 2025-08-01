@@ -1,0 +1,45 @@
+[2025-07-30T01:31:22.446Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:31:22.461Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T01:34:28.188Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:34:28.203Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T01:41:31.647Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:41:31.662Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T01:44:18.015Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:44:18.029Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T01:55:47.355Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:55:47.369Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T01:57:33.355Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T01:57:33.370Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T02:01:16.898Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T02:01:16.912Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T02:06:06.753Z] [INFO] 🛑 Todos os renders ativos cancelados automaticamente (0)
+[2025-07-30T02:06:06.768Z] [INFO] ✅ Servidor finalizado
+[2025-07-30T16:40:37.045Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3005
+[2025-07-30T16:40:37.048Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-30T16:40:37.048Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-30T16:40:37.049Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-30T16:40:54.126Z] [INFO] Health check solicitado
+[2025-07-30T16:47:21.160Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3005
+[2025-07-30T16:47:21.161Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-30T16:47:21.162Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-30T16:47:21.162Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-30T16:49:03.316Z] [INFO] [d028ef12-5788-4512-85a6-a3ca4cc95a76] Iniciando render parametrizado
+[2025-07-30T16:49:03.316Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [AUDIT] Recebendo render parametrizado - processId: d028ef12-5788-4512-85a6-a3ca4cc95a76
+[2025-07-30T16:49:03.317Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [AUDIT] req.files: {"audio":[{"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753894143262_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753894143262_audio.wav","size":909502}],"image":[{"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753894143275_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753894143275_image.png","size":6594976}]}
+[2025-07-30T16:49:03.318Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [AUDIT] req.body.settings: {"scriptVersion":"v1.4.0.a.9.1","resolution":"1920x1080","fps":30,"renderEngine":"eevee","outputName":"output_v1.4.0.a.9.1"}
+[2025-07-30T16:49:03.319Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [AUDIT] audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753894143262_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753894143262_audio.wav","size":909502}
+[2025-07-30T16:49:03.320Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [AUDIT] imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753894143275_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753894143275_image.png","size":6594976}
+[2025-07-30T16:49:03.321Z] [DEBUG] [d028ef12-5788-4512-85a6-a3ca4cc95a76] [BLINDAGEM] Caminhos finais: audio=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753894143262_audio.wav, image=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753894143275_image.png, output=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.9.1.mp4
+[2025-07-30T16:49:03.432Z] [ERROR] [d028ef12-5788-4512-85a6-a3ca4cc95a76] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-30T17:20:00.749Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3005
+[2025-07-30T17:20:00.751Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-30T17:20:00.751Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-30T17:20:00.752Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-30T17:20:31.703Z] [INFO] [bf68c20e-944c-42d8-b12e-fc2090b67196] Iniciando render parametrizado
+[2025-07-30T17:20:31.704Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [AUDIT] Recebendo render parametrizado - processId: bf68c20e-944c-42d8-b12e-fc2090b67196
+[2025-07-30T17:20:31.705Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [AUDIT] req.files: {"audio":[{"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753896031663_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753896031663_audio.wav","size":909502}],"image":[{"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753896031669_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753896031669_image.png","size":6594976}]}
+[2025-07-30T17:20:31.706Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [AUDIT] req.body.settings: {"scriptVersion":"v1.4.0.a.9.1","resolution":"1920x1080","fps":30,"renderEngine":"eevee","outputName":"output_v1.4.0.a.9.1"}
+[2025-07-30T17:20:31.706Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [AUDIT] audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753896031663_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753896031663_audio.wav","size":909502}
+[2025-07-30T17:20:31.707Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [AUDIT] imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753896031669_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753896031669_image.png","size":6594976}
+[2025-07-30T17:20:31.708Z] [DEBUG] [bf68c20e-944c-42d8-b12e-fc2090b67196] [BLINDAGEM] Caminhos finais: audio=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753896031663_audio.wav, image=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753896031669_image.png, output=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.9.1.mp4
+[2025-07-30T17:20:31.812Z] [ERROR] [bf68c20e-944c-42d8-b12e-fc2090b67196] Erro ao executar render: The "path" argument must be of type string. Received undefined

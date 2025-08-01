@@ -3556,3 +3556,1860 @@ Blender quit
 
 [2025-07-29T16:23:32.998Z] [INFO] [c3496f2e-c258-4043-a96c-86acdeb08480] Blender process finalizado com código: 0
 [2025-07-29T16:23:33.000Z] [SUCCESS] [c3496f2e-c258-4043-a96c-86acdeb08480] Render concluído: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+[2025-07-29T16:58:49.683Z] [INFO] Health check solicitado
+[2025-07-29T16:59:01.068Z] [INFO] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Iniciando render parametrizado
+[2025-07-29T16:59:01.069Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753808341060_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753808341060_audio.wav","size":909502}
+[2025-07-29T16:59:01.070Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"sample_cover.jpg","encoding":"7bit","mimetype":"image/jpeg","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753808341065_image.jpg","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753808341065_image.jpg","size":362360}
+[2025-07-29T16:59:01.179Z] [INFO] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Executando Blender: C:\Program Files\Blender Foundation\Blender 4.5\blender.exe C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend --background --python C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.1.py -- C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753808341060_audio.wav C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753808341065_image.jpg C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4 C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\temp\config_1df95dde-32bd-49dd-83e5-62bfbb0c7d1a.json
+[2025-07-29T16:59:04.530Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Blender 4.5.0 (hash 8cb6b388974a built 2025-07-15 01:36:24)
+Read blend: "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\template.blend"
+Fra:1 Mem:118.68M (Peak 131.29M) | Time:00:00.49 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:04.673Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:1 Mem:119.01M (Peak 131.29M) | Time:00:00.63 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:04.812Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:1 Mem:119.01M (Peak 131.29M) | Time:00:00.77 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:04.888Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:1 Mem:119.01M (Peak 131.29M) | Time:00:00.85 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:05.157Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 1
+Time: 00:01.11 (Saving: 00:00.21)
+
+
+[2025-07-29T16:59:05.209Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:2 Mem:119.15M (Peak 150.65M) | Time:00:00.05 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:05.359Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:2 Mem:119.20M (Peak 150.65M) | Time:00:00.20 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:05.514Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:2 Mem:119.20M (Peak 150.65M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:05.601Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:2 Mem:119.20M (Peak 150.65M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:05.699Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 2
+Time: 00:00.54 (Saving: 00:00.04)
+
+
+[2025-07-29T16:59:05.734Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:3 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:05.886Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:3 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:06.039Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:3 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:06.125Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:3 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:06.210Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 3
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:06.246Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:4 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:06.398Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:4 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:06.552Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:4 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:06.640Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:4 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:06.721Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 4
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:06.758Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:5 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:06.909Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:5 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:07.062Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:5 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:07.149Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:5 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:07.229Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 5
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:07.265Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:6 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:07.415Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:6 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:07.570Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:6 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:07.656Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:6 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:07.734Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 6
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:07.770Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:7 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:07.922Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:7 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:08.077Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:7 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:08.163Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:7 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:08.238Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 7
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:08.275Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:8 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:08.431Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:8 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:08.590Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:8 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:08.678Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:8 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:08.756Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 8
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:08.798Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:9 Mem:119.20M (Peak 150.84M) | Time:00:00.04 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:08.957Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:9 Mem:119.20M (Peak 150.84M) | Time:00:00.20 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:09.116Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:9 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:09.205Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:9 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:09.283Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 9
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:09.319Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:10 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:09.469Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:10 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:09.622Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:10 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:09.709Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:10 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:09.790Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 10
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:09.831Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:11 Mem:119.20M (Peak 150.84M) | Time:00:00.04 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:09.985Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:11 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:10.139Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:11 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:10.225Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:11 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:10.303Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 11
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:10.338Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:12 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:10.490Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:12 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:10.646Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:12 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:10.737Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:12 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:10.819Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 12
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:10.856Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:13 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:11.008Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:13 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:11.162Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:13 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:11.248Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:13 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:11.325Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 13
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:11.361Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:14 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:11.511Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:14 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:11.664Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:14 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:11.749Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:14 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:11.827Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 14
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:11.863Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:15 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:12.019Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:15 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:12.178Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:15 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:12.267Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:15 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:12.346Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 15
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:12.381Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:16 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:12.533Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:16 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:12.689Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:16 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:12.776Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:16 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:12.858Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 16
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:12.894Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:17 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:13.043Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:17 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:13.197Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:17 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:13.283Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:17 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:13.362Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 17
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:13.398Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:18 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:13.549Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:18 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:13.703Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:18 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:13.790Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:18 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:13.871Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 18
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:13.908Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:19 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:14.059Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:19 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:14.214Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:19 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:14.301Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:19 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:14.377Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 19
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:14.413Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:20 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:14.565Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:20 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:14.719Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:20 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:14.806Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:20 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:14.887Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 20
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:14.924Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:21 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:15.075Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:21 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:15.231Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:21 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:15.316Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:21 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:15.396Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 21
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:15.432Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:22 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:15.583Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:22 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:15.738Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:22 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:15.825Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:22 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:15.907Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 22
+Time: 00:00.51 (Saving: 00:00.04)
+
+
+[2025-07-29T16:59:15.943Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:23 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:16.094Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:23 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:16.249Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:23 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:16.336Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:23 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:16.417Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 23
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:16.453Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:24 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:16.604Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:24 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:16.758Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:24 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:16.845Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:24 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:16.924Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 24
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:16.961Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:25 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:17.113Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:25 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:17.270Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:25 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:17.360Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:25 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:17.437Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 25
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:17.473Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:26 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:17.624Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:26 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:17.778Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:26 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:17.866Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:26 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:17.945Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 26
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:17.982Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:27 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:18.134Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:27 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:18.288Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:27 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:18.374Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:27 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:18.455Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 27
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:18.492Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:28 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:18.644Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:28 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:18.797Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:28 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:18.884Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:28 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:18.965Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 28
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:19.001Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:29 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:19.154Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:29 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:19.309Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:29 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:19.395Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:29 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:19.472Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 29
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:19.509Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:30 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:19.661Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:30 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:19.816Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:30 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:19.904Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:30 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:19.980Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 30
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:20.016Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:31 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:20.169Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:31 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:20.326Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:31 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:20.414Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:31 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:20.492Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 31
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:20.529Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:32 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:20.684Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:32 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:20.842Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:32 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:20.929Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:32 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:21.007Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 32
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:21.044Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:33 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:21.199Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:33 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:21.357Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:33 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:21.445Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:33 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:21.526Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 33
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:21.563Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:34 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:21.714Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:34 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:21.869Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:34 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:21.955Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:34 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:22.035Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 34
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:22.071Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:35 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:22.227Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:35 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:22.385Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:35 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:22.473Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:35 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:22.554Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 35
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:22.590Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:36 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:22.742Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:36 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:22.898Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:36 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:22.985Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:36 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:23.062Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 36
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:23.099Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:37 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:23.257Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:37 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:23.416Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:37 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:23.506Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:37 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:23.588Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 37
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:23.625Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:38 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:23.778Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:38 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:23.932Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:38 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:24.019Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:38 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:24.096Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 38
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:24.133Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:39 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:24.286Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:39 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:24.441Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:39 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:24.528Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:39 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:24.609Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 39
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:24.646Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:40 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:24.797Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:40 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:24.951Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:40 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:25.037Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:40 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:25.113Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 40
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:25.150Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:41 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:25.302Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:41 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:25.457Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:41 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:25.545Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:41 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:25.623Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 41
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:25.660Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:42 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:25.810Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:42 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:25.964Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:42 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:26.050Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:42 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:26.127Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 42
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:26.163Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:43 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:26.316Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:43 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:26.471Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:43 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:26.558Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:43 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:26.634Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 43
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:26.671Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:44 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:26.823Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:44 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:26.981Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:44 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:27.069Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:44 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:27.146Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 44
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:27.183Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:45 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:27.337Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:45 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:27.494Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:45 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:27.582Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:45 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:27.662Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 45
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:27.699Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:46 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:27.853Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:46 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:28.007Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:46 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:28.095Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:46 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:28.172Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 46
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:28.209Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:47 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:28.367Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:47 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:28.527Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:47 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:28.616Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:47 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:28.695Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 47
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:28.732Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:48 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:28.886Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:48 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:29.042Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:48 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:29.132Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:48 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:29.209Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 48
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:29.251Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:49 Mem:119.20M (Peak 150.84M) | Time:00:00.04 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:29.405Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:49 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:29.562Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:49 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:29.649Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:49 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:29.729Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 49
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:29.766Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:50 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:29.917Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:50 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:30.071Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:50 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:30.159Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:50 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:30.237Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 50
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:30.274Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:51 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:30.430Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:51 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:30.589Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:51 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:30.678Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:51 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:30.757Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 51
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:30.793Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:52 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:30.946Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:52 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:31.111Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:52 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:31.201Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:52 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:31.281Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 52
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:31.318Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:53 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:31.470Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:53 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:31.628Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:53 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:31.717Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:53 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:31.794Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 53
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:31.831Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:54 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:31.989Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:54 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:32.149Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:54 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:32.237Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:54 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:32.318Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 54
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:32.354Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:55 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:32.506Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:55 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:32.659Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:55 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:32.746Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:55 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:32.824Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 55
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:32.862Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:56 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:33.022Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:56 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:33.181Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:56 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:33.270Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:56 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:33.344Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 56
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:33.381Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:57 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:33.537Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:57 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:33.689Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:57 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:33.776Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:57 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:33.851Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 57
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:33.887Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:58 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:34.039Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:58 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:34.194Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:58 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:34.283Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:58 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:34.360Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 58
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:34.398Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:59 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:34.561Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:59 Mem:119.20M (Peak 150.84M) | Time:00:00.20 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:34.724Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:59 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:34.815Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:59 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:34.891Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 59
+Time: 00:00.53 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:34.928Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:60 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:35.085Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:60 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:35.246Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:60 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:35.335Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:60 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:35.413Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 60
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:35.451Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:61 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:35.611Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:61 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:35.774Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:61 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:35.865Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:61 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:35.942Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 61
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:35.980Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:62 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:36.142Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:62 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:36.310Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:62 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:36.402Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:62 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:36.477Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 62
+Time: 00:00.53 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:36.513Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:63 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:36.666Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:63 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:36.826Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:63 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:36.914Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:63 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:36.993Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 63
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:37.029Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:64 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:37.185Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:64 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:37.343Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:64 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:37.431Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:64 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:37.507Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 64
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:37.545Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:65 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:37.702Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:65 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:37.858Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:65 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:37.946Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:65 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:38.021Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 65
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:38.058Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:66 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:38.210Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:66 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:38.369Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:66 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:38.459Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:66 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:38.540Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 66
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:38.576Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:67 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:38.732Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:67 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:38.887Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:67 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:38.974Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:67 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:39.055Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 67
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:39.093Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:68 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:39.252Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:68 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:39.413Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:68 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:39.504Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:68 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:39.585Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 68
+Time: 00:00.52 (Saving: 00:00.04)
+
+
+[2025-07-29T16:59:39.627Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:69 Mem:119.20M (Peak 150.84M) | Time:00:00.04 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:39.793Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:69 Mem:119.20M (Peak 150.84M) | Time:00:00.20 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:39.958Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:69 Mem:119.20M (Peak 150.84M) | Time:00:00.37 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:40.046Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:69 Mem:119.20M (Peak 150.84M) | Time:00:00.46 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:40.125Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 69
+Time: 00:00.54 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:40.162Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:70 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:40.312Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:70 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:40.473Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:70 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:40.562Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:70 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:40.639Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 70
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:40.676Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:71 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:40.832Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:71 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:40.994Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:71 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:41.082Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:71 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:41.160Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 71
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:41.195Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:72 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:41.355Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:72 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:41.515Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:72 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:41.606Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:72 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:41.683Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 72
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:41.721Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:73 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:41.875Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:73 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:42.032Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:73 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:42.120Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:73 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:42.194Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 73
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:42.231Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:74 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:42.383Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:74 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:42.539Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:74 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:42.627Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:74 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:42.706Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 74
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:42.743Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:75 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:42.898Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:75 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:43.054Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:75 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:43.142Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:75 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:43.220Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 75
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:43.257Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:76 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:43.409Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:76 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:43.564Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:76 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:43.652Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:76 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:43.730Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 76
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:43.767Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:77 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:43.923Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:77 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:44.080Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:77 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:44.167Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:77 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:44.241Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 77
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:44.278Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:78 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:44.432Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:78 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:44.590Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:78 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:44.677Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:78 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:44.753Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 78
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:44.789Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:79 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:44.939Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:79 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:45.094Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:79 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:45.183Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:79 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:45.259Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 79
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:45.295Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:80 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:45.449Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:80 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:45.609Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:80 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:45.700Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:80 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:45.780Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 80
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:45.817Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:81 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:45.973Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:81 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:46.139Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:81 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:46.228Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:81 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:46.306Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 81
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:46.343Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:82 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:46.501Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:82 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:46.662Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:82 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:46.752Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:82 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:46.831Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 82
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:46.868Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:83 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:47.028Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:83 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:47.191Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:83 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:47.280Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:83 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:47.361Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 83
+Time: 00:00.53 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:47.398Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:84 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:47.558Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:84 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:47.719Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:84 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:47.808Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:84 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:47.886Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 84
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:47.924Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:85 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:48.076Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:85 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:48.231Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:85 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:48.318Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:85 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:48.395Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 85
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:48.432Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:86 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:48.584Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:86 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:48.738Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:86 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:48.824Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:86 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:48.900Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 86
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:48.936Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:87 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:49.089Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:87 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:49.245Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:87 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:49.333Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:87 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:49.407Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 87
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:49.465Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:88 Mem:119.20M (Peak 150.84M) | Time:00:00.05 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:49.618Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:88 Mem:119.20M (Peak 150.84M) | Time:00:00.21 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:49.776Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:88 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:49.863Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:88 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:49.941Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 88
+Time: 00:00.53 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:49.978Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:89 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:50.131Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:89 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:50.288Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:89 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:50.377Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:89 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:50.452Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 89
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:50.489Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:90 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:50.641Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:90 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:50.797Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:90 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:50.884Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:90 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:50.966Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 90
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:51.003Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:91 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:51.157Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:91 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:51.314Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:91 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:51.401Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:91 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:51.475Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 91
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:51.513Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:92 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:51.664Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:92 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:51.820Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:92 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:51.908Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:92 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:51.987Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 92
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:52.024Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:93 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:52.177Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:93 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:52.332Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:93 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:52.420Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:93 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:52.496Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 93
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:52.533Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:94 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:52.685Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:94 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:52.840Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:94 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:52.927Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:94 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:53.002Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 94
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:53.040Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:95 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:53.192Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:95 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:53.346Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:95 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:53.432Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:95 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:53.509Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 95
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:53.546Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:96 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:53.695Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:96 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:53.850Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:96 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:53.936Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:96 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:54.010Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 96
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:54.046Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:97 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:54.197Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:97 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:54.350Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:97 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:54.436Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:97 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:54.513Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 97
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:54.550Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:98 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:54.702Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:98 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:54.856Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:98 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:54.943Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:98 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:55.025Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 98
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:55.061Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:99 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:55.215Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:99 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:55.368Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:99 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:55.454Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:99 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:55.531Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 99
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:55.568Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:100 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:55.726Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:100 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:55.887Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:100 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:55.978Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:100 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:56.057Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 100
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:56.094Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:101 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:56.253Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:101 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:56.410Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:101 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:56.498Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:101 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:56.572Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 101
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:56.609Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:102 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:56.763Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:102 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:56.923Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:102 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:57.010Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:102 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:57.087Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 102
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:57.124Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:103 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:57.276Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:103 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:57.431Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:103 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:57.518Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:103 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:57.592Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 103
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:57.629Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:104 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:57.784Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:104 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:57.943Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:104 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:58.032Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:104 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:58.109Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 104
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:58.146Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:105 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:58.296Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:105 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:58.450Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:105 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:58.537Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:105 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:58.614Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 105
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:58.652Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:106 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:58.811Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:106 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:58.973Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:106 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:59.064Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:106 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:59.139Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 106
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:59.176Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:107 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:59.328Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:107 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:59.482Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:107 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T16:59:59.569Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:107 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T16:59:59.645Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 107
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T16:59:59.682Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:108 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T16:59:59.833Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:108 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T16:59:59.988Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:108 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:00.076Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:108 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:00.154Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 108
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:00.191Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:109 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:00.345Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:109 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:00.505Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:109 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:00.600Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:109 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:00.678Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 109
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:00.717Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:110 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:00.868Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:110 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:01.021Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:110 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:01.110Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:110 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:01.188Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 110
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:01.225Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:111 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:01.376Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:111 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:01.532Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:111 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:01.619Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:111 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:01.696Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 111
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:01.733Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:112 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:01.883Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:112 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:02.036Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:112 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:02.121Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:112 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:02.196Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 112
+Time: 00:00.49 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:02.233Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:113 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:02.382Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:113 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:02.536Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:113 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:02.625Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:113 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:02.703Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 113
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:02.740Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:114 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:02.892Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:114 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:03.046Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:114 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:03.134Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:114 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:03.211Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 114
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:03.247Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:115 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:03.401Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:115 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:03.560Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:115 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:03.648Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:115 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:03.727Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 115
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:03.763Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:116 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:03.925Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:116 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:04.082Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:116 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:04.169Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:116 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:04.245Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 116
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:04.282Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:117 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:04.436Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:117 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:04.592Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:117 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:04.680Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:117 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:04.758Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 117
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:04.795Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:118 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:04.950Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:118 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:05.109Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:118 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:05.197Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:118 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:05.272Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 118
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:05.309Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:119 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:05.465Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:119 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:05.629Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:119 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:05.718Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:119 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:05.796Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 119
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:05.834Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:120 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:05.989Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:120 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:06.150Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:120 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:06.238Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:120 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:06.318Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 120
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:06.354Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:121 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:06.508Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:121 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:06.668Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:121 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:06.758Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:121 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:06.837Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 121
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:06.873Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:122 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:07.028Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:122 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:07.184Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:122 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:07.272Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:122 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:07.350Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 122
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:07.388Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:123 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:07.539Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:123 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:07.693Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:123 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:07.780Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:123 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:07.856Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 123
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:07.893Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:124 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:08.043Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:124 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:08.197Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:124 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:08.283Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:124 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:08.362Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 124
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:08.398Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:125 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:08.549Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:125 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:08.704Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:125 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:08.790Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:125 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:08.866Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 125
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:08.902Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:126 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:09.053Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:126 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:09.208Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:126 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:09.295Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:126 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:09.370Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 126
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:09.407Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:127 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:09.557Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:127 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:09.709Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:127 Mem:119.20M (Peak 150.84M) | Time:00:00.33 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:09.795Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:127 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:09.874Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 127
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:09.911Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:128 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:10.062Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:128 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:10.216Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:128 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:10.302Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:128 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:10.382Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 128
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:10.419Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:129 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:10.571Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:129 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:10.727Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:129 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:10.815Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:129 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:10.892Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 129
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:10.929Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:130 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:11.081Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:130 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:11.238Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:130 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:11.326Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:130 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:11.404Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 130
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:11.441Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:131 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:11.594Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:131 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:11.752Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:131 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:11.841Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:131 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:11.915Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 131
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:11.952Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:132 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:12.106Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:132 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:12.264Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:132 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:12.356Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:132 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:12.436Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 132
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:12.483Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:133 Mem:119.20M (Peak 150.84M) | Time:00:00.04 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:12.637Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:133 Mem:119.20M (Peak 150.84M) | Time:00:00.20 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:12.796Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:133 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:12.884Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:133 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:12.963Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 133
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:13.000Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:134 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:13.158Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:134 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:13.320Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:134 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:13.413Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:134 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:13.493Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 134
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:13.532Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:135 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:13.691Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:135 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:13.854Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:135 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:13.945Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:135 Mem:119.20M (Peak 150.84M) | Time:00:00.45 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:14.023Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 135
+Time: 00:00.53 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:14.060Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:136 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:14.216Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:136 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:14.374Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:136 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:14.460Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:136 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:14.536Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 136
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:14.573Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:137 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:14.724Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:137 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:14.878Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:137 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:14.964Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:137 Mem:119.20M (Peak 150.84M) | Time:00:00.42 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:15.041Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 137
+Time: 00:00.50 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:15.078Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:138 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:15.235Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:138 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:15.395Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:138 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:15.485Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:138 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:15.563Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 138
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:15.600Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:139 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:15.757Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:139 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:15.921Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:139 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:16.010Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:139 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:16.088Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 139
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:16.125Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:140 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:16.282Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:140 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:16.438Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:140 Mem:119.20M (Peak 150.84M) | Time:00:00.35 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:16.527Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:140 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:16.605Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 140
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:16.642Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:141 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:16.794Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:141 Mem:119.20M (Peak 150.84M) | Time:00:00.18 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:16.951Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:141 Mem:119.20M (Peak 150.84M) | Time:00:00.34 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:17.038Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:141 Mem:119.20M (Peak 150.84M) | Time:00:00.43 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:17.118Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 141
+Time: 00:00.51 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:17.158Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:142 Mem:119.20M (Peak 150.84M) | Time:00:00.03 | Rendering 1 / 64 samples
+
+[2025-07-29T17:00:17.317Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:142 Mem:119.20M (Peak 150.84M) | Time:00:00.19 | Rendering 25 / 64 samples
+
+[2025-07-29T17:00:17.478Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:142 Mem:119.20M (Peak 150.84M) | Time:00:00.36 | Rendering 50 / 64 samples
+
+[2025-07-29T17:00:17.566Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Fra:142 Mem:119.20M (Peak 150.84M) | Time:00:00.44 | Rendering 64 / 64 samples
+
+[2025-07-29T17:00:17.641Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: Append frame 142
+Time: 00:00.52 (Saving: 00:00.03)
+
+
+[2025-07-29T17:00:17.872Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: 🎯 V1.4.0.a.8.1 - HOTFIX BLENDER 4.5+ INICIADO
+🛡️ BLINDAGEM: V1.4.0.a.7 sync perfeito preservado
+🔧 HOTFIX: APIs compatíveis com Blender 4.5+ e EEVEE_NEXT
+📂 Working directory: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender
+🐍 Python script: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\Blender\render_audio_visualizer_v1.4.0.a.8.1.py
+🔍 Verificando existência dos arquivos...
+✅ Todos os arquivos validados com sucesso
+🎵 Áudio: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753808341060_audio.wav
+🖼️ Imagem: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753808341065_image.jpg
+📁 Output (absoluto): C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+⚙️ Config: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\temp\config_1df95dde-32bd-49dd-83e5-62bfbb0c7d1a.json
+📊 CONFIGURAÇÕES APLICADAS V1.4.0.a.8.1 HOTFIX:
+   🎬 Resolução: 1920x1080 (Full HD padrão)
+   🎞️ FPS: 30
+   🔍 Samples: 128
+   ⚡ Engine: BLENDER_EEVEE_NEXT (Eevee Next padrão - Blender 4.5+)
+   📊 Amplitude Multiplier: 3.0x (V1.4.0.a.7 BLINDADO)
+   🌊 Suavização: 1
+   🎧 Canais: mono
+   📦 Escala Base: 1.0x
+   📈 Escala Máxima: 5.0x
+   🎯 Partículas: 64
+   📏 Espaçamento: 1.2
+🎬 Setting up scene...
+🚀 Render engine: BLENDER_EEVEE_NEXT
+📐 Resolução: 1920x1080
+⚡ Eevee configurado para velocidade (samples: 64)
+✅ Samples Eevee configurados
+🔒 Definindo caminho de saída do render: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+🎵 Carregando áudio...
+🎵 Áudio carregado: 227324 samples, 48000Hz, 2 canais
+⏱️ Duração: 4.74s, 142 frames @ 30fps
+🎯 Criando sistema de cubos...
+✅ 64 cubos criados
+🎵 Animando baseado no áudio...
+✅ Animação completa
+🖼️ Adicionando imagem de fundo: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753808341065_image.jpg
+🎵 Configurando áudio no sequencer...
+🎬 Iniciando render...
+📊 Engine: BLENDER_EEVEE_NEXT
+📐 Resolução: 1920x1080
+⏱️ Frames: 142
+🎵 Com áudio: True
+🎉 Render concluído com sucesso!
+📂 Arquivos no diretório de saída (C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs):
+ - output_v1.4.0.a.8.2_20250728_183504_20250728_183504.mp4
+ - output_v1.4.0.a.8.2_20250728_183504_result.json
+ - output_v1.4.0.a.8.2_20250728_184817_20250728_184817.mp4
+ - output_v1.4.0.a.8.2_20250728_184817_result.json
+ - output_v1.4.0.a.8.2_20250728_202027_20250728_202027.mp4
+ - output_v1.4.0.a.8.2_20250728_202027_result.json
+ - output_v1.4.0.a.8.2_20250728_204618_20250728_204618.mp4
+ - output_v1.4.0.a.8.2_20250728_204618_result.json
+ - output_v1.4.0.a.8.2_20250728_210827_20250728_210827.mp4
+ - output_v1.4.0.a.8.2_20250728_210827_result.json
+ - output_v1.4.0.a.8.mp4
+✅ Arquivo MP4 gerado: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+
+[2025-07-29T17:00:18.155Z] [DEBUG] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender Output: 
+Blender quit
+
+[2025-07-29T17:00:18.224Z] [INFO] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Blender process finalizado com código: 0
+[2025-07-29T17:00:18.225Z] [SUCCESS] [1df95dde-32bd-49dd-83e5-62bfbb0c7d1a] Render concluído: C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.mp4
+[2025-07-29T18:17:06.954Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3005
+[2025-07-29T18:17:06.956Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-29T18:17:06.956Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-29T18:17:06.957Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-29T18:19:20.035Z] [INFO] Health check solicitado
+[2025-07-29T18:19:32.052Z] [INFO] [fd7ab55c-ab67-4288-8a5c-fc38fb697b9c] Iniciando render parametrizado
+[2025-07-29T18:19:32.053Z] [DEBUG] [fd7ab55c-ab67-4288-8a5c-fc38fb697b9c] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813172035_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813172035_audio.wav","size":909502}
+[2025-07-29T18:19:32.054Z] [DEBUG] [fd7ab55c-ab67-4288-8a5c-fc38fb697b9c] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"sample_cover.jpg","encoding":"7bit","mimetype":"image/jpeg","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813172044_image.jpg","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813172044_image.jpg","size":362360}
+[2025-07-29T18:19:32.168Z] [ERROR] [fd7ab55c-ab67-4288-8a5c-fc38fb697b9c] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T18:22:53.444Z] [INFO] Health check solicitado
+[2025-07-29T18:23:01.797Z] [INFO] [6a35857b-6538-4563-9f13-dcb91dc05715] Iniciando render parametrizado
+[2025-07-29T18:23:01.798Z] [DEBUG] [6a35857b-6538-4563-9f13-dcb91dc05715] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813381755_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813381755_audio.wav","size":909502}
+[2025-07-29T18:23:01.798Z] [DEBUG] [6a35857b-6538-4563-9f13-dcb91dc05715] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813381762_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813381762_image.png","size":6594976}
+[2025-07-29T18:23:01.902Z] [ERROR] [6a35857b-6538-4563-9f13-dcb91dc05715] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T18:30:35.357Z] [INFO] Health check solicitado
+[2025-07-29T18:30:44.966Z] [INFO] [0edd4c0f-fbfb-4d8b-b85a-74106e90fa35] Iniciando render parametrizado
+[2025-07-29T18:30:44.966Z] [DEBUG] [0edd4c0f-fbfb-4d8b-b85a-74106e90fa35] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813844953_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813844953_audio.wav","size":909502}
+[2025-07-29T18:30:44.967Z] [DEBUG] [0edd4c0f-fbfb-4d8b-b85a-74106e90fa35] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"sample_cover.jpg","encoding":"7bit","mimetype":"image/jpeg","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753813844958_image.jpg","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753813844958_image.jpg","size":362360}
+[2025-07-29T18:30:45.078Z] [ERROR] [0edd4c0f-fbfb-4d8b-b85a-74106e90fa35] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T18:38:46.740Z] [INFO] Health check solicitado
+[2025-07-29T18:38:54.087Z] [INFO] [65b58c67-03e6-4039-8183-310e011ac8ce] Iniciando render parametrizado
+[2025-07-29T18:38:54.088Z] [DEBUG] [65b58c67-03e6-4039-8183-310e011ac8ce] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814334058_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814334058_audio.wav","size":909502}
+[2025-07-29T18:38:54.088Z] [DEBUG] [65b58c67-03e6-4039-8183-310e011ac8ce] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814334061_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814334061_image.png","size":6594976}
+[2025-07-29T18:38:54.196Z] [ERROR] [65b58c67-03e6-4039-8183-310e011ac8ce] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T18:46:22.483Z] [INFO] Health check solicitado
+[2025-07-29T18:46:31.051Z] [INFO] [38c9b03a-6365-430f-8c1e-c43407d06cc9] Iniciando render parametrizado
+[2025-07-29T18:46:31.052Z] [DEBUG] [38c9b03a-6365-430f-8c1e-c43407d06cc9] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814791044_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814791044_audio.wav","size":909502}
+[2025-07-29T18:46:31.053Z] [DEBUG] [38c9b03a-6365-430f-8c1e-c43407d06cc9] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"sample_cover.jpg","encoding":"7bit","mimetype":"image/jpeg","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814791048_image.jpg","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814791048_image.jpg","size":362360}
+[2025-07-29T18:46:31.156Z] [ERROR] [38c9b03a-6365-430f-8c1e-c43407d06cc9] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T18:49:40.705Z] [INFO] Health check solicitado
+[2025-07-29T18:49:48.692Z] [INFO] [ad57131e-4b40-47ed-a7ba-4081b5c3bab6] Iniciando render parametrizado
+[2025-07-29T18:49:48.692Z] [DEBUG] [ad57131e-4b40-47ed-a7ba-4081b5c3bab6] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814988685_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814988685_audio.wav","size":909502}
+[2025-07-29T18:49:48.693Z] [DEBUG] [ad57131e-4b40-47ed-a7ba-4081b5c3bab6] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"sample_cover.jpg","encoding":"7bit","mimetype":"image/jpeg","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753814988689_image.jpg","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753814988689_image.jpg","size":362360}
+[2025-07-29T18:49:48.807Z] [ERROR] [ad57131e-4b40-47ed-a7ba-4081b5c3bab6] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T19:28:29.238Z] [INFO] Health check solicitado
+[2025-07-29T19:28:42.511Z] [INFO] [39bf6251-dd4e-4ffc-b7e8-a879adaeaee1] Iniciando render parametrizado
+[2025-07-29T19:28:42.512Z] [DEBUG] [39bf6251-dd4e-4ffc-b7e8-a879adaeaee1] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817322470_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817322470_audio.wav","size":909502}
+[2025-07-29T19:28:42.513Z] [DEBUG] [39bf6251-dd4e-4ffc-b7e8-a879adaeaee1] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817322476_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817322476_image.png","size":6594976}
+[2025-07-29T19:28:42.623Z] [ERROR] [39bf6251-dd4e-4ffc-b7e8-a879adaeaee1] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T19:32:02.052Z] [INFO] Health check solicitado
+[2025-07-29T19:32:14.823Z] [INFO] [96c18d74-0fd1-4d86-ab7f-6220d47c784a] Iniciando render parametrizado
+[2025-07-29T19:32:14.824Z] [DEBUG] [96c18d74-0fd1-4d86-ab7f-6220d47c784a] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817534783_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817534783_audio.wav","size":909502}
+[2025-07-29T19:32:14.825Z] [DEBUG] [96c18d74-0fd1-4d86-ab7f-6220d47c784a] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817534788_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817534788_image.png","size":6594976}
+[2025-07-29T19:32:14.930Z] [ERROR] [96c18d74-0fd1-4d86-ab7f-6220d47c784a] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T19:35:29.226Z] [INFO] Health check solicitado
+[2025-07-29T19:35:42.139Z] [INFO] [3c37671d-686b-45d3-b3ca-02aa7f00584e] Iniciando render parametrizado
+[2025-07-29T19:35:42.140Z] [DEBUG] [3c37671d-686b-45d3-b3ca-02aa7f00584e] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817742102_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817742102_audio.wav","size":909502}
+[2025-07-29T19:35:42.140Z] [DEBUG] [3c37671d-686b-45d3-b3ca-02aa7f00584e] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753817742106_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753817742106_image.png","size":6594976}
+[2025-07-29T19:35:42.256Z] [ERROR] [3c37671d-686b-45d3-b3ca-02aa7f00584e] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T19:56:34.391Z] [INFO] Health check solicitado
+[2025-07-29T19:56:42.721Z] [INFO] [9f26d62a-1f1e-4388-8e9d-c05255bfed8e] Iniciando render parametrizado
+[2025-07-29T19:56:42.722Z] [DEBUG] [9f26d62a-1f1e-4388-8e9d-c05255bfed8e] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819002681_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819002681_audio.wav","size":909502}
+[2025-07-29T19:56:42.723Z] [DEBUG] [9f26d62a-1f1e-4388-8e9d-c05255bfed8e] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819002685_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819002685_image.png","size":6594976}
+[2025-07-29T19:56:42.835Z] [ERROR] [9f26d62a-1f1e-4388-8e9d-c05255bfed8e] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T19:58:16.520Z] [INFO] Health check solicitado
+[2025-07-29T19:58:23.779Z] [INFO] [e61255bf-ac81-490c-92f8-0d60290b1f3e] Iniciando render parametrizado
+[2025-07-29T19:58:23.780Z] [DEBUG] [e61255bf-ac81-490c-92f8-0d60290b1f3e] 🔍 DEBUG - audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819103750_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819103750_audio.wav","size":909502}
+[2025-07-29T19:58:23.780Z] [DEBUG] [e61255bf-ac81-490c-92f8-0d60290b1f3e] 🔍 DEBUG - imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819103753_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819103753_image.png","size":6594976}
+[2025-07-29T19:58:23.881Z] [ERROR] [e61255bf-ac81-490c-92f8-0d60290b1f3e] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T20:01:40.618Z] [INFO] 🛑 Finalizando servidor...
+[2025-07-29T20:01:40.619Z] [INFO] ✅ Servidor finalizado
+[2025-07-29T20:01:40.958Z] [INFO] 🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta 3006
+[2025-07-29T20:01:40.960Z] [INFO] 🛡️ Sistema de blindagem V1.4.0.a.7 ativo
+[2025-07-29T20:01:40.961Z] [INFO] ⚙️ Interface parametrizada completa disponível
+[2025-07-29T20:01:40.961Z] [INFO] 📁 Diretórios: uploads=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads, outputs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs, logs=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\logs
+[2025-07-29T20:02:41.351Z] [INFO] Health check solicitado
+[2025-07-29T20:02:50.400Z] [INFO] [b54bdc59-fdba-4995-8959-b98c3ab56a32] Iniciando render parametrizado
+[2025-07-29T20:02:50.401Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [AUDIT] Recebendo render parametrizado - processId: b54bdc59-fdba-4995-8959-b98c3ab56a32
+[2025-07-29T20:02:50.402Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [AUDIT] req.files: {"audio":[{"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819370365_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819370365_audio.wav","size":909502}],"image":[{"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819370372_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819370372_image.png","size":6594976}]}
+[2025-07-29T20:02:50.403Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [AUDIT] req.body.settings: {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"128","renderEngine":"BLENDER_EEVEE_NEXT","amplitudeMultiplier":"3","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","camera_offset_x":"0","camera_offset_y":"0","camera_offset_z":"0","camera_zoom":"0","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#4caf50","scriptVersion":"v1.4.0.a.8.4","outputName":"output_v1.4.0.a.8.4"}
+[2025-07-29T20:02:50.403Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [AUDIT] audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819370365_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819370365_audio.wav","size":909502}
+[2025-07-29T20:02:50.404Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [AUDIT] imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819370372_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819370372_image.png","size":6594976}
+[2025-07-29T20:02:50.405Z] [DEBUG] [b54bdc59-fdba-4995-8959-b98c3ab56a32] [BLINDAGEM] Caminhos finais: audio=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753819370365_audio.wav, image=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753819370372_image.png, output=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.4.mp4
+[2025-07-29T20:02:50.513Z] [ERROR] [b54bdc59-fdba-4995-8959-b98c3ab56a32] Erro ao executar render: The "path" argument must be of type string. Received undefined
+[2025-07-29T20:06:24.399Z] [INFO] Health check solicitado
+[2025-07-29T20:06:34.683Z] [INFO] [889a6ee9-76d4-463f-891e-71de8f0febac] Iniciando render parametrizado
+[2025-07-29T20:06:34.684Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [AUDIT] Recebendo render parametrizado - processId: 889a6ee9-76d4-463f-891e-71de8f0febac
+[2025-07-29T20:06:34.684Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [AUDIT] req.files: {"audio":[{"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819594648_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819594648_audio.wav","size":909502}],"image":[{"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819594654_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819594654_image.png","size":6594976}]}
+[2025-07-29T20:06:34.685Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [AUDIT] req.body.settings: {"audioFile":{},"imageFile":{},"resolution":"1920x1080","fps":"30","samples":"128","renderEngine":"BLENDER_EEVEE_NEXT","amplitudeMultiplier":"3","smoothing":"1","frequencyRange":"full","audioChannels":"mono","cubeScale":"1","maxScale":"5","cameraDistance":"10","camera_offset_x":"0","camera_offset_y":"0","camera_offset_z":"0","camera_zoom":"0","lightIntensity":"1000","backgroundColor":"#1e3c72","cubeColor":"#4caf50","scriptVersion":"v1.4.0.a.8.4","outputName":"output_v1.4.0.a.8.4"}
+[2025-07-29T20:06:34.686Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [AUDIT] audioFile: {"fieldname":"audio","originalname":"sample_audio3.wav","encoding":"7bit","mimetype":"audio/wav","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819594648_audio.wav","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819594648_audio.wav","size":909502}
+[2025-07-29T20:06:34.687Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [AUDIT] imageFile: {"fieldname":"image","originalname":"cover_spotify.png","encoding":"7bit","mimetype":"image/png","destination":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads","filename":"1753819594654_image.png","path":"C:\\Users\\Denys Victoriano\\Documents\\GitHub\\clone\\zentraw\\Zentraw\\3d_visualizer\\uploads\\1753819594654_image.png","size":6594976}
+[2025-07-29T20:06:34.688Z] [DEBUG] [889a6ee9-76d4-463f-891e-71de8f0febac] [BLINDAGEM] Caminhos finais: audio=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753819594648_audio.wav, image=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\uploads\1753819594654_image.png, output=C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer\outputs\output_v1.4.0.a.8.4.mp4
+[2025-07-29T20:06:34.800Z] [ERROR] [889a6ee9-76d4-463f-891e-71de8f0febac] Erro ao executar render: The "path" argument must be of type string. Received undefined

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Zentraw 3D Visualizer - Teste V1.4.0.a.9</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #233a5e; color: #fff; margin: 0; }
+    .container { max-width: 900px; margin: 32px auto; background: #2d4370; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px #0003; }
+    h1 { color: #ffb300; margin-bottom: 8px; }
+    .section { margin-bottom: 32px; }
+    label { display: block; margin: 12px 0 4px; font-weight: bold; }
+    input[type=file], select, input[type=text] { width: 100%; padding: 8px; border-radius: 6px; border: none; margin-bottom: 12px; }
+    button { background: #ffb300; color: #233a5e; border: none; border-radius: 6px; padding: 10px 24px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    button:disabled { background: #888; color: #eee; }
+    .logs { background: #1a2942; color: #e0e0e0; border-radius: 8px; padding: 16px; font-size: 14px; height: 180px; overflow-y: auto; margin-top: 8px; }
+    .status { background: #1a2942; color: #aeea00; border-radius: 8px; padding: 8px 16px; margin-bottom: 12px; font-size: 15px; }
+    .preview-img { max-width: 180px; max-height: 120px; border-radius: 8px; margin-top: 8px; }
+    .preview-audio { width: 100%; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Zentraw 3D Visualizer V1.4.0.a.9 - Teste</h1>
+    <div class="section">
+      <div class="status" id="status">Backend: verificando...</div>
+    </div>
+    <form id="renderForm" enctype="multipart/form-data">
+      <div class="section">
+        <label for="audio">Arquivo de Áudio:</label>
+        <input type="file" id="audio" name="audio" accept="audio/*" required>
+        <audio id="audioPreview" class="preview-audio" controls style="display:none;"></audio>
+        <label for="image">Imagem de Background:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <img id="imagePreview" class="preview-img" style="display:none;" />
+      </div>
+      <div class="section">
+        <label for="resolution">Resolução:</label>
+        <select id="resolution" name="resolution">
+          <option value="1920x1080">Full HD (1920x1080)</option>
+          <option value="1280x720">HD (1280x720)</option>
+        </select>
+        <label for="outputName">Nome do Output:</label>
+        <input type="text" id="outputName" name="outputName" value="teste_render.mp4" required>
+      </div>
+      <div class="section">
+        <button type="submit" id="btnRender">Disparar Render</button>
+      </div>
+    </form>
+    <div class="section">
+      <label>Logs Detalhados:</label>
+      <div class="logs" id="logs"></div>
+    </div>
+    <div class="section">
+      <label>Status do Render:</label>
+      <div class="logs" id="renderStatus"></div>
+    </div>
+  </div>
+  <script>
+    // Preview do áudio
+    document.getElementById('audio').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const audioPreview = document.getElementById('audioPreview');
+      if (file) {
+        audioPreview.src = URL.createObjectURL(file);
+        audioPreview.style.display = 'block';
+      } else {
+        audioPreview.style.display = 'none';
+      }
+    });
+    // Preview da imagem
+    document.getElementById('image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const imagePreview = document.getElementById('imagePreview');
+      if (file) {
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = 'block';
+      } else {
+        imagePreview.style.display = 'none';
+      }
+    });
+    // Verificar backend
+    function checkBackend() {
+      fetch('http://localhost:3004/health')
+        .then(r => r.ok ? r.text() : Promise.reject('Offline'))
+        .then(() => document.getElementById('status').textContent = 'Backend: Online')
+        .catch(() => document.getElementById('status').textContent = 'Backend: Offline');
+    }
+    checkBackend();
+    // Logs
+    function log(msg, type = 'info') {
+      const logs = document.getElementById('logs');
+      const color = type === 'error' ? '#ff5252' : (type === 'success' ? '#aeea00' : '#fff');
+      logs.innerHTML += `<div style='color:${color}'>${new Date().toLocaleTimeString()} - ${msg}</div>`;
+      logs.scrollTop = logs.scrollHeight;
+    }
+    // Render
+    document.getElementById('renderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      log('Preparando envio dos arquivos...');
+      const form = e.target;
+      const formData = new FormData();
+      formData.append('audio', form.audio.files[0]);
+      formData.append('image', form.image.files[0]);
+      const settings = {
+        scriptPath: 'Blender/render_audio_visualizer_v1.4.0.a.9.py',
+        outputName: form.outputName.value,
+        resolution: form.resolution.value
+      };
+      formData.append('settings', JSON.stringify(settings));
+      fetch('http://localhost:3004/api/render/parametrized', {
+        method: 'POST',
+        body: formData
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success === false) {
+          log('Erro: ' + data.error, 'error');
+        } else {
+          log('Render iniciado. ProcessId: ' + data.processId, 'success');
+          checkRenderStatus(data.processId);
+        }
+      })
+      .catch(err => log('Erro ao enviar render: ' + err, 'error'));
+    });
+    // Status do render
+    function checkRenderStatus(processId) {
+      log('Consultando status do render...');
+      const statusDiv = document.getElementById('renderStatus');
+      statusDiv.innerHTML = '';
+      function poll() {
+        fetch('http://localhost:3004/api/render/status/' + processId)
+          .then(r => r.json())
+          .then(data => {
+            statusDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            if (!data.completed) {
+              setTimeout(poll, 3000);
+            } else {
+              log('Render concluído!', 'success');
+            }
+          })
+          .catch(err => {
+            statusDiv.innerHTML = '<span style="color:#ff5252">Erro ao consultar status: ' + err + '</span>';
+            log('Erro ao consultar status: ' + err, 'error');
+          });
+      }
+      poll();
+    }
+  </script>
+</body>
+</html>

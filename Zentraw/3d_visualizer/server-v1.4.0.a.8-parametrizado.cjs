@@ -23,7 +23,7 @@ const currentDir = __dirname;
 console.log(`🔍 DEBUG - __dirname: ${__dirname}`);
 console.log(`🔍 DEBUG - currentDir: ${currentDir}`);
 
-const PORT = 3004; // Porta padrão Zentraw (corrigido de 3005)
+const PORT = process.env.ZENTRAW_PORT ? parseInt(process.env.ZENTRAW_PORT, 10) : 3005; // Porta oficial Zentraw, aceita variável de ambiente para compliance e automação
 const UPLOADS_DIR = path.resolve(currentDir, 'uploads');
 const OUTPUTS_DIR = path.resolve(currentDir, 'outputs');
 const LOGS_DIR = path.resolve(currentDir, 'logs');
@@ -161,74 +161,70 @@ app.post('/api/render/parametrized', upload.fields([
     
     log('Iniciando render parametrizado', 'INFO', processId);
     
-    if (!req.files.audio || !req.files.image) {
-        log('Arquivos de entrada ausentes', 'ERROR', processId);
+
+    // LOGS DETALHADOS DE ENTRADA
+    log(`[AUDIT] Recebendo render parametrizado - processId: ${processId}`, 'DEBUG', processId);
+    log(`[AUDIT] req.files: ${JSON.stringify(req.files)}`, 'DEBUG', processId);
+    log(`[AUDIT] req.body.settings: ${req.body.settings}`, 'DEBUG', processId);
+
+    // Validação de arquivos
+    if (!req.files || !req.files.audio || !req.files.image) {
+        log('[ERRO] Arquivos de entrada ausentes ou estrutura inválida', 'ERROR', processId);
         return res.status(400).json({
             success: false,
-            error: 'Arquivos de áudio e imagem são obrigatórios'
+            error: 'Arquivos de áudio e imagem são obrigatórios. Detalhe: Estrutura req.files inválida ou ausente.'
         });
     }
-    
+
     const audioFile = req.files.audio[0];
     const imageFile = req.files.image[0];
-    
-    // Debug detalhado dos arquivos recebidos
-    log(`🔍 DEBUG - audioFile: ${JSON.stringify(audioFile)}`, 'DEBUG', processId);
-    log(`🔍 DEBUG - imageFile: ${JSON.stringify(imageFile)}`, 'DEBUG', processId);
-    
-    // Validar se os arquivos têm caminhos válidos
-    if (!audioFile || !audioFile.path) {
-        log(`❌ Arquivo de áudio inválido ou sem caminho. audioFile: ${audioFile}`, 'ERROR', processId);
+
+    log(`[AUDIT] audioFile: ${JSON.stringify(audioFile)}`, 'DEBUG', processId);
+    log(`[AUDIT] imageFile: ${JSON.stringify(imageFile)}`, 'DEBUG', processId);
+
+    if (!audioFile || typeof audioFile.path !== 'string' || audioFile.path.trim() === '') {
+        log(`[ERRO] Arquivo de áudio inválido ou sem caminho. audioFile: ${JSON.stringify(audioFile)}`, 'ERROR', processId);
         return res.status(400).json({
             success: false,
-            error: 'Arquivo de áudio inválido'
+            error: 'Arquivo de áudio inválido ou caminho ausente.'
         });
     }
-    
-    if (!imageFile || !imageFile.path) {
-        log(`❌ Arquivo de imagem inválido ou sem caminho. imageFile: ${imageFile}`, 'ERROR', processId);
+    if (!imageFile || typeof imageFile.path !== 'string' || imageFile.path.trim() === '') {
+        log(`[ERRO] Arquivo de imagem inválido ou sem caminho. imageFile: ${JSON.stringify(imageFile)}`, 'ERROR', processId);
         return res.status(400).json({
             success: false,
-            error: 'Arquivo de imagem inválido'
+            error: 'Arquivo de imagem inválido ou caminho ausente.'
         });
     }
-    
-    // Validar caminhos como strings não vazias
-    if (typeof audioFile.path !== 'string' || audioFile.path.trim() === '') {
-        log(`❌ Caminho do áudio não é string válida: ${typeof audioFile.path} - ${audioFile.path}`, 'ERROR', processId);
-        return res.status(400).json({
-            success: false,
-            error: 'Caminho do áudio inválido'
-        });
-    }
-    
-    if (typeof imageFile.path !== 'string' || imageFile.path.trim() === '') {
-        log(`❌ Caminho da imagem não é string válida: ${typeof imageFile.path} - ${imageFile.path}`, 'ERROR', processId);
-        return res.status(400).json({
-            success: false,
-            error: 'Caminho da imagem inválido'
-        });
-    }
-    
+
     // Verificar existência física dos arquivos
     if (!fs.existsSync(audioFile.path)) {
-        log(`❌ Arquivo de áudio não existe no sistema: ${audioFile.path}`, 'ERROR', processId);
+        log(`[ERRO] Arquivo de áudio não existe no sistema: ${audioFile.path}`, 'ERROR', processId);
         return res.status(400).json({
             success: false,
-            error: 'Arquivo de áudio não encontrado no sistema'
+            error: `Arquivo de áudio não encontrado no sistema: ${audioFile.path}`
         });
     }
-    
     if (!fs.existsSync(imageFile.path)) {
-        log(`❌ Arquivo de imagem não existe no sistema: ${imageFile.path}`, 'ERROR', processId);
+        log(`[ERRO] Arquivo de imagem não existe no sistema: ${imageFile.path}`, 'ERROR', processId);
         return res.status(400).json({
             success: false,
-            error: 'Arquivo de imagem não encontrado no sistema'
+            error: `Arquivo de imagem não encontrado no sistema: ${imageFile.path}`
         });
     }
     
     const outputName = settings.outputName || `output_${processId}`;
-    const outputPath = path.join(OUTPUTS_DIR, `${outputName}.mp4`);
+    // Blindagem extra: garantir que outputName é string válida
+    let safeOutputName = typeof outputName === 'string' && outputName.trim() !== '' ? outputName : `output_${processId}`;
+    if (typeof OUTPUTS_DIR !== 'string' || OUTPUTS_DIR.trim() === '') {
+        log(`[ERRO] OUTPUTS_DIR inválido: ${OUTPUTS_DIR}`, 'ERROR', processId);
+        return res.status(500).json({ success: false, error: 'Diretório de outputs inválido.' });
+    }
+    const outputPath = path.join(OUTPUTS_DIR, `${safeOutputName}.mp4`);
+    if (typeof outputPath !== 'string' || outputPath.trim() === '') {
+        log(`[ERRO] outputPath inválido: ${outputPath}`, 'ERROR', processId);
+        return res.status(500).json({ success: false, error: 'Caminho de output inválido.' });
+    }
     
     // Preparar processo
     const processInfo = {
@@ -239,13 +235,19 @@ app.post('/api/render/parametrized', upload.fields([
         settings: settings,
         logs: [],
         files: {
-            audio: audioFile.path,
-            image: imageFile.path,
+            audio: (typeof audioFile.path === 'string' && audioFile.path.trim() !== '') ? audioFile.path : null,
+            image: (typeof imageFile.path === 'string' && imageFile.path.trim() !== '') ? imageFile.path : null,
             output: outputPath
         }
     };
     
     activeProcesses.set(processId, processInfo);
+    // Blindagem extra: logar paths finais
+    log(`[BLINDAGEM] Caminhos finais: audio=${processInfo.files.audio}, image=${processInfo.files.image}, output=${processInfo.files.output}`, 'DEBUG', processId);
+    if (!processInfo.files.audio || !processInfo.files.image || !processInfo.files.output) {
+        log(`[ERRO] Um ou mais arquivos de entrada estão inválidos após blindagem.`, 'ERROR', processId);
+        return res.status(500).json({ success: false, error: 'Arquivos de entrada inválidos após blindagem.' });
+    }
     
     // Executar render em background
     setTimeout(() => executeParametrizedRender(processId), 100);
@@ -253,7 +255,9 @@ app.post('/api/render/parametrized', upload.fields([
     res.json({
         success: true,
         processId: processId,
-        message: 'Render iniciado'
+        message: 'Render iniciado',
+        outputPath: outputPath,
+        videoUrl: `/outputs/${path.basename(outputPath)}`
     });
 });
 
@@ -346,11 +350,28 @@ function executeParametrizedRender(processId) {
         addProcessLog(processId, `🔍 Debug - Config path: ${configPath}`, 'debug');
         
         // Construir argumentos para o script Python
+        // Parâmetros relativos: garantir que settings contenha offsets relativos
+        const settings = processInfo.settings;
+        settings.camera_offset_x = Number(settings.camera_offset_x) || 0;
+        settings.camera_offset_y = Number(settings.camera_offset_y) || 0;
+        settings.camera_offset_z = Number(settings.camera_offset_z) || 0;
+        settings.camera_zoom = Number(settings.camera_zoom) || 0;
+
+        // Atualizar arquivo de configuração
+        fs.writeFileSync(configPath, JSON.stringify(settings, null, 2));
+
+        // Blindagem extra: garantir que todos os argumentos sejam strings válidas
+        // Corrigir paths: garantir que nunca sejam undefined
+        function safePath(val, fallback) {
+            if (typeof val === 'string' && val.trim() !== '') return val;
+            if (typeof fallback === 'string' && fallback.trim() !== '') return fallback;
+            return '';
+        }
         const pythonArgs = [
-            processInfo.files.audio,
-            processInfo.files.image,
-            processInfo.files.output,
-            configPath // Passar caminho do arquivo de configuração
+            safePath(processInfo.files.audio, settings.audio_path),
+            safePath(processInfo.files.image, settings.image_path),
+            safePath(processInfo.files.output, settings.output_path),
+            safePath(configPath, path.join(currentDir, 'temp', `config_${processId}.json`))
         ];
         
         // Validar cada argumento Python antes de usar (validação rigorosa)
@@ -387,34 +408,45 @@ function executeParametrizedRender(processId) {
             }
         }
         
+
         // Log detalhado dos argumentos
         addProcessLog(processId, `🔍 Debug - Python args validados: ${JSON.stringify(pythonArgs)}`, 'debug');
-        
+        addProcessLog(processId, `🔍 Debug - templatePath: ${templatePath}`, 'debug');
+        addProcessLog(processId, `🔍 Debug - scriptPath: ${scriptPath}`, 'debug');
+        addProcessLog(processId, `🔍 Debug - blenderPath: ${blenderPath}`, 'debug');
+
         const blenderArgs = [
             templatePath,
             '--background',
             '--python', scriptPath,
             '--', ...pythonArgs
         ];
-        
+
+        // Logar cada argumento individualmente
+        blenderArgs.forEach((arg, idx) => {
+            addProcessLog(processId, `🔍 Blender arg[${idx}]: ${typeof arg} | ${JSON.stringify(arg)}`, 'debug');
+        });
+
         addProcessLog(processId, `🔍 Debug - Blender args: ${JSON.stringify(blenderArgs)}`, 'debug');
-        
+
         log(`Executando Blender: ${blenderPath} ${blenderArgs.join(' ')}`, 'INFO', processId);
-        
-        // Validar argumentos antes do spawn
+
+        // Validar argumentos antes do spawn e logar tipos
         for (let i = 0; i < blenderArgs.length; i++) {
-            if (blenderArgs[i] === undefined || blenderArgs[i] === null) {
-                addProcessLog(processId, `❌ Erro: Argumento ${i} é undefined/null: ${blenderArgs[i]}`, 'error');
+            addProcessLog(processId, `🔍 [VALIDAÇÃO] Argumento ${i}: valor=${JSON.stringify(blenderArgs[i])}, tipo=${typeof blenderArgs[i]}`, 'debug');
+            if (blenderArgs[i] === undefined || blenderArgs[i] === null || (typeof blenderArgs[i] === 'string' && blenderArgs[i].trim() === '')) {
+                addProcessLog(processId, `❌ [ERRO] Argumento ${i} inválido para spawn: ${JSON.stringify(blenderArgs[i])}`, 'error');
+                addProcessLog(processId, `❌ Debug - Todos argumentos: ${JSON.stringify(blenderArgs)}`, 'error');
                 processInfo.status = 'failed';
-                processInfo.error = `Argumento ${i} é undefined`;
+                processInfo.error = `Argumento ${i} inválido para spawn`;
                 return;
             }
         }
-        
+
         let blenderProcess;
         try {
             const blenderDir = path.join(currentDir, 'Blender');
-            
+
             // Validar se diretório Blender existe
             if (!fs.existsSync(blenderDir)) {
                 addProcessLog(processId, `❌ Erro: Diretório Blender não encontrado: ${blenderDir}`, 'error');
@@ -422,13 +454,15 @@ function executeParametrizedRender(processId) {
                 processInfo.error = `Diretório Blender não encontrado: ${blenderDir}`;
                 return;
             }
-            
+
             addProcessLog(processId, `🔍 Debug - Blender cwd: ${blenderDir}`, 'debug');
-            
+
+            addProcessLog(processId, `🔍 [SPAWN] Argumentos finais para Blender: ${JSON.stringify(blenderArgs)}`, 'debug');
+
             blenderProcess = spawn(blenderPath, blenderArgs, {
                 cwd: blenderDir
             });
-            
+
             processInfo.blenderProcess = blenderProcess;
             processInfo.progress = 10;
             addProcessLog(processId, '🎬 Blender iniciado, processando render...', 'info');
@@ -491,6 +525,7 @@ function executeParametrizedRender(processId) {
                 const stats = fs.statSync(processInfo.files.output);
                 processInfo.result = {
                     outputFile: path.basename(processInfo.files.output),
+                    outputPath: processInfo.files.output,
                     fileSize: formatFileSize(stats.size),
                     duration: calculateDuration(processInfo.startTime, processInfo.endTime),
                     resolution: processInfo.settings.resolution,
@@ -729,39 +764,11 @@ function calculateDuration(startTime, endTime) {
 }
 
 // Inicialização do servidor
+console.log(`🔍 DEBUG - Inicializando servidor na porta ${PORT}`);
 app.listen(PORT, () => {
     log(`🚀 Zentraw V1.4.0.a.8 Backend iniciado na porta ${PORT}`);
     log('🛡️ Sistema de blindagem V1.4.0.a.7 ativo');
     log('⚙️ Interface parametrizada completa disponível');
     log(`📁 Diretórios: uploads=${UPLOADS_DIR}, outputs=${OUTPUTS_DIR}, logs=${LOGS_DIR}`);
-    
-    console.log(`
-🎯 ZENTRAW 3D VISUALIZER V1.4.0.a.8 - BACKEND PARAMETRIZADO
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🌐 Interface: http://localhost:${PORT}
-🛡️ Blindagem V1.4.0.a.7: ATIVA
-⚙️ Parâmetros: COMPLETOS
-📊 Logs: DETALHADOS
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    `);
+    console.log(`\n🎯 ZENTRAW 3D VISUALIZER V1.4.0.a.8 - BACKEND PARAMETRIZADO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🌐 Interface: http://localhost:${PORT}\n🛡️ Blindagem V1.4.0.a.7: ATIVA\n⚙️ Parâmetros: COMPLETOS\n📊 Logs: DETALHADOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 });
-
-// Limpeza ao sair
-process.on('SIGINT', () => {
-    log('🛑 Finalizando servidor...');
-    
-    // Cancelar processos ativos
-    activeProcesses.forEach((processInfo, processId) => {
-        if (processInfo.blenderProcess) {
-            processInfo.blenderProcess.kill();
-            log('🛑 Processo cancelado na finalização', 'WARNING', processId);
-        }
-    });
-    
-    log('✅ Servidor finalizado');
-    process.exit(0);
-});
-
-module.exports = app;

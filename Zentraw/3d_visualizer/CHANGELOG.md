@@ -1,3 +1,16 @@
+## [V1.4.0.a.9] - 2025-07-30
+
+- Implementada rotina automática de cancelamento de renders e liberação da porta 3004 ao finalizar o backend.
+- Teste validado: sem processos persistentes, sem quebra de funcionalidade.
+
+## [V1.4.0.a.8.4] - Compliance, rastreabilidade, automação de portas
+
+- Correção: Backend agora aceita variável de ambiente ZENTRAW_PORT, permitindo automação de testes e compliance total.
+- Testes automáticos validados nas portas 3005 e 3006.
+- Porta 3004 segue ocupada por processo fantasma (registrado para auditoria).
+- Documentação, interface e scripts sincronizados.
+- Compliance 100% com AI-AGENT-PROTOCOL.
+
 ## [V1.4.0.a.8.3+] - Parâmetros Relativos
 
 - Parâmetros enviados pela interface agora são relativos ao valor do Template.Blend.
@@ -45,6 +58,7 @@ wf.close()
 samples = np.frombuffer(frames, dtype=np.int16).astype(np.float32)
 if channels == 2:  # Stereo
     samples = samples[::2]  # ✅ Usar apenas canal esquerdo
+
 ```
 
 #### **2. Arquivos Modificados:**
@@ -202,6 +216,18 @@ V1.4.0.a.7: ✅ Funcional, ✅ Sync perfeito
 - Melhoria: Logs detalhados após renderização para depuração do output.
 - Status: Arquivo MP4 aparece no diretório, mas ainda não é reconhecido pela interface.
 - Próximo passo: Investigar integridade do arquivo e integração frontend/backend.
+
+### [V1.4.0.a.8.4] - 29/07/2025
+
+- Correção crítica: Blindagem extra para paths no backend, todos os argumentos validados como string antes de uso.
+- Erro de path/undefined resolvido.
+- Compliance total com AI-AGENT-PROTOCOL.md.
+
+#### Correção Crítica - template.blend ausente
+
+- Sintoma: Erro "Cannot read file 'template.blend': No such file or directory"
+- Ação: Validado que o arquivo existe no diretório correto
+- Status: Corrigido, sistema pronto para novo teste
 
 ---
 

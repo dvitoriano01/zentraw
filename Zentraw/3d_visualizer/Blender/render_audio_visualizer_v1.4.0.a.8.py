@@ -230,7 +230,14 @@ bpy.ops.object.camera_add(location=(CAMERA_DISTANCE, -CAMERA_DISTANCE, CAMERA_DI
 camera = bpy.context.active_object
 camera.rotation_euler = (1.1, 0, 0.785)  # Ângulo padrão
 bpy.context.scene.camera = camera
-print(f"📷 Câmera distância: {CAMERA_DISTANCE}m")
+
+# Aplicar offsets relativos e zoom
+camera.location.x += float(settings.get('camera_offset_x', 0))
+camera.location.y += float(settings.get('camera_offset_y', 0))
+camera.location.z += float(settings.get('camera_offset_z', 0))
+if hasattr(camera.data, 'lens'):
+    camera.data.lens += float(settings.get('camera_zoom', 0))
+print(f"📷 Câmera distância: {CAMERA_DISTANCE}m | Offsets aplicados: x={settings.get('camera_offset_x', 0)}, y={settings.get('camera_offset_y', 0)}, z={settings.get('camera_offset_z', 0)}, zoom={settings.get('camera_zoom', 0)}")
 
 # 7. Configurar iluminação
 print("💡 Setting up lighting...")

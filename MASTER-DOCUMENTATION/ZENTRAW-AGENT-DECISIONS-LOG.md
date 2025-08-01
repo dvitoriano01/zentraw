@@ -1,6 +1,28 @@
 # 📝 ZENT## 📋 **LOG DE DECISÕES - 25/07/2025**
 
-### **🔥 DECISÃO #005 - SEPARAÇÃO TOTAL DOS MÓDULOS**
+
+### **🔥 DECISÃO #006 - ATUALIZAÇÃO OFICIAL PARA V1.4.0.a.8.4**
+- **Agente:** GitHub Copilot
+- **Data/Hora:** 29/07/2025 - 14:30 BRT
+- **Módulo:** 3d-visualizer (compliance, rastreabilidade, correções)
+- **Contexto:** Usuário solicitou rastreabilidade total e atualização de versão
+- **Problema Identificado:**
+  - Versões antigas causavam confusão e erros
+  - Parâmetros não rastreados corretamente
+  - Documentação e código desatualizados
+- **Decisão Tomada:**
+  1. **ATUALIZAÇÃO TOTAL:** Interface, backend e script Python para V1.4.0.a.8.4
+  2. **RASTREABILIDADE:** Todos os pontos visuais, logs e documentação modular/central
+  3. **COMPLIANCE:** 100% com AI-AGENT-PROTOCOL
+- **Correções Aplicadas:**
+  - interface-v1.4.0.a.8-parametrizada.html → V1.4.0.a.8.4
+  - server-v1.4.0.a.8.4-parametrizado.cjs criado
+  - render_audio_visualizer_v1.4.0.a.8.4.py criado
+  - README.md, CHANGELOG.md, TROUBLESHOOTING.md, MODULE-STATUS-TRACKER.md atualizados
+- **Resultado:**
+  - Sistema rastreável, compliance garantido
+  - Documentação e código sincronizados
+- **Lição:** Versão e rastreabilidade são essenciais para evitar erros críticos
 - **Agente:** GitHub Copilot
 - **Data/Hora:** 25/07/2025 - 21:00 BRT
 - **Módulo:** 3d-visualizer (limpeza de referências cruzadas)
@@ -249,3 +271,17 @@ Executar testes da correção de encoding e validar funcionamento dos sistemas V
 
 **🎯 PRÓXIMA DECISÃO ESPERADA:**
 Executar teste V1.4.0.a.7 EVOLUTION e comparar com baseline V1.4.0.a.5
+
+### **🛡️ DECISÃO #007 - BLINDAGEM EXTRA DE PATHS NO BACKEND V1.4.0.a.8.4**
+- **Agente:** GitHub Copilot
+- **Data/Hora:** 29/07/2025 - 19:00 BRT
+- **Módulo:** 3d-visualizer
+- **Contexto:** Erro recorrente de path/undefined ao executar render parametrizado
+- **Decisão Tomada:**
+  1. Blindagem extra: todos os paths (audio, image, output) validados como string antes de qualquer uso
+  2. Sistema aborta e loga erro se algum argumento for inválido
+  3. Compliance total com AI-AGENT-PROTOCOL.md
+- **Resultado:**
+  - Erro de path/undefined resolvido
+  - Sistema funcional e rastreável
+- **Lição:** Validação rigorosa de argumentos é essencial para rastreabilidade e robustez

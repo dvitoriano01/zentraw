@@ -4,6 +4,13 @@
 **Data:** 25/07/2025  
 **Status:** SYNC DEFINITIVAMENTE CORRIGIDO
 
+## [2025-07-29] Problema de porta fantasma 3004
+
+**Sintoma:** Backend não inicia na porta 3004 (EADDRINUSE), mesmo após correção para automação de portas.
+**Causa provável:** Processo fantasma ou serviço oculto ocupando porta 3004.
+**Solução aplicada:** Backend corrigido para aceitar variável de ambiente ZENTRAW_PORT, testes automáticos validados nas portas 3005 e 3006.
+**Próximos passos:** Auditoria de processos na porta 3004, validação completa dos endpoints e interface.
+
 ---
 
 ## 🎯 **PROBLEMAS RESOLVIDOS DEFINITIVAMENTE**
@@ -150,6 +157,21 @@ cd "C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualiz
 2. 📝 **Documentação completa** - EM ANDAMENTO
 3. 💾 **Commit final** - PREPARANDO
 4. 🧪 **Testes adicionais** - SE NECESSÁRIO
+
+---
+
+## 🚨 Erro de path/undefined (V1.4.0.a.8.4)
+
+**Sintoma:** Erro "The 'path' argument must be of type string. Received undefined" ao executar renderização parametrizada.
+**Causa:** Algum argumento de path (audio, image, output) era passado como undefined em casos específicos.
+**Solução:** ✅ Blindagem extra no backend: todos os paths validados como string antes de qualquer uso. Sistema aborta e loga erro se algum for inválido.
+**Status:** Resolvido e validado em 29/07/2025.
+
+---
+
+## Problema: Porta 3004 ocupada por node.exe
+### Solução:
+A partir da versão V1.4.0.a.9, o backend cancela automaticamente todos renders e finaliza node.exe ao ser encerrado, liberando a porta 3004 sem necessidade de scripts externos.
 
 ---
 

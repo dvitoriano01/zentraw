@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 registerRoutes(app);
 app.use('/blender', blenderRouter);
 
-const PORT = 5001;
+const PORT = 3004;
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
 });

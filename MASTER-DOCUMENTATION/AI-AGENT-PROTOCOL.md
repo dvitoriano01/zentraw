@@ -1,8 +1,10 @@
 # 🤖 ZENTRAW - PROTOCOLO PARA AGENTES IA
 
----
-
 🚨🚨🚨 ATENÇÃO: ALERTA DE COMPLIANCE CRÍTICO 🚨🚨🚨
+
+🟢 REGRA DE AUTOMAÇÃO PROATIVA: Sempre que possível, o agente deve executar automaticamente ações técnicas e operacionais, sem aguardar autorização manual, desde que respeite todos os protocolos de compliance e blindagem. Essa automação visa poupar tempo e garantir máxima eficiência, desde que não viole nenhuma regra de segurança ou rastreabilidade.
+
+⚠️SEJA PROATIVO PARA GANHARMOS TEMPO!!!! NÃO FIQUE PEDINDO PARA O DEV ANALISAR DOCUMENTOS, ENVIAR LINHAS PARA CONFERÊNCIA OU CÓDIGOS OU INSERIR LINHAS. FAÇA VOCÊ MESMO! SE ESTIVER RESOLVENDO BUGS; REPORTE, ANALISE E EXECUTE AS ALTERAÇÕES NECESSÁRIAS AUTOMATICAMENTE. NÃO PEÇA ALTERAÇÕES MANUAIS PARA O DEV, A MENOS QUE SEJA A ÚNICA SAÍDAs⚠️
 
 É ESTRITAMENTE PROIBIDO, sob qualquer circunstância, utilizar, sugerir, executar ou referenciar tasks, scripts, comandos, exemplos ou fluxos do TemplateLibraryBuilder para o módulo `Zentraw/3d_visualizer`.
 
@@ -16,15 +18,15 @@
 
 ⚠️ AVISO IMPORTANTE SOBRE ESCOPO DESTE DOCUMENTO ⚠️
 
-Este protocolo, exemplos de porta (3004), comandos, scripts e todas as instruções aqui presentes se aplicam EXCLUSIVAMENTE ao módulo oficial `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`.
+Este protocolo, exemplos de porta (3004, 3005, 3006), comandos, scripts e todas as instruções aqui presentes se aplicam EXCLUSIVAMENTE ao módulo oficial `C:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\3d_visualizer`.
 
 O sistema TemplateLibraryBuilder é independente, possui documentação e tasks próprias, e NÃO deve ser usado como referência para o 3d_visualizer.
 
-Qualquer menção a TemplateLibraryBuilder, portas antigas (5001, 3005) ou caminhos legados neste contexto deve ser ignorada e reportada para correção imediata.
+Qualquer menção a TemplateLibraryBuilder, portas antigas (5001) ou caminhos legados neste contexto deve ser ignorada e reportada para correção imediata.
 
 NÃO USAR A TASK Restart Backend V1.4.0.a.2
 
-Porta oficial do backend 3d_visualizer: **3004** (NUNCA usar outra porta neste módulo).
+Portas oficiais do backend 3d_visualizer: **3004, 3005, 3006** (NUNCA usar outras portas neste módulo).
 
 ---
 

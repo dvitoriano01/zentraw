@@ -1,9 +1,10 @@
+<!-- V1.4.0.a.8.4 - Interface Parametrizada Oficial -->
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎯 Zentraw V1.4.0.a.8 - Interface Parametrizada Completa</title>
+    <title>🎯 Zentraw V1.4.0.a.8.4 - Interface Parametrizada Completa</title>
     <style>
       * {
         margin: 0;
@@ -302,9 +303,12 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8</h1>
+        <h1>🎯 Zentraw 3D Visualizer V1.4.0.a.8.4</h1>
         <div class="status">
-          Interface Parametrizada Completa - Blindagem V1.4.0.a.7 Ativa
+          ✅ Sistema Pronto<br>
+          <span style="font-size:1em;color:#fff;background:#4caf50;padding:2px 8px;border-radius:8px;">Versão da Interface: V1.4.0.a.8.4-parametrizada</span><br>
+          <span id="backendVersion" style="font-size:1em;color:#fff;background:#2196f3;padding:2px 8px;border-radius:8px;">Backend: (verificando...)</span><br>
+          <span id="scriptVersionDisplay" style="font-size:1em;color:#fff;background:#ff9800;padding:2px 8px;border-radius:8px;">Script Python: (selecionado na interface)</span>
         </div>
       </div>
 
@@ -315,7 +319,7 @@
           preservada como fallback
         </p>
         <p>
-          <strong>V1.4.0.a.8 Evolution:</strong> Interface parametrizada
+          <strong>V1.4.0.a.8.4 Evolution:</strong> Interface parametrizada
           completa + logs detalhados
         </p>
       </div>
@@ -519,6 +523,22 @@
                   10.0m
                 </div>
               </div>
+                <div class="form-group">
+                  <label for="camera_offset_x">📐 Offset X da Câmera (relativo):</label>
+                  <input type="number" id="camera_offset_x" name="camera_offset_x" value="0" step="0.1" />
+                </div>
+                <div class="form-group">
+                  <label for="camera_offset_y">📐 Offset Y da Câmera (relativo):</label>
+                  <input type="number" id="camera_offset_y" name="camera_offset_y" value="0" step="0.1" />
+                </div>
+                <div class="form-group">
+                  <label for="camera_offset_z">📐 Offset Z da Câmera (relativo):</label>
+                  <input type="number" id="camera_offset_z" name="camera_offset_z" value="0" step="0.1" />
+                </div>
+                <div class="form-group">
+                  <label for="camera_zoom">🔍 Zoom da Câmera (relativo):</label>
+                  <input type="number" id="camera_zoom" name="camera_zoom" value="0" step="0.1" />
+                </div>
               <div class="form-group">
                 <label for="lightIntensity">💡 Intensidade da Luz:</label>
                 <input
@@ -552,9 +572,11 @@
               <div class="form-group">
                 <label for="scriptVersion">🔧 Versão do Script:</label>
                 <select id="scriptVersion">
-                  <option value="v1.4.0.a.8.1" selected>
-                    V1.4.0.a.8.1 (Hotfix Blender 4.5+)
+                  <option value="v1.4.0.a.8.4" selected>
+                    V1.4.0.a.8.4 (Mais recente - Parametrizado)
                   </option>
+                  <option value="v1.4.0.a.8.3">V1.4.0.a.8.3 (Parametrizado)</option>
+                  <option value="v1.4.0.a.8.1">V1.4.0.a.8.1 (Hotfix Blender 4.5+)</option>
                   <option value="v1.4.0.a.8">V1.4.0.a.8 (Parametrizado)</option>
                   <option value="v1.4.0.a.7">
                     V1.4.0.a.7 (Blindado - Fallback)
@@ -569,7 +591,7 @@
                 <input
                   type="text"
                   id="outputName"
-                  value="output_v1.4.0.a.8"
+                  value="output_v1.4.0.a.8.4"
                   placeholder="Nome sem extensão"
                 />
               </div>
@@ -617,7 +639,7 @@
             <h3>📝 Logs Detalhados</h3>
             <div class="logs-container" id="logsContainer">
               <div class="log-entry log-info">
-                [INIT] Interface V1.4.0.a.8 carregada
+                [INIT] Interface V1.4.0.a.8.4 carregada
               </div>
               <div class="log-entry log-info">
                 [BLINDAGE] V1.4.0.a.7 blindada e disponível
@@ -678,7 +700,7 @@
       });
 
       function initializeInterface() {
-        addLog("🚀 Inicializando Interface V1.4.0.a.8...", "info");
+        addLog("🚀 Inicializando Interface V1.4.0.a.8.4...", "info");
         addLog("🛡️ Sistema de blindagem V1.4.0.a.7 carregado", "success");
         addLog("⚙️ Interface parametrizada completa ativa", "success");
 
@@ -915,6 +937,10 @@
           cubeScale: document.getElementById("cubeScale").value,
           maxScale: document.getElementById("maxScale").value,
           cameraDistance: document.getElementById("cameraDistance").value,
+          camera_offset_x: document.getElementById("camera_offset_x").value,
+          camera_offset_y: document.getElementById("camera_offset_y").value,
+          camera_offset_z: document.getElementById("camera_offset_z").value,
+          camera_zoom: document.getElementById("camera_zoom").value,
           lightIntensity: document.getElementById("lightIntensity").value,
           backgroundColor: document.getElementById("backgroundColor").value,
           cubeColor: document.getElementById("cubeColor").value,

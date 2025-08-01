@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Zentraw 3D Visualizer - Interface V1.4.0.a.9.1 Parametrizada</title>
+  <meta name="version" content="V1.4.0.a.9.1">
+  <meta name="compliance" content="AI-AGENT-PROTOCOL.md">
+  <style>
+    body { font-family: Arial, sans-serif; background: #181c24; color: #f3f3f3; margin: 0; padding: 0; }
+    header { background: #2d3442; padding: 20px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+    .version { font-size: 1.1em; color: #7fffd4; margin-top: 8px; }
+    main { padding: 30px; max-width: 900px; margin: auto; }
+    .param-group { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff; }
+    button { background: #7fffd4; color: #222; border: none; padding: 12px 24px; border-radius: 4px; font-size: 1em; cursor: pointer; margin-top: 18px; }
+    button:hover { background: #5fd7b9; }
+    .log { background: #222; color: #7fffd4; padding: 12px; border-radius: 4px; margin-top: 24px; font-size: 0.95em; }
+    .footer { text-align: center; padding: 18px; background: #222; color: #aaa; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Zentraw 3D Visualizer</h1>
+    <div class="version">Interface Parametrizada V1.4.0.a.9.1</div>
+    <div>Compliance: <strong>AI-AGENT-PROTOCOL.md</strong></div>
+  </header>
+  <main>
+    <form id="visualizerForm">
+      <div class="param-group">
+        <label for="audioFile">Arquivo de Áudio (.wav):</label>
+        <input type="file" id="audioFile" name="audioFile" accept="audio/wav" required>
+      </div>
+      <div class="param-group">
+        <label for="image">Imagem de Capa (.jpg/.png):</label>
+        <input type="file" id="image" name="image" accept="image/jpeg,image/png">
+      </div>
+      <div class="param-group">
+        <label for="blenderVersion">Versão do Script Blender:</label>
+        <select id="blenderVersion" name="blenderVersion">
+          <option value="V1.4.0.a.9.1" selected>V1.4.0.a.9.1 (Nova)</option>
+          <option value="V1.4.0.a.9">V1.4.0.a.9 (AI)</option>
+          <option value="V1.4.0.a.8.4">V1.4.0.a.8.4 (Legada)</option>
+          <option value="V1.4.0.a.7">V1.4.0.a.7 (Blindada)</option>
+        </select>
+      </div>
+      <div class="param-group">
+        <label for="resolution">Resolução:</label>
+        <select id="resolution" name="resolution">
+          <option value="1920x1080">1920x1080 (Full HD)</option>
+          <option value="1280x720">1280x720 (HD)</option>
+        </select>
+      </div>
+      <div class="param-group">
+        <label for="fps">FPS:</label>
+        <input type="number" id="fps" name="fps" min="24" max="60" value="30">
+      </div>
+      <div class="param-group">
+        <label for="engine">Render Engine:</label>
+        <select id="engine" name="engine">
+          <option value="eevee" selected>Eevee</option>
+          <option value="cycles">Cycles</option>
+        </select>
+      </div>
+      <div class="param-group">
+        <label for="outputName">Nome do Output (.mp4):</label>
+        <input type="text" id="outputName" name="outputName" value="output_v1.4.0.a.9.1.mp4">
+      </div>
+      <button type="submit">Executar Render</button>
+    </form>
+    <div class="log" id="logArea">Log de execução e rastreabilidade aparecerá aqui.</div>
+  </main>
+  <div class="footer">
+    Zentraw 3D Visualizer &copy; 2025 &mdash; Interface V1.4.0.a.9.1 &mdash; Compliance AI-AGENT-PROTOCOL.md
+  </div>
+  <script>
+    document.getElementById('visualizerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const log = document.getElementById('logArea');
+      log.textContent = '⏳ Executando render...\n';
+      const audioInput = document.getElementById('audioFile');
+      const imageInput = document.getElementById('image');
+      const blenderVersion = document.getElementById('blenderVersion').value;
+      const resolution = document.getElementById('resolution').value;
+      const fps = document.getElementById('fps').value;
+      const engine = document.getElementById('engine').value;
+      const outputName = document.getElementById('outputName').value;
+
+      if (!audioInput.files[0]) {
+        log.textContent += '❌ Arquivo de áudio obrigatório não selecionado.\n';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('audio', audioInput.files[0]);
+      if (imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+      }
+      // Montar objeto de settings
+      const settings = {
+        scriptVersion: blenderVersion === 'V1.4.0.a.9.1' ? 'v1.4.0.a.9.1' : (blenderVersion === 'V1.4.0.a.9' ? 'v1.4.0.a.9' : (blenderVersion === 'V1.4.0.a.8.4' ? 'v1.4.0.a.8.4' : 'v1.4.0.a.7')),
+        resolution,
+        fps: Number(fps),
+        renderEngine: engine,
+        outputName: outputName.replace(/\.mp4$/i, ''),
+      };
+      formData.append('settings', JSON.stringify(settings));
+
+      log.textContent += '🟢 Parâmetros enviados para backend V1.4.0.a.9.1 (porta 3004).\n';
+      log.textContent += 'Versão selecionada: ' + blenderVersion + '\n';
+      log.textContent += 'Resolução: ' + resolution + '\n';
+      log.textContent += 'FPS: ' + fps + '\n';
+      log.textContent += 'Engine: ' + engine + '\n';
+      log.textContent += 'Output: ' + outputName + '\n';
+      log.textContent += 'Compliance: AI-AGENT-PROTOCOL.md\n';
+
+      try {
+        const response = await fetch('http://localhost:3005/api/render/parametrized', {
+          method: 'POST',
+          body: formData
+        });
+        if (response.ok) {
+          const result = await response.json();
+          log.textContent += '✅ Render concluído! Output gerado com rastreabilidade total.\n';
+          log.textContent += 'Processo: ' + (result.processId || '[ID não informado]') + '\n';
+          log.textContent += 'Mensagem: ' + (result.message || '[Sem mensagem]') + '\n';
+        } else {
+          const errorText = await response.text();
+          log.textContent += '❌ Erro ao executar render: ' + errorText + '\n';
+        }
+      } catch (err) {
+        log.textContent += '❌ Falha de conexão com backend: ' + err + '\n';
+      }
+    });
+  </script>
+</body>
+</html>

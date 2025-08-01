@@ -4,11 +4,13 @@
   "description": "Zentraw 3D Visualizer with Real Blender Execution",
   "license": "MIT",
   "scripts": {
-    "start": "node server-simple-real.cjs",
-    "dev:back": "node server-simple-real.cjs"
+    "start": "npm run kill-ports && node server-v1.4.0.a.8-parametrizado.cjs",
+    "dev:back": "npm run kill-ports && node server-v1.4.0.a.8-parametrizado.cjs",
+    "kill-ports": "node kill-ports.js"
   },
   "dependencies": {
     "express": "^5.1.0",
+    "kill-port": "^2.0.1",
     "multer": "^2.0.2",
     "tsx": "^3.12.7",
     "uuid": "^11.1.0"

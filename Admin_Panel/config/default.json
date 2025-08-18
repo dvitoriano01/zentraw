@@ -1,0 +1,140 @@
+{
+  "project": {
+    "name": "Zentraw Admin Panel",
+    "version": "1.0.0",
+    "description": "Painel de administração central da Zentraw",
+    "author": "Zentraw Team",
+    "license": "MIT"
+  },
+  "server": {
+    "port": 3001,
+    "host": "localhost",
+    "cors": {
+      "enabled": true,
+      "origins": ["http://localhost:3004", "http://localhost:3005", "http://localhost:3006"]
+    }
+  },
+  "modules": {
+    "templateLibraryBuilder": {
+      "name": "TemplateLibraryBuilder",
+      "url": "http://localhost:3004",
+      "status": "active",
+      "healthCheck": "/health",
+      "apis": [
+        "/api/templates",
+        "/api/upload",
+        "/api/generate"
+      ]
+    },
+    "3dVisualizer": {
+      "name": "3D Visualizer",
+      "url": "http://localhost:3005",
+      "status": "active",
+      "healthCheck": "/health",
+      "apis": [
+        "/api/render",
+        "/api/blender",
+        "/api/status"
+      ]
+    },
+    "musicIntelligence": {
+      "name": "Music Intelligence",
+      "url": "http://localhost:3006",
+      "status": "planned",
+      "healthCheck": "/health",
+      "apis": [
+        "/api/analyze",
+        "/api/classify",
+        "/api/recommend"
+      ]
+    }
+  },
+  "security": {
+    "authentication": {
+      "enabled": true,
+      "method": "JWT",
+      "secret": "ZENTRAW_ADMIN_SECRET_KEY",
+      "expiration": "24h"
+    },
+    "encryption": {
+      "algorithm": "AES-256-GCM",
+      "keyRotation": true,
+      "rotationInterval": "30d"
+    },
+    "rateLimit": {
+      "enabled": true,
+      "windowMs": 900000,
+      "max": 100
+    }
+  },
+  "monitoring": {
+    "healthCheck": {
+      "interval": 30000,
+      "timeout": 5000,
+      "retries": 3
+    },
+    "metrics": {
+      "enabled": true,
+      "interval": 60000,
+      "retention": "7d"
+    },
+    "alerts": {
+      "enabled": true,
+      "thresholds": {
+        "responseTime": 5000,
+        "errorRate": 0.05,
+        "uptime": 0.99
+      }
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "files": {
+      "error": "logs/error.log",
+      "access": "logs/access.log",
+      "debug": "logs/debug.log"
+    },
+    "rotation": {
+      "enabled": true,
+      "maxSize": "10MB",
+      "maxFiles": 5
+    }
+  },
+  "ui": {
+    "theme": "zentraw-dark",
+    "language": "pt-BR",
+    "autoRefresh": 30000,
+    "notifications": true,
+    "animations": true
+  },
+  "apis": {
+    "external": {
+      "spotify": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": "",
+        "redirectUri": "http://localhost:3001/callback/spotify"
+      },
+      "youtube": {
+        "enabled": false,
+        "apiKey": "",
+        "quota": 10000
+      },
+      "soundcloud": {
+        "enabled": false,
+        "clientId": "",
+        "clientSecret": ""
+      }
+    }
+  },
+  "features": {
+    "dashboard": true,
+    "apiMonitor": true,
+    "moduleStatus": true,
+    "logViewer": true,
+    "configEditor": true,
+    "backupRestore": false,
+    "analytics": false
+  }
+}

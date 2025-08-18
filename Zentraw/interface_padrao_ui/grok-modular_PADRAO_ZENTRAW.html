@@ -1,0 +1,2481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      [GROK FASE 02] Enhanced Multi-Layer Icosahedron Cinema System - Template
+      001
+    </title>
+    <!--
+            Release: Grok_Modular_Blender_Integration_V2.0.0.2
+            Scope: Template 001 (grok-working.html UI + Three.js subsystem)
+            Notes: Layers panel mirrored (no icons), auto-collapse enabled, particle size slider 0.1–10 (default 0.1)
+            Tag: SAFE-ROLLBACK
+        -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%94%BA%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.cdnfonts.com/css/thegoodmonolith"
+    />
+
+    <style>
+      @import url("https://fonts.cdnfonts.com/css/thegoodmonolith");
+
+      :root {
+        --bg-color: #12100f;
+        --grid-color: rgba(255, 240, 230, 0.05);
+        --text-primary: #f3ede9;
+        --text-secondary: #c2b8b2;
+        --text-highlight: #ff4e42;
+        --accent-primary: #ff4e42;
+        --accent-secondary: #c2362f;
+        --accent-tertiary: #ffb3ab;
+        --panel-bg: rgba(30, 26, 24, 0.7);
+        --panel-border: rgba(255, 78, 66, 0.3);
+        --panel-highlight: rgba(255, 78, 66, 0.1);
+        --scanner-line: rgba(255, 78, 66, 0.7);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family: "TheGoodMonolith", monospace;
+        overflow: hidden;
+        height: 100vh;
+        text-transform: uppercase;
+        font-size: 1rem;
+        position: relative;
+      }
+      .cinema-mode {
+        background: linear-gradient(135deg, #12100f 0%, #1a1815 100%);
+        position: relative;
+      }
+      .grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            var(--grid-color) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: 1;
+        animation: dataFlow 10s infinite linear;
+        opacity: 0.8;
+      }
+      .scanner-frame {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        border: 2px solid var(--accent-primary);
+        pointer-events: none;
+        z-index: 5;
+        animation: pulseGlow 3s infinite;
+        border-radius: 4px;
+      }
+      .scanner-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--scanner-line),
+          transparent
+        );
+        animation: scanMove 3s ease-in-out infinite;
+        opacity: 0;
+        box-shadow: 0 0 10px var(--scanner-line);
+      }
+      @keyframes scanMove {
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0;
+        }
+        50% {
+          transform: translateY(calc(100vh - 80px));
+          opacity: 0.7;
+        }
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 5px var(--accent-primary);
+        }
+        50% {
+          box-shadow: 0 0 20px var(--accent-primary),
+            0 0 30px var(--accent-primary);
+        }
+      }
+      @keyframes dataFlow {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+      @keyframes frequencyPulse {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(1.2);
+        }
+      }
+      .three-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+
+      /* ADMIN PANEL - Independent Module */
+      .admin-toggle-btn {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        z-index: 9999;
+        background: linear-gradient(
+          145deg,
+          var(--accent-secondary),
+          var(--accent-primary)
+        );
+        border: 2px solid var(--panel-border);
+        color: var(--text-primary);
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+      .admin-toggle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 78, 66, 0.4);
+      }
+      .admin-toggle-btn.active {
+        background: linear-gradient(145deg, #ff6b5b, #ff4e42);
+        box-shadow: 0 0 20px rgba(255, 78, 66, 0.6);
+      }
+
+      .admin-panel {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        width: 400px;
+        max-width: 30vw;
+        height: 70vh;
+        background: var(--panel-bg);
+        border: 2px solid var(--accent-primary);
+        border-radius: 12px;
+        z-index: 9998;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.8) translateY(-20px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+      .admin-panel.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) translateY(0);
+      }
+
+      .admin-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 2px solid var(--panel-border);
+        background: rgba(255, 78, 66, 0.1);
+        border-radius: 10px 10px 0 0;
+        cursor: move;
+      }
+      .admin-panel-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+      }
+      .admin-panel-close {
+        background: none;
+        border: none;
+        color: var(--accent-primary);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+      .admin-panel-close:hover {
+        background: rgba(255, 78, 66, 0.2);
+        transform: scale(1.1);
+      }
+
+      .admin-panel-content {
+        padding: 20px;
+        height: calc(100% - 70px);
+        overflow-y: auto;
+      }
+      .admin-panel-content::-webkit-scrollbar {
+        width: 8px;
+      }
+      .admin-panel-content::-webkit-scrollbar-track {
+        background: rgba(255, 78, 66, 0.1);
+        border-radius: 4px;
+      }
+      .admin-panel-content::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 4px;
+      }
+
+      .admin-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .admin-tab {
+        background: rgba(255, 78, 66, 0.1);
+        border: 1px solid var(--panel-border);
+        color: var(--text-secondary);
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+      }
+      .admin-tab:hover {
+        background: rgba(255, 78, 66, 0.2);
+        color: var(--text-primary);
+      }
+      .admin-tab.active {
+        background: var(--accent-primary);
+        color: var(--bg-color);
+        font-weight: bold;
+      }
+
+      .admin-section {
+        display: none;
+      }
+      .admin-section.active {
+        display: block;
+      }
+
+      .admin-param-group {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+      }
+      .admin-param-title {
+        font-size: 0.9rem;
+        color: var(--accent-primary);
+        margin-bottom: 10px;
+        font-weight: bold;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 5px;
+      }
+      .admin-param-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .admin-param-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        flex: 1;
+      }
+      .admin-param-control {
+        flex: 1;
+        margin-left: 10px;
+      }
+      .admin-param-input {
+        width: 100%;
+        background: rgba(255, 78, 66, 0.1);
+        border: 1px solid var(--panel-border);
+        color: var(--text-primary);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.8rem;
+      }
+      .admin-param-input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 8px rgba(255, 78, 66, 0.3);
+      }
+      .admin-param-value {
+        font-size: 0.8rem;
+        color: var(--accent-primary);
+        min-width: 40px;
+        text-align: right;
+      }
+
+      /* Audio Panel */
+      .audio-panel {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        width: 350px;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 20px;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 10px;
+      }
+      .panel-title {
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--accent-primary);
+      }
+      .audio-status-indicator {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+      .audio-section {
+        margin-bottom: 20px;
+      }
+      .section-title {
+        font-size: 0.85rem;
+        color: var(--accent-primary);
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 5px;
+      }
+      .audio-btn {
+        background: linear-gradient(
+          145deg,
+          var(--accent-secondary),
+          var(--accent-primary)
+        );
+        border: none;
+        color: var(--text-primary);
+        padding: 8px 16px;
+        margin: 2px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.8rem;
+      }
+      .audio-controls {
+        display: flex;
+        gap: 5px;
+      }
+      .cinema-tracks {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+      }
+      .track-btn {
+        background: linear-gradient(145deg, #2a2520, #3a3025);
+        border: 1px solid var(--panel-border);
+        color: var(--text-secondary);
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.7rem;
+      }
+      .frequency-bars {
+        display: flex;
+        align-items: flex-end;
+        height: 80px;
+        gap: 1px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        border: 1px solid var(--panel-border);
+        overflow: hidden;
+        position: relative;
+      }
+      .frequency-bars::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 78, 66, 0.1),
+          transparent
+        );
+        animation: dataFlow 2s infinite;
+      }
+      .frequency-bar {
+        width: 1px;
+        background: linear-gradient(
+          to top,
+          var(--accent-primary),
+          var(--accent-tertiary)
+        );
+        min-height: 2px;
+        height: 2px;
+        transition: height 0.1s ease;
+        border-radius: 1px;
+        box-shadow: 0 0 2px var(--accent-primary);
+      }
+
+      /* Spectrum Analyzer Styles */
+      .spectrum-analyzer-container {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        border: 1px solid var(--panel-border);
+        position: relative;
+        flex: 1;
+        height: 100px;
+        min-width: 300px;
+      }
+      .spectrum-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      /* Config Button and Panel */
+      .config-btn {
+        background: var(--panel-highlight);
+        border: 1px solid var(--panel-border);
+        color: var(--accent-primary);
+        padding: 4px 8px;
+        margin-left: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+      }
+      .config-btn:hover {
+        background: var(--panel-border);
+        transform: scale(1.1);
+      }
+
+      .spectrum-main-container {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        position: relative;
+      }
+      .spectrum-config-panel {
+        width: 200px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--panel-border);
+        border-radius: 4px;
+        padding: 10px;
+        position: absolute;
+        right: -210px;
+        top: 0;
+        opacity: 0;
+        transition: all 0.4s ease;
+        pointer-events: none;
+        z-index: 10;
+      }
+      .spectrum-config-panel.visible {
+        right: -10px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .config-header {
+        color: var(--accent-primary);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        font-weight: bold;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 5px;
+      }
+      .config-group {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .config-group label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        min-width: 80px;
+      }
+      .config-group input,
+      .config-group select {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--panel-border);
+        color: var(--text-primary);
+        padding: 4px 6px;
+        border-radius: 3px;
+        font-size: 0.75rem;
+      }
+      .config-group input[type="range"] {
+        width: 80px;
+      }
+      .config-group input[type="number"] {
+        width: 60px;
+      }
+      .config-group select {
+        width: 70px;
+      }
+      .config-group input:focus,
+      .config-group select:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+      }
+      .config-group span {
+        font-size: 0.75rem;
+        color: var(--accent-primary);
+        margin-left: 5px;
+      }
+      .value-display {
+        font-size: 0.75rem;
+        color: var(--accent-primary);
+        font-weight: bold;
+        min-width: 35px;
+        text-align: right;
+      }
+
+      /* Grid lines for spectrum analyzer */
+      .spectrum-analyzer-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(
+            to bottom,
+            rgba(255, 78, 66, 0.1) 1px,
+            transparent 1px
+          ),
+          linear-gradient(to right, rgba(255, 78, 66, 0.1) 1px, transparent 1px);
+        background-size: 100% 33.33%, 12.5% 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .audio-data {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .data-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+      }
+      .data-row span:first-child {
+        color: var(--text-secondary);
+      }
+      .data-row span:last-child {
+        color: var(--accent-primary);
+      }
+
+      /* Bottom Control Panels */
+      .enhanced-control-panel {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 10;
+      }
+      .control-section {
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 15px;
+        min-width: 200px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .control-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 78, 66, 0.05),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .control-section:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 78, 66, 0.2);
+        border-color: var(--accent-primary);
+      }
+      .control-section:hover::before {
+        left: 100%;
+      }
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--panel-border);
+        padding-bottom: 8px;
+      }
+      .section-icon {
+        font-size: 1.2rem;
+      }
+      .section-title {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: var(--accent-primary);
+        flex: 1;
+      }
+      .section-status {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+      .hdri-buttons,
+      .quality-buttons,
+      .system-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .hdri-btn,
+      .quality-btn,
+      .system-btn {
+        background: linear-gradient(145deg, #2a2520, #3a3025);
+        border: 1px solid var(--panel-border);
+        color: var(--text-secondary);
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.7rem;
+        transition: all 0.3s ease;
+      }
+      .hdri-btn:hover,
+      .quality-btn:hover,
+      .system-btn:hover {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+      }
+      .hdri-btn.active,
+      .quality-btn.active {
+        background: linear-gradient(
+          145deg,
+          var(--accent-secondary),
+          var(--accent-primary)
+        );
+        color: var(--text-primary);
+        border-color: var(--accent-primary);
+      }
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .toggle-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      /* Layer Control Panel */
+      .layer-control-panel {
+        position: fixed;
+        left: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 340px;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 15px;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      .layer-preset-buttons {
+        display: flex;
+        gap: 5px;
+      }
+      .preset-btn {
+        background: linear-gradient(145deg, #2a2520, #3a3025);
+        border: 1px solid var(--panel-border);
+        color: var(--text-secondary);
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.7rem;
+      }
+
+      /* Tab System */
+      .tab-navigation {
+        display: flex;
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--panel-border);
+      }
+      .tab-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        padding: 8px 16px;
+        border-radius: 4px 4px 0 0;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.75rem;
+        transition: all 0.3s ease;
+        border-bottom: 2px solid transparent;
+      }
+      .tab-btn.active {
+        color: var(--accent-primary);
+        border-bottom: 2px solid var(--accent-primary);
+        background: rgba(255, 78, 66, 0.1);
+      }
+      .tab-btn:hover {
+        color: var(--accent-primary);
+        background: rgba(255, 78, 66, 0.05);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .layer-item {
+        margin-bottom: 10px;
+        border: 1px solid var(--panel-border);
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--panel-highlight);
+      }
+      .layer-item.layer-disabled {
+        opacity: 0.6;
+      }
+      .layer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      .layer-header:hover {
+        background: rgba(255, 78, 66, 0.15);
+      }
+      .layer-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+      }
+      .layer-name {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+      .layer-parameters {
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--panel-border);
+        display: none;
+      }
+      .layer-parameters.always-visible {
+        display: block !important;
+      }
+      .parameter-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .parameter-row label {
+        min-width: 110px;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+      .parameter-row input[type="range"] {
+        flex: 1;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 2px;
+      }
+      .parameter-row select {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--panel-border);
+        color: var(--text-secondary);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.75rem;
+      }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: var(--text-secondary);
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .toggle-slider {
+        background-color: var(--accent-primary);
+      }
+      input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+        background-color: var(--text-primary);
+      }
+
+      .layer-toggle {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      .layer-toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* Status Bar */
+      .status-bar {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 8px 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 20;
+      }
+      .status-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .status-label {
+        font-size: 0.7rem;
+        color: var(--text-secondary);
+      }
+      .status-value {
+        font-size: 0.7rem;
+        color: var(--accent-primary);
+        font-weight: bold;
+      }
+      .status-indicator {
+        margin-right: 10px;
+      }
+      .fps-counter {
+        color: var(--accent-primary);
+        font-weight: bold;
+      }
+
+      /* Notification */
+      .notification {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 16px 24px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 100;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+      }
+      .notification.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Musical Mode Displays */
+      #music-mode-display {
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+      #bass-energy-display {
+        color: #ff6b6b;
+      }
+      #mid-energy-display {
+        color: #4ecdc4;
+      }
+      #peak-energy-display {
+        color: #ffe66d;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent-primary);
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body class="cinema-mode">
+    <div class="grid-overlay"></div>
+    <div class="scanner-frame"><div class="scanner-line"></div></div>
+
+    <div id="three-container" class="three-container"></div>
+
+    <div class="audio-panel">
+      <div class="panel-header">
+        <span class="panel-title">AUDIO SYSTEM</span>
+        <div class="audio-status-indicator">
+          <span id="audio-status">AUDIO: NO SIGNAL</span>
+        </div>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">LOAD AUDIO</div>
+        <input
+          type="file"
+          id="audio-file-input-panel"
+          accept=".mp3,.wav,.ogg,.m4a"
+          style="display: none"
+        />
+        <button id="load-audio-btn-panel" class="audio-btn">LOAD FILE</button>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">CONTROLS</div>
+        <div class="audio-controls">
+          <button id="audio-play-btn" class="audio-btn" disabled>▶</button>
+          <button id="audio-pause-btn" class="audio-btn" disabled>⏸</button>
+          <button id="audio-stop-btn" class="audio-btn" disabled>⏹</button>
+        </div>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">CINEMA TRACKS</div>
+        <div class="cinema-tracks">
+          <button id="track-merkaba" class="track-btn">MERKABA</button>
+          <button id="track-dhawika" class="track-btn">DHAWIKA</button>
+          <button id="track-vacant" class="track-btn">VACANT</button>
+          <button id="track-lastnight" class="track-btn">LASTNIGHT</button>
+        </div>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">AUDIO DATA</div>
+        <div class="audio-data">
+          <div class="data-row">
+            <span>PEAK:</span><span id="peak-frequency">0 Hz</span>
+          </div>
+          <div class="data-row">
+            <span>RMS:</span><span id="rms-level">-∞ dB</span>
+          </div>
+          <div class="data-row">
+            <span>RANGE:</span><span id="dynamic-range">0 dB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="audio-section">
+        <div class="section-title">LAYER CONTROLS</div>
+        <div class="parameter-row">
+          <label>OPACITY:</label>
+          <input
+            type="range"
+            id="layer-opacity"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.9"
+          />
+          <span id="opacity-value">0.9</span>
+        </div>
+        <div class="parameter-row">
+          <label>SCALE:</label>
+          <input
+            type="range"
+            id="layer-scale"
+            min="0.1"
+            max="3"
+            step="0.1"
+            value="1"
+          />
+          <span id="scale-value">1.0</span>
+        </div>
+        <div class="parameter-row">
+          <label>AUDIO REACTIVE:</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="audio-reactive" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">
+          AUDIO SPECTRUM ANALYZER
+          <button id="spectrum-config-btn" class="config-btn">⚙️</button>
+        </div>
+        <div class="spectrum-main-container">
+          <div class="spectrum-analyzer-container">
+            <canvas id="spectrum-canvas" class="spectrum-canvas"></canvas>
+          </div>
+          <div class="spectrum-config-panel" id="spectrum-config-panel">
+            <div class="config-header">SPECTRUM SETTINGS</div>
+            <div class="config-group">
+              <label>FFT SIZE:</label>
+              <select id="fft-size-select">
+                <option value="256">256</option>
+                <option value="512" selected>512</option>
+                <option value="1024">1024</option>
+                <option value="2048">2048</option>
+              </select>
+            </div>
+            <div class="config-group">
+              <label>MIN FREQ:</label>
+              <input
+                type="number"
+                id="min-freq"
+                value="20"
+                min="20"
+                max="1000"
+                step="10"
+              />
+              <span id="min-freq-display" class="value-display">20Hz</span>
+            </div>
+            <div class="config-group">
+              <label>MAX FREQ:</label>
+              <input
+                type="number"
+                id="max-freq"
+                value="20000"
+                min="1000"
+                max="22000"
+                step="100"
+              />
+              <span id="max-freq-display" class="value-display">20K</span>
+            </div>
+            <div class="config-group">
+              <label>SMOOTHING:</label>
+              <input
+                type="range"
+                id="smoothing-range"
+                min="0"
+                max="0.95"
+                step="0.05"
+                value="0.8"
+              />
+              <span id="smoothing-display" class="value-display">0.80</span>
+            </div>
+            <div class="config-group">
+              <label>GRID OPACITY:</label>
+              <input
+                type="range"
+                id="grid-opacity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.2"
+              />
+              <span id="grid-opacity-display" class="value-display">0.20</span>
+            </div>
+            <div class="config-group">
+              <label>BAR WIDTH:</label>
+              <input
+                type="range"
+                id="bar-width"
+                min="0.5"
+                max="3"
+                step="0.1"
+                value="1"
+              />
+              <span id="bar-width-display" class="value-display">1.0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="audio-section">
+        <div class="section-title">PARAMETERS</div>
+        <div class="parameter-row">
+          <label>SENSITIVITY:</label>
+          <input
+            type="range"
+            id="sensitivity-slider"
+            min="0.1"
+            max="10"
+            step="0.1"
+            value="5"
+          />
+          <span id="sensitivity-value">5.0</span>
+        </div>
+        <div class="parameter-row">
+          <label>REACTIVITY:</label>
+          <input
+            type="range"
+            id="reactivity-slider"
+            min="0.1"
+            max="3"
+            step="0.1"
+            value="1"
+          />
+          <span id="reactivity-value">1.0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="enhanced-control-panel">
+      <div class="control-section">
+        <div class="section-header">
+          <span class="section-icon">🌍</span
+          ><span class="section-title">HDR ENVIRONMENT</span
+          ><span class="section-status" id="hdri-status">HDR: READY</span>
+        </div>
+        <div class="hdri-buttons">
+          <button id="hdri-studio" class="hdri-btn active" data-env="studio">
+            STUDIO
+          </button>
+          <button id="hdri-sunset" class="hdri-btn" data-env="sunset">
+            SUNSET
+          </button>
+          <button id="hdri-forest" class="hdri-btn" data-env="forest">
+            FOREST
+          </button>
+          <button id="hdri-city" class="hdri-btn" data-env="city">CITY</button>
+        </div>
+        <div class="parameter-row">
+          <label>INTENSITY:</label
+          ><input
+            type="range"
+            id="env-intensity"
+            min="0"
+            max="3"
+            step="0.1"
+            value="1"
+          /><span id="env-intensity-value">1.0</span>
+        </div>
+      </div>
+      <div class="control-section">
+        <div class="section-header">
+          <span class="section-icon">⚡</span
+          ><span class="section-title">RENDER QUALITY</span
+          ><span class="section-status">ACTIVE</span>
+        </div>
+        <div class="quality-buttons">
+          <button id="quality-low" class="quality-btn">LOW</button>
+          <button id="quality-medium" class="quality-btn active">MEDIUM</button>
+          <button id="quality-high" class="quality-btn">HIGH</button>
+          <button id="quality-ultra" class="quality-btn">ULTRA</button>
+        </div>
+      </div>
+      <div class="control-section">
+        <div class="section-header">
+          <span class="section-icon">🎬</span>
+          <span class="section-title">ANIMATION</span>
+          <span class="section-status">ENABLED</span>
+        </div>
+        <div class="toggle-row">
+          <label class="toggle-label">ENABLE ANIMATION</label>
+          <label class="toggle-switch">
+            <input type="checkbox" id="animation-toggle" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="control-section">
+        <div class="section-header">
+          <span class="section-icon">⚙️</span>
+          <span class="section-title">SYSTEM</span>
+          <span class="section-status">READY</span>
+        </div>
+        <div class="system-buttons">
+          <button id="export-settings" class="system-btn">EXPORT</button>
+          <button id="import-settings" class="system-btn">IMPORT</button>
+          <button id="reset-system" class="system-btn">RESET</button>
+          <button id="fullscreen-btn" class="system-btn">FULLSCREEN</button>
+          <button id="screenshot-btn" class="system-btn">SCREENSHOT</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-control-panel">
+      <div class="panel-header">
+        <span class="panel-title">LAYER SYSTEM</span>
+        <div class="layer-preset-buttons">
+          <button id="preset-minimal" class="preset-btn">MIN</button>
+          <button id="preset-standard" class="preset-btn active">STD</button>
+          <button id="preset-maximum" class="preset-btn">MAX</button>
+          <button id="preset-audio-reactive" class="preset-btn">AUD</button>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-navigation">
+        <button class="tab-btn active" data-tab="3d-object">3D OBJECT</button>
+        <button class="tab-btn" data-tab="camera">CAMERA</button>
+        <button class="tab-btn" data-tab="parameter">PARAMETER</button>
+      </div>
+
+      <!-- 3D Object Tab -->
+      <div class="tab-content active" id="3d-object">
+        <!-- Main Layer -->
+        <div class="layer-item" id="main-layer">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">MAIN LAYER</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="main-layer-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>ANOMALY DISTORTION:</label
+              ><input
+                type="range"
+                id="main-anomaly"
+                min="0"
+                max="10"
+                step="0.1"
+                value="0.5"
+              /><span id="main-anomaly-value">0.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>SUBDIVISION LEVEL:</label
+              ><input
+                type="range"
+                id="main-subdivision"
+                min="1"
+                max="5"
+                step="1"
+                value="2"
+              /><span id="main-subdivision-value">2</span>
+            </div>
+            <div class="parameter-row">
+              <label>RENDER MODE:</label
+              ><select id="main-render-mode">
+                <option value="solid">Solid</option>
+                <option value="wireframe">Wireframe</option>
+                <option value="core">Core</option>
+                <option value="points">Points</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>AUDIO SENSITIVITY:</label
+              ><input
+                type="range"
+                id="main-audio-sensitivity"
+                min="0.1"
+                max="5"
+                step="0.1"
+                value="1"
+              /><span id="main-audio-sensitivity-value">1.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROTATION SPEED:</label
+              ><input
+                type="range"
+                id="main-rotation-speed"
+                min="0"
+                max="3"
+                step="0.1"
+                value="0.5"
+              /><span id="main-rotation-speed-value">0.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>OPACITY:</label
+              ><input
+                type="range"
+                id="main-opacity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.9"
+              /><span id="main-opacity-value">0.9</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bass Layer -->
+        <div class="layer-item" id="bass-layer">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">BASS LAYER (20-150Hz)</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="bass-layer-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>ANOMALY DISTORTION:</label
+              ><input
+                type="range"
+                id="bass-anomaly"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0.8"
+              /><span id="bass-anomaly-value">0.8</span>
+            </div>
+            <div class="parameter-row">
+              <label>SUBDIVISION LEVEL:</label
+              ><input
+                type="range"
+                id="bass-subdivision"
+                min="1"
+                max="5"
+                step="1"
+                value="3"
+              /><span id="bass-subdivision-value">3</span>
+            </div>
+            <div class="parameter-row">
+              <label>RENDER MODE:</label
+              ><select id="bass-render-mode">
+                <option value="solid">Solid</option>
+                <option value="wireframe">Wireframe</option>
+                <option value="core" selected>Core</option>
+                <option value="points">Points</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>AUDIO SENSITIVITY:</label
+              ><input
+                type="range"
+                id="bass-audio-sensitivity"
+                min="0.1"
+                max="3"
+                step="0.1"
+                value="1.5"
+              /><span id="bass-audio-sensitivity-value">1.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROTATION SPEED:</label
+              ><input
+                type="range"
+                id="bass-rotation-speed"
+                min="0"
+                max="3"
+                step="0.1"
+                value="0.3"
+              /><span id="bass-rotation-speed-value">0.3</span>
+            </div>
+            <div class="parameter-row">
+              <label>OPACITY:</label
+              ><input
+                type="range"
+                id="bass-opacity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.7"
+              /><span id="bass-opacity-value">0.7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mid Layer -->
+        <div class="layer-item" id="mid-layer">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">MID LAYER (150-4KHz)</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="mid-layer-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>ANOMALY DISTORTION:</label
+              ><input
+                type="range"
+                id="mid-anomaly"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0.6"
+              /><span id="mid-anomaly-value">0.6</span>
+            </div>
+            <div class="parameter-row">
+              <label>SUBDIVISION LEVEL:</label
+              ><input
+                type="range"
+                id="mid-subdivision"
+                min="1"
+                max="5"
+                step="1"
+                value="2"
+              /><span id="mid-subdivision-value">2</span>
+            </div>
+            <div class="parameter-row">
+              <label>RENDER MODE:</label
+              ><select id="mid-render-mode">
+                <option value="solid" selected>Solid</option>
+                <option value="wireframe">Wireframe</option>
+                <option value="core">Core</option>
+                <option value="points">Points</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>AUDIO SENSITIVITY:</label
+              ><input
+                type="range"
+                id="mid-audio-sensitivity"
+                min="0.1"
+                max="3"
+                step="0.1"
+                value="1.2"
+              /><span id="mid-audio-sensitivity-value">1.2</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROTATION SPEED:</label
+              ><input
+                type="range"
+                id="mid-rotation-speed"
+                min="0"
+                max="3"
+                step="0.1"
+                value="0.8"
+              /><span id="mid-rotation-speed-value">0.8</span>
+            </div>
+            <div class="parameter-row">
+              <label>OPACITY:</label
+              ><input
+                type="range"
+                id="mid-opacity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.8"
+              /><span id="mid-opacity-value">0.8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- High Layer -->
+        <div class="layer-item" id="high-layer">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">HIGH LAYER (4K-20KHz)</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="high-layer-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>ANOMALY DISTORTION:</label
+              ><input
+                type="range"
+                id="high-anomaly"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0.4"
+              /><span id="high-anomaly-value">0.4</span>
+            </div>
+            <div class="parameter-row">
+              <label>SUBDIVISION LEVEL:</label
+              ><input
+                type="range"
+                id="high-subdivision"
+                min="1"
+                max="5"
+                step="1"
+                value="1"
+              /><span id="high-subdivision-value">1</span>
+            </div>
+            <div class="parameter-row">
+              <label>RENDER MODE:</label
+              ><select id="high-render-mode">
+                <option value="solid">Solid</option>
+                <option value="wireframe" selected>Wireframe</option>
+                <option value="core">Core</option>
+                <option value="points">Points</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>AUDIO SENSITIVITY:</label
+              ><input
+                type="range"
+                id="high-audio-sensitivity"
+                min="0.1"
+                max="3"
+                step="0.1"
+                value="2"
+              /><span id="high-audio-sensitivity-value">2.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROTATION SPEED:</label
+              ><input
+                type="range"
+                id="high-rotation-speed"
+                min="0"
+                max="3"
+                step="0.1"
+                value="1.5"
+              /><span id="high-rotation-speed-value">1.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>OPACITY:</label
+              ><input
+                type="range"
+                id="high-opacity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.6"
+              /><span id="high-opacity-value">0.6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Camera Tab -->
+      <div class="tab-content" id="camera">
+        <div class="layer-item" id="camera-controls">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">CAMERA SYSTEM</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="camera-system-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters always-visible">
+            <div class="parameter-row">
+              <label>SHAKE CAMERA:</label
+              ><input
+                type="range"
+                id="camera-shake"
+                min="0"
+                max="3"
+                step="0.1"
+                value="0.5"
+              /><span id="camera-shake-value">0.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>ORBIT SPEED:</label
+              ><input
+                type="range"
+                id="camera-orbit"
+                min="0"
+                max="3"
+                step="0.01"
+                value="0.01"
+              /><span id="camera-orbit-value">0.01</span>
+            </div>
+            <div class="parameter-row">
+              <label>AUTO ZOOM:</label
+              ><input
+                type="range"
+                id="camera-zoom"
+                min="0.3"
+                max="3"
+                step="0.1"
+                value="1"
+              /><span id="camera-zoom-value">1.0</span>
+            </div>
+
+            <!-- Manual Mode Controls -->
+            <div class="parameter-row">
+              <label>FORCE MODE:</label>
+              <select
+                id="force-music-mode"
+                style="
+                  background: var(--panel-bg);
+                  color: var(--text-primary);
+                  border: 1px solid var(--panel-border);
+                  padding: 4px;
+                "
+              >
+                <option value="auto">AUTO</option>
+                <option value="calm">CALM</option>
+                <option value="buildup">BUILD UP</option>
+                <option value="drop">DROP</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>FORCE INTENSITY:</label
+              ><input
+                type="range"
+                id="force-intensity"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.5"
+              /><span id="force-intensity-value">0.5</span>
+            </div>
+
+            <!-- Musical Mode Status -->
+            <div class="parameter-row">
+              <label>MUSICAL MODE:</label
+              ><span id="music-mode-display">CALM</span>
+            </div>
+            <div class="parameter-row">
+              <label>FORCE MODE:</label>
+              <select
+                id="force-music-mode"
+                style="
+                  background: #2a2520;
+                  color: #d4af37;
+                  border: 1px solid #444;
+                  padding: 4px;
+                "
+              >
+                <option value="auto">AUTO</option>
+                <option value="calm">CALM</option>
+                <option value="buildup">BUILD UP</option>
+                <option value="drop">DROP</option>
+              </select>
+            </div>
+            <div class="parameter-row">
+              <label>BASS ENERGY:</label
+              ><span id="bass-energy-display">0%</span>
+            </div>
+            <div class="parameter-row">
+              <label>MID ENERGY:</label><span id="mid-energy-display">0%</span>
+            </div>
+            <div class="parameter-row">
+              <label>PEAK ENERGY:</label
+              ><span id="peak-energy-display">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parameter Tab -->
+      <div class="tab-content" id="parameter">
+        <!-- Particle System -->
+        <div class="layer-item" id="particle-system">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">PARTICLE SYSTEM</span>
+            </div>
+            <label class="layer-toggle"
+              ><input
+                type="checkbox"
+                id="particle-system-toggle"
+                checked /><span class="toggle-slider"></span
+            ></label>
+          </div>
+          <div class="layer-parameters always-visible">
+            <div class="parameter-row">
+              <label>PARTICLE SIZE:</label
+              ><input
+                type="range"
+                id="particle-size"
+                min="0.1"
+                max="10"
+                step="0.1"
+                value="0.1"
+              /><span id="particle-size-value">0.1</span>
+            </div>
+            <div class="parameter-row">
+              <label>QUANTITY:</label
+              ><input
+                type="range"
+                id="particle-quantity"
+                min="100"
+                max="5000"
+                step="100"
+                value="3000"
+              /><span id="particle-quantity-value">3000</span>
+            </div>
+            <div class="parameter-row">
+              <label>AUDIO REACTIVITY:</label
+              ><input
+                type="range"
+                id="particle-reactivity"
+                min="0.1"
+                max="3"
+                step="0.1"
+                value="1"
+              /><span id="particle-reactivity-value">1.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>GLOW INTENSITY:</label
+              ><input
+                type="range"
+                id="glow-intensity"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0.8"
+              /><span id="glow-intensity-value">0.8</span>
+            </div>
+            <div class="parameter-row">
+              <label>COLOR (HUE):</label
+              ><input
+                type="range"
+                id="particle-hue"
+                min="0"
+                max="360"
+                step="1"
+                value="0"
+              /><span id="particle-hue-value">0</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROTATION SPEED:</label
+              ><input
+                type="range"
+                id="particle-rotation"
+                min="0"
+                max="3"
+                step="0.1"
+                value="0.5"
+              /><span id="particle-rotation-value">0.5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frequency Visualization -->
+        <div class="layer-item" id="frequency-visualization">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">FREQUENCY VISUALIZATION</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="frequency-viz-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters always-visible">
+            <div class="parameter-row">
+              <label>SENSITIVITY:</label
+              ><input
+                type="range"
+                id="frequency-sensitivity"
+                min="0.1"
+                max="3"
+                step="0.1"
+                value="1"
+              /><span id="frequency-sensitivity-value">1.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>BAR COUNT:</label
+              ><input
+                type="range"
+                id="frequency-bar-count"
+                min="8"
+                max="64"
+                step="4"
+                value="16"
+              /><span id="frequency-bar-count-value">16</span>
+            </div>
+            <div class="parameter-row">
+              <label>HEIGHT SCALE:</label
+              ><input
+                type="range"
+                id="frequency-height-scale"
+                min="0.5"
+                max="3"
+                step="0.1"
+                value="1"
+              /><span id="frequency-height-scale-value">1.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>SMOOTHING:</label
+              ><input
+                type="range"
+                id="frequency-smoothing"
+                min="0"
+                max="0.9"
+                step="0.1"
+                value="0.8"
+              /><span id="frequency-smoothing-value">0.8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legacy Layers for Compatibility -->
+        <div class="layer-item" id="layer-materials">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">MATERIALS</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="layer-3-toggle" checked /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>METALNESS:</label
+              ><input
+                type="range"
+                id="material-metalness"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.7"
+              /><span id="metalness-value">0.7</span>
+            </div>
+            <div class="parameter-row">
+              <label>ROUGHNESS:</label
+              ><input
+                type="range"
+                id="material-roughness"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0.2"
+              /><span id="roughness-value">0.2</span>
+            </div>
+            <div class="parameter-row">
+              <label>CLEARCOAT:</label
+              ><input
+                type="range"
+                id="material-clearcoat"
+                min="0"
+                max="1"
+                step="0.1"
+                value="0"
+              /><span id="clearcoat-value">0.0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer-item layer-disabled" id="layer-postfx">
+          <div class="layer-header">
+            <div class="layer-info">
+              <span class="layer-name">POST-FX</span>
+            </div>
+            <label class="layer-toggle"
+              ><input type="checkbox" id="layer-4-toggle" /><span
+                class="toggle-slider"
+              ></span
+            ></label>
+          </div>
+          <div class="layer-parameters">
+            <div class="parameter-row">
+              <label>BLOOM:</label
+              ><input
+                type="range"
+                id="postfx-bloom"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0.5"
+              /><span id="bloom-value">0.5</span>
+            </div>
+            <div class="parameter-row">
+              <label>CONTRAST:</label
+              ><input
+                type="range"
+                id="postfx-contrast"
+                min="0.5"
+                max="2"
+                step="0.1"
+                value="1"
+              /><span id="contrast-value">1.0</span>
+            </div>
+            <div class="parameter-row">
+              <label>SATURATION:</label
+              ><input
+                type="range"
+                id="postfx-saturation"
+                min="0"
+                max="2"
+                step="0.1"
+                value="1"
+              /><span id="saturation-value">1.0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-section">
+        <div class="status-label">RENDER:</div>
+        <div class="status-value">
+          <span id="draw-calls">0</span> CALLS
+          <span id="triangles">0</span> TRIS
+        </div>
+      </div>
+      <div class="status-section">
+        <div class="status-label">MEMORY:</div>
+        <div class="status-value">
+          <span id="geometries">0</span> GEO <span id="textures">0</span> TEX
+        </div>
+      </div>
+      <div class="status-section">
+        <div class="status-label">SYSTEM:</div>
+        <div class="status-value">
+          <span class="status-indicator"
+            >AUDIO: <span id="system-audio">NO AUDIO</span></span
+          >
+          <span class="status-indicator"
+            >RENDER: <span id="system-render">ACTIVE</span></span
+          >
+          <span class="status-indicator"
+            >LAYERS: <span id="system-layers">3/5</span></span
+          >
+        </div>
+      </div>
+      <div class="status-section">
+        <div class="status-label">FPS:</div>
+        <div class="status-value">
+          <span id="fps" class="fps-counter">60</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://esm.sh/three@0.175.0",
+          "three/addons/": "https://esm.sh/three@0.175.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script>
+      // Initialize collapsed state for layer parameters and ensure DOM is ready
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM Content Loaded - Initializing UI...");
+
+        // Show first layer parameters by default
+        const firstLayerParams = document.querySelector(
+          "#main-layer .layer-parameters"
+        );
+        if (firstLayerParams) {
+          firstLayerParams.style.display = "block";
+          console.log("First layer parameters shown");
+        }
+
+        // Ensure always-visible parameters are shown
+        const alwaysVisibleParams = document.querySelectorAll(
+          ".layer-parameters.always-visible"
+        );
+        alwaysVisibleParams.forEach((params) => {
+          params.style.display = "block";
+          console.log(
+            "Always-visible parameters enforced:",
+            params.closest(".layer-item").id
+          );
+        });
+
+        // Ensure tab system works before Three.js loads
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        console.log("Found tab buttons:", tabBtns.length);
+        console.log("Found tab contents:", tabContents.length);
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const targetTab = btn.dataset.tab;
+            console.log("Tab clicked:", targetTab);
+
+            tabBtns.forEach((b) => b.classList.remove("active"));
+            tabContents.forEach((c) => c.classList.remove("active"));
+
+            btn.classList.add("active");
+            const targetContent = document.getElementById(targetTab);
+            if (targetContent) {
+              targetContent.classList.add("active");
+              console.log("Tab activated:", targetTab);
+            } else {
+              console.error("Tab content not found:", targetTab);
+            }
+          });
+        });
+
+        console.log("UI initialization complete");
+
+        // ADMIN PANEL FUNCTIONALITY - Independent Module
+        const adminToggle = document.getElementById("adminToggle");
+        const adminPanel = document.getElementById("adminPanel");
+        const adminClose = document.getElementById("adminClose");
+        const adminHeader = document.getElementById("adminHeader");
+        const adminTabs = document.querySelectorAll(".admin-tab");
+        const adminSections = document.querySelectorAll(".admin-section");
+
+        let isDragging = false;
+        let currentX = 0;
+        let currentY = 0;
+        let initialX = 0;
+        let initialY = 0;
+
+        // Toggle admin panel
+        adminToggle.addEventListener("click", () => {
+          const isVisible = adminPanel.classList.contains("visible");
+          if (isVisible) {
+            adminPanel.classList.remove("visible");
+            adminToggle.classList.remove("active");
+          } else {
+            adminPanel.classList.add("visible");
+            adminToggle.classList.add("active");
+          }
+        });
+
+        // Close admin panel
+        adminClose.addEventListener("click", () => {
+          adminPanel.classList.remove("visible");
+          adminToggle.classList.remove("active");
+        });
+
+        // Dragging functionality
+        adminHeader.addEventListener("mousedown", (e) => {
+          isDragging = true;
+          const rect = adminPanel.getBoundingClientRect();
+          initialX = e.clientX - rect.left;
+          initialY = e.clientY - rect.top;
+          adminHeader.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+          if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+
+            // Keep panel within viewport
+            const maxX = window.innerWidth - adminPanel.offsetWidth;
+            const maxY = window.innerHeight - adminPanel.offsetHeight;
+            currentX = Math.max(0, Math.min(currentX, maxX));
+            currentY = Math.max(0, Math.min(currentY, maxY));
+
+            adminPanel.style.left = currentX + "px";
+            adminPanel.style.top = currentY + "px";
+          }
+        });
+
+        document.addEventListener("mouseup", () => {
+          isDragging = false;
+          adminHeader.style.cursor = "move";
+        });
+
+        // Tab switching
+        adminTabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const targetSection = tab.getAttribute("data-section");
+
+            // Remove active from all tabs and sections
+            adminTabs.forEach((t) => t.classList.remove("active"));
+            adminSections.forEach((s) => s.classList.remove("active"));
+
+            // Add active to clicked tab and corresponding section
+            tab.classList.add("active");
+            document
+              .getElementById(targetSection + "-section")
+              .classList.add("active");
+          });
+        });
+
+        // Parameter controls with real-time value updates
+        const paramInputs = document.querySelectorAll(".admin-param-input");
+        paramInputs.forEach((input) => {
+          const valueDisplay = document.getElementById(input.id + "-value");
+
+          input.addEventListener("input", () => {
+            if (valueDisplay) {
+              valueDisplay.textContent = input.value;
+            }
+
+            // Dispatch custom event for parameter changes
+            window.dispatchEvent(
+              new CustomEvent("adminParamChange", {
+                detail: {
+                  parameter: input.id,
+                  value: input.value,
+                  type: input.type,
+                },
+              })
+            );
+
+            console.log("Admin parameter changed:", input.id, "=", input.value);
+          });
+        });
+
+        // Global admin panel API for external modules
+        window.ZenTrawAdmin = {
+          getParameter: (paramId) => {
+            const input = document.getElementById(paramId);
+            return input ? input.value : null;
+          },
+          setParameter: (paramId, value) => {
+            const input = document.getElementById(paramId);
+            const valueDisplay = document.getElementById(paramId + "-value");
+            if (input) {
+              input.value = value;
+              if (valueDisplay) valueDisplay.textContent = value;
+            }
+          },
+          isVisible: () => adminPanel.classList.contains("visible"),
+          show: () => {
+            adminPanel.classList.add("visible");
+            adminToggle.classList.add("active");
+          },
+          hide: () => {
+            adminPanel.classList.remove("visible");
+            adminToggle.classList.remove("active");
+          },
+        };
+
+        console.log("ZenTraw Admin Panel initialized");
+      });
+    </script>
+
+    <!-- ADMIN PANEL - Independent Development Module -->
+    <button class="admin-toggle-btn" id="adminToggle">
+      <span>⚙️ ADMIN</span>
+    </button>
+
+    <div class="admin-panel" id="adminPanel">
+      <div class="admin-panel-header" id="adminHeader">
+        <div class="admin-panel-title">ZenTraw Admin Panel</div>
+        <button class="admin-panel-close" id="adminClose">✕</button>
+      </div>
+      <div class="admin-panel-content">
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-section="audio">
+            Audio System
+          </button>
+          <button class="admin-tab" data-section="camera">
+            Camera Control
+          </button>
+          <button class="admin-tab" data-section="layers">Layer System</button>
+          <button class="admin-tab" data-section="objects">3D Objects</button>
+        </div>
+
+        <!-- Audio System Configuration -->
+        <div class="admin-section active" id="audio-section">
+          <div class="admin-param-group">
+            <div class="admin-param-title">Audio Context</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Sample Rate</div>
+              <div class="admin-param-control">
+                <input
+                  type="number"
+                  class="admin-param-input"
+                  id="sampleRate"
+                  value="44100"
+                  min="8000"
+                  max="96000"
+                />
+              </div>
+              <div class="admin-param-value" id="sampleRate-value">44100</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Buffer Size</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="bufferSize"
+                  value="2048"
+                  min="256"
+                  max="8192"
+                  step="256"
+                />
+              </div>
+              <div class="admin-param-value" id="bufferSize-value">2048</div>
+            </div>
+          </div>
+
+          <div class="admin-param-group">
+            <div class="admin-param-title">Frequency Analysis</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">FFT Size</div>
+              <div class="admin-param-control">
+                <select class="admin-param-input" id="fftSize">
+                  <option value="256">256</option>
+                  <option value="512">512</option>
+                  <option value="1024">1024</option>
+                  <option value="2048" selected>2048</option>
+                  <option value="4096">4096</option>
+                </select>
+              </div>
+              <div class="admin-param-value" id="fftSize-value">2048</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Smoothing</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="smoothing"
+                  value="0.8"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                />
+              </div>
+              <div class="admin-param-value" id="smoothing-value">0.8</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Min Decibels</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="minDecibels"
+                  value="-100"
+                  min="-120"
+                  max="-60"
+                  step="5"
+                />
+              </div>
+              <div class="admin-param-value" id="minDecibels-value">-100</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Max Decibels</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="maxDecibels"
+                  value="-30"
+                  min="-60"
+                  max="0"
+                  step="5"
+                />
+              </div>
+              <div class="admin-param-value" id="maxDecibels-value">-30</div>
+            </div>
+          </div>
+
+          <div class="admin-param-group">
+            <div class="admin-param-title">Frequency Bars</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Bar Count</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="barCount"
+                  value="16"
+                  min="8"
+                  max="32"
+                  step="2"
+                />
+              </div>
+              <div class="admin-param-value" id="barCount-value">16</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Sensitivity</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="sensitivity"
+                  value="1.5"
+                  min="0.5"
+                  max="3"
+                  step="0.1"
+                />
+              </div>
+              <div class="admin-param-value" id="sensitivity-value">1.5</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Bass Boost</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="bassBoost"
+                  value="1.2"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                />
+              </div>
+              <div class="admin-param-value" id="bassBoost-value">1.2</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Camera Control Configuration -->
+        <div class="admin-section" id="camera-section">
+          <div class="admin-param-group">
+            <div class="admin-param-title">Musical Orbit System</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Mode</div>
+              <div class="admin-param-control">
+                <select class="admin-param-input" id="cameraMode">
+                  <option value="CALM">CALM Mode</option>
+                  <option value="DROP">DROP Mode</option>
+                  <option value="MANUAL">Manual</option>
+                </select>
+              </div>
+              <div class="admin-param-value" id="cameraMode-value">CALM</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Orbit Radius</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="orbitRadius"
+                  value="20"
+                  min="5"
+                  max="50"
+                  step="1"
+                />
+              </div>
+              <div class="admin-param-value" id="orbitRadius-value">20</div>
+            </div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Speed Multiplier</div>
+              <div class="admin-param-control">
+                <input
+                  type="range"
+                  class="admin-param-input"
+                  id="speedMultiplier"
+                  value="1"
+                  min="0.1"
+                  max="3"
+                  step="0.1"
+                />
+              </div>
+              <div class="admin-param-value" id="speedMultiplier-value">1</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layer System Configuration -->
+        <div class="admin-section" id="layers-section">
+          <div class="admin-param-group">
+            <div class="admin-param-title">Layer Management</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Active Layers</div>
+              <div class="admin-param-control">
+                <input
+                  type="number"
+                  class="admin-param-input"
+                  id="activeLayers"
+                  value="3"
+                  min="1"
+                  max="8"
+                />
+              </div>
+              <div class="admin-param-value" id="activeLayers-value">3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Objects Configuration -->
+        <div class="admin-section" id="objects-section">
+          <div class="admin-param-group">
+            <div class="admin-param-title">Object Properties</div>
+            <div class="admin-param-row">
+              <div class="admin-param-label">Object Count</div>
+              <div class="admin-param-control">
+                <input
+                  type="number"
+                  class="admin-param-input"
+                  id="objectCount"
+                  value="100"
+                  min="10"
+                  max="500"
+                />
+              </div>
+              <div class="admin-param-value" id="objectCount-value">100</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import "./js/three-template-001.js";
+    </script>
+  </body>
+</html>

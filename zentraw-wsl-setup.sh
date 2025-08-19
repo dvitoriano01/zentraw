@@ -26,8 +26,14 @@ print_error() {
 }
 
 # Check if running in WSL
-if [[ ! -f /proc/version ]] || ! grep -q Microsoft /proc/version; then
-    print_error "Este script deve ser executado no WSL Ubuntu!"
+if [[ ! -f /proc/version ]] || ! grep -qi "microsoft\|wsl" /proc/version; then
+    # Additional check for WSL2
+    if [[ ! -f /proc/sys/kernel/osrelease ]] || ! grep -qi "microsoft\|wsl" /proc/sys/kernel/osrelease; then
+        # If both fail, check if we're in a Linux environment at least
+        if [[ ! -f /etc/os-release ]]; then
+            print_error "Este script deve ser executado no WSL Ubuntu!"
+        fi
+    fi
 fi
 
 print_status "Sistema WSL detectado - continuando setup..."

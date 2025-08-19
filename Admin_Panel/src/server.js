@@ -5,6 +5,11 @@ const morgan = require('morgan');
 const compression = require('compression');
 const path = require('path');
 const fs = require('fs');
+const { spawn } = require('child_process');
+
+// Carregar variáveis de ambiente do .env
+require('dotenv').config();
+
 const config = require('../config/default.json');
 
 const app = express();
@@ -28,7 +33,317 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servir arquivos estáticos
-app.use(express.static(path.join(__dirname)));
+// Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, '../public')));
+
+// ===============================================
+// 🔧 API MANAGER ROUTES - GROK TEAM INTEGRATION
+// ===============================================
+
+// Status das APIs externas
+app.get('/api/external-apis/status', (req, res) => {
+    try {
+        // Função para verificar se uma chave está realmente configurada
+        const isConfigured = (key) => {
+            const value = process.env[key];
+            return value && 
+                   value !== '' && 
+                   value !== 'your-key-here' && 
+                   value !== 'sk_test_your-stripe-key' &&
+                   value !== 'your-twilio-sid' &&
+                   value !== 'your-twilio-token' &&
+                   value !== 'your-google-key' &&
+                   !value.includes('your-') &&
+                   !value.includes('example');
+        };
+        
+        const apiStatus = {
+            openai: {
+                name: 'OpenAI',
+                status: isConfigured('OPENAI_API_KEY') ? 'active' : 'inactive',
+                configured: isConfigured('OPENAI_API_KEY'),
+                masked: isConfigured('OPENAI_API_KEY') ? maskApiKey(process.env.OPENAI_API_KEY) : null
+            },
+            spotify: {
+                name: 'Spotify',
+                status: (isConfigured('SPOTIFY_CLIENT_ID') && isConfigured('SPOTIFY_CLIENT_SECRET')) ? 'active' : 'inactive',
+                configured: (isConfigured('SPOTIFY_CLIENT_ID') && isConfigured('SPOTIFY_CLIENT_SECRET')),
+                masked: isConfigured('SPOTIFY_CLIENT_ID') ? maskApiKey(process.env.SPOTIFY_CLIENT_ID) : null
+            },
+            github: {
+                name: 'GitHub',
+                status: isConfigured('GITHUB_TOKEN') ? 'active' : 'inactive',
+                configured: isConfigured('GITHUB_TOKEN'),
+                masked: isConfigured('GITHUB_TOKEN') ? maskApiKey(process.env.GITHUB_TOKEN) : null
+            },
+            supabase: {
+                name: 'Supabase',
+                status: (isConfigured('SUPABASE_URL') && isConfigured('SUPABASE_KEY')) ? 'active' : 'inactive',
+                configured: (isConfigured('SUPABASE_URL') && isConfigured('SUPABASE_KEY')),
+                masked: isConfigured('SUPABASE_URL') ? maskApiKey(process.env.SUPABASE_URL) : null
+            },
+            blender: {
+                name: 'Blender',
+                status: isConfigured('BLENDER_PATH') ? 'active' : 'inactive',
+                configured: isConfigured('BLENDER_PATH'),
+                masked: isConfigured('BLENDER_PATH') ? maskApiKey(process.env.BLENDER_PATH) : null
+            },
+            stripe: {
+                name: 'Stripe',
+                status: isConfigured('STRIPE_API_KEY') ? 'active' : 'inactive',
+                configured: isConfigured('STRIPE_API_KEY'),
+                masked: isConfigured('STRIPE_API_KEY') ? maskApiKey(process.env.STRIPE_API_KEY) : null
+            },
+            twilio: {
+                name: 'Twilio',
+                status: (isConfigured('TWILIO_ACCOUNT_SID') && isConfigured('TWILIO_AUTH_TOKEN')) ? 'active' : 'inactive',
+                configured: (isConfigured('TWILIO_ACCOUNT_SID') && isConfigured('TWILIO_AUTH_TOKEN')),
+                masked: isConfigured('TWILIO_ACCOUNT_SID') ? maskApiKey(process.env.TWILIO_ACCOUNT_SID) : null
+            }
+        };
+        
+        const activeCount = Object.values(apiStatus).filter(api => api.status === 'active').length;
+        
+        res.json({
+            success: true,
+            apis: apiStatus,
+            total: Object.keys(apiStatus).length,
+            active: activeCount
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao verificar status das APIs',
+            details: error.message
+        });
+    }
+});
+
+// Executar API Manager (Python)
+app.post('/api/external-apis/initialize', (req, res) => {
+    try {
+        const pythonScript = path.join(__dirname, 'api_manager.py');
+        const pythonProcess = spawn('python', [pythonScript], {
+            stdio: 'pipe',
+            env: process.env
+        });
+        
+        let output = '';
+        let errorOutput = '';
+        
+        pythonProcess.stdout.on('data', (data) => {
+            output += data.toString();
+        });
+        
+        pythonProcess.stderr.on('data', (data) => {
+            errorOutput += data.toString();
+        });
+        
+        pythonProcess.on('close', (code) => {
+            if (code === 0) {
+                res.json({
+                    success: true,
+                    message: 'API Manager inicializado com sucesso',
+                    output: output
+                });
+            } else {
+                res.status(500).json({
+                    success: false,
+                    error: 'Erro ao inicializar API Manager',
+                    code: code,
+                    output: errorOutput
+                });
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao executar API Manager',
+            details: error.message
+        });
+    }
+});
+
+// Atualizar configurações de APIs no arquivo .env
+app.post('/api/external-apis/config', (req, res) => {
+    try {
+        const { apiKey, apiValue } = req.body;
+        
+        // Validação de segurança
+        if (!apiKey || !apiValue) {
+            return res.status(400).json({
+                success: false,
+                error: 'Chave e valor da API são obrigatórios'
+            });
+        }
+        
+        // Lista de chaves válidas para segurança
+        const validKeys = [
+            'OPENAI_API_KEY',
+            'SPOTIFY_CLIENT_ID',
+            'SPOTIFY_CLIENT_SECRET',
+            'GITHUB_TOKEN',
+            'SUPABASE_URL',
+            'SUPABASE_KEY',
+            'BLENDER_PATH',
+            'STRIPE_API_KEY',
+            'TWILIO_ACCOUNT_SID',
+            'TWILIO_AUTH_TOKEN',
+            'GOOGLE_API_KEY'
+        ];
+        
+        if (!validKeys.includes(apiKey)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Chave de API não é válida'
+            });
+        }
+        
+        // Ler arquivo .env atual
+        const envPath = path.join(__dirname, '../.env');
+        let envContent = '';
+        
+        if (fs.existsSync(envPath)) {
+            envContent = fs.readFileSync(envPath, 'utf8');
+        }
+        
+        // Atualizar ou adicionar chave
+        const keyRegex = new RegExp(`^${apiKey}=.*$`, 'm');
+        const newKeyValue = `${apiKey}=${apiValue}`;
+        
+        if (keyRegex.test(envContent)) {
+            // Atualizar chave existente
+            envContent = envContent.replace(keyRegex, newKeyValue);
+        } else {
+            // Adicionar nova chave
+            envContent += `\n${newKeyValue}`;
+        }
+        
+        // Salvar arquivo .env
+        fs.writeFileSync(envPath, envContent, 'utf8');
+        
+        // Atualizar variável de ambiente na sessão atual
+        process.env[apiKey] = apiValue;
+        
+        res.json({
+            success: true,
+            message: `Chave ${apiKey} atualizada com sucesso`,
+            key: apiKey,
+            masked: maskApiKey(apiValue)
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao atualizar configuração',
+            details: error.message
+        });
+    }
+});
+
+// Endpoint para testar conexão com APIs específicas
+app.get('/api/external-apis/test/:apiType', (req, res) => {
+    try {
+        const { apiType } = req.params;
+        
+        // Validar tipo de API
+        const validTypes = ['openai', 'spotify', 'github', 'supabase', 'blender', 'stripe', 'twilio'];
+        if (!validTypes.includes(apiType)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Tipo de API inválido'
+            });
+        }
+        
+        // Simulação de teste de conexão
+        const testResults = {
+            openai: {
+                endpoint: 'https://api.openai.com/v1/models',
+                status: process.env.OPENAI_API_KEY ? 'configured' : 'not_configured',
+                message: process.env.OPENAI_API_KEY ? 'Chave configurada' : 'Chave não configurada'
+            },
+            spotify: {
+                endpoint: 'https://api.spotify.com/v1/me',
+                status: (process.env.SPOTIFY_CLIENT_ID && process.env.SPOTIFY_CLIENT_SECRET) ? 'configured' : 'not_configured',
+                message: (process.env.SPOTIFY_CLIENT_ID && process.env.SPOTIFY_CLIENT_SECRET) ? 'Credenciais configuradas' : 'Credenciais não configuradas'
+            },
+            github: {
+                endpoint: 'https://api.github.com/user',
+                status: process.env.GITHUB_TOKEN ? 'configured' : 'not_configured',
+                message: process.env.GITHUB_TOKEN ? 'Token configurado' : 'Token não configurado'
+            },
+            supabase: {
+                endpoint: process.env.SUPABASE_URL || 'not_configured',
+                status: (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) ? 'configured' : 'not_configured',
+                message: (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) ? 'Configuração completa' : 'Configuração incompleta'
+            },
+            blender: {
+                endpoint: process.env.BLENDER_PATH || 'not_configured',
+                status: process.env.BLENDER_PATH ? 'configured' : 'not_configured',
+                message: process.env.BLENDER_PATH ? 'Caminho configurado' : 'Caminho não configurado'
+            },
+            stripe: {
+                endpoint: 'https://api.stripe.com/v1/account',
+                status: process.env.STRIPE_API_KEY ? 'configured' : 'not_configured',
+                message: process.env.STRIPE_API_KEY ? 'Chave configurada' : 'Chave não configurada'
+            },
+            twilio: {
+                endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json',
+                status: (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) ? 'configured' : 'not_configured',
+                message: (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) ? 'Credenciais configuradas' : 'Credenciais não configuradas'
+            }
+        };
+        
+        const result = testResults[apiType];
+        
+        res.json({
+            success: true,
+            apiType: apiType,
+            test: result,
+            timestamp: new Date().toISOString()
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao testar API',
+            details: error.message
+        });
+    }
+});
+
+// Endpoint para verificar saúde da API (diferente do /health principal)
+app.get('/api/health', (req, res) => {
+    try {
+        res.json({
+            status: 'healthy',
+            timestamp: new Date().toISOString(),
+            uptime: process.uptime(),
+            apis: {
+                external_apis: 'operational',
+                admin_panel: 'operational'
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 'unhealthy',
+            error: error.message
+        });
+    }
+});
+
+// Função para mascarar chaves API para segurança
+function maskApiKey(key) {
+    if (!key || key.length < 8) return '***';
+    const start = key.substring(0, 4);
+    const end = key.substring(key.length - 4);
+    const middle = '*'.repeat(key.length - 8);
+    return `${start}${middle}${end}`;
+}
+
+// ===============================================
+// 🏠 ZENTRAW ADMIN PANEL MAIN ROUTES
+// ===============================================
 
 // Log de inicialização
 const startTime = new Date();

@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zentraw Admin Panel - V1.0.0</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%94%A7%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/thegoodmonolith" />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/thego                <div class="action-buttons">
+                    <button class="btn" onclick="checkModuleHealth('mi')">Verificar</button>
+                    <button class="btn" disabled>Em Breve</button>
+                </div>
+            </div>olith" />
     
     <style>
         @import url("https://fonts.cdnfonts.com/css/thegoodmonolith");
@@ -297,6 +301,137 @@
             color: #fff;
         }
 
+        /* API MANAGER COMPACT ENDPOINTS */
+        .api-endpoints-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 15px 0;
+        }
+
+        .endpoint-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255, 78, 66, 0.05);
+            border: 1px solid rgba(255, 78, 66, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-button:hover {
+            background: rgba(255, 78, 66, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateX(2px);
+        }
+
+        .endpoint-name {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: monospace;
+        }
+
+        .endpoint-status {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--success-color);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .endpoint-status.error {
+            background: var(--error-color);
+            color: #fff;
+        }
+
+        .endpoint-status.warning {
+            background: var(--warning-color);
+            color: #000;
+        }
+
+        /* API PANEL WORKSPACE */
+        .api-workspace {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .api-workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: var(--panel-bg);
+            border-bottom: 2px solid var(--panel-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-secondary);
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--accent-primary);
+            transform: translateX(-2px);
+        }
+
+        .api-workspace-content {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .workspace-summary {
+            grid-column: 1 / -1;
+            margin-bottom: 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .summary-value {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
         /* API MONITOR */
         .api-list {
             list-style: none;
@@ -346,6 +481,160 @@
             color: var(--text-secondary);
             margin: 2px 0;
             font-family: monospace;
+        }
+
+        /* API PANEL MODAL */
+        .api-panel-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .api-panel-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--panel-bg);
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80%;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .api-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--panel-border);
+            padding-bottom: 15px;
+        }
+
+        .api-panel-title {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .api-close-btn {
+            background: var(--error-color);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .api-card {
+            background: rgba(255, 78, 66, 0.1);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .api-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+        }
+
+        .api-card-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .api-card-status.active {
+            background: var(--success-color);
+            color: #000;
+        }
+
+        .api-card-status.inactive {
+            background: var(--error-color);
+            color: #fff;
+        }
+
+        .api-card-config {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .api-config-field {
+            margin-bottom: 8px;
+        }
+
+        .api-config-field label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .api-config-field input {
+            width: 100%;
+            padding: 4px 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--panel-border);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        .api-config-field input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .api-update-btn {
+            background: var(--accent-primary);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            margin-top: 8px;
+        }
+
+        .api-update-btn:hover {
+            background: var(--accent-secondary);
+        }
+
+        .api-masked-value {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .log-entry.error {
@@ -398,8 +687,22 @@
         <div class="subtitle">Central de Controle - V1.0.0</div>
     </div>
 
+    <!-- API Workspace -->
+    <div class="api-workspace" id="api-workspace" style="display: none;">
+        <div class="api-workspace-header">
+            <button class="back-button" onclick="returnToMainPanel()">
+                ← VOLTAR
+            </button>
+            <h2 class="api-panel-title">🔧 Zentraw API Manager</h2>
+            <div></div>
+        </div>
+        <div class="api-workspace-content" id="api-workspace-content">
+            <!-- APIs individuais serão carregadas aqui -->
+        </div>
+    </div>
+
     <!-- Main Container -->
-    <div class="main-container">
+    <div class="main-container" id="main-container">
         <div class="dashboard-grid">
             
             <!-- Template Library Builder -->
@@ -453,27 +756,33 @@
                 </div>
             </div>
 
-            <!-- API Monitor -->
+            <!-- API Manager - CONSOLIDATED -->
             <div class="dashboard-card">
                 <div class="card-header">
-                    <span class="card-title">🌐 Monitor de APIs</span>
-                    <div class="status-indicator status-online"></div>
+                    <span class="card-title">🔧 API Manager</span>
+                    <div class="status-indicator status-online" id="api-manager-status"></div>
                 </div>
-                <ul class="api-list" id="api-list">
-                    <li class="api-item">
-                        <span class="api-endpoint">/api/health</span>
-                        <span class="api-status">OK</span>
-                    </li>
-                    <li class="api-item">
-                        <span class="api-endpoint">/api/modules</span>
-                        <span class="api-status">OK</span>
-                    </li>
-                    <li class="api-item">
-                        <span class="api-endpoint">/api/status</span>
-                        <span class="api-status">OK</span>
-                    </li>
-                </ul>
+                <div class="module-info">
+                    <p>Status: <span class="highlight" id="api-active-count">0 APIs Ativas</span></p>
+                    <p>Última Verificação: <span class="highlight" id="api-last-check">--:--:--</span></p>
+                </div>
+                <div class="api-endpoints-compact">
+                    <div class="endpoint-button" onclick="testEndpoint('/api/health')">
+                        <span class="endpoint-name">/api/health</span>
+                        <span class="endpoint-status" id="health-status">OK</span>
+                    </div>
+                    <div class="endpoint-button" onclick="testEndpoint('/api/modules')">
+                        <span class="endpoint-name">/api/modules</span>
+                        <span class="endpoint-status" id="modules-status">OK</span>
+                    </div>
+                    <div class="endpoint-button" onclick="testEndpoint('/api/status')">
+                        <span class="endpoint-name">/api/status</span>
+                        <span class="endpoint-status" id="status-status">OK</span>
+                    </div>
+                </div>
                 <div class="action-buttons">
+                    <button class="btn" onclick="checkAPIStatus()">Verificar</button>
+                    <button class="btn primary" onclick="openAPIPanel()">Abrir</button>
                     <button class="btn" onclick="refreshAPIs()">Atualizar</button>
                     <button class="btn" onclick="showAPIDetails()">Detalhes</button>
                 </div>
@@ -664,6 +973,414 @@
             alert('Detalhes das APIs serão implementados na próxima versão!');
         }
 
+        // ===============================================
+        // 🔧 API MANAGER FUNCTIONS - GROK TEAM
+        // ===============================================
+
+        // Configuração base da API
+        const API_BASE_URL = 'http://localhost:3003';
+        let connectionRetries = 0;
+        const MAX_RETRIES = 5;
+        let connectionInterval = null;
+
+        // Sistema de reconexão automática
+        function checkConnection() {
+            return fetch(`${API_BASE_URL}/health`, { 
+                method: 'GET',
+                timeout: 3000 
+            }).then(response => {
+                if (response.ok) {
+                    connectionRetries = 0;
+                    if (connectionInterval) {
+                        clearInterval(connectionInterval);
+                        connectionInterval = null;
+                        addLog('🔌 Conexão reestabelecida com sucesso', 'success');
+                    }
+                    return true;
+                }
+                throw new Error('Server not responding');
+            }).catch(error => {
+                if (connectionRetries < MAX_RETRIES) {
+                    connectionRetries++;
+                    addLog(`⚠️ Tentativa de reconexão ${connectionRetries}/${MAX_RETRIES}...`, 'error');
+                    
+                    if (!connectionInterval) {
+                        connectionInterval = setInterval(checkConnection, 5000);
+                    }
+                } else {
+                    addLog('❌ Falha na conexão. Execute recovery-zentraw.bat', 'error');
+                    if (connectionInterval) {
+                        clearInterval(connectionInterval);
+                        connectionInterval = null;
+                    }
+                }
+                return false;
+            });
+        }
+
+        // Testar endpoint específico
+        async function testEndpoint(endpoint) {
+            addLog(`Testando endpoint: ${endpoint}`);
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    method: 'GET',
+                    timeout: 3000
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addLog(`✅ ${endpoint}: OK - ${JSON.stringify(data)}`, 'success');
+                    
+                    // Atualizar status visual
+                    const endpointKey = endpoint.replace('/api/', '').replace('/', '');
+                    const statusElement = document.getElementById(`${endpointKey}-status`);
+                    if (statusElement) {
+                        statusElement.textContent = 'OK';
+                        statusElement.className = 'endpoint-status';
+                    }
+                } else {
+                    addLog(`❌ ${endpoint}: Erro ${response.status}`, 'error');
+                    
+                    // Atualizar status visual
+                    const endpointKey = endpoint.replace('/api/', '').replace('/', '');
+                    const statusElement = document.getElementById(`${endpointKey}-status`);
+                    if (statusElement) {
+                        statusElement.textContent = 'ERROR';
+                        statusElement.className = 'endpoint-status error';
+                    }
+                }
+            } catch (error) {
+                addLog(`❌ ${endpoint}: Falha na conexão - ${error.message}`, 'error');
+                
+                // Atualizar status visual
+                const endpointKey = endpoint.replace('/api/', '').replace('/', '');
+                const statusElement = document.getElementById(`${endpointKey}-status`);
+                if (statusElement) {
+                    statusElement.textContent = 'OFFLINE';
+                    statusElement.className = 'endpoint-status error';
+                }
+            }
+        }
+
+        // Testar conexão com API específica
+        async function testAPIConnection(apiKey) {
+            addLog(`Testando conexão da API: ${apiKey}`);
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/external-apis/test/${apiKey}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog(`✅ ${apiKey}: Conexão OK`, 'success');
+                } else {
+                    addLog(`❌ ${apiKey}: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                addLog(`❌ Erro ao testar ${apiKey}: ${error.message}`, 'error');
+            }
+        }
+
+        // Verificar status das APIs externas
+        async function checkAPIStatus() {
+            try {
+                addLog('Verificando status das APIs externas...');
+                
+                // Verificar conexão primeiro
+                const isConnected = await checkConnection();
+                if (!isConnected) {
+                    addLog('❌ Sem conexão com o servidor', 'error');
+                    return;
+                }
+                
+                const response = await fetch(`${API_BASE_URL}/api/external-apis/status`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const activeCount = data.active;
+                    
+                    // Atualizar painel principal
+                    document.getElementById('api-active-count').textContent = `${activeCount} APIs Ativas`;
+                    document.getElementById('api-last-check').textContent = new Date().toLocaleTimeString();
+                    
+                    // Atualizar status visual
+                    const statusElement = document.getElementById('api-manager-status');
+                    statusElement.className = `status-indicator ${activeCount > 0 ? 'status-online' : 'status-warning'}`;
+                    
+                    // Atualizar endpoints individuais
+                    testEndpoint('/api/health');
+                    testEndpoint('/api/modules');
+                    testEndpoint('/api/status');
+                    
+                    addLog(`APIs verificadas: ${activeCount}/${data.total} ativas`, 'success');
+                } else {
+                    addLog('Erro ao verificar APIs: ' + data.error, 'error');
+                }
+            } catch (error) {
+                connectionRetries++;
+                addLog('Erro de conexão com API Manager: ' + error.message, 'error');
+                
+                if (connectionRetries <= MAX_RETRIES) {
+                    addLog('🔄 Tentando reconectar...', 'error');
+                    setTimeout(() => checkAPIStatus(), 3000);
+                } else {
+                    addLog('❌ Múltiplas falhas. Execute recovery-zentraw.bat', 'error');
+                }
+            }
+        }
+
+        // Abrir painel de APIs expandido
+        // Abrir workspace de APIs
+        async function openAPIPanel() {
+            addLog('Abrindo workspace de APIs...');
+            console.log('🔧 DEBUG: Iniciando openAPIPanel()');
+            
+            try {
+                // Buscar dados das APIs
+                addLog('Fazendo requisição para /api/external-apis/status...');
+                const response = await fetch(`${API_BASE_URL}/api/external-apis/status`);
+                console.log('🔧 DEBUG: Response recebida:', response);
+                const data = await response.json();
+                console.log('🔧 DEBUG: Data parsed:', data);
+                
+                if (data.success) {
+                    addLog('Dados das APIs recebidos com sucesso');
+                    console.log('🔧 DEBUG: Ocultando main-container e mostrando api-workspace');
+                    
+                    // Ocultar main container e mostrar workspace
+                    document.getElementById('main-container').style.display = 'none';
+                    document.getElementById('api-workspace').style.display = 'block';
+                    
+                    console.log('🔧 DEBUG: Containers alterados, construindo conteúdo...');
+                    
+                    // Construir conteúdo do workspace
+                    const workspaceContent = document.getElementById('api-workspace-content');
+                    console.log('🔧 DEBUG: Workspace content element:', workspaceContent);
+                    
+                    console.log('🔧 DEBUG: Construindo HTML do workspace...');
+                    const workspaceHTML = `
+                        <div class="workspace-summary dashboard-card">
+                            <div class="card-header">
+                                <span class="card-title">📊 Resumo Geral</span>
+                                <div class="status-indicator status-online"></div>
+                            </div>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="summary-label">Total de APIs:</span>
+                                    <span class="summary-value highlight">${data.total}</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">APIs Ativas:</span>
+                                    <span class="summary-value highlight">${data.active}</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Status Geral:</span>
+                                    <span class="summary-value highlight">${data.active > 0 ? 'Operacional' : 'Aguardando'}</span>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn primary" onclick="initializeAPIManager()">🚀 Inicializar APIs</button>
+                                <button class="btn" onclick="checkAPIStatus()">🔄 Atualizar Status</button>
+                            </div>
+                        </div>
+                        
+                        ${Object.entries(data.apis).map(([key, api]) => `
+                            <div class="api-card dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-title">${api.name}</span>
+                                    <div class="status-indicator ${api.status === 'active' ? 'status-online' : 'status-offline'}"></div>
+                                </div>
+                                <div class="module-info">
+                                    <p>Status: <span class="highlight">${api.status === 'active' ? '🟢 Ativa' : '🔴 Inativa'}</span></p>
+                                    <p>Configurada: <span class="highlight">${api.configured ? '✅ Sim' : '❌ Não'}</span></p>
+                                    ${api.masked ? `<p>Chave: <span class="highlight">${api.masked}</span></p>` : ''}
+                                </div>
+                                
+                                <div class="api-card-config">
+                                    ${getConfigFieldsForAPI(key, api)}
+                                </div>
+                                
+                                <div class="action-buttons">
+                                    <button class="btn primary" onclick="updateAPIConfig('${key}')">🔄 Atualizar</button>
+                                    <button class="btn" onclick="testAPIConnection('${key}')">🔍 Testar</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    `;
+                    
+                    console.log('🔧 DEBUG: HTML construído, definindo innerHTML...');
+                    workspaceContent.innerHTML = workspaceHTML;
+                    console.log('🔧 DEBUG: Workspace content definido!');
+                    
+                    addLog('Workspace de APIs carregado com sucesso', 'success');
+                } else {
+                    addLog('Erro ao carregar APIs: ' + data.error, 'error');
+                }
+            } catch (error) {
+                addLog('Erro de conexão com API Manager: ' + error.message, 'error');
+            }
+        }
+
+        // Voltar para o painel principal
+        function returnToMainPanel() {
+            document.getElementById('api-workspace').style.display = 'none';
+            document.getElementById('main-container').style.display = 'block';
+            addLog('Retornado ao painel principal');
+        }
+
+        // Inicializar API Manager (Python)
+        async function initializeAPIManager() {
+            try {
+                addLog('Inicializando API Manager...');
+                const response = await fetch(`${API_BASE_URL}/api/external-apis/initialize`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addLog('API Manager inicializado com sucesso', 'success');
+                    addLog('Output: ' + data.output);
+                    checkAPIStatus(); // Atualizar status após inicialização
+                } else {
+                    addLog('Erro ao inicializar API Manager: ' + data.error, 'error');
+                    if (data.output) {
+                        addLog('Error output: ' + data.output, 'error');
+                    }
+                }
+            } catch (error) {
+                addLog('Erro de conexão ao inicializar API Manager: ' + error.message, 'error');
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('apiPanelModal');
+            if (modal && event.target === modal) {
+                closeAPIPanel();
+            }
+        });
+
+        // ===============================================
+        // 🔐 API CONFIGURATION FUNCTIONS
+        // ===============================================
+
+        // Gerar campos de configuração específicos para cada API
+        function getConfigFieldsForAPI(apiKey, apiData) {
+            const configs = {
+                'openai': [
+                    { key: 'OPENAI_API_KEY', label: 'OpenAI API Key', placeholder: 'sk-proj-...', type: 'password' }
+                ],
+                'spotify': [
+                    { key: 'SPOTIFY_CLIENT_ID', label: 'Client ID', placeholder: 'Spotify Client ID', type: 'text' },
+                    { key: 'SPOTIFY_CLIENT_SECRET', label: 'Client Secret', placeholder: 'Spotify Client Secret', type: 'password' }
+                ],
+                'github': [
+                    { key: 'GITHUB_TOKEN', label: 'GitHub Token', placeholder: 'ghp_...', type: 'password' }
+                ],
+                'supabase': [
+                    { key: 'SUPABASE_URL', label: 'Supabase URL', placeholder: 'https://xyz.supabase.co', type: 'text' },
+                    { key: 'SUPABASE_KEY', label: 'Supabase Key', placeholder: 'eyJ...', type: 'password' }
+                ],
+                'blender': [
+                    { key: 'BLENDER_PATH', label: 'Blender Path', placeholder: 'C:/Program Files/Blender.../blender.exe', type: 'text' }
+                ],
+                'stripe': [
+                    { key: 'STRIPE_API_KEY', label: 'Stripe API Key', placeholder: 'sk_test_... ou sk_live_...', type: 'password' }
+                ],
+                'twilio': [
+                    { key: 'TWILIO_ACCOUNT_SID', label: 'Account SID', placeholder: 'AC...', type: 'text' },
+                    { key: 'TWILIO_AUTH_TOKEN', label: 'Auth Token', placeholder: 'Auth Token', type: 'password' }
+                ]
+            };
+
+            const fields = configs[apiKey] || [];
+            return fields.map(field => `
+                <div class="api-config-field">
+                    <label for="${field.key}">${field.label}:</label>
+                    <input 
+                        type="${field.type}" 
+                        id="${field.key}" 
+                        placeholder="${field.placeholder}"
+                        data-api-key="${field.key}"
+                    />
+                </div>
+            `).join('');
+        }
+
+        // Atualizar configuração de uma API específica
+        async function updateAPIConfig(apiType) {
+            try {
+                const apiCard = event.target.closest('.api-card');
+                const inputs = apiCard.querySelectorAll('input[data-api-key]');
+                
+                let updates = [];
+                let hasValues = false;
+                
+                for (const input of inputs) {
+                    const apiKey = input.getAttribute('data-api-key');
+                    const apiValue = input.value.trim();
+                    
+                    if (apiValue) {
+                        hasValues = true;
+                        updates.push({ key: apiKey, value: apiValue });
+                    }
+                }
+                
+                if (!hasValues) {
+                    addLog(`Erro: Nenhuma chave informada para ${apiType}`, 'error');
+                    return;
+                }
+                
+                addLog(`Atualizando configurações para ${apiType}...`);
+                
+                // Enviar atualizações uma por uma
+                for (const update of updates) {
+                    const response = await fetch(`${API_BASE_URL}/api/external-apis/config`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            apiKey: update.key,
+                            apiValue: update.value
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        addLog(`✅ ${update.key} atualizada: ${result.masked}`, 'success');
+                        // Limpar campo após atualização
+                        const input = apiCard.querySelector(`input[data-api-key="${update.key}"]`);
+                        if (input) input.value = '';
+                    } else {
+                        addLog(`❌ Erro ao atualizar ${update.key}: ${result.error}`, 'error');
+                    }
+                }
+                
+                // Atualizar status após as configurações
+                addLog('Atualizando status das APIs...');
+                await checkAPIStatus();
+                
+                // Reabrir painel para mostrar atualizações
+                setTimeout(() => {
+                    closeAPIPanel();
+                    setTimeout(() => openAPIPanel(), 500);
+                }, 1000);
+                
+            } catch (error) {
+                addLog(`Erro ao atualizar ${apiType}: ${error.message}`, 'error');
+            }
+        }
+
+        // ===============================================
+        // END API MANAGER FUNCTIONS
+        // ===============================================
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             addLog('🔧 Zentraw Admin Panel V1.0.0 iniciado', 'success');
@@ -674,6 +1391,7 @@
                 checkModuleHealth('tlb');
                 checkModuleHealth('3dv');
                 checkModuleHealth('mi');
+                checkAPIStatus(); // Verificar APIs também
             }, 1000);
             
             // Configurar verificação periódica
@@ -681,12 +1399,13 @@
                 checkModuleHealth('tlb');
                 checkModuleHealth('3dv');
                 checkModuleHealth('mi');
+                checkAPIStatus(); // Incluir APIs na verificação periódica
             }, 30000); // A cada 30 segundos
             
             // Atualizar uptime a cada segundo
             setInterval(updateUptime, 1000);
             
-            addLog('Sistema de monitoramento ativo');
+            addLog('Sistema de monitoramento ativo com API Manager integrado');
         });
 
         // Limpeza ao sair

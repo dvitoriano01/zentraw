@@ -1,5 +1,25 @@
 # 🤖 ZENTRAW - PROTOCOLO PARA AGENTES IA
 
+**🚫 PROIBIÇÕES ABSOLUTAS - VIOLAÇÃO = FALHA CRÍTICA:**
+
+❌ **NUNCA** utilizar informações não validadas ou inverídicas
+❌ **NUNCA** fazer alegações de marketing sem base técnica real
+❌ **NUNCA** prometer funcionalidades não implementadas
+❌ **NUNCA** usar termos como "AI-powered", "professional-grade", "cinema-quality" sem validação real
+❌ **NUNCA** referenciar documentação oficial de terceiros (Blender, Unity, etc.) sem uso comprovado
+❌ **NUNCA** exagerar métricas (ex: "350% improvement") sem medição real
+❌ **NUNCA** usar nomenclatura técnica falsa (ex: "Blender-inspired" sem implementação real)
+
+**✅ OBRIGAÇÕES CRÍTICAS:**
+
+✅ **SEMPRE** trabalhar SOMENTE com possibilidades reais e comprovadas
+✅ **SEMPRE** tentar viabilizar o inexistente com recursos PRÓPRIOS e REAIS
+✅ **SEMPRE** construir alternativas viáveis através da visão do DEV
+✅ **SEMPRE** deixar claro sobre possibilidades reais de realização
+✅ **SEMPRE** ser 100% transparente sobre capacidades vs limitações
+✅ **SEMPRE** focar em resultados funcionais e satisfatórios para o usuário
+✅ **SEMPRE** documentar com precisão técnica absoluta
+
 🚨🚨🚨 ATENÇÃO: ALERTA DE COMPLIANCE CRÍTICO 🚨🚨🚨
 
 🟢 REGRA DE AUTOMAÇÃO PROATIVA: Sempre que possível, o agente deve executar automaticamente ações técnicas e operacionais, sem aguardar autorização manual, desde que respeite todos os protocolos de compliance e blindagem. Essa automação visa poupar tempo e garantir máxima eficiência, desde que não viole nenhuma regra de segurança ou rastreabilidade.
@@ -30,10 +50,149 @@ Portas oficiais do backend 3d_visualizer: **3004, 3005, 3006** (NUNCA usar outra
 
 ---
 
-**Versão:** MASTER v1.0  
-**Data:** 24 de Julho de 2025  
+**Versão:** MASTER v1.1  
+**Data:** 18 de Agosto de 2025  
+**Última Atualização:** 18/08/2025 - Admin Panel V1.0.0 + PowerShell Integration  
 **Autoridade:** ZENTRAW-MASTER-RULES.md  
 **Aplicação:** OBRIGATÓRIA para TODOS os agentes IA
+
+---
+
+## 🎯 **ZENTRAW MISSION STATEMENT**
+
+O ZENTRAW pretende trazer **ECOSSISTEMA MODULAR INTEGRADO** para criadores de conteúdo musical, reunindo tecnologias de template generation + análise de áudio + visualização 3D + gerenciamento de APIs que **NÃO SÃO UTILIZADAS JUNTAS** em uma solução integrada e estável. Exemplo: template automation + análise musical + renderização Blender + API management centralizado + pipeline completamente integrado.
+
+**🔍 ZENTRAW DIFERENCIAL REAL:**
+Primeira solução que combina: **Admin Panel Centralizado + Template Library Builder + 3D Visualizer + API Manager + PowerShell Automation + Zero Configuração Manual** em uma solução modular para criação musical profissional.
+
+**🎯 ZENTRAW MODULES OVERVIEW:**
+- **Admin Panel V1.0.0:** Central de controle e API management (porta 3003)
+- **Template Library Builder V1.4.0.a.2+:** Sistema de templates (porta 3004) 
+- **3D Visualizer V1.4.0.a.8:** Renderização audiovisual (porta 3005)
+- **PowerShell Management V2.1:** Automação e controle de processos
+- **Music Intelligence:** Em desenvolvimento (porta 3006)
+
+---
+
+## 🛡️ **POWERSH ELL MANAGEMENT INTEGRATION**
+
+**REGRA CRÍTICA:** Todos os agentes devem conhecer e utilizar o sistema PowerShell Management V2.1 para controle de processos e debugging.
+
+### ✅ SCRIPTS PRINCIPAIS DISPONÍVEIS:
+
+- **zentraw_master_control_v2_fixed.ps1:** Script principal de controle
+- **port-3003-detective.ps1:** Diagnóstico específico do Admin Panel
+- **ps-master.bat:** Interface interativa para usuário
+- **ps-restart.bat:** Restart automático do Admin Panel
+- **ps-nuclear.bat:** Reset completo de processos Node.js
+
+### 🔐 UTILIZAÇÃO OBRIGATÓRIA:
+
+```powershell
+# Para restart do Admin Panel:
+ps-restart.bat
+
+# Para diagnóstico completo:
+ps-master.bat # opção 1 (Status)
+
+# Para problemas críticos:
+ps-nuclear.bat # com confirmação
+```
+
+### 🛑 DEBUGS E TROUBLESHOOTING:
+
+- **SEMPRE** usar PowerShell scripts antes de debugging manual
+- **SEMPRE** verificar portas ocupadas via port-detective antes de iniciar serviços
+- **SEMPRE** usar restart automático em vez de kill manual + start manual
+
+---
+
+## 🔒 **ADMIN PANEL INTEGRATION - PROTECTION PROTOCOL**
+
+**REGRA CRÍTICA:** O Admin Panel V1.0.0 (porta 3003) é o centro de controle do ecossistema Zentraw.
+
+### ✅ OPERAÇÕES QUE EXIGEM ADMIN PANEL:
+
+- Monitoramento de status dos módulos
+- Configuração e teste de APIs externas
+- Logs centralizados do sistema
+- Health checks automáticos
+
+### 🔐 IMPLEMENTAÇÃO OBRIGATÓRIA:
+
+```javascript
+// Endpoints críticos disponíveis:
+// GET  /health                     - Health check geral
+// GET  /api/status                 - Status dos módulos
+// GET  /api/external-apis/status   - Status das APIs externas
+// GET  /api/external-apis/test/:api - Teste de APIs específicas
+// POST /api/external-apis/config   - Configuração de APIs
+```
+
+### 🛑 PROTEÇÃO DO ADMIN PANEL:
+
+- **SEMPRE** verificar se porta 3003 está livre antes de iniciar
+- **SEMPRE** usar PowerShell scripts para restart
+- **NUNCA** modificar estrutura core sem backup
+- **SEMPRE** testar health check após mudanças
+
+---
+
+## 🛡️ **MÓDULOS BLINDADOS - PROTEÇÃO CONTRA QUEBRAS**
+
+**PROBLEMA:** Módulos funcionais podem quebrar com edições/melhoramentos futuros.
+
+### 🔒 ESTRATÉGIAS DE BLINDAGEM ZENTRAW:
+
+#### 1. **VERSIONAMENTO GRANULAR POR MÓDULO**
+
+```
+Admin_Panel/
+├── V1.0.0/           ← BLINDADO (funcionando)
+├── V1.1.0-dev/       ← Desenvolvimento
+└── config/           ← Compartilhado
+
+Template Library Builder/
+├── V1.4.0.a.2+/      ← BLINDADO (funcionando)
+├── V1.4.0.a.3-dev/   ← Desenvolvimento
+└── shared/           ← Componentes reutilizáveis
+```
+
+#### 2. **POWERSH ELL SAFETY LATCH**
+
+```powershell
+# Safety Latch obrigatório para operações críticas
+function Confirm-CriticalOperation {
+    if (!$Force) {
+        $confirm = Read-Host "CONFIRMA OPERAÇÃO CRÍTICA? (SIM/não)"
+        if ($confirm -ne 'SIM') { return $false }
+    }
+    return $true
+}
+```
+
+#### 3. **HEALTH CHECK INTEGRATION**
+
+```javascript
+// Verificação de integridade na inicialização
+const MODULE_INTEGRITY = {
+  "admin-panel": { port: 3003, endpoint: "/health" },
+  "template-builder": { port: 3004, endpoint: "/health" },
+  "3d-visualizer": { port: 3005, endpoint: "/health" }
+};
+```
+
+#### 4. **BACKUP AUTOMÁTICO VIA POWERSHELL**
+
+```powershell
+# Backup antes de qualquer operação crítica
+function Backup-ZentrawModule {
+    param([string]$ModuleName)
+    $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $backupPath = "backups/${ModuleName}_${timestamp}"
+    # Backup implementation
+}
+```
 
 ---
 

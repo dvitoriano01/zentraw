@@ -1,4 +1,51 @@
 # 🤖 ZENTRAW - PROTOCOLO PARA AGENTES IA
+# =============================================================
+# [ATUALIZAÇÃO 20/08/2025 - TROCA DE WORKSPACE E CONTEXTO DO DIA]
+# =============================================================
+
+## 🚨 TROCA DE WORKSPACE E RESET DE MEMÓRIA DO AGENTE
+
+Sempre que o workspace for trocado (ex: mudança de diretório raiz, inclusão de novos repositórios, alteração do ambiente VS Code/WSL), a memória do agente será resetada. É obrigatório:
+
+- Registrar o novo diretório raiz do workspace (ex: ~/GitHub/clone no WSL)
+- Validar a presença de todos os repositórios e módulos necessários
+- Reexecutar a rotina de leitura documental e validação física dos arquivos
+- Atualizar o contexto operacional do agente, incluindo:
+    - Data da operação
+    - Ambiente ativo (ex: WSL Ubuntu 22.04.4 LTS)
+    - Versão do Node.js/NVM
+    - Status dos terminais e comandos em uso
+    - Status dos módulos e do dashboard
+
+## 🗓️ CONTEXTO OPERACIONAL DO DIA (20/08/2025)
+
+- Ambiente: WSL Ubuntu 22.04.4 LTS
+- Node.js: v18.20.8 (NVM)
+- Diretório raiz: ~/GitHub/clone
+- Repositórios ativos: zentraw, gsap-threejs-inertia_DENYS, etc.
+- Dashboard Zentraw: configurado para gerenciamento modular, com paths atualizados para o novo 3D Visualizer
+- Atenção especial: evitar execução de scripts Python automáticos ao iniciar módulos externos
+
+## 🖥️ USO DO WSL E TERMINAL
+
+- Todas as operações devem ser realizadas via terminal WSL (bash)
+- Proibido uso de comandos Windows/PowerShell para módulos Zentraw
+- Sempre validar o ambiente Node.js/NVM antes de iniciar qualquer serviço
+- Registrar comandos e outputs relevantes para rastreabilidade
+
+## 🔄 PRÓXIMOS PASSOS COM O DASHBOARD
+
+1. Validar a inicialização do dashboard no novo workspace
+2. Testar o start dos módulos, especialmente o 3D Visualizer, garantindo que apenas o servidor Node.js seja iniciado
+3. Atualizar README.md, CHANGELOG.md e demais documentos dos módulos conforme alterações
+4. Registrar todas decisões e mudanças em ZENTRAW-AGENT-DECISIONS-LOG.md
+5. Executar VALIDATION-CHECKLIST.md após cada etapa
+
+## ⚠️ COMMIT OBRIGATÓRIO
+
+Após qualquer atualização documental ou operacional, é obrigatório realizar commit com mensagem clara, incluindo data, contexto da troca de workspace, e próximos passos definidos.
+
+# =============================================================
 
 **🚫 PROIBIÇÕES ABSOLUTAS - VIOLAÇÃO = FALHA CRÍTICA:**
 

@@ -548,6 +548,95 @@ app.get('/assets/:file', (req, res) => {
 // ERROR HANDLERS
 // ==========================================
 
+// ===============================================
+// 🌐 ZENTRAW GLOBAL CONFIGURATION ROUTES
+// ===============================================
+
+// Endpoint para detectar conflitos de configuração
+app.get('/api/config/conflicts', (req, res) => {
+    try {
+        const conflicts = [];
+        
+        // Verificar conflitos de API
+        const apiKeys = ['OPENAI_API_KEY', 'SPOTIFY_CLIENT_ID', 'SPOTIFY_CLIENT_SECRET', 
+                        'GITHUB_TOKEN', 'SUPABASE_URL', 'SUPABASE_KEY', 'BLENDER_PATH'];
+        
+        apiKeys.forEach(key => {
+            const value = process.env[key];
+            if (value && (value.includes('your-') || value.includes('example') || value === '')) {
+                conflicts.push({
+                    type: 'api_configuration',
+                    key: key,
+                    issue: 'Chave de API não configurada adequadamente'
+                });
+            }
+        });
+        
+        res.json({
+            success: true,
+            conflicts: conflicts,
+            total: conflicts.length,
+            checked_at: new Date().toISOString()
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao detectar conflitos',
+            details: error.message
+        });
+    }
+});
+
+// Endpoint para status global do Zentraw
+app.get('/api/global/status', (req, res) => {
+    try {
+        const globalStatus = {
+            admin_panel: {
+                status: 'online',
+                port: PORT,
+                version: '1.0.0'
+            },
+            apis: {
+                configured: 0,
+                total: 7
+            }
+        };
+        
+        // Contar APIs configuradas
+        const apiKeys = ['OPENAI_API_KEY', 'SPOTIFY_CLIENT_ID', 'GITHUB_TOKEN', 
+                        'SUPABASE_URL', 'BLENDER_PATH', 'STRIPE_API_KEY', 'TWILIO_ACCOUNT_SID'];
+        
+        apiKeys.forEach(key => {
+            const isConfigured = process.env[key] && 
+                               process.env[key] !== '' && 
+                               !process.env[key].includes('your-') && 
+                               !process.env[key].includes('example');
+            
+            if (isConfigured) {
+                globalStatus.apis.configured++;
+            }
+        });
+        
+        res.json({
+            success: true,
+            zentraw_global_status: globalStatus,
+            timestamp: new Date().toISOString()
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao obter status global',
+            details: error.message
+        });
+    }
+});
+
+// ===============================================
+// END GLOBAL CONFIGURATION ROUTES
+// ===============================================
+
 // 404 Handler
 app.use((req, res) => {
     res.status(404).json({

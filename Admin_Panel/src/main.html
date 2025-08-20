@@ -138,6 +138,7 @@
             transform: translateX(-50%);
             z-index: 10;
             text-align: center;
+            margin-left: 100px; /* Evita sobreposição com botão admin */
         }
 
         .header h1 {
@@ -179,6 +180,10 @@
             text-transform: uppercase;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .admin-toggle-btn:hover {
@@ -551,11 +556,15 @@
             padding: 15px;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
         .api-card h4 {
             color: var(--accent-primary);
             margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .api-card-status {
@@ -630,6 +639,13 @@
             border-radius: 3px;
             font-size: 0.7rem;
             color: var(--text-secondary);
+            word-break: break-all;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         @keyframes fadeIn {
@@ -1378,13 +1394,130 @@
         }
 
         // ===============================================
-        // END API MANAGER FUNCTIONS
+        // GLOBAL ZENTRAW CONFIGURATION MANAGER
+        // ===============================================
+        
+        // Função para detectar conflitos de configuração
+        async function detectConfigConflicts() {
+            try {
+                addLog('🔍 Verificando conflitos de configuração...');
+                
+                const conflicts = [];
+                
+                // Verificar conflitos de porta
+                const modules = ['tlb', '3dv', 'mi'];
+                const ports = ['3004', '3005', '3006'];
+                
+                for (let i = 0; i < modules.length; i++) {
+                    try {
+                        const response = await fetch(`http://localhost:${ports[i]}/health`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.port && data.port !== ports[i]) {
+                                conflicts.push(`${modules[i]}: Esperado porta ${ports[i]}, encontrado ${data.port}`);
+                            }
+                        }
+                    } catch (error) {
+                        // Módulo offline, não é conflito
+                    }
+                }
+                
+                // Verificar conflitos de API
+                const apiStatus = await fetch('/api/external-apis/status');
+                const apis = await apiStatus.json();
+                
+                if (apis.success) {
+                    Object.entries(apis.apis).forEach(([key, api]) => {
+                        if (api.status === 'active' && (!api.masked || api.masked === 'null')) {
+                            conflicts.push(`${key}: API configurada mas chave inválida`);
+                        }
+                    });
+                }
+                
+                if (conflicts.length > 0) {
+                    addLog(`⚠️ Conflitos detectados: ${conflicts.length}`, 'warning');
+                    conflicts.forEach(conflict => addLog(`   - ${conflict}`, 'warning'));
+                } else {
+                    addLog('✅ Nenhum conflito detectado', 'success');
+                }
+                
+                return conflicts;
+                
+            } catch (error) {
+                addLog(`Erro na detecção de conflitos: ${error.message}`, 'error');
+                return [];
+            }
+        }
+        
+        // Função para aplicar configurações globalmente
+        async function applyGlobalConfig(config) {
+            try {
+                addLog('🔧 Aplicando configurações globalmente...');
+                
+                // Aplicar no Admin Panel (já está aplicado)
+                
+                // Aplicar nos outros módulos via API
+                const modules = [
+                    { id: 'tlb', port: '3004', name: 'Template Library Builder' },
+                    { id: '3dv', port: '3005', name: '3D Visualizer' },
+                    { id: 'mi', port: '3006', name: 'Music Intelligence' }
+                ];
+                
+                for (const module of modules) {
+                    try {
+                        const response = await fetch(`http://localhost:${module.port}/api/config`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(config)
+                        });
+                        
+                        if (response.ok) {
+                            addLog(`✅ ${module.name}: Configuração aplicada`, 'success');
+                        } else {
+                            addLog(`⚠️ ${module.name}: Falha na aplicação`, 'warning');
+                        }
+                    } catch (error) {
+                        addLog(`❌ ${module.name}: Offline ou erro`, 'error');
+                    }
+                }
+                
+                addLog('🎯 Configuração global concluída');
+                
+            } catch (error) {
+                addLog(`Erro na aplicação global: ${error.message}`, 'error');
+            }
+        }
+        
+        // Função para fazer Admin Panel acessível globalmente
+        window.openZentrawAdmin = function() {
+            window.open('http://localhost:3003', '_blank', 'width=1400,height=900');
+        };
+        
+        // Função para monitoramento contínuo
+        function startGlobalMonitoring() {
+            addLog('🛡️ Monitoramento global ativo');
+            
+            // Verificar conflitos a cada 60 segundos
+            setInterval(detectConfigConflicts, 60000);
+            
+            // Verificar todos os módulos a cada 30 segundos
+            setInterval(() => {
+                checkModuleHealth('tlb');
+                checkModuleHealth('3dv');
+                checkModuleHealth('mi');
+                checkAPIStatus();
+            }, 30000);
+        }
+
+        // ===============================================
+        // END GLOBAL CONFIGURATION MANAGER
         // ===============================================
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             addLog('🔧 Zentraw Admin Panel V1.0.0 iniciado', 'success');
             addLog('Inicializando verificação de módulos...');
+            addLog('Sistema de monitoramento ativo com API Manager integrado');
             
             // Verificar módulos na inicialização
             setTimeout(() => {
@@ -1392,7 +1525,11 @@
                 checkModuleHealth('3dv');
                 checkModuleHealth('mi');
                 checkAPIStatus(); // Verificar APIs também
+                detectConfigConflicts(); // Verificar conflitos
             }, 1000);
+            
+            // Iniciar monitoramento global
+            startGlobalMonitoring();
             
             // Configurar verificação periódica
             healthCheckInterval = setInterval(() => {

@@ -46,6 +46,45 @@ Qualquer menção a TemplateLibraryBuilder, portas antigas (5001) ou caminhos le
 
 NÃO USAR A TASK Restart Backend V1.4.0.a.2
 
+🚀🚀🚀 ENVIRONMENT MIGRATION COMPLETO: WSL UBUNTU 22.04 🚀🚀🚀
+
+**OBRIGATÓRIO:** TODO desenvolvimento Zentraw agora opera EXCLUSIVAMENTE no ambiente WSL Ubuntu 22.04.4 LTS. 
+
+✅ **WSL ENVIRONMENT REQUIREMENTS:**
+- Sistema: WSL Ubuntu 22.04.4 LTS  
+- Node.js: v18.20.8 (via NVM)
+- NPM: v10.8.2+
+- Git: Configurado com credenciais do usuário
+- Diretório base: `~/zentraw/` (WSL filesystem)
+
+✅ **ROTINA OPERACIONAL OBRIGATÓRIA:**
+```bash
+# 1. Acesso WSL
+wsl -d Ubuntu-22.04
+
+# 2. Ambiente Node.js
+source ~/.bashrc && nvm use 18
+
+# 3. Projeto Zentraw
+cd ~/zentraw
+
+# 4. Admin Panel (OBRIGATÓRIO - Controle Central)
+cd ~/zentraw/Admin_Panel && npm start
+```
+
+✅ **ADMIN PANEL COMO CENTRO DE CONTROLE:**
+- URL: http://localhost:3003 (porta 3003 - OBRIGATÓRIA)
+- Todas as configurações globais passam pelo Admin Panel
+- APIs externas gerenciadas centralmente
+- Detecção automática de conflitos
+- Monitoramento de todos os módulos em tempo real
+
+✅ **SCRIPTS DE CONTROLE WSL:**
+- `~/zentraw/zentraw-wsl-control.sh` - Controle de módulos
+- `~/zentraw/zentraw-wsl-migration-consolidated.sh` - Rotina completa
+
+🚫 **PROIBIDO:** Usar comandos Windows, PowerShell ou ambiente Windows para desenvolvimento Zentraw. Toda operação deve ser WSL-native.
+
 Portas oficiais do backend 3d_visualizer: **3004, 3005, 3006** (NUNCA usar outras portas neste módulo).
 
 ---

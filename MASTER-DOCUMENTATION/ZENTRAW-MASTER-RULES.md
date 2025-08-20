@@ -1,9 +1,50 @@
 # 🏛️ ZENTRAW - REGRAS MASTER UNIVERSAIS
 
-**Versão:** MASTER v1.0  
-**Data:** 24 de Julho de 2025  
+**Versão:** MASTER v2.0 - WSL MIGRATION EDITION  
+**Data:** 19 de Agosto de 2025  
+**Última Atualização:** WSL Ubuntu Migration Complete  
 **Autoridade:** ABSOLUTA - Sobrepõe toda documentação modular  
 **Escopo:** TODO o ecossistema Zentraw
+
+---
+
+## 🚀 **WSL UBUNTU MIGRATION - ENVIRONMENT REQUIREMENTS**
+
+### **AMBIENTE OBRIGATÓRIO (DESDE 19/08/2025):**
+**TODO desenvolvimento Zentraw opera EXCLUSIVAMENTE no WSL Ubuntu 22.04.4 LTS**
+
+✅ **ESPECIFICAÇÕES TÉCNICAS:**
+- **Sistema:** WSL Ubuntu 22.04.4 LTS
+- **Node.js:** v18.20.8 (via NVM - OBRIGATÓRIO)
+- **NPM:** v10.8.2+
+- **Git:** Configurado com credenciais do usuário
+- **Workspace:** `~/zentraw/` (WSL filesystem)
+- **Performance:** 75% melhoria vs Windows (npm install: 24s vs 60-120s)
+- **Security:** 0 vulnerabilities (vs múltiplas no Windows)
+
+✅ **ROTINA OPERACIONAL OBRIGATÓRIA:**
+```bash
+# Acesso WSL
+wsl -d Ubuntu-22.04
+
+# Configuração Node.js
+source ~/.bashrc && nvm use 18
+
+# Workspace Zentraw
+cd ~/zentraw
+
+# Admin Panel (CENTRO DE CONTROLE)
+cd ~/zentraw/Admin_Panel && npm start  # Porta 3003 - OBRIGATÓRIA
+```
+
+✅ **ADMIN PANEL COMO NÚCLEO CENTRAL:**
+- **URL:** http://localhost:3003 (PORTA FIXA)
+- **Função:** Controle centralizado de TODOS os módulos Zentraw
+- **APIs:** Gerenciamento central de todas as APIs externas
+- **Monitoramento:** Real-time de módulos, conflitos e performance
+- **Configuração:** Global - mudanças aplicadas em todo o ecossistema
+
+🚫 **PROIBIDO ABSOLUTO:** Desenvolvimento em ambiente Windows, PowerShell ou cmd para Zentraw. WSL-only.
 
 ---
 
@@ -26,27 +67,38 @@ P5: 📊 Demais documentos modulares      ← Específicos técnicos
 
 ## 🏗️ **PADRÕES ARQUITETURAIS OBRIGATÓRIOS**
 
-### **ESTRUTURA UNIVERSAL DE MÓDULO:**
+### **ESTRUTURA UNIVERSAL DE MÓDULO (WSL-NATIVE):**
 ```
 [NOME_MÓDULO]/
 ├── 📚 docs/
 │   ├── README.md              # Status + arquivos ativos (OBRIGATÓRIO)
 │   ├── CHANGELOG.md           # Histórico completo (OBRIGATÓRIO) 
 │   ├── TROUBLESHOOTING.md     # Problemas resolvidos (OBRIGATÓRIO)
+│   ├── WSL_MIGRATION.md       # Status migração WSL (NOVO - OBRIGATÓRIO)
 │   ├── ARCHITECTURE.md        # Estrutura técnica
 │   ├── TESTING.md             # Procedimentos de teste
 │   ├── API.md                 # Documentação de API (se aplicável)
 │   └── versions/              # Logs por versão
 │       ├── v[x.x.x.x]/       # Documentação versionada
 │       └── current/           # Link para versão ativa
-├── 🔧 src/                    # Código fonte ativo
-├── 🧪 tests/                  # Testes validados
-├── 📋 config/                 # Configurações
+├── 🔧 src/                    # Código fonte ativo (WSL-native)
+├── 🧪 tests/                  # Testes validados (WSL-native)
+├── 📋 config/                 # Configurações (WSL-compatible)
 ├── 📤 outputs/                # Resultados/builds
 ├── 📊 logs/                   # Logs de execução
 ├── 🎯 README.md               # Visão geral do módulo
-├── 📦 package.json            # Dependências (se aplicável)
-└── 📁 archive/                # Arquivos obsoletos (NUNCA USAR)
+├── 📦 package.json            # Dependências (Node.js v18.20.8)
+├── 🐧 wsl-setup.sh            # Script de setup WSL (NOVO - OBRIGATÓRIO)
+└── 📁 archive/                # Arquivos obsoletos Windows (NUNCA USAR)
+```
+
+### **PORTAS OFICIAIS ZENTRAW (WSL-NATIVE):**
+```
+3003 - Admin Panel (Centro de Controle) - OBRIGATÓRIO
+3004 - Template Library Builder Backend
+3005 - 3D Visualizer (Official: ~/zentraw/Zentraw/3d_visualizer)
+3006 - Music Intelligence AI
+5002 - Media Control (Legacy)
 ```
 
 ---

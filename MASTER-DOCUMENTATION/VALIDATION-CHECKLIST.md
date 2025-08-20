@@ -1,28 +1,50 @@
 # ✅ ZENTRAW - CHECKLIST DE VALIDAÇÃO
 
-**Versão:** MASTER v1.0  
-**Data:** 25 de Julho de 2025  
+**Versão:** MASTER v1.1 - WORKSPACE TRANSITION EDITION  
+**Data:** 20 de Agosto de 2025  
 **Autoridade:** AI-AGENT-PROTOCOL.md  
 **Aplicação:** Validação obrigatória após qualquer modificação
 
 ---
 
-## 🔍 **CHECKLIST DE VALIDAÇÃO V1.4.0.a.7 - 25/07/2025**
+## 🔍 **CHECKLIST DE VALIDAÇÃO - WORKSPACE TRANSITION 20/08/2025**
+
+### **🔄 VALIDAÇÃO DE TROCA DE WORKSPACE**
+
+#### **1.1 Workspace Configuration**
+- ✅ **Diretório Raiz:** ~/GitHub/clone (WSL) / C:\Users\Denys Victoriano\Documents\GitHub\clone (Windows)
+- ✅ **Repositórios Inclusos:** zentraw, gsap-threejs-inertia_DENYS, outros necessários
+- ✅ **Acesso:** VS Code pode acessar todos os diretórios necessários
+- ✅ **Mapeamento WSL:** Funcional entre Windows e WSL paths
+
+#### **1.2 Dashboard Zentraw V1.0.0**
+- ✅ **Localização:** zentraw\Zentraw\dashboard\
+- ✅ **Configuração:** server.js atualizado com novos paths
+- ✅ **3D Visualizer Path:** Atualizado para repositório externo
+- ✅ **Segurança:** Comandos configurados para evitar Python automático
+- 🔧 **Teste Funcionamento:** PENDENTE - Aguardando validação
+
+#### **1.3 Instruções para Continuidade**
+- ✅ **Protocolo Atualizado:** AI-AGENT-PROTOCOL.md com instruções completas
+- ✅ **Status Documentado:** MODULE-STATUS-TRACKER.md atualizado
+- ✅ **Decisões Registradas:** ZENTRAW-AGENT-DECISIONS-LOG.md completo
+- ✅ **Regras Master:** ZENTRAW-MASTER-RULES.md com contexto do dia
 
 ### **📊 1. CONSISTÊNCIA DOCUMENTAL**
 
-#### **1.1 Documentação Master**
-- ✅ **ZENTRAW-MASTER-RULES.md:** Consultado e respeitado
-- ✅ **MODULE-ARCHITECTURE-STANDARD.md:** Padrões aplicados
-- ✅ **MODULE-STATUS-TRACKER.md:** Atualizado com V1.4.0.a.7
-- ✅ **AI-AGENT-PROTOCOL.md:** Regra de blindagem adicionada
-- ✅ **ZENTRAW-AGENT-DECISIONS-LOG.md:** Decisões registradas
+#### **1.1 Documentação Master (ATUALIZADA 20/08/2025)**
+- ✅ **ZENTRAW-MASTER-RULES.md:** Atualizado com workspace transition
+- ✅ **MODULE-ARCHITECTURE-STANDARD.md:** Padrões mantidos
+- ✅ **MODULE-STATUS-TRACKER.md:** Atualizado com status atual
+- ✅ **AI-AGENT-PROTOCOL.md:** Instruções de troca de workspace adicionadas
+- ✅ **ZENTRAW-AGENT-DECISIONS-LOG.md:** Decisão #010 registrada
+- ✅ **VALIDATION-CHECKLIST.md:** Este documento atualizado
 
-#### **1.2 Documentação Modular**
-- ❓ **3d-visualizer/docs/README.md:** REQUER ATUALIZAÇÃO
-- ❓ **3d-visualizer/docs/CHANGELOG.md:** REQUER CRIAÇÃO
-- ❓ **3d-visualizer/docs/TROUBLESHOOTING.md:** REQUER CRIAÇÃO
-- ❓ **3d-visualizer/docs/ARCHITECTURE.md:** REQUER CRIAÇÃO
+#### **1.2 Dashboard Zentraw**
+- ✅ **README.md:** Documentação completa do dashboard
+- ✅ **server.js:** Configurado com paths atualizados
+- ✅ **package.json:** Dependências instaladas
+- 🔧 **Teste de Funcionamento:** REQUER VALIDAÇÃO
 
 ### **📁 2. INTEGRIDADE ARQUITETURAL**
 

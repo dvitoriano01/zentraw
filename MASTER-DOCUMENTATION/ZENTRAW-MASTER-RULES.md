@@ -1,16 +1,34 @@
 # 🏛️ ZENTRAW - REGRAS MASTER UNIVERSAIS
 
-**Versão:** MASTER v2.0 - WSL MIGRATION EDITION  
-**Data:** 19 de Agosto de 2025  
-**Última Atualização:** WSL Ubuntu Migration Complete  
+**Versão:** MASTER v2.1 - WORKSPACE TRANSITION EDITION  
+**Data:** 20 de Agosto de 2025  
+**Última Atualização:** Troca de Workspace + Dashboard Integration Complete  
 **Autoridade:** ABSOLUTA - Sobrepõe toda documentação modular  
 **Escopo:** TODO o ecossistema Zentraw
 
 ---
 
+## 🔄 **TROCA DE WORKSPACE E RESET DE MEMÓRIA DO AGENTE (20/08/2025)**
+
+### **CONTEXTO CRÍTICO:**
+Workspace foi alterado para incluir TODOS os repositórios necessários. Memória do agente reseta a cada troca de workspace. É OBRIGATÓRIO documentar todo o progresso e instruções para continuidade.
+
+### **WORKSPACE ATUAL (DESDE 20/08/2025):**
+- **Diretório Raiz:** `~/GitHub/clone` (WSL) / `C:\Users\Denys Victoriano\Documents\GitHub\clone` (Windows mapping)
+- **Repositórios Inclusos:** zentraw, gsap-threejs-inertia_DENYS, outros módulos necessários
+- **3D Visualizer Oficial:** `C:\Users\Denys Victoriano\Documents\GitHub\clone\gsap-threejs-inertia_DENYS\Grok_Blender_Integration`
+- **Dashboard Zentraw:** Configurado em `zentraw\Zentraw\dashboard\` para gerenciamento modular
+
+### **DASHBOARD ZENTRAW - STATUS 20/08/2025:**
+- **Localização:** `c:\Users\Denys Victoriano\Documents\GitHub\clone\zentraw\Zentraw\dashboard\`
+- **Função:** Gerenciamento modular - inicia apenas um módulo por vez
+- **Porta:** 3000 (dashboard principal)
+- **Status:** Configurado com novos paths, incluindo 3D Visualizer externo
+- **Segurança:** Configurado para NÃO executar scripts Python automáticos
+
 ## 🚀 **WSL UBUNTU MIGRATION - ENVIRONMENT REQUIREMENTS**
 
-### **AMBIENTE OBRIGATÓRIO (DESDE 19/08/2025):**
+### **AMBIENTE OBRIGATÓRIO (ATUALIZADO 20/08/2025):**
 **TODO desenvolvimento Zentraw opera EXCLUSIVAMENTE no WSL Ubuntu 22.04.4 LTS**
 
 ✅ **ESPECIFICAÇÕES TÉCNICAS:**

@@ -1,0 +1,18 @@
+    <script>
+        // Zentraw Agent agora é carregado via script externo em http://localhost:3007/zentraw-agent.js
+        // Função de compatibilidade para casos onde o script externo não carrega
+        function openZentrawAgent(config = {}) {
+            if (typeof ZentrawAgent !== 'undefined') {
+                // Script externo carregado - usar implementação externa
+                if (!window.zentrawAgent) {
+                    window.zentrawAgent = new ZentrawAgent(config);
+                }
+                window.zentrawAgent.open();
+            } else {
+                // Fallback caso o script externo não carregue
+                console.warn('⚠️ Zentraw Agent externo não carregado. Verifique se o servidor está rodando em localhost:3007');
+                alert('🤖 Zentraw Agent indisponível.\n\nVerifique se o servidor está rodando:\nnode Agent/src/server.js');
+            }
+        }
+    </script>
+</head>

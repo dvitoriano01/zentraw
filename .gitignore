@@ -1,21 +1,30 @@
 # ===============================================
 # 🔒 ZENTRAW - SECURITY FOCUSED .gitignore
 # ===============================================
-# VERSÃO: SECURITY HARDENED v1.0
-# DATA: 20 de Agosto de 2025
+# VERSÃO: SECURITY HARDENED v1.1 - 21/08/2025
+# ATUALIZAÇÃO CRÍTICA: Proteção total de chaves API
 
 # ===============================================
 # 🚨 CRITICAL SECURITY - API KEYS & SECRETS
 # ===============================================
 
-# Environment files (NEVER COMMIT)
+# Environment files (NEVER COMMIT) - ABSOLUTA PRIORIDADE
 .env
+.env.*
+*.env
 .env.local
 .env.development
 .env.production
 .env.staging
 .env.test
-*.env
+.env.backup
+
+# ZENTRAW SPECIFIC PROTECTION
+Agent/.env*
+Admin_Panel/.env*
+Zentraw/.env*
+Template*/.env*
+3d_visualizer/.env*
 
 # API Keys and Secrets
 **/config/secrets/*
@@ -24,6 +33,9 @@
 **/*keys*
 **/*token*
 **/api-keys/*
+*openai*key*
+*spotify*key*
+*github*token*
 
 # Specific API configuration files
 spotify-config.json

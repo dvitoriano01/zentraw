@@ -1,6 +1,24 @@
 # 🎯 ZENTRAW AGENT - PREPARAÇÃO PARA PRÓXIMA SESSÃO
 
-## 📋 CHECKLIST DE INICIALIZAÇÃO
+## � ALERTA DE SEGURANÇA CRÍTICO
+
+### **ANTES DE QUALQUER AÇÃO - RESOLVER EXPOSIÇÃO OPENAI:**
+```bash
+# 🚨 CHAVE OPENAI EXPOSTA NO COMMIT ff188abc...
+# 📁 Arquivo: /zentraw/Agent/.env
+# 🔍 Ver: 🚨-SECURITY-ALERT-OPENAI-KEY-20AGO2025.md
+
+# 1. INVALIDAR CHAVE OPENAI (https://platform.openai.com/api-keys)
+# 2. GERAR NOVA CHAVE
+# 3. REMOVER .env DO REPOSITÓRIO
+git rm --cached Agent/.env
+echo "Agent/.env" >> .gitignore
+
+# 4. VERIFICAR SEGURANÇA
+grep -r "sk-" . --exclude-dir=node_modules --exclude="*.md"
+```
+
+## �📋 CHECKLIST DE INICIALIZAÇÃO
 
 ### **1. Verificar Ambiente**
 ```bash

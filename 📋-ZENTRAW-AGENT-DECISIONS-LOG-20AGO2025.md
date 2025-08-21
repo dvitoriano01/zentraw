@@ -145,9 +145,24 @@
 ### **Documentação Criada:**
 - ✅ README.md Agent
 - ✅ package.json configurado
-- ✅ .env com OpenAI key
+- 🚨 .env com OpenAI key (PROBLEMA DE SEGURANÇA!)
 - ✅ Script inicialização
 - ✅ Troubleshooting guide
+
+## 🚨 ALERTA DE SEGURANÇA CRÍTICO IDENTIFICADO
+
+**PROBLEMA:** Chave OpenAI exposta no commit ff188abc5d77d9469f80ec786b13d521ecf3b90b  
+**ARQUIVO:** `/zentraw/Agent/.env` linha 2  
+**AÇÃO:** Sessão suspensa para resolução de segurança  
+**DOCUMENTO:** 🚨-SECURITY-ALERT-OPENAI-KEY-20AGO2025.md criado  
+
+### **Próxima Sessão - PRIORIDADE CRÍTICA:**
+1. 🚨 **PRIMEIRO:** Invalidar chave OpenAI exposta
+2. 🚨 **SEGUNDO:** Implementar protocolo de segurança
+3. 🔧 **TERCEIRO:** Resolver ERR_CONNECTION_REFUSED static files
+4. 🧪 **QUARTO:** Testar Agent end-to-end
+
+**STATUS FINAL:** SUSPENSO - RESOLUÇÃO DE SEGURANÇA OBRIGATÓRIA
 
 ## 🔮 IMPACTO DAS DECISÕES
 

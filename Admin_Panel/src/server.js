@@ -241,8 +241,8 @@ app.post('/api/external-apis/config', (req, res) => {
     }
 });
 
-// Endpoint para testar conexão com APIs específicas
-app.get('/api/external-apis/test/:apiType', (req, res) => {
+// Endpoint para testar conexão REAL com APIs específicas
+app.get('/api/external-apis/test/:apiType', async (req, res) => {
     try {
         const { apiType } = req.params;
         
@@ -254,63 +254,443 @@ app.get('/api/external-apis/test/:apiType', (req, res) => {
                 error: 'Tipo de API inválido'
             });
         }
+
+        // IMPLEMENTAÇÃO DE TESTES REAIS
+        let testResult;
         
-        // Simulação de teste de conexão
-        const testResults = {
-            openai: {
-                endpoint: 'https://api.openai.com/v1/models',
-                status: process.env.OPENAI_API_KEY ? 'configured' : 'not_configured',
-                message: process.env.OPENAI_API_KEY ? 'Chave configurada' : 'Chave não configurada'
-            },
-            spotify: {
-                endpoint: 'https://api.spotify.com/v1/me',
-                status: (process.env.SPOTIFY_CLIENT_ID && process.env.SPOTIFY_CLIENT_SECRET) ? 'configured' : 'not_configured',
-                message: (process.env.SPOTIFY_CLIENT_ID && process.env.SPOTIFY_CLIENT_SECRET) ? 'Credenciais configuradas' : 'Credenciais não configuradas'
-            },
-            github: {
-                endpoint: 'https://api.github.com/user',
-                status: process.env.GITHUB_TOKEN ? 'configured' : 'not_configured',
-                message: process.env.GITHUB_TOKEN ? 'Token configurado' : 'Token não configurado'
-            },
-            supabase: {
-                endpoint: process.env.SUPABASE_URL || 'not_configured',
-                status: (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) ? 'configured' : 'not_configured',
-                message: (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) ? 'Configuração completa' : 'Configuração incompleta'
-            },
-            blender: {
-                endpoint: process.env.BLENDER_PATH || 'not_configured',
-                status: process.env.BLENDER_PATH ? 'configured' : 'not_configured',
-                message: process.env.BLENDER_PATH ? 'Caminho configurado' : 'Caminho não configurado'
-            },
-            stripe: {
-                endpoint: 'https://api.stripe.com/v1/account',
-                status: process.env.STRIPE_API_KEY ? 'configured' : 'not_configured',
-                message: process.env.STRIPE_API_KEY ? 'Chave configurada' : 'Chave não configurada'
-            },
-            twilio: {
-                endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json',
-                status: (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) ? 'configured' : 'not_configured',
-                message: (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) ? 'Credenciais configuradas' : 'Credenciais não configuradas'
-            }
-        };
-        
-        const result = testResults[apiType];
+        switch (apiType) {
+            case 'openai':
+                testResult = await testOpenAIConnection();
+                break;
+            case 'github':
+                testResult = await testGitHubConnection();
+                break;
+            case 'blender':
+                testResult = await testBlenderConnection();
+                break;
+            case 'spotify':
+                testResult = await testSpotifyConnection();
+                break;
+            case 'supabase':
+                testResult = await testSupabaseConnection();
+                break;
+            case 'stripe':
+                testResult = await testStripeConnection();
+                break;
+            case 'twilio':
+                testResult = await testTwilioConnection();
+                break;
+            default:
+                testResult = {
+                    success: false,
+                    status: 'not_implemented',
+                    message: 'Teste não implementado para esta API',
+                    endpoint: 'N/A'
+                };
+        }
         
         res.json({
-            success: true,
+            success: testResult.success,
             apiType: apiType,
-            test: result,
-            timestamp: new Date().toISOString()
+            test: testResult,
+            timestamp: new Date().toISOString(),
+            realTest: true // Indica que foi um teste real
         });
         
     } catch (error) {
         res.status(500).json({
             success: false,
             error: 'Erro ao testar API',
-            details: error.message
+            details: error.message,
+            realTest: true
         });
     }
 });
+
+// ==============================================
+// 🔧 FUNÇÕES DE TESTE REAL DE APIS
+// ==============================================
+
+// Teste REAL da OpenAI
+async function testOpenAIConnection() {
+    if (!process.env.OPENAI_API_KEY) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Chave OpenAI não configurada',
+            endpoint: 'https://api.openai.com/v1/models'
+        };
+    }
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/models', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Conexão OK - ${data.data ? data.data.length : 0} modelos disponíveis`,
+                endpoint: 'https://api.openai.com/v1/models',
+                responseTime: Date.now(),
+                details: `Modelos: ${data.data ? data.data.slice(0, 3).map(m => m.id).join(', ') + '...' : 'N/A'}`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status} ${response.statusText}`,
+                endpoint: 'https://api.openai.com/v1/models'
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: 'https://api.openai.com/v1/models'
+        };
+    }
+}
+
+// Teste REAL do GitHub
+async function testGitHubConnection() {
+    if (!process.env.GITHUB_TOKEN) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Token GitHub não configurado',
+            endpoint: 'https://api.github.com/user'
+        };
+    }
+
+    try {
+        const response = await fetch('https://api.github.com/user', {
+            method: 'GET',
+            headers: {
+                'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'Zentraw-Admin-Panel'
+            },
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Conexão OK - Usuário: ${data.login}`,
+                endpoint: 'https://api.github.com/user',
+                details: `Repos: ${data.public_repos}, Seguidores: ${data.followers}`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status}`,
+                endpoint: 'https://api.github.com/user'
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: 'https://api.github.com/user'
+        };
+    }
+}
+
+// Teste REAL do Blender (verificar se executável existe e funciona)
+async function testBlenderConnection() {
+    if (!process.env.BLENDER_PATH) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Caminho do Blender não configurado',
+            endpoint: process.env.BLENDER_PATH || 'N/A'
+        };
+    }
+
+    try {
+        const fs = require('fs');
+        const { spawn } = require('child_process');
+        
+        // Verificar se arquivo existe
+        if (!fs.existsSync(process.env.BLENDER_PATH)) {
+            return {
+                success: false,
+                status: 'file_not_found',
+                message: '❌ Arquivo Blender não encontrado no caminho especificado',
+                endpoint: process.env.BLENDER_PATH
+            };
+        }
+
+        // Testar execução do Blender com comando --version
+        return new Promise((resolve) => {
+            const blender = spawn(process.env.BLENDER_PATH, ['--version'], {
+                timeout: 15000
+            });
+
+            let output = '';
+            blender.stdout.on('data', (data) => {
+                output += data.toString();
+            });
+
+            blender.on('close', (code) => {
+                if (code === 0 && output.includes('Blender')) {
+                    const version = output.match(/Blender (\d+\.\d+\.\d+)/);
+                    resolve({
+                        success: true,
+                        status: 'connected',
+                        message: `✅ Blender funcional - ${version ? version[1] : 'versão detectada'}`,
+                        endpoint: process.env.BLENDER_PATH,
+                        details: `Caminho válido, executável respondendo`
+                    });
+                } else {
+                    resolve({
+                        success: false,
+                        status: 'execution_failed',
+                        message: `❌ Falha na execução: código ${code}`,
+                        endpoint: process.env.BLENDER_PATH
+                    });
+                }
+            });
+
+            blender.on('error', (error) => {
+                resolve({
+                    success: false,
+                    status: 'execution_error',
+                    message: `❌ Erro de execução: ${error.message}`,
+                    endpoint: process.env.BLENDER_PATH
+                });
+            });
+        });
+    } catch (error) {
+        return {
+            success: false,
+            status: 'test_failed',
+            message: `❌ Erro no teste: ${error.message}`,
+            endpoint: process.env.BLENDER_PATH
+        };
+    }
+}
+
+// Teste REAL do Spotify
+async function testSpotifyConnection() {
+    if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Credenciais Spotify não configuradas',
+            endpoint: 'https://accounts.spotify.com/api/token'
+        };
+    }
+
+    try {
+        // Testar autenticação Client Credentials
+        const auth = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64');
+        
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Basic ${auth}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials',
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Autenticação OK - Token obtido`,
+                endpoint: 'https://accounts.spotify.com/api/token',
+                details: `Expires in: ${data.expires_in}s, Type: ${data.token_type}`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status}`,
+                endpoint: 'https://accounts.spotify.com/api/token'
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: 'https://accounts.spotify.com/api/token'
+        };
+    }
+}
+
+// Teste REAL do Supabase
+async function testSupabaseConnection() {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Configuração Supabase incompleta',
+            endpoint: process.env.SUPABASE_URL || 'N/A'
+        };
+    }
+
+    try {
+        const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/`, {
+            method: 'GET',
+            headers: {
+                'apikey': process.env.SUPABASE_KEY,
+                'Authorization': `Bearer ${process.env.SUPABASE_KEY}`
+            },
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Conexão OK - Supabase respondendo`,
+                endpoint: process.env.SUPABASE_URL,
+                details: `Status: ${response.status}, API acessível`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status}`,
+                endpoint: process.env.SUPABASE_URL
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: process.env.SUPABASE_URL
+        };
+    }
+}
+
+// Teste REAL do Stripe
+async function testStripeConnection() {
+    if (!process.env.STRIPE_API_KEY) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Chave Stripe não configurada',
+            endpoint: 'https://api.stripe.com/v1/account'
+        };
+    }
+
+    try {
+        const response = await fetch('https://api.stripe.com/v1/account', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${process.env.STRIPE_API_KEY}`
+            },
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Conexão OK - Conta: ${data.display_name || data.id}`,
+                endpoint: 'https://api.stripe.com/v1/account',
+                details: `País: ${data.country}, Tipo: ${data.type}`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status}`,
+                endpoint: 'https://api.stripe.com/v1/account'
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: 'https://api.stripe.com/v1/account'
+        };
+    }
+}
+
+// Teste REAL do Twilio
+async function testTwilioConnection() {
+    if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+        return {
+            success: false,
+            status: 'not_configured',
+            message: 'Credenciais Twilio não configuradas',
+            endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json'
+        };
+    }
+
+    try {
+        const auth = Buffer.from(`${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`).toString('base64');
+        
+        const response = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}.json`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Basic ${auth}`
+            },
+            timeout: 10000
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                success: true,
+                status: 'connected',
+                message: `✅ Conexão OK - Conta: ${data.friendly_name}`,
+                endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json',
+                details: `Status: ${data.status}, Tipo: ${data.type}`
+            };
+        } else {
+            return {
+                success: false,
+                status: 'auth_failed',
+                message: `❌ Falha na autenticação: ${response.status}`,
+                endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json'
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            status: 'connection_failed',
+            message: `❌ Erro de conexão: ${error.message}`,
+            endpoint: 'https://api.twilio.com/2010-04-01/Accounts.json'
+        };
+    }
+}
+
+// Função para mascarar chaves API para segurança
+function maskApiKey(key) {
+    if (!key || key.length < 8) return '***';
+    const start = key.substring(0, 4);
+    const end = key.substring(key.length - 4);
+    const middle = '*'.repeat(key.length - 8);
+    return `${start}${middle}${end}`;
+}
+
+// ===============================================
+// 🏠 ZENTRAW ADMIN PANEL MAIN ROUTES
+// ===============================================
 
 // Endpoint para verificar saúde da API (diferente do /health principal)
 app.get('/api/health', (req, res) => {
@@ -637,6 +1017,8 @@ app.get('/api/global/status', (req, res) => {
 // END GLOBAL CONFIGURATION ROUTES
 // ===============================================
 
+// ==============================================
+
 // 404 Handler
 app.use((req, res) => {
     res.status(404).json({
@@ -682,9 +1064,10 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
-process.on('SIGINT', () => {
-    console.log('🛑 Recebido SIGINT, encerrando servidor...');
-    process.exit(0);
-});
+// COMENTADO TEMPORARIAMENTE PARA AUTOMAÇÃO
+// process.on('SIGINT', () => {
+//     console.log('🛑 Recebido SIGINT, encerrando servidor...');
+//     process.exit(0);
+// });
 
 module.exports = app;

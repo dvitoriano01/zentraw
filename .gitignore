@@ -1,0 +1,168 @@
+# ===============================================
+# 🔒 ZENTRAW - SECURITY FOCUSED .gitignore
+# ===============================================
+# VERSÃO: SECURITY HARDENED v1.0
+# DATA: 20 de Agosto de 2025
+
+# ===============================================
+# 🚨 CRITICAL SECURITY - API KEYS & SECRETS
+# ===============================================
+
+# Environment files (NEVER COMMIT)
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+*.env
+
+# API Keys and Secrets
+**/config/secrets/*
+**/secrets/*
+**/*secrets*
+**/*keys*
+**/*token*
+**/api-keys/*
+
+# Specific API configuration files
+spotify-config.json
+openai-config.json
+github-config.json
+supabase-config.json
+
+# ===============================================
+# 🛡️ ZENTRAW SPECIFIC SECURITY
+# ===============================================
+
+# Admin Panel sensitive files
+Admin_Panel/.env*
+Admin_Panel/config/production.json
+Admin_Panel/secrets/
+
+# Template Library Builder sensitive
+TemplateLibraryBuilder/.env*
+TemplateLibraryBuilder/config/api-keys.json
+
+# 3D Visualizer sensitive
+Zentraw/.env*
+Zentraw/*/config/keys.json
+
+# ===============================================
+# 📂 NODE.JS & DEPENDENCIES
+# ===============================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ===============================================
+# 🔧 DEVELOPMENT & BUILD
+# ===============================================
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Build outputs
+build/
+dist/
+out/
+outputs/
+*.tgz
+*.tar.gz
+
+# ===============================================
+# 🎨 MEDIA & CACHE
+# ===============================================
+
+# Media files temporários
+*.tmp
+*.temp
+*.cache
+
+# Blender temporary files
+*.blend1
+*.blend2
+**/Blender/renders/temp/*
+
+# ===============================================
+# 💻 SYSTEM FILES
+# ===============================================
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+*.lnk
+
+# ===============================================
+# 🔧 IDE & EDITOR
+# ===============================================
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ===============================================
+# 🧪 TESTING & COVERAGE
+# ===============================================
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Jest
+jest-coverage/
+
+# ===============================================
+# 📊 BACKUP & TEMPORARY
+# ===============================================
+
+# Backup files
+*.backup
+*.bak
+*.swp
+*.swo
+*~
+
+# Temporary folders
+tmp/
+temp/
+.temp/
+
+# ===============================================
+# 🚨 SECURITY AUDIT TRAIL
+# ===============================================
+# Este .gitignore foi criado em resposta a security breach
+# Data: 20/08/2025
+# Motivo: Chaves API expostas em commits
+# Ação: Implementação de proteção robusta
+# ===============================================

@@ -148,7 +148,7 @@ http://localhost:3003
 1. **OpenAI API**
    - Status: ✅ Configurada
    - Endpoint: `https://api.openai.com/v1/models`
-   - Key: `sk-proj-kbgi6NWpa4dBATKW...` (masked)
+   - Key: `[REDACTED FOR SECURITY]`
 
 2. **Spotify API**
    - Status: ✅ Configurada
@@ -158,7 +158,7 @@ http://localhost:3003
 3. **GitHub API**
    - Status: ✅ Configurada
    - Endpoint: `https://api.github.com/user`
-   - Token: `ghp_****************************AeJV` (masked)
+   - Token: `[REDACTED FOR SECURITY]`
 
 4. **Supabase**
    - Status: ✅ Configurada

@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zentraw Admin Panel - V1.0.0</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%F0%9F%94%A7%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/thego                <div class="action-buttons">
-                    <button class="btn" onclick="checkModuleHealth('mi')">Verificar</button>
-                    <button class="btn" disabled>Em Breve</button>
-                </div>
-            </div>olith" />
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/thegoodmonolith" />
+    <!-- Zentraw Agent Script -->
+    <script src="http://localhost:3007/zentraw-agent.js"></script>
     
     <style>
         @import url("https://fonts.cdnfonts.com/css/thegoodmonolith");
@@ -610,11 +608,23 @@
             border-radius: 4px;
             color: var(--text-primary);
             font-size: 0.8rem;
+            transition: all 0.3s ease;
         }
 
         .api-config-field input:focus {
             outline: none;
             border-color: var(--accent-primary);
+            box-shadow: 0 0 5px rgba(255, 78, 66, 0.3);
+        }
+
+        .api-config-field input.success {
+            border-color: var(--success-color);
+            box-shadow: 0 0 5px rgba(74, 222, 128, 0.3);
+        }
+
+        .api-config-field input.error {
+            border-color: var(--error-color);
+            box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
         }
 
         .api-update-btn {
@@ -681,8 +691,15 @@
             }
         }
     </style>
-</head>
-
+    
+    <script>
+        function openZentrawAgent(config = {}) {
+            if (!window.zentrawAgent) {
+                window.zentrawAgent = new ZentrawAgent(config);
+            }
+            window.zentrawAgent.open();
+        }
+    </script>
 <body class="cinema-mode">
     <!-- Grid Overlay -->
     <div class="grid-overlay"></div>
@@ -1081,20 +1098,49 @@
 
         // Testar conexão com API específica
         async function testAPIConnection(apiKey) {
-            addLog(`Testando conexão da API: ${apiKey}`);
+            addLog(`🔍 Testando conexão da API: ${apiKey}`);
+            
+            // Encontrar o botão de teste para feedback visual
+            const testButton = event.target;
+            const originalText = testButton.textContent;
+            
+            // Feedback visual durante teste
+            testButton.disabled = true;
+            testButton.textContent = '🔍 Testando...';
+            testButton.style.backgroundColor = '#fbbf24';
             
             try {
                 const response = await fetch(`${API_BASE_URL}/api/external-apis/test/${apiKey}`);
                 const data = await response.json();
                 
                 if (data.success) {
-                    addLog(`✅ ${apiKey}: Conexão OK`, 'success');
+                    const testResult = data.test;
+                    if (testResult.status === 'configured') {
+                        addLog(`✅ ${apiKey}: Conexão OK - ${testResult.message}`, 'success');
+                        testButton.textContent = '✅ OK!';
+                        testButton.style.backgroundColor = '#4ade80';
+                    } else {
+                        addLog(`⚠️ ${apiKey}: ${testResult.message}`, 'warning');
+                        testButton.textContent = '⚠️ Config';
+                        testButton.style.backgroundColor = '#fbbf24';
+                    }
                 } else {
                     addLog(`❌ ${apiKey}: ${data.error}`, 'error');
+                    testButton.textContent = '❌ Erro';
+                    testButton.style.backgroundColor = '#ef4444';
                 }
             } catch (error) {
                 addLog(`❌ Erro ao testar ${apiKey}: ${error.message}`, 'error');
+                testButton.textContent = '❌ Falha';
+                testButton.style.backgroundColor = '#ef4444';
             }
+            
+            // Resetar botão após 4 segundos
+            setTimeout(() => {
+                testButton.disabled = false;
+                testButton.textContent = originalText;
+                testButton.style.backgroundColor = '';
+            }, 4000);
         }
 
         // Verificar status das APIs externas
@@ -1146,16 +1192,68 @@
         }
 
         // Abrir painel de APIs expandido
-        // Abrir workspace de APIs
+        // Verificar se estamos executando no contexto correto
+        function checkExecutionContext() {
+            const protocol = window.location.protocol;
+            const isFileProtocol = protocol === 'file:';
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            
+            if (isFileProtocol) {
+                addLog('⚠️ AVISO: Interface sendo executada como arquivo local', 'warning');
+                addLog('📋 Para melhor funcionamento, abra: http://localhost:3003', 'warning');
+                
+                // Oferecer redirecionamento automático
+                const redirectBtn = document.createElement('button');
+                redirectBtn.textContent = '🔄 Abrir versão HTTP';
+                redirectBtn.className = 'btn primary';
+                redirectBtn.onclick = () => window.location.href = 'http://localhost:3003';
+                
+                // Adicionar botão de redirecionamento no topo
+                const header = document.querySelector('.header');
+                if (header) {
+                    header.appendChild(redirectBtn);
+                }
+                
+                return false; // Contexto incorreto
+            }
+            
+            return true; // Contexto correto
+        }
+
+        // Versão melhorada do openAPIPanel com verificação de contexto
         async function openAPIPanel() {
             addLog('Abrindo workspace de APIs...');
             console.log('🔧 DEBUG: Iniciando openAPIPanel()');
             
+            // Verificar contexto de execução
+            const contextOK = checkExecutionContext();
+            if (!contextOK) {
+                addLog('❌ Contexto inválido. Redirecionando para HTTP...', 'error');
+                setTimeout(() => {
+                    window.location.href = 'http://localhost:3003';
+                }, 2000);
+                return;
+            }
+            
             try {
                 // Buscar dados das APIs
                 addLog('Fazendo requisição para /api/external-apis/status...');
-                const response = await fetch(`${API_BASE_URL}/api/external-apis/status`);
+                
+                const response = await fetch(`${API_BASE_URL}/api/external-apis/status`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    timeout: 10000 // 10 segundos timeout
+                });
+                
                 console.log('🔧 DEBUG: Response recebida:', response);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const data = await response.json();
                 console.log('🔧 DEBUG: Data parsed:', data);
                 
@@ -1218,7 +1316,9 @@
                                 
                                 <div class="action-buttons">
                                     <button class="btn primary" onclick="updateAPIConfig('${key}')">🔄 Atualizar</button>
-                                    <button class="btn" onclick="testAPIConnection('${key}')">🔍 Testar</button>
+                                    <button class="btn" onclick="${key === 'openai' ? 'openZentrawAgent({context: \"Admin Panel - OpenAI Configuration\"})' : `testAPIConnection('${key}')`}">
+                                        ${key === 'openai' ? '🤖 AGENT' : '🔍 Testar'}
+                                    </button>
                                 </div>
                             </div>
                         `).join('')}
@@ -1242,6 +1342,11 @@
             document.getElementById('api-workspace').style.display = 'none';
             document.getElementById('main-container').style.display = 'block';
             addLog('Retornado ao painel principal');
+        }
+
+        // Fechar painel de APIs (função que estava faltando)
+        function closeAPIPanel() {
+            returnToMainPanel();
         }
 
         // Inicializar API Manager (Python)
@@ -1332,6 +1437,11 @@
             try {
                 const apiCard = event.target.closest('.api-card');
                 const inputs = apiCard.querySelectorAll('input[data-api-key]');
+                const updateButton = event.target;
+                
+                // Desabilitar botão durante processamento
+                updateButton.disabled = true;
+                updateButton.textContent = '🔄 Salvando...';
                 
                 let updates = [];
                 let hasValues = false;
@@ -1347,11 +1457,15 @@
                 }
                 
                 if (!hasValues) {
-                    addLog(`Erro: Nenhuma chave informada para ${apiType}`, 'error');
+                    addLog(`❌ Erro: Nenhuma chave informada para ${apiType}`, 'error');
+                    updateButton.disabled = false;
+                    updateButton.textContent = '🔄 Atualizar';
                     return;
                 }
                 
-                addLog(`Atualizando configurações para ${apiType}...`);
+                addLog(`🔄 Salvando configurações para ${apiType}...`);
+                
+                let successCount = 0;
                 
                 // Enviar atualizações uma por uma
                 for (const update of updates) {
@@ -1369,27 +1483,60 @@
                     const result = await response.json();
                     
                     if (result.success) {
-                        addLog(`✅ ${update.key} atualizada: ${result.masked}`, 'success');
-                        // Limpar campo após atualização
+                        successCount++;
+                        addLog(`✅ ${update.key} salva com sucesso: ${result.masked}`, 'success');
+                        
+                        // Limpar campo após atualização e mostrar feedback visual
                         const input = apiCard.querySelector(`input[data-api-key="${update.key}"]`);
-                        if (input) input.value = '';
+                        if (input) {
+                            input.value = '';
+                            input.style.borderColor = '#4ade80';
+                            input.placeholder = `✅ Salva: ${result.masked}`;
+                            
+                            // Resetar visual após 3 segundos
+                            setTimeout(() => {
+                                input.style.borderColor = '';
+                                input.placeholder = input.getAttribute('placeholder') || '';
+                            }, 3000);
+                        }
                     } else {
-                        addLog(`❌ Erro ao atualizar ${update.key}: ${result.error}`, 'error');
+                        addLog(`❌ Erro ao salvar ${update.key}: ${result.error}`, 'error');
                     }
                 }
                 
+                // Feedback final
+                if (successCount === updates.length) {
+                    addLog(`🎉 Todas as chaves do ${apiType} foram salvas com sucesso!`, 'success');
+                    updateButton.textContent = '✅ Salvo!';
+                    updateButton.style.backgroundColor = '#4ade80';
+                } else {
+                    addLog(`⚠️ ${successCount}/${updates.length} chaves salvas para ${apiType}`, 'warning');
+                    updateButton.textContent = '⚠️ Parcial';
+                    updateButton.style.backgroundColor = '#fbbf24';
+                }
+                
                 // Atualizar status após as configurações
-                addLog('Atualizando status das APIs...');
+                addLog('🔄 Atualizando status das APIs...');
                 await checkAPIStatus();
                 
-                // Reabrir painel para mostrar atualizações
+                // Resetar botão após 3 segundos
                 setTimeout(() => {
-                    closeAPIPanel();
-                    setTimeout(() => openAPIPanel(), 500);
-                }, 1000);
+                    updateButton.disabled = false;
+                    updateButton.textContent = '🔄 Atualizar';
+                    updateButton.style.backgroundColor = '';
+                }, 3000);
                 
             } catch (error) {
-                addLog(`Erro ao atualizar ${apiType}: ${error.message}`, 'error');
+                addLog(`❌ Erro ao atualizar ${apiType}: ${error.message}`, 'error');
+                const updateButton = event.target;
+                updateButton.disabled = false;
+                updateButton.textContent = '❌ Erro';
+                updateButton.style.backgroundColor = '#ef4444';
+                
+                setTimeout(() => {
+                    updateButton.textContent = '🔄 Atualizar';
+                    updateButton.style.backgroundColor = '';
+                }, 3000);
             }
         }
 
@@ -1513,9 +1660,20 @@
         // END GLOBAL CONFIGURATION MANAGER
         // ===============================================
 
+        // ==============================================
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             addLog('🔧 Zentraw Admin Panel V1.0.0 iniciado', 'success');
+            
+            // VERIFICAÇÃO CRÍTICA: Contexto de execução
+            const contextOK = checkExecutionContext();
+            if (!contextOK) {
+                addLog('⚠️ ATENÇÃO: Executando como arquivo local!', 'warning');
+                addLog('📋 Para funcionalidade completa, use: http://localhost:3003', 'warning');
+                return; // Não inicializar verificações se contexto incorreto
+            }
+            
             addLog('Inicializando verificação de módulos...');
             addLog('Sistema de monitoramento ativo com API Manager integrado');
             

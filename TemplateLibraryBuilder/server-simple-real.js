@@ -17,9 +17,9 @@ const path = require('path');
 
 const express = require('express');
 const multer = require('multer');
-const { spawn } = require('child_process');
-const path = require('path');
-const fs = require('fs');
+// const { spawn } = require('child_process'); // REMOVIDO - duplicado
+// const path = require('path'); // REMOVIDO - duplicado  
+// const fs = require('fs'); // REMOVIDO - duplicado
 
 const PORT = 3004;
 const UPLOADS_DIR = path.resolve(__dirname, 'uploads');

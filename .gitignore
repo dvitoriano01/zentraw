@@ -178,3 +178,28 @@ temp/
 # Motivo: Chaves API expostas em commits
 # Ação: Implementação de proteção robusta
 # ===============================================
+
+# Environment files - SECURITY
+*.env
+.env.*
+
+# API Keys and secrets - SECURITY  
+**/api-keys/**
+**/secrets/**
+**/*secret*
+**/*key*
+**/*token*
+
+# Logs that may contain sensitive data
+*.log
+logs/
+
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Backup files that may contain sensitive data
+*-backup*.html
+*-broken*.html
+*-with-*.html
+

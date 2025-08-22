@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const OpenAI = require('openai');
 
 // Configuração explícita do dotenv
@@ -1048,11 +1049,70 @@ app.post('/api/chat', async (req, res) => {
             });
         }
 
-        // Preparar mensagens para OpenAI
+        // 🎯 REDIRECIONAMENTO AUTOMÁTICO PARA DALL-E 3
+        // Detectar se o usuário está solicitando geração de imagens
+        const imageGenerationKeywords = [
+            'criar imagem', 'gerar imagem', 'fazer imagem', 'desenhar',
+            'create image', 'generate image', 'make image', 'draw',
+            'ilustrar', 'pintar', 'arte', 'desenho', 'quadro',
+            'fotografia', 'retrato', 'paisagem', 'logo', 'ícone',
+            'crie uma', 'faça uma', 'desenhe uma', 'gere uma',
+            'quero uma imagem', 'preciso de uma imagem'
+        ];
+
+        const messageText = message.toLowerCase();
+        const isImageRequest = imageGenerationKeywords.some(keyword => 
+            messageText.includes(keyword.toLowerCase())
+        );
+
+        if (isImageRequest) {
+            // Redirecionar automaticamente para DALL-E 3
+            try {
+                const sanitizedPrompt = sanitizePromptBackend(message);
+                
+                const response = await openai.images.generate({
+                    model: "dall-e-3",
+                    prompt: sanitizedPrompt,
+                    n: 1,
+                    size: '1024x1024',
+                    quality: 'standard'
+                });
+
+                return res.json({
+                    success: true,
+                    response: `🎨 Imagem gerada com sucesso! Detectei que você queria criar uma imagem, então redirecionei automaticamente para o DALL-E 3.\n\n🖼️ **Sua imagem está pronta:**`,
+                    image_url: response.data[0].url,
+                    revised_prompt: response.data[0].revised_prompt,
+                    original_prompt: message,
+                    auto_redirected: true,
+                    model: 'dall-e-3'
+                });
+            } catch (imageError) {
+                console.error('Erro no redirecionamento para DALL-E:', imageError.message);
+                // Em caso de erro, continua com o chat normal mas informa sobre a funcionalidade
+                const errorMessage = `❌ Detectei que você queria gerar uma imagem, mas houve um erro: ${imageError.message}\n\n💡 **Dica:** Você pode usar o endpoint específico /api/generate-image ou reformular sua solicitação.`;
+                
+                return res.json({
+                    success: true,
+                    response: errorMessage,
+                    auto_redirect_failed: true,
+                    error_details: imageError.message
+                });
+            }
+        }
+
+        // Preparar mensagens para OpenAI (chat normal)
         const messages = [
             {
                 role: "system",
-                content: "Você é o Zentraw Agent, um assistente inteligente especializado em desenvolvimento, análise de dados, geração de código e criação de conteúdo. Responda sempre em português brasileiro de forma útil e precisa."
+                content: `Você é o Zentraw Agent, um assistente inteligente especializado em desenvolvimento, análise de dados, geração de código e criação de conteúdo. 
+
+IMPORTANTE: Você NÃO pode gerar, criar, desenhar ou produzir imagens diretamente. Quando um usuário solicitar criação de imagens, explique que:
+- O sistema possui um módulo específico DALL-E 3 integrado para geração de imagens
+- Eles devem usar termos como "criar imagem", "gerar imagem", "desenhar" para ativar o redirecionamento automático
+- Ou usar diretamente o endpoint /api/generate-image
+
+Responda sempre em português brasileiro de forma útil e precisa.`
             }
         ];
 
@@ -1261,6 +1321,39 @@ app.post('/api/image-variations', async (req, res) => {
             success: false, 
             error: `Erro DALL-E Variations: ${error.message}` 
         });
+    }
+});
+
+// Servir arquivo JavaScript do Agent (Solução B - Inline serving)
+app.get('/zentraw-agent.js', (req, res) => {
+    try {
+        console.log('🔍 Servindo zentraw-agent.js...');
+        const filePath = path.join(__dirname, 'public', 'zentraw-agent.js');
+        console.log('📁 Caminho:', filePath);
+        
+        // Verificar se arquivo existe
+        if (!fs.existsSync(filePath)) {
+            console.log('❌ Arquivo não encontrado');
+            return res.status(404).send('File not found');
+        }
+        
+        // Ler arquivo e servir inline
+        const content = fs.readFileSync(filePath, 'utf8');
+        console.log('✅ Arquivo carregado, tamanho:', content.length, 'bytes');
+        
+        // Headers CORS e Content-Type
+        res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3003');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.setHeader('Cache-Control', 'no-cache');
+        
+        res.send(content);
+        console.log('📤 zentraw-agent.js servido com sucesso');
+        
+    } catch (error) {
+        console.error('❌ Erro ao servir zentraw-agent.js:', error.message);
+        res.status(500).send('Internal server error: ' + error.message);
     }
 });
 
